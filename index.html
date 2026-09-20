@@ -1,362 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Medical Care</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthcare Excellence</title>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f9fb;
+    color: #17324d;
+    line-height: 1.6;
+}
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f4f9fc;
-      color: #16324f;
-      line-height: 1.6;
-    }
+header {
+    background: #ffffff;
+    border-bottom: 1px solid #dcebf1;
+    padding: 14px 5%;
+}
 
+.navbar {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.logo {
+    width: 86px;
+    height: 86px;
+    object-fit: contain;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #24516b;
+    font-weight: 600;
+    padding: 12px 18px;
+    border-radius: 10px;
+    transition: 0.25s ease;
+}
+
+nav a:hover {
+    background: #e8f6f8;
+    color: #087f8c;
+}
+
+nav a.active {
+    background: #087f8c;
+    color: #ffffff;
+}
+
+.page-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto 60px;
+}
+
+.banner {
+    width: 100%;
+    max-width: 1128px;
+    margin: 0 auto 34px;
+    overflow: hidden;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(23, 50, 77, 0.10);
+    background: #ffffff;
+}
+
+.banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.hero-text {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto 40px;
+}
+
+.hero-text .eyebrow {
+    color: #087f8c;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.hero-text h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: #17324d;
+    margin-bottom: 12px;
+}
+
+.hero-text p {
+    color: #557083;
+    font-size: 1.1rem;
+}
+
+.content-card {
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 30px;
+    box-shadow: 0 10px 35px rgba(23, 50, 77, 0.08);
+}
+
+.content-image {
+    width: 100%;
+    max-width: 950px;
+    height: auto;
+    display: block;
+    margin: 0 auto 30px;
+    border-radius: 18px;
+}
+
+.eoq-card {
+    text-align: center;
+    padding: 40px 25px;
+    background: linear-gradient(135deg, #e8f7f8, #f7fcfd);
+    border: 1px solid #cfe9ed;
+    border-radius: 20px;
+}
+
+.eoq-card h2 {
+    color: #087f8c;
+    margin-bottom: 10px;
+    font-size: 2rem;
+}
+
+.eoq-card p {
+    max-width: 700px;
+    margin: 0 auto 24px;
+    color: #557083;
+}
+
+.eoq-button {
+    display: inline-block;
+    background: #087f8c;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 700;
+    transition: 0.25s ease;
+}
+
+.eoq-button:hover {
+    background: #066b76;
+    transform: translateY(-2px);
+}
+
+footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: #718896;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 700px) {
     header {
-      background: #ffffff;
-      border-bottom: 1px solid #dce8ef;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+        padding: 10px 5%;
     }
 
-    .nav {
-      max-width: 1200px;
-      margin: auto;
-      padding: 10px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+    .navbar {
+        flex-direction: column;
+        gap: 8px;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      text-decoration: none;
-      color: #16324f;
-      font-weight: 700;
-      font-size: 18px;
+    .logo {
+        width: 72px;
+        height: 72px;
     }
 
-    .brand img {
-      width: 76px;
-      height: 76px;
-      object-fit: contain;
-      border-radius: 12px;
+    nav {
+        width: 100%;
+        justify-content: center;
     }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    nav a {
+        padding: 10px 14px;
+        font-size: 0.9rem;
     }
 
-    .nav-links a {
-      text-decoration: none;
-      color: #36566f;
-      font-weight: 600;
-      padding: 11px 16px;
-      border-radius: 10px;
-      transition: 0.2s ease;
-    }
-
-    .nav-links a:hover {
-      background: #eaf5fa;
-      color: #087f9c;
-    }
-
-    .nav-links .eoq-link {
-      background: #087f9c;
-      color: white;
+    .page-container {
+        width: 94%;
+        margin-top: 20px;
     }
 
     .banner {
-      width: 100%;
-      max-width: 1128px;
-      height: 191px;
-      margin: 0 auto;
-      overflow: hidden;
-      background: #ffffff;
+        border-radius: 12px;
+        margin-bottom: 26px;
     }
 
-    .banner img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
+    .content-card {
+        padding: 18px;
     }
 
-    .hero-text {
-      background: #ffffff;
-      text-align: center;
-      padding: 45px 24px 55px;
-      border-bottom: 1px solid #e2edf2;
-    }
-
-    .hero-text-inner {
-      max-width: 850px;
-      margin: auto;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      background: #eaf5fa;
-      color: #087f9c;
-      padding: 8px 16px;
-      border-radius: 30px;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 18px;
-    }
-
-    .hero-text h1 {
-      font-size: clamp(38px, 6vw, 64px);
-      line-height: 1.05;
-      margin-bottom: 18px;
-      color: #16324f;
-    }
-
-    .hero-text p {
-      max-width: 700px;
-      margin: auto;
-      font-size: 18px;
-      color: #688096;
-    }
-
-    main {
-      max-width: 1200px;
-      margin: auto;
-      padding: 65px 24px;
-    }
-
-    .section-heading {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    .section-heading h2 {
-      font-size: 34px;
-      margin-bottom: 10px;
-    }
-
-    .section-heading p {
-      color: #688096;
-      font-size: 17px;
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-    }
-
-    .feature-card {
-      background: white;
-      border: 1px solid #dce8ef;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(15, 63, 88, 0.07);
-    }
-
-    .feature-card img {
-      width: 100%;
-      height: 260px;
-      display: block;
-      object-fit: cover;
-    }
-
-    .feature-content {
-      padding: 28px;
-    }
-
-    .feature-content h3 {
-      color: #087f9c;
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    .feature-content p {
-      color: #688096;
+    .content-image {
+        border-radius: 12px;
     }
 
     .eoq-card {
-      background: linear-gradient(135deg, #073b5c, #087f9c);
-      color: white;
-      border-radius: 20px;
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      box-shadow: 0 10px 30px rgba(15, 63, 88, 0.12);
+        padding: 30px 18px;
     }
-
-    .eoq-card h3 {
-      font-size: 30px;
-      margin-bottom: 12px;
-    }
-
-    .eoq-card p {
-      opacity: 0.92;
-      margin-bottom: 25px;
-    }
-
-    .eoq-button {
-      display: inline-block;
-      width: fit-content;
-      text-decoration: none;
-      background: white;
-      color: #087f9c;
-      padding: 13px 22px;
-      border-radius: 11px;
-      font-weight: 700;
-      transition: 0.2s ease;
-    }
-
-    .eoq-button:hover {
-      transform: translateY(-2px);
-    }
-
-    footer {
-      background: #073b5c;
-      color: rgba(255, 255, 255, 0.8);
-      text-align: center;
-      padding: 35px 20px;
-    }
-
-    footer strong {
-      color: white;
-    }
-
-    @media (max-width: 800px) {
-      .nav {
-        flex-direction: column;
-        padding: 12px 18px;
-      }
-
-      .brand img {
-        width: 70px;
-        height: 70px;
-      }
-
-      .nav-links {
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      .banner {
-        height: auto;
-        aspect-ratio: 1128 / 191;
-      }
-
-      .feature-grid {
-        grid-template-columns: 1fr;
-      }
-
-      main {
-        padding: 45px 18px;
-      }
-    }
-  </style>
+}
+</style>
 </head>
-
 <body>
 
-  <header>
-    <nav class="nav">
-      <a href="/" class="brand">
-        <img src="/logo.jpg" alt="Company Logo">
-        <span>Medical Care</span>
-      </a>
-
-      <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/eoq" class="eoq-link">Employee of the Quarter</a>
-      </div>
-    </nav>
-  </header>
-
-  <div class="banner">
-    <img src="/banner.jpg" alt="Employee of the Quarter">
-  </div>
-
-  <section class="hero-text">
-    <div class="hero-text-inner">
-      <div class="eyebrow">Q3 2026 Recognition</div>
-
-      <h1>Employee of the Quarter</h1>
-
-      <p>
-        Help us recognize an outstanding member of our team
-        for their dedication, compassion, and exceptional service.
-      </p>
-    </div>
-  </section>
-
-  <main>
-
-    <div class="section-heading">
-      <h2>Recognizing Excellence</h2>
-
-      <p>
-        Celebrating the people who make a difference every day.
-      </p>
-    </div>
-
-    <section class="feature-grid">
-
-      <div class="feature-card">
-        <img src="/image2.jpg" alt="Medical Care">
-
-        <div class="feature-content">
-          <h3>Our People Matter</h3>
-
-          <p>
-            Our team is at the heart of everything we do.
-            We are proud to recognize dedication, teamwork,
-            compassion, and exceptional service.
-          </p>
-        </div>
-      </div>
-
-      <div class="eoq-card">
-        <h3>Employee of the Quarter</h3>
-
-        <p>
-          It's time to recognize an exceptional member of our team.
-          Visit the voting page to view this quarter's nominees
-          and cast your vote.
-        </p>
-
-        <a href="/eoq" class="eoq-button">
-          Go to Voting
+<header>
+    <div class="navbar">
+        <a href="/">
+            <img src="/logo.jpg" alt="Company Logo" class="logo">
         </a>
-      </div>
+
+        <nav>
+            <a href="/" class="active">Home</a>
+            <a href="/eoq/">🏆 Employee of the Quarter</a>
+        </nav>
+    </div>
+</header>
+
+<main class="page-container">
+
+    <div class="banner">
+        <img src="/banner.jpg" alt="Company Banner">
+    </div>
+
+    <section class="hero-text">
+        <div class="eyebrow">Q3 2026 Recognition</div>
+        <h1>Employee of the Quarter</h1>
+        <p>Help us recognize an outstanding member of our team for their dedication, compassion, and exceptional service.</p>
+    </section>
+
+    <section class="content-card">
+
+        <img src="/image2.jpg" alt="Healthcare Team" class="content-image">
+
+        <div class="eoq-card">
+            <h2>🏆 Recognize Excellence</h2>
+            <p>
+                Our team members make a difference every day. Visit the Employee of the Quarter voting page and help recognize someone who has made an outstanding contribution.
+            </p>
+            <a href="/eoq/" class="eoq-button">Go to Voting →</a>
+        </div>
 
     </section>
 
-  </main>
+</main>
 
-  <footer>
-    <p>
-      <strong>Medical Care</strong> · Employee Recognition Program
-    </p>
-
-    <p>
-      Q3 2026
-    </p>
-  </footer>
+<footer>
+    © 2026 Healthcare Excellence. All rights reserved.
+</footer>
 
 </body>
 </html>
