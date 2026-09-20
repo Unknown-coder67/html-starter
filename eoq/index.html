@@ -79,48 +79,64 @@
       color: white;
     }
 
-    .hero {
-      background: linear-gradient(135deg, #073b5c, #087f9c, #18a6a6);
-      color: white;
-      padding: 65px 24px;
-      text-align: center;
+    .banner {
+      width: 100%;
+      max-width: 1128px;
+      height: 191px;
+      margin: 0 auto;
+      overflow: hidden;
+      background: #ffffff;
     }
 
-    .hero-inner {
+    .banner img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .hero-text {
+      background: #ffffff;
+      text-align: center;
+      padding: 45px 24px 55px;
+      border-bottom: 1px solid #e2edf2;
+    }
+
+    .hero-text-inner {
       max-width: 850px;
       margin: auto;
     }
 
     .eyebrow {
       display: inline-block;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.25);
+      background: #eaf5fa;
+      color: #087f9c;
       padding: 8px 16px;
       border-radius: 30px;
       font-size: 13px;
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
-    .hero h1 {
+    .hero-text h1 {
       font-size: clamp(38px, 6vw, 64px);
       line-height: 1.05;
       margin-bottom: 18px;
     }
 
-    .hero p {
+    .hero-text p {
       max-width: 700px;
       margin: auto;
       font-size: 18px;
-      opacity: 0.95;
+      color: #688096;
     }
 
     main {
       max-width: 1200px;
       margin: auto;
-      padding: 60px 24px;
+      padding: 60px 24px 140px;
     }
 
     .section-heading {
@@ -165,7 +181,7 @@
 
     .candidate {
       background: white;
-      border: 1px solid #dce8ef;
+      border: 2px solid #dce8ef;
       border-radius: 20px;
       padding: 30px;
       text-align: center;
@@ -174,8 +190,13 @@
     }
 
     .candidate:hover {
-      transform: translateY(-5px);
+      transform: translateY(-4px);
       box-shadow: 0 15px 35px rgba(15, 63, 88, 0.11);
+    }
+
+    .candidate.selected {
+      border-color: #087f9c;
+      box-shadow: 0 0 0 4px rgba(8, 127, 156, 0.12);
     }
 
     .avatar {
@@ -213,10 +234,10 @@
 
     .vote-btn {
       width: 100%;
-      border: none;
-      background: #087f9c;
-      color: white;
-      padding: 14px 20px;
+      border: 2px solid #087f9c;
+      background: white;
+      color: #087f9c;
+      padding: 13px 20px;
       border-radius: 12px;
       font-size: 16px;
       font-weight: 700;
@@ -225,12 +246,12 @@
     }
 
     .vote-btn:hover {
-      background: #066b83;
-      transform: translateY(-1px);
+      background: #eaf5fa;
     }
 
-    .vote-btn.selected {
-      background: #18a06f;
+    .candidate.selected .vote-btn {
+      background: #087f9c;
+      color: white;
     }
 
     .vote-count {
@@ -238,6 +259,62 @@
       font-size: 14px;
       color: #688096;
       font-weight: 600;
+    }
+
+    .confirmation {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 200;
+      background: white;
+      border-top: 1px solid #dce8ef;
+      box-shadow: 0 -10px 30px rgba(15, 63, 88, 0.12);
+      padding: 18px 24px;
+      display: none;
+    }
+
+    .confirmation-inner {
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .confirmation-text {
+      color: #16324f;
+      font-weight: 600;
+    }
+
+    .confirmation-text strong {
+      color: #087f9c;
+    }
+
+    .confirmation-actions {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .cancel-btn,
+    .confirm-btn {
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .cancel-btn {
+      background: #edf2f5;
+      color: #36566f;
+    }
+
+    .confirm-btn {
+      background: #18a06f;
+      color: white;
     }
 
     #voteMessage {
@@ -258,7 +335,6 @@
       color: rgba(255,255,255,0.8);
       text-align: center;
       padding: 35px 20px;
-      margin-top: 30px;
     }
 
     footer strong {
@@ -276,12 +352,31 @@
         flex-wrap: wrap;
       }
 
+      .banner {
+        height: auto;
+        aspect-ratio: 1128 / 191;
+      }
+
       .nominees {
         grid-template-columns: 1fr;
       }
 
+      .confirmation-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .confirmation-actions {
+        width: 100%;
+      }
+
+      .cancel-btn,
+      .confirm-btn {
+        flex: 1;
+      }
+
       main {
-        padding: 45px 18px;
+        padding: 45px 18px 160px;
       }
     }
   </style>
@@ -303,8 +398,12 @@
     </nav>
   </header>
 
-  <section class="hero">
-    <div class="hero-inner">
+  <div class="banner">
+    <img src="/banner.jpg" alt="Employee of the Quarter">
+  </div>
+
+  <section class="hero-text">
+    <div class="hero-text-inner">
       <div class="eyebrow">Q3 2026 Recognition</div>
 
       <h1>Employee of the Quarter</h1>
@@ -322,7 +421,8 @@
       <h2>Cast Your Vote</h2>
 
       <p>
-        Choose the employee you believe deserves recognition this quarter.
+        Select a nominee below. You'll have a chance to confirm
+        your choice before your vote is submitted.
       </p>
     </div>
 
@@ -336,8 +436,11 @@
 
     <section class="nominees">
 
-      <article class="candidate">
-        <div class="avatar">SA</div>
+      <article class="candidate" data-name="Sarah Ahmed">
+
+        <div class="avatar">
+          SA
+        </div>
 
         <h3>Sarah Ahmed</h3>
 
@@ -350,17 +453,21 @@
           teamwork, and consistently going above and beyond.
         </p>
 
-        <button class="vote-btn" onclick="vote('sarah', this)">
-          Vote for Sarah
+        <button class="vote-btn" onclick="selectCandidate('sarah', 'Sarah Ahmed', this)">
+          Select Sarah
         </button>
 
         <div class="vote-count">
           Votes: <span id="sarah-count">0</span>
         </div>
+
       </article>
 
-      <article class="candidate">
-        <div class="avatar">DM</div>
+      <article class="candidate" data-name="Daniel Morgan">
+
+        <div class="avatar">
+          DM
+        </div>
 
         <h3>Daniel Morgan</h3>
 
@@ -373,17 +480,21 @@
           and exceptional support for both patients and colleagues.
         </p>
 
-        <button class="vote-btn" onclick="vote('daniel', this)">
-          Vote for Daniel
+        <button class="vote-btn" onclick="selectCandidate('daniel', 'Daniel Morgan', this)">
+          Select Daniel
         </button>
 
         <div class="vote-count">
           Votes: <span id="daniel-count">0</span>
         </div>
+
       </article>
 
-      <article class="candidate">
-        <div class="avatar">MT</div>
+      <article class="candidate" data-name="Maya Thompson">
+
+        <div class="avatar">
+          MT
+        </div>
 
         <h3>Maya Thompson</h3>
 
@@ -396,13 +507,14 @@
           empathy, and creating a welcoming patient experience.
         </p>
 
-        <button class="vote-btn" onclick="vote('maya', this)">
-          Vote for Maya
+        <button class="vote-btn" onclick="selectCandidate('maya', 'Maya Thompson', this)">
+          Select Maya
         </button>
 
         <div class="vote-count">
           Votes: <span id="maya-count">0</span>
         </div>
+
       </article>
 
     </section>
@@ -410,6 +522,27 @@
     <div id="voteMessage"></div>
 
   </main>
+
+  <div class="confirmation" id="confirmation">
+    <div class="confirmation-inner">
+
+      <div class="confirmation-text">
+        You selected <strong id="selectedName"></strong>.
+        Ready to submit your vote?
+      </div>
+
+      <div class="confirmation-actions">
+        <button class="cancel-btn" onclick="cancelSelection()">
+          Change Selection
+        </button>
+
+        <button class="confirm-btn" onclick="confirmVote()">
+          Confirm Vote
+        </button>
+      </div>
+
+    </div>
+  </div>
 
   <footer>
     <p>
@@ -428,31 +561,73 @@
       maya: 0
     };
 
-    function vote(employee, button) {
+    let selectedEmployee = null;
+    let selectedButton = null;
+
+    function selectCandidate(employee, name, button) {
       if (localStorage.getItem("eoq-voted")) {
         showMessage("You have already voted. Thank you!");
         return;
       }
 
-      votes[employee]++;
-
-      document.getElementById(employee + "-count").textContent =
-        votes[employee];
-
-      localStorage.setItem("eoq-voted", employee);
-
-      document.querySelectorAll(".vote-btn").forEach(item => {
-        item.classList.remove("selected");
-        item.disabled = true;
-        item.style.opacity = "0.65";
-        item.style.cursor = "not-allowed";
+      document.querySelectorAll(".candidate").forEach(card => {
+        card.classList.remove("selected");
       });
 
-      button.classList.add("selected");
-      button.style.opacity = "1";
-      button.textContent = "✓ Vote Submitted";
+      document.querySelectorAll(".vote-btn").forEach(item => {
+        item.textContent = item.textContent.replace("✓ ", "Select ");
+      });
 
-      showMessage("Thank you for voting! Your vote has been recorded.");
+      button.closest(".candidate").classList.add("selected");
+      button.textContent = "✓ Selected";
+
+      selectedEmployee = employee;
+      selectedButton = button;
+
+      document.getElementById("selectedName").textContent = name;
+      document.getElementById("confirmation").style.display = "block";
+    }
+
+    function cancelSelection() {
+      document.querySelectorAll(".candidate").forEach(card => {
+        card.classList.remove("selected");
+      });
+
+      if (selectedButton) {
+        selectedButton.textContent =
+          "Select " + selectedButton.textContent.replace("✓ Selected", "").trim();
+      }
+
+      selectedEmployee = null;
+      selectedButton = null;
+
+      document.getElementById("confirmation").style.display = "none";
+    }
+
+    function confirmVote() {
+      if (!selectedEmployee) {
+        return;
+      }
+
+      votes[selectedEmployee]++;
+
+      document.getElementById(selectedEmployee + "-count").textContent =
+        votes[selectedEmployee];
+
+      localStorage.setItem("eoq-voted", selectedEmployee);
+
+      document.querySelectorAll(".vote-btn").forEach(button => {
+        button.disabled = true;
+        button.style.opacity = "0.55";
+        button.style.cursor = "not-allowed";
+      });
+
+      selectedButton.textContent = "✓ Vote Submitted";
+      selectedButton.style.opacity = "1";
+
+      document.getElementById("confirmation").style.display = "none";
+
+      showMessage("Thank you! Your vote has been submitted.");
     }
 
     function showMessage(message) {
@@ -465,7 +640,7 @@
     if (localStorage.getItem("eoq-voted")) {
       document.querySelectorAll(".vote-btn").forEach(button => {
         button.disabled = true;
-        button.style.opacity = "0.65";
+        button.style.opacity = "0.55";
         button.style.cursor = "not-allowed";
       });
 
