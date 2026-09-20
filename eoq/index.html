@@ -1,652 +1,545 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Employee of the Quarter</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee of the Quarter</title>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f9fb;
+    color: #17324d;
+    line-height: 1.6;
+}
+
+header {
+    background: #ffffff;
+    border-bottom: 1px solid #dcebf1;
+    padding: 14px 5%;
+}
+
+.navbar {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.logo {
+    width: 86px;
+    height: 86px;
+    object-fit: contain;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #24516b;
+    font-weight: 600;
+    padding: 12px 18px;
+    border-radius: 10px;
+    transition: 0.25s ease;
+}
+
+nav a:hover {
+    background: #e8f6f8;
+    color: #087f8c;
+}
+
+nav a.active {
+    background: #087f8c;
+    color: #ffffff;
+}
+
+.page-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto 100px;
+}
+
+.banner {
+    width: 100%;
+    max-width: 1128px;
+    margin: 0 auto 34px;
+    overflow: hidden;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(23, 50, 77, 0.10);
+    background: #ffffff;
+}
+
+.banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.hero-text {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto 35px;
+}
+
+.hero-text .eyebrow {
+    color: #087f8c;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.hero-text h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: #17324d;
+    margin-bottom: 12px;
+}
+
+.hero-text p {
+    color: #557083;
+    font-size: 1.1rem;
+}
+
+.voting-zone {
+    background: linear-gradient(135deg, #0a7180, #087f8c);
+    color: #ffffff;
+    border-radius: 24px;
+    padding: 38px 25px;
+    text-align: center;
+    margin-bottom: 35px;
+    box-shadow: 0 12px 35px rgba(8, 127, 140, 0.20);
+}
+
+.voting-zone .label {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.9;
+    margin-bottom: 8px;
+}
+
+.voting-zone h2 {
+    font-size: clamp(1.8rem, 4vw, 2.7rem);
+    margin-bottom: 8px;
+}
+
+.voting-zone p {
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.92;
+}
+
+.voting-card {
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 30px;
+    box-shadow: 0 10px 35px rgba(23, 50, 77, 0.08);
+}
+
+.voting-card h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    color: #17324d;
+}
+
+.instructions {
+    text-align: center;
+    color: #718896;
+    margin-bottom: 25px;
+}
+
+.candidates {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.candidate {
+    border: 2px solid #dcebf1;
+    border-radius: 18px;
+    padding: 25px 18px;
+    text-align: center;
+    transition: 0.25s ease;
+    background: #fbfeff;
+}
+
+.candidate:hover {
+    border-color: #8bcbd2;
+    transform: translateY(-3px);
+}
+
+.candidate.selected {
+    border-color: #087f8c;
+    background: #eaf8f9;
+    box-shadow: 0 8px 22px rgba(8, 127, 140, 0.12);
+}
+
+.avatar {
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    background: linear-gradient(135deg, #d8f0f2, #b7e0e4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #087f8c;
+}
+
+.candidate h4 {
+    font-size: 1.25rem;
+    margin-bottom: 5px;
+    color: #17324d;
+}
+
+.candidate p {
+    color: #718896;
+    font-size: 0.9rem;
+    margin-bottom: 18px;
+}
+
+.vote-btn {
+    width: 100%;
+    border: none;
+    background: #087f8c;
+    color: #ffffff;
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.vote-btn:hover {
+    background: #066b76;
+}
+
+.vote-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.confirmation-bar {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    width: min(900px, calc(100% - 30px));
+    background: #ffffff;
+    border: 1px solid #cfe3e8;
+    border-radius: 16px;
+    padding: 15px 18px;
+    box-shadow: 0 12px 40px rgba(23, 50, 77, 0.18);
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    z-index: 1000;
+}
+
+.confirmation-bar.show {
+    display: flex;
+}
+
+.confirmation-text {
+    color: #17324d;
+    font-weight: 600;
+}
+
+.confirmation-text span {
+    color: #087f8c;
+    font-weight: 800;
+}
+
+.confirmation-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.change-btn,
+.confirm-btn {
+    border: none;
+    padding: 11px 16px;
+    border-radius: 9px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.change-btn {
+    background: #edf3f5;
+    color: #315568;
+}
+
+.confirm-btn {
+    background: #087f8c;
+    color: #ffffff;
+}
+
+.change-btn:hover {
+    background: #dfeaec;
+}
+
+.confirm-btn:hover {
+    background: #066b76;
+}
+
+.success-message {
+    display: none;
+    text-align: center;
+    margin-top: 25px;
+    padding: 18px;
+    border-radius: 14px;
+    background: #e7f7ed;
+    color: #237345;
+    font-weight: 700;
+}
+
+.success-message.show {
+    display: block;
+}
+
+footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: #718896;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 850px) {
+    .candidates {
+        grid-template-columns: 1fr;
     }
+}
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f4f9fc;
-      color: #16324f;
-      line-height: 1.6;
-    }
-
+@media (max-width: 700px) {
     header {
-      background: #ffffff;
-      border-bottom: 1px solid #dce8ef;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+        padding: 10px 5%;
     }
 
-    .nav {
-      max-width: 1200px;
-      margin: auto;
-      padding: 10px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+    .navbar {
+        flex-direction: column;
+        gap: 8px;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      text-decoration: none;
-      color: #16324f;
-      font-weight: 700;
-      font-size: 18px;
+    .logo {
+        width: 72px;
+        height: 72px;
     }
 
-    .brand img {
-      width: 76px;
-      height: 76px;
-      object-fit: contain;
-      border-radius: 12px;
+    nav {
+        width: 100%;
+        justify-content: center;
     }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    nav a {
+        padding: 10px 14px;
+        font-size: 0.9rem;
     }
 
-    .nav-links a {
-      text-decoration: none;
-      color: #36566f;
-      font-weight: 600;
-      padding: 11px 16px;
-      border-radius: 10px;
-      transition: 0.2s ease;
-    }
-
-    .nav-links a:hover {
-      background: #eaf5fa;
-      color: #087f9c;
-    }
-
-    .nav-links .active {
-      background: #087f9c;
-      color: white;
+    .page-container {
+        width: 94%;
+        margin-top: 20px;
     }
 
     .banner {
-      width: 100%;
-      max-width: 1128px;
-      height: 191px;
-      margin: 0 auto;
-      overflow: hidden;
-      background: #ffffff;
+        border-radius: 12px;
+        margin-bottom: 26px;
     }
 
-    .banner img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
+    .voting-zone {
+        padding: 30px 18px;
+        border-radius: 18px;
     }
 
-    .hero-text {
-      background: #ffffff;
-      text-align: center;
-      padding: 45px 24px 55px;
-      border-bottom: 1px solid #e2edf2;
+    .voting-card {
+        padding: 20px;
     }
 
-    .hero-text-inner {
-      max-width: 850px;
-      margin: auto;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      background: #eaf5fa;
-      color: #087f9c;
-      padding: 8px 16px;
-      border-radius: 30px;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 18px;
-    }
-
-    .hero-text h1 {
-      font-size: clamp(38px, 6vw, 64px);
-      line-height: 1.05;
-      margin-bottom: 18px;
-    }
-
-    .hero-text p {
-      max-width: 700px;
-      margin: auto;
-      font-size: 18px;
-      color: #688096;
-    }
-
-    main {
-      max-width: 1200px;
-      margin: auto;
-      padding: 60px 24px 140px;
-    }
-
-    .section-heading {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    .section-heading h2 {
-      font-size: 34px;
-      margin-bottom: 10px;
-    }
-
-    .section-heading p {
-      color: #688096;
-    }
-
-    .quarter-card {
-      background: white;
-      border: 1px solid #dce8ef;
-      border-radius: 20px;
-      padding: 28px;
-      margin-bottom: 45px;
-      box-shadow: 0 10px 30px rgba(15, 63, 88, 0.07);
-      text-align: center;
-    }
-
-    .quarter-card h3 {
-      color: #087f9c;
-      font-size: 24px;
-      margin-bottom: 5px;
-    }
-
-    .quarter-card p {
-      color: #688096;
-    }
-
-    .nominees {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 25px;
-    }
-
-    .candidate {
-      background: white;
-      border: 2px solid #dce8ef;
-      border-radius: 20px;
-      padding: 30px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(15, 63, 88, 0.06);
-      transition: 0.25s ease;
-    }
-
-    .candidate:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 15px 35px rgba(15, 63, 88, 0.11);
-    }
-
-    .candidate.selected {
-      border-color: #087f9c;
-      box-shadow: 0 0 0 4px rgba(8, 127, 156, 0.12);
-    }
-
-    .avatar {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      margin: 0 auto 18px;
-      background: linear-gradient(135deg, #087f9c, #18a6a6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 30px;
-      font-weight: 700;
-    }
-
-    .candidate h3 {
-      font-size: 22px;
-      margin-bottom: 6px;
-    }
-
-    .candidate .role {
-      color: #087f9c;
-      font-weight: 700;
-      font-size: 14px;
-      margin-bottom: 15px;
-    }
-
-    .candidate p {
-      color: #688096;
-      font-size: 15px;
-      min-height: 72px;
-      margin-bottom: 20px;
-    }
-
-    .vote-btn {
-      width: 100%;
-      border: 2px solid #087f9c;
-      background: white;
-      color: #087f9c;
-      padding: 13px 20px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .vote-btn:hover {
-      background: #eaf5fa;
-    }
-
-    .candidate.selected .vote-btn {
-      background: #087f9c;
-      color: white;
-    }
-
-    .vote-count {
-      margin-top: 12px;
-      font-size: 14px;
-      color: #688096;
-      font-weight: 600;
-    }
-
-    .confirmation {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 200;
-      background: white;
-      border-top: 1px solid #dce8ef;
-      box-shadow: 0 -10px 30px rgba(15, 63, 88, 0.12);
-      padding: 18px 24px;
-      display: none;
-    }
-
-    .confirmation-inner {
-      max-width: 900px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .confirmation-text {
-      color: #16324f;
-      font-weight: 600;
-    }
-
-    .confirmation-text strong {
-      color: #087f9c;
+    .confirmation-bar {
+        flex-direction: column;
+        align-items: stretch;
+        bottom: 10px;
     }
 
     .confirmation-actions {
-      display: flex;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-
-    .cancel-btn,
-    .confirm-btn {
-      border: none;
-      padding: 12px 20px;
-      border-radius: 10px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .cancel-btn {
-      background: #edf2f5;
-      color: #36566f;
-    }
-
-    .confirm-btn {
-      background: #18a06f;
-      color: white;
-    }
-
-    #voteMessage {
-      display: none;
-      margin: 30px auto 0;
-      max-width: 650px;
-      padding: 18px 22px;
-      background: #e7f8f1;
-      border: 1px solid #b8ead5;
-      color: #176b4d;
-      border-radius: 14px;
-      text-align: center;
-      font-weight: 600;
-    }
-
-    footer {
-      background: #073b5c;
-      color: rgba(255,255,255,0.8);
-      text-align: center;
-      padding: 35px 20px;
-    }
-
-    footer strong {
-      color: white;
-    }
-
-    @media (max-width: 800px) {
-      .nav {
-        flex-direction: column;
-      }
-
-      .nav-links {
         width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
+    }
 
-      .banner {
-        height: auto;
-        aspect-ratio: 1128 / 191;
-      }
-
-      .nominees {
-        grid-template-columns: 1fr;
-      }
-
-      .confirmation-inner {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .confirmation-actions {
-        width: 100%;
-      }
-
-      .cancel-btn,
-      .confirm-btn {
+    .change-btn,
+    .confirm-btn {
         flex: 1;
-      }
-
-      main {
-        padding: 45px 18px 160px;
-      }
     }
-  </style>
+}
+</style>
 </head>
-
 <body>
 
-  <header>
-    <nav class="nav">
-      <a href="/" class="brand">
-        <img src="/logo.jpg" alt="Company Logo">
-        <span>Medical Care</span>
-      </a>
+<header>
+    <div class="navbar">
+        <a href="/">
+            <img src="/logo.jpg" alt="Company Logo" class="logo">
+        </a>
 
-      <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/eoq" class="active">Employee of the Quarter</a>
-      </div>
-    </nav>
-  </header>
-
-  <div class="banner">
-    <img src="/banner.jpg" alt="Employee of the Quarter">
-  </div>
-
-  <section class="hero-text">
-    <div class="hero-text-inner">
-      <div class="eyebrow">Q3 2026 Recognition</div>
-
-      <h1>Employee of the Quarter</h1>
-
-      <p>
-        Help us recognize an outstanding member of our team
-        for their dedication, compassion, and exceptional service.
-      </p>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/eoq/" class="active">🏆 Employee of the Quarter</a>
+        </nav>
     </div>
-  </section>
+</header>
 
-  <main>
+<main class="page-container">
 
-    <div class="section-heading">
-      <h2>Cast Your Vote</h2>
-
-      <p>
-        Select a nominee below. You'll have a chance to confirm
-        your choice before your vote is submitted.
-      </p>
+    <div class="banner">
+        <img src="/banner.jpg" alt="Company Banner">
     </div>
 
-    <div class="quarter-card">
-      <h3>Q3 2026</h3>
-
-      <p>
-        Voting is open to eligible employees.
-      </p>
-    </div>
-
-    <section class="nominees">
-
-      <article class="candidate" data-name="Sarah Ahmed">
-
-        <div class="avatar">
-          SA
-        </div>
-
-        <h3>Sarah Ahmed</h3>
-
-        <div class="role">
-          Patient Care Coordinator
-        </div>
-
-        <p>
-          Recognized for compassionate patient support,
-          teamwork, and consistently going above and beyond.
-        </p>
-
-        <button class="vote-btn" onclick="selectCandidate('sarah', 'Sarah Ahmed', this)">
-          Select Sarah
-        </button>
-
-        <div class="vote-count">
-          Votes: <span id="sarah-count">0</span>
-        </div>
-
-      </article>
-
-      <article class="candidate" data-name="Daniel Morgan">
-
-        <div class="avatar">
-          DM
-        </div>
-
-        <h3>Daniel Morgan</h3>
-
-        <div class="role">
-          Clinical Support Specialist
-        </div>
-
-        <p>
-          Recognized for reliability, professionalism,
-          and exceptional support for both patients and colleagues.
-        </p>
-
-        <button class="vote-btn" onclick="selectCandidate('daniel', 'Daniel Morgan', this)">
-          Select Daniel
-        </button>
-
-        <div class="vote-count">
-          Votes: <span id="daniel-count">0</span>
-        </div>
-
-      </article>
-
-      <article class="candidate" data-name="Maya Thompson">
-
-        <div class="avatar">
-          MT
-        </div>
-
-        <h3>Maya Thompson</h3>
-
-        <div class="role">
-          Patient Services Representative
-        </div>
-
-        <p>
-          Recognized for outstanding communication,
-          empathy, and creating a welcoming patient experience.
-        </p>
-
-        <button class="vote-btn" onclick="selectCandidate('maya', 'Maya Thompson', this)">
-          Select Maya
-        </button>
-
-        <div class="vote-count">
-          Votes: <span id="maya-count">0</span>
-        </div>
-
-      </article>
-
+    <section class="hero-text">
+        <div class="eyebrow">Q3 2026 Recognition</div>
+        <h1>Employee of the Quarter</h1>
+        <p>Help us recognize an outstanding member of our team for their dedication, compassion, and exceptional service.</p>
     </section>
 
-    <div id="voteMessage"></div>
+    <section class="voting-zone">
+        <div class="label">Voting Section</div>
+        <h2>🏆 Your Voice Matters</h2>
+        <p>Select the colleague you believe deserves recognition this quarter. You will have a chance to review your selection before your vote is submitted.</p>
+    </section>
 
-  </main>
+    <section class="voting-card">
+        <h3>Select an Employee</h3>
+        <p class="instructions">Click a name to select. Your vote will not be submitted until you confirm it.</p>
 
-  <div class="confirmation" id="confirmation">
-    <div class="confirmation-inner">
+        <div class="candidates">
 
-      <div class="confirmation-text">
-        You selected <strong id="selectedName"></strong>.
-        Ready to submit your vote?
-      </div>
+            <div class="candidate" id="candidate-ahmed">
+                <div class="avatar">AK</div>
+                <h4>Ahmed Khaled</h4>
+                <p>Healthcare Team</p>
+                <button class="vote-btn" onclick="selectCandidate('ahmed', 'Ahmed Khaled', this)">Select Ahmed Khaled</button>
+            </div>
 
-      <div class="confirmation-actions">
-        <button class="cancel-btn" onclick="cancelSelection()">
-          Change Selection
-        </button>
+            <div class="candidate" id="candidate-abdullah">
+                <div class="avatar">AM</div>
+                <h4>Abdullah Mohammed</h4>
+                <p>Healthcare Team</p>
+                <button class="vote-btn" onclick="selectCandidate('abdullah', 'Abdullah Mohammed', this)">Select Abdullah Mohammed</button>
+            </div>
 
-        <button class="confirm-btn" onclick="confirmVote()">
-          Confirm Vote
-        </button>
-      </div>
+            <div class="candidate" id="candidate-reem">
+                <div class="avatar">RA</div>
+                <h4>Reem Ali</h4>
+                <p>Healthcare Team</p>
+                <button class="vote-btn" onclick="selectCandidate('reem', 'Reem Ali', this)">Select Reem Ali</button>
+            </div>
 
+        </div>
+
+        <div class="success-message" id="successMessage">
+            Your vote has been successfully submitted. Thank you for participating!
+        </div>
+    </section>
+
+</main>
+
+<div class="confirmation-bar" id="confirmationBar">
+    <div class="confirmation-text">
+        Selected: <span id="selectedName"></span>
     </div>
-  </div>
 
-  <footer>
-    <p>
-      <strong>Medical Care</strong> · Employee Recognition Program
-    </p>
+    <div class="confirmation-actions">
+        <button class="change-btn" onclick="cancelSelection()">Change Selection</button>
+        <button class="confirm-btn" onclick="confirmVote()">Confirm Vote</button>
+    </div>
+</div>
 
-    <p>
-      Q3 2026
-    </p>
-  </footer>
+<footer>
+    © 2026 Healthcare Excellence. All rights reserved.
+</footer>
 
-  <script>
-    const votes = {
-      sarah: 0,
-      daniel: 0,
-      maya: 0
-    };
+<script>
+let selectedEmployee = null;
+let selectedName = null;
+let selectedButton = null;
 
-    let selectedEmployee = null;
-    let selectedButton = null;
-
-    function selectCandidate(employee, name, button) {
-      if (localStorage.getItem("eoq-voted")) {
-        showMessage("You have already voted. Thank you!");
+function selectCandidate(employee, name, button) {
+    if (localStorage.getItem("eoqVoted") === "true") {
         return;
-      }
-
-      document.querySelectorAll(".candidate").forEach(card => {
-        card.classList.remove("selected");
-      });
-
-      document.querySelectorAll(".vote-btn").forEach(item => {
-        item.textContent = item.textContent.replace("✓ ", "Select ");
-      });
-
-      button.closest(".candidate").classList.add("selected");
-      button.textContent = "✓ Selected";
-
-      selectedEmployee = employee;
-      selectedButton = button;
-
-      document.getElementById("selectedName").textContent = name;
-      document.getElementById("confirmation").style.display = "block";
     }
 
-    function cancelSelection() {
-      document.querySelectorAll(".candidate").forEach(card => {
+    document.querySelectorAll(".candidate").forEach(card => {
         card.classList.remove("selected");
-      });
+    });
 
-      if (selectedButton) {
-        selectedButton.textContent =
-          "Select " + selectedButton.textContent.replace("✓ Selected", "").trim();
-      }
+    document.querySelectorAll(".vote-btn").forEach(btn => {
+        btn.textContent = btn.dataset.originalText || btn.textContent.replace("✓ Selected", "").trim();
+    });
 
-      selectedEmployee = null;
-      selectedButton = null;
+    const candidateCard = document.getElementById("candidate-" + employee);
+    candidateCard.classList.add("selected");
 
-      document.getElementById("confirmation").style.display = "none";
+    if (!button.dataset.originalText) {
+        button.dataset.originalText = button.textContent;
     }
 
-    function confirmVote() {
-      if (!selectedEmployee) {
+    button.textContent = "✓ Selected";
+    selectedEmployee = employee;
+    selectedName = name;
+    selectedButton = button;
+
+    document.getElementById("selectedName").textContent = name;
+    document.getElementById("confirmationBar").classList.add("show");
+}
+
+function cancelSelection() {
+    if (selectedButton && selectedButton.dataset.originalText) {
+        selectedButton.textContent = selectedButton.dataset.originalText;
+    }
+
+    document.querySelectorAll(".candidate").forEach(card => {
+        card.classList.remove("selected");
+    });
+
+    selectedEmployee = null;
+    selectedName = null;
+    selectedButton = null;
+
+    document.getElementById("confirmationBar").classList.remove("show");
+}
+
+function confirmVote() {
+    if (!selectedEmployee) {
         return;
-      }
-
-      votes[selectedEmployee]++;
-
-      document.getElementById(selectedEmployee + "-count").textContent =
-        votes[selectedEmployee];
-
-      localStorage.setItem("eoq-voted", selectedEmployee);
-
-      document.querySelectorAll(".vote-btn").forEach(button => {
-        button.disabled = true;
-        button.style.opacity = "0.55";
-        button.style.cursor = "not-allowed";
-      });
-
-      selectedButton.textContent = "✓ Vote Submitted";
-      selectedButton.style.opacity = "1";
-
-      document.getElementById("confirmation").style.display = "none";
-
-      showMessage("Thank you! Your vote has been submitted.");
     }
 
-    function showMessage(message) {
-      const messageBox = document.getElementById("voteMessage");
+    const currentVotes = Number(localStorage.getItem("votes_" + selectedEmployee) || 0);
+    localStorage.setItem("votes_" + selectedEmployee, currentVotes + 1);
+    localStorage.setItem("eoqVoted", "true");
+    localStorage.setItem("eoqVotedFor", selectedEmployee);
 
-      messageBox.textContent = message;
-      messageBox.style.display = "block";
-    }
+    document.getElementById("confirmationBar").classList.remove("show");
+    document.getElementById("successMessage").classList.add("show");
 
-    if (localStorage.getItem("eoq-voted")) {
-      document.querySelectorAll(".vote-btn").forEach(button => {
-        button.disabled = true;
-        button.style.opacity = "0.55";
-        button.style.cursor = "not-allowed";
-      });
-
-      showMessage("You have already voted. Thank you!");
-    }
-  </script>
+    document.querySelectorAll(".vote-btn").forEach(btn => {
+        btn.disabled = true;
+    });
+}
+</script>
 
 </body>
 </html>
