@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/eoq",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/eoq/",
+      "destination": "/index.html"
+    }
+  ]
+}
