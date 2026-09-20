@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee of the Quarter</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f9fc;
+      color: #16324f;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #dce8ef;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      text-decoration: none;
+      color: #16324f;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .brand img {
+      width: 76px;
+      height: 76px;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #36566f;
+      font-weight: 600;
+      padding: 11px 16px;
+      border-radius: 10px;
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      background: #eaf5fa;
+      color: #087f9c;
+    }
+
+    .nav-links .active {
+      background: #087f9c;
+      color: white;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #073b5c, #087f9c, #18a6a6);
+      color: white;
+      padding: 65px 24px;
+      text-align: center;
+    }
+
+    .hero-inner {
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 64px);
+      line-height: 1.05;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: auto;
+      font-size: 18px;
+      opacity: 0.95;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 60px 24px;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-heading h2 {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    .section-heading p {
+      color: #688096;
+    }
+
+    .quarter-card {
+      background: white;
+      border: 1px solid #dce8ef;
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 45px;
+      box-shadow: 0 10px 30px rgba(15, 63, 88, 0.07);
+      text-align: center;
+    }
+
+    .quarter-card h3 {
+      color: #087f9c;
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .quarter-card p {
+      color: #688096;
+    }
+
+    .nominees {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+
+    .candidate {
+      background: white;
+      border: 1px solid #dce8ef;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(15, 63, 88, 0.06);
+      transition: 0.25s ease;
+    }
+
+    .candidate:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(15, 63, 88, 0.11);
+    }
+
+    .avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      margin: 0 auto 18px;
+      background: linear-gradient(135deg, #087f9c, #18a6a6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 30px;
+      font-weight: 700;
+    }
+
+    .candidate h3 {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .candidate .role {
+      color: #087f9c;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .candidate p {
+      color: #688096;
+      font-size: 15px;
+      min-height: 72px;
+      margin-bottom: 20px;
+    }
+
+    .vote-btn {
+      width: 100%;
+      border: none;
+      background: #087f9c;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .vote-btn:hover {
+      background: #066b83;
+      transform: translateY(-1px);
+    }
+
+    .vote-btn.selected {
+      background: #18a06f;
+    }
+
+    .vote-count {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #688096;
+      font-weight: 600;
+    }
+
+    #voteMessage {
+      display: none;
+      margin: 30px auto 0;
+      max-width: 650px;
+      padding: 18px 22px;
+      background: #e7f8f1;
+      border: 1px solid #b8ead5;
+      color: #176b4d;
+      border-radius: 14px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    footer {
+      background: #073b5c;
+      color: rgba(255,255,255,0.8);
+      text-align: center;
+      padding: 35px 20px;
+      margin-top: 30px;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    @media (max-width: 800px) {
+      .nav {
+        flex-direction: column;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .nominees {
+        grid-template-columns: 1fr;
+      }
+
+      main {
+        padding: 45px 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav class="nav">
+      <a href="/" class="brand">
+        <img src="/logo.jpg" alt="Company Logo">
+        <span>Medical Care</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/eoq" class="active">Employee of the Quarter</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Q3 2026 Recognition</div>
+
+      <h1>Employee of the Quarter</h1>
+
+      <p>
+        Help us recognize an outstanding member of our team
+        for their dedication, compassion, and exceptional service.
+      </p>
+    </div>
+  </section>
+
+  <main>
+
+    <div class="section-heading">
+      <h2>Cast Your Vote</h2>
+
+      <p>
+        Choose the employee you believe deserves recognition this quarter.
+      </p>
+    </div>
+
+    <div class="quarter-card">
+      <h3>Q3 2026</h3>
+
+      <p>
+        Voting is open to eligible employees.
+      </p>
+    </div>
+
+    <section class="nominees">
+
+      <article class="candidate">
+        <div class="avatar">SA</div>
+
+        <h3>Sarah Ahmed</h3>
+
+        <div class="role">
+          Patient Care Coordinator
+        </div>
+
+        <p>
+          Recognized for compassionate patient support,
+          teamwork, and consistently going above and beyond.
+        </p>
+
+        <button class="vote-btn" onclick="vote('sarah', this)">
+          Vote for Sarah
+        </button>
+
+        <div class="vote-count">
+          Votes: <span id="sarah-count">0</span>
+        </div>
+      </article>
+
+      <article class="candidate">
+        <div class="avatar">DM</div>
+
+        <h3>Daniel Morgan</h3>
+
+        <div class="role">
+          Clinical Support Specialist
+        </div>
+
+        <p>
+          Recognized for reliability, professionalism,
+          and exceptional support for both patients and colleagues.
+        </p>
+
+        <button class="vote-btn" onclick="vote('daniel', this)">
+          Vote for Daniel
+        </button>
+
+        <div class="vote-count">
+          Votes: <span id="daniel-count">0</span>
+        </div>
+      </article>
+
+      <article class="candidate">
+        <div class="avatar">MT</div>
+
+        <h3>Maya Thompson</h3>
+
+        <div class="role">
+          Patient Services Representative
+        </div>
+
+        <p>
+          Recognized for outstanding communication,
+          empathy, and creating a welcoming patient experience.
+        </p>
+
+        <button class="vote-btn" onclick="vote('maya', this)">
+          Vote for Maya
+        </button>
+
+        <div class="vote-count">
+          Votes: <span id="maya-count">0</span>
+        </div>
+      </article>
+
+    </section>
+
+    <div id="voteMessage"></div>
+
+  </main>
+
+  <footer>
+    <p>
+      <strong>Medical Care</strong> · Employee Recognition Program
+    </p>
+
+    <p>
+      Q3 2026
+    </p>
+  </footer>
+
+  <script>
+    const votes = {
+      sarah: 0,
+      daniel: 0,
+      maya: 0
+    };
+
+    function vote(employee, button) {
+      if (localStorage.getItem("eoq-voted")) {
+        showMessage("You have already voted. Thank you!");
+        return;
+      }
+
+      votes[employee]++;
+
+      document.getElementById(employee + "-count").textContent =
+        votes[employee];
+
+      localStorage.setItem("eoq-voted", employee);
+
+      document.querySelectorAll(".vote-btn").forEach(item => {
+        item.classList.remove("selected");
+        item.disabled = true;
+        item.style.opacity = "0.65";
+        item.style.cursor = "not-allowed";
+      });
+
+      button.classList.add("selected");
+      button.style.opacity = "1";
+      button.textContent = "✓ Vote Submitted";
+
+      showMessage("Thank you for voting! Your vote has been recorded.");
+    }
+
+    function showMessage(message) {
+      const messageBox = document.getElementById("voteMessage");
+
+      messageBox.textContent = message;
+      messageBox.style.display = "block";
+    }
+
+    if (localStorage.getItem("eoq-voted")) {
+      document.querySelectorAll(".vote-btn").forEach(button => {
+        button.disabled = true;
+        button.style.opacity = "0.65";
+        button.style.cursor = "not-allowed";
+      });
+
+      showMessage("You have already voted. Thank you!");
+    }
+  </script>
+
+</body>
+</html>
