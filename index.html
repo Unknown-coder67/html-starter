@@ -84,6 +84,16 @@ nav a.active::after {
     margin: 0 0 34px;
     overflow: hidden;
     background: #FEFEFE;
+    position: relative; /* Allows the dark overlay to sit over the video */
+}
+
+/* Dark transparent overlay over the banner video */
+.banner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.30); /* DARKNESS LEVEL */
+    pointer-events: none;
 }
 
 .banner img {
