@@ -92,6 +92,12 @@ nav a.active::after {
     display: block;
 }
 
+.banner video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
 .main-content {
     width: 90%;
     max-width: 1200px;
@@ -594,13 +600,16 @@ footer {
 
 
 <div class="banner">
-
-    <img
-        src="/banner.jpg"
-        alt="Company Banner"
+    <video
+        autoplay
+        muted
+        loop
+        playsinline
         class="fade-in"
+        aria-label="Company Banner"
     >
-
+        <source src="/banner.mp4" type="video/mp4">
+    </video>
 </div>
 
 
