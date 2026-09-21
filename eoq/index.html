@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Employee of the Quarter</title>
+
 <style>
 * {
     box-sizing: border-box;
@@ -64,20 +65,10 @@ nav a.active {
     color: #ffffff;
 }
 
-.page-container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 30px auto 100px;
-}
-
 .banner {
     width: 100%;
-    max-width: 1128px;
-    margin: 0 auto 34px;
+    margin: 0 0 40px;
     overflow: hidden;
-    border-radius: 18px;
-    box-shadow: 0 8px 25px rgba(23, 50, 77, 0.10);
-    background: #ffffff;
 }
 
 .banner img {
@@ -86,298 +77,315 @@ nav a.active {
     display: block;
 }
 
-.hero-text {
+.main-content {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto 100px;
+}
+
+.intro {
     text-align: center;
-    max-width: 900px;
-    margin: 0 auto 35px;
+    margin-bottom: 40px;
 }
 
-.hero-text .eyebrow {
-    color: #0DC8EA;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-}
-
-.hero-text h1 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    color: #17324d;
-    margin-bottom: 12px;
-}
-
-.hero-text p {
+.intro p {
     color: #557083;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    margin-bottom: 5px;
 }
 
-.voting-zone {
-    background: linear-gradient(135deg, #0a7180, #0DC8EA);
-    color: #ffffff;
-    border-radius: 24px;
-    padding: 38px 25px;
-    text-align: center;
-    margin-bottom: 35px;
-    box-shadow: 0 12px 35px rgba(8, 127, 140, 0.20);
-}
-
-.voting-zone .label {
-    font-size: 0.85rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    opacity: 0.9;
-    margin-bottom: 8px;
-}
-
-.voting-zone h2 {
-    font-size: clamp(1.8rem, 4vw, 2.7rem);
-    margin-bottom: 8px;
-}
-
-.voting-zone p {
-    max-width: 700px;
-    margin: 0 auto;
-    opacity: 0.92;
-}
-
-.voting-card {
-    background: #ffffff;
-    border-radius: 22px;
-    padding: 30px;
-    box-shadow: 0 10px 35px rgba(23, 50, 77, 0.08);
-}
-
-.voting-card h3 {
-    text-align: center;
-    font-size: 1.5rem;
-    margin-bottom: 8px;
+.intro h1 {
     color: #17324d;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: normal;
+    line-height: 1.2;
 }
 
-.instructions {
+.code-section {
+    max-width: 560px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #dcebf1;
+    border-radius: 18px;
+    padding: 40px;
     text-align: center;
-    color: #718896;
+    box-shadow: 0 10px 30px rgba(23, 50, 77, 0.07);
+}
+
+.code-icon {
+    width: 62px;
+    height: 62px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: #e8f6f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}
+
+.code-section h2 {
+    color: #17324d;
+    font-size: 1.7rem;
+    margin-bottom: 8px;
+}
+
+.code-section p {
+    color: #557083;
     margin-bottom: 25px;
+}
+
+.code-input {
+    width: 100%;
+    height: 52px;
+    border: 1px solid #cbdde5;
+    border-radius: 10px;
+    padding: 0 16px;
+    text-align: center;
+    font-size: 1rem;
+    color: #17324d;
+    outline: none;
+    text-transform: uppercase;
+}
+
+.code-input:focus {
+    border-color: #0DC8EA;
+    box-shadow: 0 0 0 3px rgba(13, 200, 234, 0.12);
+}
+
+.code-button {
+    width: 100%;
+    height: 52px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #0DC8EA;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.code-button:hover {
+    background: #08afd0;
+}
+
+.code-error {
+    display: none;
+    color: #d94b4b;
+    font-size: 0.9rem;
+    margin-top: 12px;
+}
+
+.voting-section {
+    display: none;
+}
+
+.voting-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.voting-header h2 {
+    color: #17324d;
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+.voting-header p {
+    color: #557083;
+}
+
+.department-badge {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: #e8f6f8;
+    color: #087c98;
+    font-size: 0.85rem;
+    font-weight: 700;
 }
 
 .candidates {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 22px;
 }
 
 .candidate {
-    border: 2px solid #dcebf1;
+    background: #ffffff;
+    border: 1px solid #dcebf1;
     border-radius: 18px;
-    padding: 25px 18px;
+    padding: 20px;
     text-align: center;
+    box-shadow: 0 8px 25px rgba(23, 50, 77, 0.07);
     transition: 0.25s ease;
-    background: #fbfeff;
 }
 
 .candidate:hover {
-    border-color: #8bcbd2;
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    border-color: #9ddfea;
 }
 
 .candidate.selected {
-    border-color: #0DC8EA;
-    background: #eaf8f9;
-    box-shadow: 0 8px 22px rgba(8, 127, 140, 0.12);
+    border: 2px solid #0DC8EA;
+    box-shadow: 0 10px 30px rgba(13, 200, 234, 0.15);
 }
 
-.avatar {
-    width: 82px;
-    height: 82px;
-    border-radius: 50%;
-    margin: 0 auto 15px;
-    background: linear-gradient(135deg, #d8f0f2, #b7e0e4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: #0DC8EA;
-}
-
-.candidate h4 {
-    font-size: 1.25rem;
-    margin-bottom: 5px;
-    color: #17324d;
-}
-
-.candidate p {
-    color: #718896;
-    font-size: 0.9rem;
+.candidate-image {
+    width: 100%;
+    height: 230px;
     margin-bottom: 18px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.candidate-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.candidate h3 {
+    color: #17324d;
+    font-size: 1.2rem;
+    margin-bottom: 12px;
 }
 
 .vote-btn {
     width: 100%;
-    border: none;
-    background: #0DC8EA;
-    color: #ffffff;
-    padding: 12px 15px;
-    border-radius: 10px;
+    height: 45px;
+    border: 1px solid #0DC8EA;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #087c98;
     font-weight: 700;
     cursor: pointer;
-    transition: 0.25s ease;
 }
 
 .vote-btn:hover {
-    background: #066b76;
+    background: #e8f6f8;
 }
 
-.vote-btn:disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
+.candidate.selected .vote-btn {
+    background: #0DC8EA;
+    color: #ffffff;
 }
 
 .confirmation-bar {
     position: fixed;
-    left: 50%;
-    bottom: 20px;
-    transform: translateX(-50%);
-    width: min(900px, calc(100% - 30px));
-    background: #ffffff;
-    border: 1px solid #cfe3e8;
-    border-radius: 16px;
-    padding: 15px 18px;
-    box-shadow: 0 12px 40px rgba(23, 50, 77, 0.18);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.97);
+    border-top: 1px solid #dcebf1;
+    box-shadow: 0 -8px 25px rgba(23, 50, 77, 0.08);
+    padding: 15px 5%;
     display: none;
+    z-index: 100;
+}
+
+.confirmation-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
-    z-index: 1000;
+    gap: 20px;
 }
 
-.confirmation-bar.show {
-    display: flex;
+.selection-text {
+    color: #557083;
 }
 
-.confirmation-text {
+.selection-text strong {
     color: #17324d;
-    font-weight: 600;
 }
 
-.confirmation-text span {
-    color: #0DC8EA;
-    font-weight: 800;
-}
-
-.confirmation-actions {
+.confirmation-buttons {
     display: flex;
     gap: 10px;
-    flex-shrink: 0;
 }
 
 .change-btn,
 .confirm-btn {
-    border: none;
-    padding: 11px 16px;
+    height: 44px;
+    padding: 0 20px;
     border-radius: 9px;
     font-weight: 700;
     cursor: pointer;
 }
 
 .change-btn {
-    background: #edf3f5;
-    color: #315568;
+    background: #ffffff;
+    border: 1px solid #cbdde5;
+    color: #557083;
 }
 
 .confirm-btn {
     background: #0DC8EA;
+    border: 1px solid #0DC8EA;
     color: #ffffff;
 }
 
 .change-btn:hover {
-    background: #dfeaec;
+    border-color: #0DC8EA;
+    color: #087c98;
 }
 
 .confirm-btn:hover {
-    background: #066b76;
+    background: #08afd0;
 }
 
-.success-message {
+.success-section {
     display: none;
+    max-width: 600px;
+    margin: 0 auto;
     text-align: center;
-    margin-top: 25px;
-    padding: 18px;
-    border-radius: 14px;
-    background: #e7f7ed;
-    color: #237345;
-    font-weight: 700;
+    background: #ffffff;
+    border: 1px solid #dcebf1;
+    border-radius: 18px;
+    padding: 45px 30px;
+    box-shadow: 0 10px 30px rgba(23, 50, 77, 0.07);
 }
 
-.success-message.show {
-    display: block;
+.success-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: #e8f6f8;
+    color: #0DC8EA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    font-weight: bold;
 }
 
-footer {
-    text-align: center;
-    padding: 30px 20px;
-    color: #718896;
-    font-size: 0.9rem;
+.success-section h2 {
+    color: #17324d;
+    margin-bottom: 10px;
 }
 
-@media (max-width: 850px) {
+.success-section p {
+    color: #557083;
+}
+
+@media (max-width: 800px) {
     .candidates {
         grid-template-columns: 1fr;
     }
-}
 
-@media (max-width: 700px) {
-    header {
-        padding: 10px 5%;
-    }
-
-    .navbar {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .logo {
-        width: 72px;
-        height: 72px;
-    }
-
-    nav {
-        width: 100%;
-        justify-content: center;
-    }
-
-    nav a {
-        padding: 10px 14px;
-        font-size: 0.9rem;
-    }
-
-    .page-container {
-        width: 94%;
-        margin-top: 20px;
-    }
-
-    .banner {
-        border-radius: 12px;
-        margin-bottom: 26px;
-    }
-
-    .voting-zone {
-        padding: 30px 18px;
-        border-radius: 18px;
-    }
-
-    .voting-card {
-        padding: 20px;
-    }
-
-    .confirmation-bar {
+    .confirmation-inner {
         flex-direction: column;
         align-items: stretch;
-        bottom: 10px;
     }
 
-    .confirmation-actions {
+    .confirmation-buttons {
         width: 100%;
     }
 
@@ -385,160 +393,327 @@ footer {
     .confirm-btn {
         flex: 1;
     }
+
+    .code-section {
+        padding: 30px 22px;
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 10px 4%;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    nav {
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    nav a {
+        padding: 10px 14px;
+    }
+
+    .logo {
+        width: 76px;
+        height: 76px;
+    }
+
+    .main-content {
+        width: 92%;
+    }
 }
 </style>
 </head>
+
 <body>
 
 <header>
     <div class="navbar">
+
         <a href="/">
-            <img src="/logo.jpg" alt="Company Logo" class="logo">
+            <img src="/logo.jpg" alt="Care Medical Jiwar" class="logo">
         </a>
 
         <nav>
             <a href="/">Home</a>
-            <a href="/eoq/" class="active">🏆 Employee of the Quarter</a>
+            <a href="/winners/">Winners</a>
+            <a href="/eoq/" class="active">EOQ</a>
         </nav>
+
     </div>
 </header>
 
-<main class="page-container">
+<div class="banner">
+    <img src="/image2.jpg" alt="Employee of the Quarter">
+</div>
 
-    <div class="banner">
-        <img src="/banner.jpg" alt="Company Banner">
-    </div>
+<main class="main-content">
 
-    <section class="hero-text">
-        <div class="eyebrow">Q3 2026 Recognition</div>
+    <section class="intro">
+        <p>Celebrating Excellence</p>
         <h1>Employee of the Quarter</h1>
-        <p>Help us recognize an outstanding member of our team for their dedication, compassion, and exceptional service.</p>
+        <p>Recognizing the people who make a difference every day.</p>
     </section>
 
-    <section class="voting-zone">
-        <div class="label">Voting Section</div>
-        <h2>🏆 Your Voice Matters</h2>
-        <p>Select the colleague you believe deserves recognition this quarter. You will have a chance to review your selection before your vote is submitted.</p>
+    <section class="code-section" id="codeSection">
+
+        <div class="code-icon">
+            🔐
+        </div>
+
+        <h2>Enter Department Code</h2>
+
+        <p>
+            Please enter your department code to access the voting section.
+        </p>
+
+        <input
+            type="text"
+            id="departmentCode"
+            class="code-input"
+            placeholder="Example: NUR-31PX"
+            autocomplete="off"
+        >
+
+        <button class="code-button" onclick="verifyCode()">
+            Continue to Voting
+        </button>
+
+        <div class="code-error" id="codeError">
+            Invalid department code. Please try again.
+        </div>
+
     </section>
 
-    <section class="voting-card">
-        <h3>Select an Employee</h3>
-        <p class="instructions">Click a name to select. Your vote will not be submitted until you confirm it.</p>
+    <section class="voting-section" id="votingSection">
+
+        <div class="voting-header">
+
+            <h2>Choose Your Employee of the Quarter</h2>
+
+            <p>
+                Please review your selection before confirming your vote.
+            </p>
+
+            <div class="department-badge" id="departmentBadge"></div>
+
+        </div>
 
         <div class="candidates">
 
-            <div class="candidate" id="candidate-ahmed">
-                <div class="avatar">AK</div>
-                <h4>Ahmed Khaled</h4>
-                <p>Healthcare Team</p>
-                <button class="vote-btn" onclick="selectCandidate('ahmed', 'Ahmed Khaled', this)">Select Ahmed Khaled</button>
+            <div class="candidate" data-name="Ahmed Khaled">
+
+                <div class="candidate-image">
+                    <img src="/employee1.jpg" alt="Ahmed Khaled">
+                </div>
+
+                <h3>Ahmed Khaled</h3>
+
+                <button class="vote-btn" onclick="selectCandidate(this)">
+                    Select
+                </button>
+
             </div>
 
-            <div class="candidate" id="candidate-abdullah">
-                <div class="avatar">AM</div>
-                <h4>Abdullah Mohammed</h4>
-                <p>Healthcare Team</p>
-                <button class="vote-btn" onclick="selectCandidate('abdullah', 'Abdullah Mohammed', this)">Select Abdullah Mohammed</button>
+            <div class="candidate" data-name="Abdullah Mohammed">
+
+                <div class="candidate-image">
+                    <img src="/employee2.jpg" alt="Abdullah Mohammed">
+                </div>
+
+                <h3>Abdullah Mohammed</h3>
+
+                <button class="vote-btn" onclick="selectCandidate(this)">
+                    Select
+                </button>
+
             </div>
 
-            <div class="candidate" id="candidate-reem">
-                <div class="avatar">RA</div>
-                <h4>Reem Ali</h4>
-                <p>Healthcare Team</p>
-                <button class="vote-btn" onclick="selectCandidate('reem', 'Reem Ali', this)">Select Reem Ali</button>
+            <div class="candidate" data-name="Reem Ali">
+
+                <div class="candidate-image">
+                    <img src="/employee3.jpg" alt="Reem Ali">
+                </div>
+
+                <h3>Reem Ali</h3>
+
+                <button class="vote-btn" onclick="selectCandidate(this)">
+                    Select
+                </button>
+
             </div>
 
         </div>
 
-        <div class="success-message" id="successMessage">
-            Your vote has been successfully submitted. Thank you for participating!
+    </section>
+
+    <section class="success-section" id="successSection">
+
+        <div class="success-icon">
+            ✓
         </div>
+
+        <h2>Vote Submitted Successfully</h2>
+
+        <p>
+            Thank you for participating in the Employee of the Quarter voting.
+        </p>
+
     </section>
 
 </main>
 
 <div class="confirmation-bar" id="confirmationBar">
-    <div class="confirmation-text">
-        Selected: <span id="selectedName"></span>
+
+    <div class="confirmation-inner">
+
+        <div class="selection-text">
+            Selected: <strong id="selectedName"></strong>
+        </div>
+
+        <div class="confirmation-buttons">
+
+            <button class="change-btn" onclick="changeSelection()">
+                Change Selection
+            </button>
+
+            <button class="confirm-btn" onclick="confirmVote()">
+                Confirm Vote
+            </button>
+
+        </div>
+
     </div>
 
-    <div class="confirmation-actions">
-        <button class="change-btn" onclick="cancelSelection()">Change Selection</button>
-        <button class="confirm-btn" onclick="confirmVote()">Confirm Vote</button>
-    </div>
 </div>
 
-<footer>
-    © 2026 Healthcare Excellence. All rights reserved.
-</footer>
-
 <script>
-let selectedEmployee = null;
-let selectedName = null;
-let selectedButton = null;
+const departmentCodes = {
+    "NUR-31PX": "Nursing",
+    "HR-84K2": "Human Resources",
+    "FIN-72QM": "Finance",
+    "IT-56LA": "Information Technology"
+};
 
-function selectCandidate(employee, name, button) {
-    if (localStorage.getItem("eoqVoted") === "true") {
+let currentDepartment = "";
+let selectedCandidate = "";
+
+function verifyCode() {
+    const input = document.getElementById("departmentCode");
+    const error = document.getElementById("codeError");
+
+    const code = input.value.trim().toUpperCase();
+
+    if (!departmentCodes[code]) {
+        error.textContent = "Invalid department code. Please try again.";
+        error.style.display = "block";
         return;
     }
 
-    document.querySelectorAll(".candidate").forEach(card => {
-        card.classList.remove("selected");
-    });
+    const usedCodes = JSON.parse(
+        localStorage.getItem("eoqUsedCodes") || "[]"
+    );
 
-    document.querySelectorAll(".vote-btn").forEach(btn => {
-        btn.textContent = btn.dataset.originalText || btn.textContent.replace("✓ Selected", "").trim();
-    });
-
-    const candidateCard = document.getElementById("candidate-" + employee);
-    candidateCard.classList.add("selected");
-
-    if (!button.dataset.originalText) {
-        button.dataset.originalText = button.textContent;
+    if (usedCodes.includes(code)) {
+        error.textContent = "This department has already submitted its vote.";
+        error.style.display = "block";
+        return;
     }
 
-    button.textContent = "✓ Selected";
-    selectedEmployee = employee;
-    selectedName = name;
-    selectedButton = button;
+    currentDepartment = code;
 
-    document.getElementById("selectedName").textContent = name;
-    document.getElementById("confirmationBar").classList.add("show");
+    document.getElementById("departmentBadge").textContent =
+        departmentCodes[code] + " Department";
+
+    document.getElementById("codeSection").style.display = "none";
+    document.getElementById("votingSection").style.display = "block";
+
+    error.style.display = "none";
 }
 
-function cancelSelection() {
-    if (selectedButton && selectedButton.dataset.originalText) {
-        selectedButton.textContent = selectedButton.dataset.originalText;
-    }
-
-    document.querySelectorAll(".candidate").forEach(card => {
-        card.classList.remove("selected");
+function selectCandidate(button) {
+    document.querySelectorAll(".candidate").forEach(candidate => {
+        candidate.classList.remove("selected");
+        candidate.querySelector(".vote-btn").textContent = "Select";
     });
 
-    selectedEmployee = null;
-    selectedName = null;
-    selectedButton = null;
+    const candidate = button.closest(".candidate");
 
-    document.getElementById("confirmationBar").classList.remove("show");
+    candidate.classList.add("selected");
+    button.textContent = "✓ Selected";
+
+    selectedCandidate = candidate.dataset.name;
+
+    document.getElementById("selectedName").textContent =
+        selectedCandidate;
+
+    document.getElementById("confirmationBar").style.display = "block";
+}
+
+function changeSelection() {
+    document.querySelectorAll(".candidate").forEach(candidate => {
+        candidate.classList.remove("selected");
+        candidate.querySelector(".vote-btn").textContent = "Select";
+    });
+
+    selectedCandidate = "";
+
+    document.getElementById("confirmationBar").style.display = "none";
 }
 
 function confirmVote() {
-    if (!selectedEmployee) {
+    if (!selectedCandidate || !currentDepartment) {
         return;
     }
 
-    const currentVotes = Number(localStorage.getItem("votes_" + selectedEmployee) || 0);
-    localStorage.setItem("votes_" + selectedEmployee, currentVotes + 1);
-    localStorage.setItem("eoqVoted", "true");
-    localStorage.setItem("eoqVotedFor", selectedEmployee);
+    const votes = JSON.parse(
+        localStorage.getItem("eoqVotes") || "{}"
+    );
 
-    document.getElementById("confirmationBar").classList.remove("show");
-    document.getElementById("successMessage").classList.add("show");
+    const usedCodes = JSON.parse(
+        localStorage.getItem("eoqUsedCodes") || "[]"
+    );
 
-    document.querySelectorAll(".vote-btn").forEach(btn => {
-        btn.disabled = true;
-    });
+    if (usedCodes.includes(currentDepartment)) {
+        return;
+    }
+
+    if (!votes[selectedCandidate]) {
+        votes[selectedCandidate] = 0;
+    }
+
+    votes[selectedCandidate]++;
+
+    usedCodes.push(currentDepartment);
+
+    localStorage.setItem(
+        "eoqVotes",
+        JSON.stringify(votes)
+    );
+
+    localStorage.setItem(
+        "eoqUsedCodes",
+        JSON.stringify(usedCodes)
+    );
+
+    document.getElementById("votingSection").style.display = "none";
+    document.getElementById("confirmationBar").style.display = "none";
+    document.getElementById("successSection").style.display = "block";
 }
+
+document
+    .getElementById("departmentCode")
+    .addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            verifyCode();
+        }
+    });
 </script>
 
 </body>
