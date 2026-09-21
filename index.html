@@ -1,835 +1,676 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Care Medical Jiwar Recognition</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #ffffff;
-            color: #163b56;
-            overflow-x: hidden;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        header {
-            width: 100%;
-            padding: 22px 60px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #ffffff;
-            position: relative;
-            z-index: 100;
-        }
-
-        .logo img {
-            width: 170px;
-            height: auto;
-            display: block;
-        }
-
-        nav.main-nav {
-            display: flex;
-            align-items: center;
-            gap: 38px;
-        }
-
-        nav.main-nav a {
-            color: #36586d;
-            font-size: 15px;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        nav.main-nav a:hover {
-            color: #1d6fa5;
-        }
-
-        .hero {
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .hero img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        main {
-            width: 100%;
-        }
-
-        .home-content {
-            padding: 130px 60px 150px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .intro {
-            max-width: 850px;
-            margin-bottom: 100px;
-        }
-
-        .intro-small {
-            font-size: 15px;
-            color: #6e8999;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        .intro h1 {
-            font-size: clamp(45px, 7vw, 90px);
-            line-height: 0.98;
-            font-weight: 500;
-            color: #163b56;
-            margin-bottom: 35px;
-        }
-
-        .intro p {
-            max-width: 700px;
-            font-size: 21px;
-            line-height: 1.7;
-            color: #607585;
-        }
-
-        .recognition-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 35px;
-            margin-bottom: 110px;
-        }
-
-        .recognition-card {
-            overflow: hidden;
-            background: #f4f9fc;
-            border-radius: 4px;
-        }
-
-        .recognition-card img {
-            width: 100%;
-            height: 430px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .recognition-card-content {
-            padding: 28px;
-        }
-
-        .recognition-card-content h2 {
-            font-size: 25px;
-            font-weight: 500;
-            color: #163b56;
-            margin-bottom: 10px;
-        }
-
-        .recognition-card-content p {
-            color: #6a7f8d;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .bottom-line {
-            border-top: 1px solid #d9e4ea;
-            padding-top: 45px;
-            max-width: 900px;
-        }
-
-        .bottom-line p {
-            font-size: clamp(28px, 4vw, 50px);
-            line-height: 1.15;
-            color: #163b56;
-            font-weight: 400;
-        }
-
-        .about-area {
-            position: relative;
-            background: #f7fbfd;
-            padding: 150px 0 180px;
-            scroll-margin-top: 30px;
-        }
-
-        .about-layout {
-            max-width: 1500px;
-            margin: 0 auto;
-            padding: 0 50px;
-            display: flex;
-            align-items: flex-start;
-            gap: 100px;
-        }
-
-        .about-section-nav {
-            position: sticky;
-            top: 40vh;
-            flex: 0 0 190px;
-            width: 190px;
-            z-index: 10;
-        }
-
-        .about-section-nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .about-section-nav li {
-            margin-bottom: 18px;
-        }
-
-        .about-section-nav a {
-            display: block;
-            color: #8a9aaa;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 1.4;
-            padding-left: 18px;
-            border-left: 2px solid transparent;
-            transition:
-                color 0.3s ease,
-                border-color 0.3s ease;
-        }
-
-        .about-section-nav a:hover {
-            color: #1d6fa5;
-        }
-
-        .about-section-nav a.active {
-            color: #1d6fa5;
-            border-left-color: #1d6fa5;
-        }
-
-        .about-content {
-            flex: 1;
-            max-width: 1000px;
-        }
-
-        .about-intro {
-            margin-bottom: 140px;
-        }
-
-        .about-intro-small {
-            font-size: 15px;
-            color: #6e8999;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 22px;
-        }
-
-        .about-intro h2 {
-            font-size: clamp(48px, 7vw, 92px);
-            line-height: 0.95;
-            font-weight: 500;
-            color: #163b56;
-            margin-bottom: 35px;
-        }
-
-        .about-intro p {
-            max-width: 760px;
-            font-size: 21px;
-            line-height: 1.7;
-            color: #607585;
-        }
-
-        .about-text {
-            margin-bottom: 120px;
-        }
-
-        .about-text h3 {
-            font-size: clamp(35px, 4.5vw, 58px);
-            line-height: 1.02;
-            font-weight: 500;
-            color: #163b56;
-            margin-bottom: 28px;
-        }
-
-        .about-text p {
-            max-width: 800px;
-            font-size: 18px;
-            line-height: 1.85;
-            color: #607585;
-        }
-
-        .about-highlight {
-            padding-top: 10px;
-            margin-bottom: 20px;
-        }
-
-        .about-highlight h3 {
-            font-size: clamp(38px, 4.5vw, 62px);
-            line-height: 1;
-            font-weight: 500;
-            color: #163b56;
-            margin-bottom: 28px;
-        }
-
-        .about-highlight p {
-            max-width: 800px;
-            font-size: 18px;
-            line-height: 1.85;
-            color: #607585;
-        }
-
-        footer {
-            padding: 45px 60px;
-            background: #163b56;
-            color: #ffffff;
-            text-align: center;
-        }
-
-        footer p {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(45px);
-            transition:
-                opacity 0.9s ease,
-                transform 0.9s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .fade-in-banner {
-            opacity: 0;
-            transform: scale(1.02);
-            transition:
-                opacity 1s ease,
-                transform 1.2s ease;
-        }
-
-        .fade-in-banner.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .recognition-card:nth-child(1) {
-            transition-delay: 0s;
-        }
-
-        .recognition-card:nth-child(2) {
-            transition-delay: 0.12s;
-        }
-
-        .recognition-card:nth-child(3) {
-            transition-delay: 0.24s;
-        }
-
-        .recognition-card:nth-child(4) {
-            transition-delay: 0.36s;
-        }
-
-        @media (max-width: 1200px) {
-            .about-layout {
-                gap: 55px;
-                padding: 0 40px;
-            }
-
-            .about-section-nav {
-                flex-basis: 175px;
-                width: 175px;
-            }
-
-            .home-content {
-                padding-left: 40px;
-                padding-right: 40px;
-            }
-        }
-
-        @media (max-width: 900px) {
-            header {
-                padding: 20px 30px;
-            }
-
-            nav.main-nav {
-                gap: 20px;
-            }
-
-            nav.main-nav a {
-                font-size: 14px;
-            }
-
-            .home-content {
-                padding: 100px 30px 120px;
-            }
-
-            .recognition-grid {
-                gap: 20px;
-            }
-
-            .recognition-card img {
-                height: 350px;
-            }
-
-            .about-area {
-                padding: 110px 0 130px;
-            }
-
-            .about-layout {
-                display: block;
-                padding: 0 30px;
-            }
-
-            .about-section-nav {
-                display: none;
-            }
-
-            .about-content {
-                max-width: 100%;
-            }
-        }
-
-        @media (max-width: 700px) {
-            header {
-                padding: 18px 20px;
-                flex-direction: column;
-                gap: 18px;
-            }
-
-            .logo img {
-                width: 145px;
-            }
-
-            nav.main-nav {
-                gap: 18px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            nav.main-nav a {
-                font-size: 13px;
-            }
-
-            .hero img {
-                min-height: 220px;
-                object-fit: cover;
-            }
-
-            .home-content {
-                padding: 85px 20px 100px;
-            }
-
-            .intro {
-                margin-bottom: 75px;
-            }
-
-            .intro p,
-            .about-intro p {
-                font-size: 18px;
-            }
-
-            .recognition-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
-                margin-bottom: 80px;
-            }
-
-            .recognition-card img {
-                height: auto;
-                max-height: 500px;
-            }
-
-            .bottom-line p {
-                font-size: 30px;
-            }
-
-            .about-area {
-                padding: 90px 0 110px;
-            }
-
-            .about-layout {
-                padding: 0 20px;
-            }
-
-            .about-intro {
-                margin-bottom: 90px;
-            }
-
-            .about-text {
-                margin-bottom: 85px;
-            }
-
-            .about-text p,
-            .about-highlight p {
-                font-size: 17px;
-                line-height: 1.75;
-            }
-
-            footer {
-                padding: 35px 20px;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            html {
-                scroll-behavior: auto;
-            }
-
-            .fade-in,
-            .fade-in-banner {
-                opacity: 1;
-                transform: none;
-                transition: none;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Care Medical Jiwar</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #FEFEFE;
+    color: #17324d;
+    line-height: 1.6;
+}
+
+header {
+    background: #FEFEFE;
+    border-bottom: 1px solid #dcebf1;
+    padding: 8px 5%;
+}
+
+.navbar {
+    max-width: 1920px;
+    height: 58px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.logo {
+    width: 200px;
+    height: 50px;
+    object-fit: contain;
+    transform: translate(-8px, 3px);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+nav a {
+    position: relative;
+    text-decoration: none;
+    color: #24516b;
+    font-weight: 600;
+    padding: 8px 2px;
+    transition: color 0.25s ease;
+}
+
+nav a:hover {
+    color: #0DC8EA;
+    background: transparent;
+}
+
+nav a.active {
+    color: #0DC8EA;
+    background: transparent;
+}
+
+nav a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -5px;
+    height: 2px;
+    background: #0DC8EA;
+    border-radius: 2px;
+}
+
+.banner {
+    width: 100%;
+    margin: 0 0 34px;
+    overflow: hidden;
+    background: #FEFEFE;
+}
+
+.banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.main-content {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto 60px;
+}
+
+.intro {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.intro p {
+    color: #557083;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.intro h1 {
+    color: #17324d;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: normal;
+    margin: 6px 0;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: #FEFEFE;
+    border: 1px solid #dcebf1;
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center;
+}
+
+.card-image {
+    width: 50%;
+    height: 50px;
+    margin: 0 auto 14px;
+    background: #FEFEFE;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.card h3 {
+    color: #17324d;
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+}
+
+.card p {
+    color: #718896;
+    font-size: 0.9rem;
+}
+
+.bottom-line {
+    text-align: center;
+    margin-top: 32px;
+    color: #557083;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: #718896;
+    font-size: 0.9rem;
+}
+
+
+/* ABOUT */
+
+.about-section {
+    position: relative;
+    width: 100%;
+    padding: 110px 0 120px;
+    border-top: 1px solid #dcebf1;
+    background: #FEFEFE;
+    scroll-margin-top: 30px;
+}
+
+.about-layout {
+    width: 94%;
+    max-width: 1500px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 80px;
+}
+
+.about-section-nav {
+    position: sticky;
+    top: 35vh;
+    flex: 0 0 180px;
+    width: 180px;
+    margin-left: -20px;
+}
+
+.about-section-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.about-section-nav li {
+    margin-bottom: 16px;
+}
+
+.about-section-nav a {
+    display: block;
+    position: relative;
+    color: #718896;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.4;
+    padding: 4px 0 4px 15px;
+    border-left: 2px solid transparent;
+    transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.about-section-nav a:hover {
+    color: #0DC8EA;
+}
+
+.about-section-nav a.active {
+    color: #0DC8EA;
+    border-left-color: #0DC8EA;
+}
+
+.about-content {
+    flex: 1;
+    max-width: 950px;
+}
+
+.about-intro {
+    margin-bottom: 110px;
+}
+
+.about-intro p:first-child {
+    color: #557083;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.about-intro h2 {
+    color: #17324d;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: normal;
+    margin: 6px 0;
+    line-height: 1.2;
+}
+
+.about-intro p:last-child {
+    color: #557083;
+    font-size: 1rem;
+    margin-top: 8px;
+}
+
+.about-text {
+    margin-bottom: 100px;
+    max-width: 850px;
+}
+
+.about-text h3 {
+    color: #17324d;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: normal;
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+
+.about-text p {
+    color: #557083;
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 800px;
+}
+
+.about-highlight {
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+.about-highlight h3 {
+    color: #17324d;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: normal;
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+
+.about-highlight p {
+    color: #557083;
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 800px;
+}
+
+
+/* FADE IN */
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+    .about-layout {
+        gap: 45px;
+    }
+
+    .about-section-nav {
+        flex: 0 0 160px;
+        width: 160px;
+        margin-left: -10px;
+    }
+}
+
+@media (max-width: 900px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-layout {
+        width: 90%;
+        display: block;
+    }
+
+    .about-section-nav {
+        display: none;
+    }
+
+    .about-content {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 700px) {
+    header {
+        padding: 5px 5%;
+    }
+
+    .navbar {
+        height: 58px;
+        gap: 8px;
+    }
+
+    .logo {
+        width: 62px;
+        height: 62px;
+    }
+
+    nav {
+        width: auto;
+        justify-content: center;
+        gap: 18px;
+    }
+
+    nav a {
+        padding: 6px 2px;
+        font-size: 0.9rem;
+    }
+
+    .banner {
+        margin-bottom: 26px;
+    }
+
+    .main-content {
+        width: 94%;
+    }
+
+    .intro {
+        margin-bottom: 28px;
+    }
+
+    .intro h1 {
+        font-size: 2rem;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .about-section {
+        padding: 80px 0 90px;
+    }
+
+    .about-layout {
+        width: 94%;
+    }
+
+    .about-intro {
+        margin-bottom: 75px;
+    }
+
+    .about-text {
+        margin-bottom: 75px;
+    }
+
+    .about-text h3,
+    .about-highlight h3 {
+        font-size: 2rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fade-in {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+</style>
 </head>
 
 <body>
 
 <header>
-    <a href="/" class="logo">
-        <img src="/logo.jpg" alt="Care Medical Jiwar">
-    </a>
+    <div class="navbar">
+        <a href="/">
+            <img src="/logo.jpg" alt="Company Logo" class="logo">
+        </a>
 
-    <nav class="main-nav">
-        <a href="/">Home</a>
-        <a href="#about">About</a>
-        <a href="/nominate/">Nominate</a>
-        <a href="/winners/">Winners</a>
-    </nav>
+        <nav>
+            <a href="/" class="active">Home</a>
+            <a href="#about">About</a>
+            <a href="/nominate/">Nominate</a>
+            <a href="/winners/">Winners</a>
+        </nav>
+    </div>
 </header>
 
-<section class="hero">
-    <img
-        src="/banner.jpg"
-        alt="Care Medical Jiwar Recognition"
-        class="fade-in-banner"
-    >
-</section>
+<div class="banner">
+    <img src="/banner.jpg" alt="Company Banner" class="fade-in">
+</div>
 
-<main>
+<main class="main-content">
 
-    <section class="home-content">
+    <section class="intro fade-in">
+        <p>The purpose behind recognition</p>
+        <h1>Celebrating what makes a difference</h1>
+        <p>Recognizing the people who make a difference every day.</p>
+    </section>
 
-        <div class="intro fade-in">
-            <div class="intro-small">
-                The purpose behind recognition
+    <section class="cards">
+
+        <div class="card fade-in">
+            <div class="card-image">
+                <img src="/employee1.jpg" alt="Employee 1">
             </div>
-
-            <h1>
-                Celebrating what makes a difference
-            </h1>
-
-            <p>
-                Recognizing the people who make a difference every day.
-            </p>
+            <h3>Team Member</h3>
+            <p>Outstanding dedication and commitment.</p>
         </div>
 
-        <div class="recognition-grid">
-
-            <article class="recognition-card fade-in">
-                <img src="/employee1.jpg" alt="Recognition">
-                <div class="recognition-card-content">
-                    <h2>Making a Difference</h2>
-                    <p>
-                        Recognizing meaningful contributions that create
-                        a positive impact every day.
-                    </p>
-                </div>
-            </article>
-
-            <article class="recognition-card fade-in">
-                <img src="/employee2.jpg" alt="Recognition">
-                <div class="recognition-card-content">
-                    <h2>People Who Care</h2>
-                    <p>
-                        Celebrating individuals whose dedication and care
-                        make a lasting difference.
-                    </p>
-                </div>
-            </article>
-
-            <article class="recognition-card fade-in">
-                <img src="/employee3.jpg" alt="Recognition">
-                <div class="recognition-card-content">
-                    <h2>Everyday Excellence</h2>
-                    <p>
-                        Highlighting the commitment, effort and excellence
-                        shown throughout our organization.
-                    </p>
-                </div>
-            </article>
-
-            <article class="recognition-card fade-in">
-                <img src="/employee4.jpg" alt="Recognition">
-                <div class="recognition-card-content">
-                    <h2>Together We Grow</h2>
-                    <p>
-                        Building a culture where contributions are seen,
-                        appreciated and celebrated.
-                    </p>
-                </div>
-            </article>
-
+        <div class="card fade-in">
+            <div class="card-image">
+                <img src="/employee2.jpg" alt="Employee 2">
+            </div>
+            <h3>Excellence</h3>
+            <p>Going above and beyond every day.</p>
         </div>
 
-        <div class="bottom-line fade-in">
-            <p>
-                Every contribution matters. Together, we make a difference.
-            </p>
+        <div class="card fade-in">
+            <div class="card-image">
+                <img src="/employee3.jpg" alt="Employee 3">
+            </div>
+            <h3>Compassion</h3>
+            <p>Making a positive difference for others.</p>
+        </div>
+
+        <div class="card fade-in">
+            <div class="card-image">
+                <img src="/employee4.jpg" alt="Employee 4">
+            </div>
+            <h3>Recognition</h3>
+            <p>Celebrating exceptional achievements.</p>
         </div>
 
     </section>
 
-
-    <section class="about-area" id="about">
-
-        <div class="about-layout">
-
-            <nav class="about-section-nav">
-                <ul>
-                    <li>
-                        <a href="#about-intro" class="active">
-                            About
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#purpose">
-                            Our Purpose
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#recognition">
-                            Why Recognition Matters
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#celebrate">
-                            What We Celebrate
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#goal">
-                            Our Goal
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#contribution">
-                            Every Contribution Matters
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-
-
-            <div class="about-content">
-
-                <section
-                    class="about-intro fade-in"
-                    id="about-intro"
-                >
-                    <div class="about-intro-small">
-                        About the Recognition Program
-                    </div>
-
-                    <h2>
-                        Celebrating Our People
-                    </h2>
-
-                    <p>
-                        Recognizing the people who make a difference every day.
-                    </p>
-                </section>
-
-
-                <section
-                    class="about-text fade-in"
-                    id="purpose"
-                >
-                    <h3>
-                        Our Purpose
-                    </h3>
-
-                    <p>
-                        The Recognition Program exists to celebrate the
-                        dedication, commitment and positive impact of our
-                        people. It gives us an opportunity to recognize those
-                        who consistently go above and beyond and contribute
-                        to creating a better experience for everyone.
-                    </p>
-                </section>
-
-
-                <section
-                    class="about-text fade-in"
-                    id="recognition"
-                >
-                    <h3>
-                        Why Recognition Matters
-                    </h3>
-
-                    <p>
-                        Recognition is more than simply saying thank you.
-                        It creates a culture where people feel valued,
-                        appreciated and motivated to continue making a
-                        difference. By recognizing meaningful contributions,
-                        we help strengthen the values and spirit that bring
-                        our organization together.
-                    </p>
-                </section>
-
-
-                <section
-                    class="about-text fade-in"
-                    id="celebrate"
-                >
-                    <h3>
-                        What We Celebrate
-                    </h3>
-
-                    <p>
-                        We celebrate the people who demonstrate care,
-                        teamwork, dedication, leadership, innovation and
-                        excellence. Whether it is a small everyday action
-                        or a significant achievement, every contribution
-                        has the potential to make a meaningful impact.
-                    </p>
-                </section>
-
-
-                <section
-                    class="about-text fade-in"
-                    id="goal"
-                >
-                    <h3>
-                        Our Goal
-                    </h3>
-
-                    <p>
-                        Our goal is to create an environment where
-                        appreciation becomes part of our everyday culture.
-                        Through recognition, we want to highlight the
-                        people and actions that inspire others and help
-                        us continue moving forward together.
-                    </p>
-                </section>
-
-
-                <section
-                    class="about-highlight fade-in"
-                    id="contribution"
-                >
-                    <h3>
-                        Every Contribution Matters
-                    </h3>
-
-                    <p>
-                        Every person has a role to play. Every effort
-                        contributes to something bigger. Together, we
-                        recognize the people who help make a difference
-                        every day.
-                    </p>
-                </section>
-
-            </div>
-
-        </div>
-
-    </section>
+    <div class="bottom-line fade-in">
+        Every contribution matters. Together, we make a difference.
+    </div>
 
 </main>
 
 
+<section class="about-section" id="about">
+
+    <div class="about-layout">
+
+        <nav class="about-section-nav">
+            <ul>
+                <li>
+                    <a href="#about-intro" class="active">About</a>
+                </li>
+                <li>
+                    <a href="#purpose">Our Purpose</a>
+                </li>
+                <li>
+                    <a href="#recognition">Why Recognition Matters</a>
+                </li>
+                <li>
+                    <a href="#celebrate">What We Celebrate</a>
+                </li>
+                <li>
+                    <a href="#goal">Our Goal</a>
+                </li>
+                <li>
+                    <a href="#contribution">Every Contribution Matters</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="about-content">
+
+            <section class="about-intro fade-in" id="about-intro">
+                <p>About the Recognition Program</p>
+
+                <h2>Celebrating Our People</h2>
+
+                <p>
+                    Recognizing the people who make a difference every day.
+                </p>
+            </section>
+
+
+            <section class="about-text fade-in" id="purpose">
+                <h3>Our Purpose</h3>
+
+                <p>
+                    The Recognition Program exists to celebrate the
+                    dedication, commitment and positive impact of our people.
+                    It gives us an opportunity to recognize those who
+                    consistently go above and beyond and contribute to
+                    creating a better experience for everyone.
+                </p>
+            </section>
+
+
+            <section class="about-text fade-in" id="recognition">
+                <h3>Why Recognition Matters</h3>
+
+                <p>
+                    Recognition is more than simply saying thank you.
+                    It creates a culture where people feel valued,
+                    appreciated and motivated to continue making a difference.
+                    By recognizing meaningful contributions, we help
+                    strengthen the values and spirit that bring our
+                    organization together.
+                </p>
+            </section>
+
+
+            <section class="about-text fade-in" id="celebrate">
+                <h3>What We Celebrate</h3>
+
+                <p>
+                    We celebrate the people who demonstrate care, teamwork,
+                    dedication, leadership, innovation and excellence.
+                    Whether it is a small everyday action or a significant
+                    achievement, every contribution has the potential to
+                    make a meaningful impact.
+                </p>
+            </section>
+
+
+            <section class="about-text fade-in" id="goal">
+                <h3>Our Goal</h3>
+
+                <p>
+                    Our goal is to create an environment where appreciation
+                    becomes part of our everyday culture. Through recognition,
+                    we want to highlight the people and actions that inspire
+                    others and help us continue moving forward together.
+                </p>
+            </section>
+
+
+            <section class="about-highlight fade-in" id="contribution">
+                <h3>Every Contribution Matters</h3>
+
+                <p>
+                    Every person has a role to play. Every effort contributes
+                    to something bigger. Together, we recognize the people
+                    who help make a difference every day.
+                </p>
+            </section>
+
+        </div>
+
+    </div>
+
+</section>
+
+
 <footer>
-    <p>
-        © Care Medical Jiwar. All rights reserved.
-    </p>
+    © 2026 Care Medical Jiwar. All rights reserved.
 </footer>
 
 
 <script>
-    const fadeElements = document.querySelectorAll(
-        '.fade-in, .fade-in-banner'
-    );
+const fadeElements = document.querySelectorAll(".fade-in");
 
-    const fadeObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                } else {
-                    entry.target.classList.remove('visible');
-                }
-            });
-        },
-        {
-            threshold: 0.15
+const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+        } else {
+            entry.target.classList.remove("visible");
         }
-    );
-
-    fadeElements.forEach((element) => {
-        fadeObserver.observe(element);
     });
+}, {
+    threshold: 0.15
+});
+
+fadeElements.forEach((element) => {
+    fadeObserver.observe(element);
+});
 
 
-    const aboutSections = document.querySelectorAll(
-        '#about-intro, #purpose, #recognition, #celebrate, #goal, #contribution'
-    );
+const aboutSections = document.querySelectorAll(
+    "#about-intro, #purpose, #recognition, #celebrate, #goal, #contribution"
+);
 
-    const aboutNavLinks = document.querySelectorAll(
-        '.about-section-nav a'
-    );
+const aboutNavLinks = document.querySelectorAll(
+    ".about-section-nav a"
+);
 
-    const aboutObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
+const aboutObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
 
-                    aboutNavLinks.forEach((link) => {
-                        link.classList.remove('active');
-                    });
-
-                    const activeLink = document.querySelector(
-                        '.about-section-nav a[href="#' +
-                        entry.target.id +
-                        '"]'
-                    );
-
-                    if (activeLink) {
-                        activeLink.classList.add('active');
-                    }
-                }
+            aboutNavLinks.forEach((link) => {
+                link.classList.remove("active");
             });
-        },
-        {
-            rootMargin: '-35% 0px -50% 0px',
-            threshold: 0
-        }
-    );
 
-    aboutSections.forEach((section) => {
-        aboutObserver.observe(section);
+            const activeLink = document.querySelector(
+                '.about-section-nav a[href="#' + entry.target.id + '"]'
+            );
+
+            if (activeLink) {
+                activeLink.classList.add("active");
+            }
+        }
     });
+}, {
+    rootMargin: "-35% 0px -50% 0px",
+    threshold: 0
+});
+
+aboutSections.forEach((section) => {
+    aboutObserver.observe(section);
+});
 </script>
 
 </body>
