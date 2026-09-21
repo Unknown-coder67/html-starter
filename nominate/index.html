@@ -1,5 +1,5 @@
-```html
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -17,16 +17,24 @@
     padding: 0;
 }
 
+html {
+    min-height: 100%;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: url("/background.jpg") center center / cover fixed no-repeat;
     color: #17324d;
     line-height: 1.6;
     min-height: 100vh;
+    background-image: url("/background.jpg");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 header {
-    background: rgba(255, 255, 255, 0.96);
+    background: rgba(255, 255, 255, 0.94);
     border-bottom: 1px solid #dcebf1;
     padding: 8px 5%;
 }
@@ -93,12 +101,12 @@ nav a.active::after {
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: -10px;
+    gap: 8px;
     margin-bottom: 50px;
 }
 
 .intro p {
-    color: #557083;
+    color: #17324d;
     font-family: "PT Serif", serif;
     font-size: 1.05rem;
     margin: 0;
@@ -459,164 +467,170 @@ nav a.active::after {
     }
 }
 </style>
+
 </head>
 
 <body>
 
 <header>
     <div class="navbar">
-
         <a href="/">
             <img src="/logo.jpg" alt="Company Logo" class="logo">
         </a>
 
-        <nav>
-            <a href="/">Home</a>
-            <a href="/about/">About</a>
-            <a href="/nominate/" class="active">Nominate</a>
-            <a href="/winners/">Winners</a>
-        </nav>
+```
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about/">About</a>
+        <a href="/nominate/" class="active">Nominate</a>
+        <a href="/winners/">Winners</a>
+    </nav>
+</div>
+```
 
-    </div>
 </header>
 
 <main class="main-content">
 
-    <section class="intro">
-        <p>Honoring Achievement</p>
-        <h1>Employee of the Quarter</h1>
-        <p>Select the employee who made a meaningful impact this quarter</p>
-    </section>
+```
+<section class="intro">
+    <p>Honoring Achievement</p>
+    <h1>Employee of the Quarter</h1>
+    <p>Select the employee who made a meaningful impact this quarter</p>
+</section>
 
-    <section class="code-section" id="codeSection">
+<section class="code-section" id="codeSection">
 
-        <div class="code-icon">
-            🔐
-        </div>
+    <div class="code-icon">
+        🔐
+    </div>
 
-        <h2>Enter Your Department Code</h2>
+    <h2>Enter Your Department Code</h2>
 
-        <p>
-            Please enter your authorized department code to access the voting section.
-        </p>
+    <p>
+        Please enter your authorized department code to access the voting section.
+    </p>
 
-        <input
-            type="text"
-            id="departmentCode"
-            class="code-input"
-            placeholder="Department Code"
-            autocomplete="off"
-        >
+    <input
+        type="text"
+        id="departmentCode"
+        class="code-input"
+        placeholder="Department Code"
+        autocomplete="off"
+    >
 
-        <button class="code-button" onclick="verifyCode()">
-            Continue to Voting
-        </button>
+    <button class="code-button" onclick="verifyCode()">
+        Continue to Voting
+    </button>
 
-        <div class="code-error" id="codeError">
-            Invalid department code. Please try again.
-        </div>
+    <div class="code-error" id="codeError">
+        Invalid department code. Please try again.
+    </div>
 
-    </section>
+</section>
 
-    <section class="voting-section" id="votingSection">
+<section class="voting-section" id="votingSection">
 
-        <div class="voting-header">
+    <div class="voting-header">
 
-            <h2>Choose Your Employee of the Quarter</h2>
-
-            <p>
-                Please review your selection before confirming your vote.
-            </p>
-
-            <div class="department-badge" id="departmentBadge"></div>
-
-        </div>
-
-        <div class="candidates">
-
-            <div class="candidate" data-name="Ahmed Khaled">
-
-                <div class="candidate-image">
-                    <img src="/employee1.jpg" alt="Ahmed Khaled">
-                </div>
-
-                <h3>Ahmed Khaled</h3>
-
-                <button class="vote-btn" onclick="selectCandidate(this)">
-                    Select
-                </button>
-
-            </div>
-
-            <div class="candidate" data-name="Abdullah Mohammed">
-
-                <div class="candidate-image">
-                    <img src="/employee2.jpg" alt="Abdullah Mohammed">
-                </div>
-
-                <h3>Abdullah Mohammed</h3>
-
-                <button class="vote-btn" onclick="selectCandidate(this)">
-                    Select
-                </button>
-
-            </div>
-
-            <div class="candidate" data-name="Reem Ali">
-
-                <div class="candidate-image">
-                    <img src="/employee3.jpg" alt="Reem Ali">
-                </div>
-
-                <h3>Reem Ali</h3>
-
-                <button class="vote-btn" onclick="selectCandidate(this)">
-                    Select
-                </button>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <section class="success-section" id="successSection">
-
-        <div class="success-icon">
-            ✓
-        </div>
-
-        <h2>Vote Submitted Successfully</h2>
+        <h2>Choose Your Employee of the Quarter</h2>
 
         <p>
-            Thank you for participating in the Employee of the Quarter voting.
+            Please review your selection before confirming your vote.
         </p>
 
-    </section>
+        <div class="department-badge" id="departmentBadge"></div>
+
+    </div>
+
+    <div class="candidates">
+
+        <div class="candidate" data-name="Ahmed Khaled">
+
+            <div class="candidate-image">
+                <img src="/employee1.jpg" alt="Ahmed Khaled">
+            </div>
+
+            <h3>Ahmed Khaled</h3>
+
+            <button class="vote-btn" onclick="selectCandidate(this)">
+                Select
+            </button>
+
+        </div>
+
+        <div class="candidate" data-name="Abdullah Mohammed">
+
+            <div class="candidate-image">
+                <img src="/employee2.jpg" alt="Abdullah Mohammed">
+            </div>
+
+            <h3>Abdullah Mohammed</h3>
+
+            <button class="vote-btn" onclick="selectCandidate(this)">
+                Select
+            </button>
+
+        </div>
+
+        <div class="candidate" data-name="Reem Ali">
+
+            <div class="candidate-image">
+                <img src="/employee3.jpg" alt="Reem Ali">
+            </div>
+
+            <h3>Reem Ali</h3>
+
+            <button class="vote-btn" onclick="selectCandidate(this)">
+                Select
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="success-section" id="successSection">
+
+    <div class="success-icon">
+        ✓
+    </div>
+
+    <h2>Vote Submitted Successfully</h2>
+
+    <p>
+        Thank you for participating in the Employee of the Quarter voting.
+    </p>
+
+</section>
+```
 
 </main>
 
 <div class="confirmation-bar" id="confirmationBar">
 
-    <div class="confirmation-inner">
+```
+<div class="confirmation-inner">
 
-        <div class="selection-text">
-            Selected: <strong id="selectedName"></strong>
-        </div>
+    <div class="selection-text">
+        Selected: <strong id="selectedName"></strong>
+    </div>
 
-        <div class="confirmation-buttons">
+    <div class="confirmation-buttons">
 
-            <button class="change-btn" onclick="changeSelection()">
-                Change Selection
-            </button>
+        <button class="change-btn" onclick="changeSelection()">
+            Change Selection
+        </button>
 
-            <button class="confirm-btn" onclick="confirmVote()">
-                Confirm Vote
-            </button>
-
-        </div>
+        <button class="confirm-btn" onclick="confirmVote()">
+            Confirm Vote
+        </button>
 
     </div>
+
+</div>
+```
 
 </div>
 
@@ -745,4 +759,3 @@ document
 
 </body>
 </html>
-```
