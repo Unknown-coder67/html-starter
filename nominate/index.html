@@ -76,18 +76,6 @@ nav a.active::after {
     border-radius: 2px;
 }
 
-.banner {
-    width: 100%;
-    margin: 0 0 40px;
-    overflow: hidden;
-}
-
-.banner img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
 .main-content {
     width: 90%;
     max-width: 1200px;
@@ -97,12 +85,15 @@ nav a.active::after {
 .intro {
     text-align: center;
     margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .intro p {
     color: #557083;
     font-size: 1rem;
-    margin-bottom: 5px;
+    margin: 0;
 }
 
 .intro h1 {
@@ -110,6 +101,7 @@ nav a.active::after {
     font-size: clamp(2.2rem, 5vw, 3.5rem);
     font-weight: normal;
     line-height: 1.2;
+    margin: 0;
 }
 
 .code-section {
@@ -128,6 +120,7 @@ nav a.active::after {
     margin: 0 auto 20px;
     border-radius: 50%;
     background: #ffffff;
+    border: 2px solid #0DC8EA;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -155,7 +148,6 @@ nav a.active::after {
     font-size: 1rem;
     color: #17324d;
     outline: none;
-    text-transform: uppercase;
 }
 
 .code-input:focus {
@@ -434,6 +426,18 @@ nav a.active::after {
         padding: 6px 2px;
         font-size: 0.9rem;
     }
+
+    .main-content {
+        width: 94%;
+    }
+
+    .intro {
+        gap: 10px;
+    }
+
+    .intro h1 {
+        font-size: 2rem;
+    }
 }
 </style>
 </head>
@@ -612,7 +616,7 @@ function verifyCode() {
     const input = document.getElementById("departmentCode");
     const error = document.getElementById("codeError");
 
-    const code = input.value.trim().toUpperCase();
+    const code = input.value.trim();
 
     if (!departmentCodes[code]) {
         error.textContent = "Invalid department code. Please try again.";
