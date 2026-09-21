@@ -1,9 +1,14 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nominate | Care Medical Jiwar</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif&display=swap" rel="stylesheet">
 
 <style>
 * {
@@ -14,13 +19,14 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #ffffff;
+    background: url("/background.jpg") center center / cover fixed no-repeat;
     color: #17324d;
     line-height: 1.6;
+    min-height: 100vh;
 }
 
 header {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.96);
     border-bottom: 1px solid #dcebf1;
     padding: 8px 5%;
 }
@@ -80,30 +86,42 @@ nav a.active::after {
     width: 90%;
     max-width: 1200px;
     margin: 0 auto 100px;
+    padding-top: 55px;
 }
 
 .intro {
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: -5px;
+    gap: -10px;
     margin-bottom: 50px;
-    font-size: 24px;
 }
 
-.intro p,
+.intro p {
+    color: #557083;
+    font-family: "PT Serif", serif;
+    font-size: 1.05rem;
+    margin: 0;
+}
+
 .intro h1 {
+    color: #17324d;
+    font-family: "PT Serif", serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.2;
     margin: 0;
 }
 
 .code-section {
     max-width: 560px;
     margin: 0 auto;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.97);
     border: 2px solid #0DC8EA;
     border-radius: 18px;
     padding: 40px;
     text-align: center;
+    box-shadow: 0 12px 35px rgba(23, 50, 77, 0.12);
 }
 
 .code-icon {
@@ -178,6 +196,9 @@ nav a.active::after {
 .voting-header {
     text-align: center;
     margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.94);
+    padding: 25px;
+    border-radius: 18px;
 }
 
 .voting-header h2 {
@@ -208,12 +229,12 @@ nav a.active::after {
 }
 
 .candidate {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.97);
     border: 1px solid #dcebf1;
     border-radius: 18px;
     padding: 20px;
     text-align: center;
-    box-shadow: 0 8px 25px rgba(23, 50, 77, 0.07);
+    box-shadow: 0 8px 25px rgba(23, 50, 77, 0.12);
     transition: 0.25s ease;
 }
 
@@ -339,11 +360,11 @@ nav a.active::after {
     max-width: 600px;
     margin: 0 auto;
     text-align: center;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.97);
     border: 1px solid #dcebf1;
     border-radius: 18px;
     padding: 45px 30px;
-    box-shadow: 0 10px 30px rgba(23, 50, 77, 0.07);
+    box-shadow: 0 10px 30px rgba(23, 50, 77, 0.12);
 }
 
 .success-icon {
@@ -421,14 +442,20 @@ nav a.active::after {
 
     .main-content {
         width: 94%;
+        padding-top: 35px;
     }
 
     .intro {
-        gap: 10px;
+        gap: 8px;
+        margin-bottom: 40px;
     }
 
     .intro h1 {
         font-size: 2rem;
+    }
+
+    .intro p {
+        font-size: 0.95rem;
     }
 }
 </style>
@@ -718,3 +745,4 @@ document
 
 </body>
 </html>
+```
