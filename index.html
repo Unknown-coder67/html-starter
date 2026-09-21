@@ -6,6 +6,7 @@
 <title>Care Medical Jiwar</title>
 
 <style>
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -172,7 +173,9 @@ footer {
 }
 
 
-/* ABOUT */
+/* =========================================================
+   ABOUT SECTION
+   ========================================================= */
 
 .about-section {
     position: relative;
@@ -183,54 +186,153 @@ footer {
     scroll-margin-top: 30px;
 }
 
+
+/* =========================================================
+   ABOUT LAYOUT
+   ========================================================= */
+
 .about-layout {
-    width: 94%;
+    width: 100%;
     max-width: 1500px;
     margin: 0 auto;
+    padding: 0 40px;
     display: flex;
     align-items: flex-start;
-    gap: 80px;
+
+    /* Space between navigation and About text */
+    gap: 70px;
 }
+
+
+/* =========================================================
+   ABOUT SIDE NAVIGATION
+   ========================================================= */
 
 .about-section-nav {
+
+    /*
+       NAVIGATION LEFT POSITION
+
+       Change this value to move the navigation left/right.
+
+       -20px  = slightly outside its normal position
+       -60px  = further left
+       -100px = very close to screen border
+    */
+    margin-left: -100px;
+
+
+    /*
+       STICKY POSITION
+
+       Controls where the navigation sits vertically
+       while scrolling through the About section.
+    */
     position: sticky;
     top: 35vh;
-    flex: 0 0 180px;
-    width: 180px;
-    margin-left: -20px;
+
+
+    /*
+       NAVIGATION WIDTH
+    */
+    flex: 0 0 230px;
+    width: 230px;
+
+    z-index: 10;
 }
 
+
+/* Remove default list styling */
 .about-section-nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
+
+/*
+   SPACE BETWEEN NAVIGATION ITEMS
+
+   Increase 20px for more space.
+*/
 .about-section-nav li {
-    margin-bottom: 16px;
+    margin-bottom: 20px;
 }
 
+
+/*
+   NAVIGATION TEXT
+
+   Increase font-size here to make the navigation bigger.
+*/
 .about-section-nav a {
-    display: block;
+    display: flex;
+    align-items: center;
+
     position: relative;
+
     color: #718896;
     text-decoration: none;
-    font-size: 0.85rem;
+
+    /*
+       NAVIGATION FONT SIZE
+    */
+    font-size: 1.05rem;
+
     font-weight: 600;
     line-height: 1.4;
-    padding: 4px 0 4px 15px;
+
+    padding: 7px 0 7px 16px;
+
     border-left: 2px solid transparent;
-    transition: color 0.25s ease, border-color 0.25s ease;
+
+    transition:
+        color 0.25s ease,
+        border-color 0.25s ease;
 }
+
+
+/*
+   NAVIGATION ICON SIZE
+
+   Change width and height here if you want
+   the icons bigger or smaller.
+*/
+.about-section-nav svg {
+    width: 23px;
+    height: 23px;
+
+    /*
+       SPACE BETWEEN ICON AND TEXT
+
+       Increase 10px for more separation.
+    */
+    margin-right: 12px;
+
+    flex-shrink: 0;
+
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
 
 .about-section-nav a:hover {
     color: #0DC8EA;
 }
 
+
 .about-section-nav a.active {
     color: #0DC8EA;
     border-left-color: #0DC8EA;
 }
+
+
+/* =========================================================
+   ABOUT CONTENT
+   ========================================================= */
 
 .about-content {
     flex: 1;
@@ -302,12 +404,16 @@ footer {
 }
 
 
-/* FADE IN */
+/* =========================================================
+   FADE IN
+   ========================================================= */
 
 .fade-in {
     opacity: 0;
     transform: translateY(35px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
 }
 
 .fade-in.visible {
@@ -316,21 +422,45 @@ footer {
 }
 
 
-/* RESPONSIVE */
+/* =========================================================
+   TABLET
+   ========================================================= */
 
 @media (max-width: 1100px) {
+
     .about-layout {
         gap: 45px;
+        padding: 0 40px;
     }
 
     .about-section-nav {
-        flex: 0 0 160px;
-        width: 160px;
-        margin-left: -10px;
+
+        /*
+           NAVIGATION LEFT POSITION ON TABLET
+        */
+        margin-left: -60px;
+
+        flex: 0 0 200px;
+        width: 200px;
+    }
+
+    .about-section-nav a {
+        font-size: 1rem;
+    }
+
+    .about-section-nav svg {
+        width: 21px;
+        height: 21px;
     }
 }
 
+
+/* =========================================================
+   MOBILE / SMALL TABLET
+   ========================================================= */
+
 @media (max-width: 900px) {
+
     .cards {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -338,6 +468,7 @@ footer {
     .about-layout {
         width: 90%;
         display: block;
+        padding: 0;
     }
 
     .about-section-nav {
@@ -349,7 +480,13 @@ footer {
     }
 }
 
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
 @media (max-width: 700px) {
+
     header {
         padding: 5px 5%;
     }
@@ -422,83 +559,146 @@ footer {
     }
 }
 
+
 @media (prefers-reduced-motion: reduce) {
+
     .fade-in {
         opacity: 1;
         transform: none;
         transition: none;
     }
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
+
     <div class="navbar">
+
         <a href="/">
             <img src="/logo.jpg" alt="Company Logo" class="logo">
         </a>
 
         <nav>
             <a href="/" class="active">Home</a>
-            <a href="#about">About</a>
             <a href="/nominate/">Nominate</a>
             <a href="/winners/">Winners</a>
         </nav>
+
     </div>
+
 </header>
 
+
 <div class="banner">
-    <img src="/banner.jpg" alt="Company Banner" class="fade-in">
+
+    <img
+        src="/banner.jpg"
+        alt="Company Banner"
+        class="fade-in"
+    >
+
 </div>
+
 
 <main class="main-content">
 
     <section class="intro fade-in">
-        <p>The purpose behind recognition</p>
-        <h1>Celebrating what makes a difference</h1>
-        <p>Recognizing the people who make a difference every day.</p>
+
+        <p>
+            The purpose behind recognition
+        </p>
+
+        <h1>
+            Celebrating what makes a difference
+        </h1>
+
+        <p>
+            Recognizing the people who make a difference every day.
+        </p>
+
     </section>
+
 
     <section class="cards">
 
         <div class="card fade-in">
+
             <div class="card-image">
                 <img src="/employee1.jpg" alt="Employee 1">
             </div>
-            <h3>Team Member</h3>
-            <p>Outstanding dedication and commitment.</p>
+
+            <h3>
+                Team Member
+            </h3>
+
+            <p>
+                Outstanding dedication and commitment.
+            </p>
+
         </div>
 
+
         <div class="card fade-in">
+
             <div class="card-image">
                 <img src="/employee2.jpg" alt="Employee 2">
             </div>
-            <h3>Excellence</h3>
-            <p>Going above and beyond every day.</p>
+
+            <h3>
+                Excellence
+            </h3>
+
+            <p>
+                Going above and beyond every day.
+            </p>
+
         </div>
 
+
         <div class="card fade-in">
+
             <div class="card-image">
                 <img src="/employee3.jpg" alt="Employee 3">
             </div>
-            <h3>Compassion</h3>
-            <p>Making a positive difference for others.</p>
+
+            <h3>
+                Compassion
+            </h3>
+
+            <p>
+                Making a positive difference for others.
+            </p>
+
         </div>
 
+
         <div class="card fade-in">
+
             <div class="card-image">
                 <img src="/employee4.jpg" alt="Employee 4">
             </div>
-            <h3>Recognition</h3>
-            <p>Celebrating exceptional achievements.</p>
+
+            <h3>
+                Recognition
+            </h3>
+
+            <p>
+                Celebrating exceptional achievements.
+            </p>
+
         </div>
 
     </section>
 
+
     <div class="bottom-line fade-in">
+
         Every contribution matters. Together, we make a difference.
+
     </div>
 
 </main>
@@ -508,44 +708,142 @@ footer {
 
     <div class="about-layout">
 
+
         <nav class="about-section-nav">
+
             <ul>
+
                 <li>
-                    <a href="#about-intro" class="active">About</a>
+
+                    <a href="#about-intro" class="active">
+
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="8" r="3"></circle>
+                            <path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"></path>
+                        </svg>
+
+                        <span>About</span>
+
+                    </a>
+
                 </li>
+
+
                 <li>
-                    <a href="#purpose">Our Purpose</a>
+
+                    <a href="#purpose">
+
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 3v18"></path>
+                            <path d="M5 7h14"></path>
+                            <path d="M7 7l-3 6h6L7 7z"></path>
+                            <path d="M17 7l-3 6h6l-3-6z"></path>
+                        </svg>
+
+                        <span>Our Purpose</span>
+
+                    </a>
+
                 </li>
+
+
                 <li>
-                    <a href="#recognition">Why Recognition Matters</a>
+
+                    <a href="#recognition">
+
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3z"></path>
+                        </svg>
+
+                        <span>Why Recognition Matters</span>
+
+                    </a>
+
                 </li>
+
+
                 <li>
-                    <a href="#celebrate">What We Celebrate</a>
+
+                    <a href="#celebrate">
+
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path>
+                        </svg>
+
+                        <span>What We Celebrate</span>
+
+                    </a>
+
                 </li>
+
+
                 <li>
-                    <a href="#goal">Our Goal</a>
+
+                    <a href="#goal">
+
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 19l6-6 4 4 6-8"></path>
+                            <path d="M15 9h5v5"></path>
+                        </svg>
+
+                        <span>Our Goal</span>
+
+                    </a>
+
                 </li>
+
+
                 <li>
-                    <a href="#contribution">Every Contribution Matters</a>
+
+                    <a href="#contribution">
+
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 21s-8-4.5-8-11a5 5 0 0 1 8-3.9A5 5 0 0 1 20 10c0 6.5-8 11-8 11z"></path>
+                            <path d="M8 12l2.5 2.5L16 9"></path>
+                        </svg>
+
+                        <span>Every Contribution Matters</span>
+
+                    </a>
+
                 </li>
+
             </ul>
+
         </nav>
+
 
         <div class="about-content">
 
-            <section class="about-intro fade-in" id="about-intro">
-                <p>About the Recognition Program</p>
 
-                <h2>Celebrating Our People</h2>
+            <section
+                class="about-intro fade-in"
+                id="about-intro"
+            >
+
+                <p>
+                    About the Recognition Program
+                </p>
+
+                <h2>
+                    Celebrating Our People
+                </h2>
 
                 <p>
                     Recognizing the people who make a difference every day.
                 </p>
+
             </section>
 
 
-            <section class="about-text fade-in" id="purpose">
-                <h3>Our Purpose</h3>
+            <section
+                class="about-text fade-in"
+                id="purpose"
+            >
+
+                <h3>
+                    Our Purpose
+                </h3>
 
                 <p>
                     The Recognition Program exists to celebrate the
@@ -554,11 +852,18 @@ footer {
                     consistently go above and beyond and contribute to
                     creating a better experience for everyone.
                 </p>
+
             </section>
 
 
-            <section class="about-text fade-in" id="recognition">
-                <h3>Why Recognition Matters</h3>
+            <section
+                class="about-text fade-in"
+                id="recognition"
+            >
+
+                <h3>
+                    Why Recognition Matters
+                </h3>
 
                 <p>
                     Recognition is more than simply saying thank you.
@@ -568,11 +873,18 @@ footer {
                     strengthen the values and spirit that bring our
                     organization together.
                 </p>
+
             </section>
 
 
-            <section class="about-text fade-in" id="celebrate">
-                <h3>What We Celebrate</h3>
+            <section
+                class="about-text fade-in"
+                id="celebrate"
+            >
+
+                <h3>
+                    What We Celebrate
+                </h3>
 
                 <p>
                     We celebrate the people who demonstrate care, teamwork,
@@ -581,11 +893,18 @@ footer {
                     achievement, every contribution has the potential to
                     make a meaningful impact.
                 </p>
+
             </section>
 
 
-            <section class="about-text fade-in" id="goal">
-                <h3>Our Goal</h3>
+            <section
+                class="about-text fade-in"
+                id="goal"
+            >
+
+                <h3>
+                    Our Goal
+                </h3>
 
                 <p>
                     Our goal is to create an environment where appreciation
@@ -593,18 +912,27 @@ footer {
                     we want to highlight the people and actions that inspire
                     others and help us continue moving forward together.
                 </p>
+
             </section>
 
 
-            <section class="about-highlight fade-in" id="contribution">
-                <h3>Every Contribution Matters</h3>
+            <section
+                class="about-highlight fade-in"
+                id="contribution"
+            >
+
+                <h3>
+                    Every Contribution Matters
+                </h3>
 
                 <p>
                     Every person has a role to play. Every effort contributes
                     to something bigger. Together, we recognize the people
                     who help make a difference every day.
                 </p>
+
             </section>
+
 
         </div>
 
@@ -619,19 +947,25 @@ footer {
 
 
 <script>
+
 const fadeElements = document.querySelectorAll(".fade-in");
 
 const fadeObserver = new IntersectionObserver((entries) => {
+
     entries.forEach((entry) => {
+
         if (entry.isIntersecting) {
             entry.target.classList.add("visible");
         } else {
             entry.target.classList.remove("visible");
         }
+
     });
+
 }, {
     threshold: 0.15
 });
+
 
 fadeElements.forEach((element) => {
     fadeObserver.observe(element);
@@ -646,8 +980,11 @@ const aboutNavLinks = document.querySelectorAll(
     ".about-section-nav a"
 );
 
+
 const aboutObserver = new IntersectionObserver((entries) => {
+
     entries.forEach((entry) => {
+
         if (entry.isIntersecting) {
 
             aboutNavLinks.forEach((link) => {
@@ -655,22 +992,29 @@ const aboutObserver = new IntersectionObserver((entries) => {
             });
 
             const activeLink = document.querySelector(
-                '.about-section-nav a[href="#' + entry.target.id + '"]'
+                '.about-section-nav a[href="#' +
+                entry.target.id +
+                '"]'
             );
 
             if (activeLink) {
                 activeLink.classList.add("active");
             }
+
         }
+
     });
+
 }, {
     rootMargin: "-35% 0px -50% 0px",
     threshold: 0
 });
 
+
 aboutSections.forEach((section) => {
     aboutObserver.observe(section);
 });
+
 </script>
 
 </body>
