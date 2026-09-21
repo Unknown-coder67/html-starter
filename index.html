@@ -59,22 +59,14 @@ nav a:hover {
 }
 
 nav a.active {
+    background: #087f8c;
     color: #ffffff;
-}
-
-.page-container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 30px auto 60px;
 }
 
 .banner {
     width: 100%;
-    max-width: 1920px;
-    margin: 0 auto 34px;
+    margin: 0 0 34px;
     overflow: hidden;
-    border-radius: 18px;
-    box-shadow: 0 8px 25px rgba(23, 50, 77, 0.10);
     background: #ffffff;
 }
 
@@ -82,6 +74,12 @@ nav a.active {
     width: 100%;
     height: auto;
     display: block;
+}
+
+.page-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto 60px;
 }
 
 .hero-text {
@@ -146,6 +144,7 @@ nav a.active {
 
 .eoq-button {
     display: inline-block;
+    background: #087f8c;
     color: #ffffff;
     text-decoration: none;
     padding: 14px 28px;
@@ -176,7 +175,7 @@ footer {
         gap: 8px;
     }
 
-    . {
+    .logo {
         width: 72px;
         height: 72px;
     }
@@ -191,14 +190,13 @@ footer {
         font-size: 0.9rem;
     }
 
+    .banner {
+        margin-bottom: 26px;
+    }
+
     .page-container {
         width: 94%;
         margin-top: 20px;
-    }
-
-    .banner {
-        border-radius: 0px;
-        margin-bottom: 26px;
     }
 
     .content-card {
@@ -225,16 +223,16 @@ footer {
 
         <nav>
             <a href="/" class="active">Home</a>
-            <a href="/" class="active">Winners</a>
+            <a href="/winners/">Winners</a>
         </nav>
     </div>
 </header>
 
-<main class="page-container">
+<div class="banner">
+    <img src="/banner.jpg" alt="Company Banner">
+</div>
 
-    <div class="banner">
-        <img src="/banner.jpg" alt="Company Banner">
-    </div>
+<main class="page-container">
 
     <section class="hero-text">
         <div class="eyebrow">Q3 2026 Recognition</div>
