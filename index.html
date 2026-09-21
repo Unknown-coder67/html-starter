@@ -91,86 +91,75 @@ nav a.active::after {
     display: block;
 }
 
-.page-container {
+.main-content {
     width: 90%;
     max-width: 1200px;
-    margin: 30px auto 60px;
+    margin: 0 auto 60px;
 }
 
-.hero-text {
+.intro {
     text-align: center;
-    max-width: 900px;
-    margin: 0 auto 40px;
+    margin-bottom: 35px;
 }
 
-.hero-text .eyebrow {
-    color: #0DC8EA;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 8px;
+.intro p {
+    color: #557083;
+    font-size: 1rem;
+    margin-bottom: 4px;
 }
 
-.hero-text h1 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
+.intro h1 {
     color: #17324d;
-    margin-bottom: 12px;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    margin: 6px 0;
 }
 
-.hero-text p {
-    color: #557083;
-    font-size: 1.1rem;
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
 }
 
-.content-card {
+.card {
     background: #ffffff;
-    border-radius: 22px;
-    padding: 30px;
-    box-shadow: 0 10px 35px rgba(23, 50, 77, 0.08);
-}
-
-.content-image {
-    width: 100%;
-    max-width: 950px;
-    height: auto;
-    display: block;
-    margin: 0 auto 30px;
-    border-radius: 18px;
-}
-
-.eoq-card {
+    border: 1px solid #dcebf1;
+    border-radius: 16px;
+    padding: 18px;
     text-align: center;
-    padding: 40px 25px;
-    background: linear-gradient(135deg, #e8f7f8, #f7fcfd);
-    border: 1px solid #cfe9ed;
-    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(23, 50, 77, 0.07);
 }
 
-.eoq-card h2 {
-    margin-bottom: 10px;
-    font-size: 2rem;
+.card-image {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: #e8f7f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0DC8EA;
+    font-size: 1.8rem;
 }
 
-.eoq-card p {
-    max-width: 700px;
-    margin: 0 auto 24px;
+.card h3 {
+    color: #17324d;
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+}
+
+.card p {
+    color: #718896;
+    font-size: 0.9rem;
+}
+
+.bottom-line {
+    text-align: center;
+    margin-top: 32px;
     color: #557083;
-}
-
-.eoq-button {
-    display: inline-block;
-    background: #0DC8EA;
-    color: #ffffff;
-    text-decoration: none;
-    padding: 14px 28px;
-    border-radius: 12px;
-    font-weight: 700;
-    transition: 0.25s ease;
-}
-
-.eoq-button:hover {
-    background: #066b76;
-    transform: translateY(-2px);
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 footer {
@@ -178,6 +167,12 @@ footer {
     padding: 30px 20px;
     color: #718896;
     font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 700px) {
@@ -210,21 +205,25 @@ footer {
         margin-bottom: 26px;
     }
 
-    .page-container {
+    .main-content {
         width: 94%;
-        margin-top: 20px;
     }
 
-    .content-card {
-        padding: 18px;
+    .intro {
+        margin-bottom: 28px;
     }
 
-    .content-image {
-        border-radius: 12px;
+    .intro h1 {
+        font-size: 2rem;
     }
 
-    .eoq-card {
-        padding: 30px 18px;
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .card {
+        padding: 20px;
     }
 }
 </style>
@@ -251,44 +250,47 @@ footer {
     <img src="/banner.jpg" alt="Company Banner">
 </div>
 
-<main class="page-container">
+<main class="main-content">
 
-    <section class="hero-text">
-        <div class="eyebrow">Q3 2026 Recognition</div>
+    <section class="intro">
+        <p>Celebrating Excellence</p>
 
         <h1>Employee of the Quarter</h1>
 
-        <p>
-            Help us recognize an outstanding member of our team for their dedication,
-            compassion, and exceptional service.
-        </p>
+        <p>Recognizing the people who make a difference every day.</p>
     </section>
 
-    <section class="content-card">
+    <section class="cards">
 
-        <img
-            src="/image2.jpg"
-            alt="Healthcare Team"
-            class="content-image"
-        >
+        <div class="card">
+            <div class="card-image">👤</div>
+            <h3>Team Member</h3>
+            <p>Outstanding dedication and commitment.</p>
+        </div>
 
-        <div class="eoq-card">
+        <div class="card">
+            <div class="card-image">⭐</div>
+            <h3>Excellence</h3>
+            <p>Going above and beyond every day.</p>
+        </div>
 
-            <h2>🏆 Recognize Excellence</h2>
+        <div class="card">
+            <div class="card-image">❤️</div>
+            <h3>Compassion</h3>
+            <p>Making a positive difference for others.</p>
+        </div>
 
-            <p>
-                Our team members make a difference every day.
-                Visit the Employee of the Quarter voting page and help recognize
-                someone who has made an outstanding contribution.
-            </p>
-
-            <a href="/eoq/" class="eoq-button">
-                Go to Voting →
-            </a>
-
+        <div class="card">
+            <div class="card-image">🏆</div>
+            <h3>Recognition</h3>
+            <p>Celebrating exceptional achievements.</p>
         </div>
 
     </section>
+
+    <div class="bottom-line">
+        Every contribution matters. Together, we make a difference.
+    </div>
 
 </main>
 
