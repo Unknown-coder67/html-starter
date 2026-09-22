@@ -172,21 +172,102 @@ nav a.active::after {
     font-weight: 600;
 }
 
-/* ===== SPOTLIGHT SECTION ===== */
-.spotlight-section {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto 80px;
-    text-align: center;
+/* ===== FULL CONTENT AREA (sticky nav + all sections) ===== */
+.content-section {
+    position: relative;
+    width: 100%;
+    padding: 60px 0 120px;
+    border-top: 1px solid #dcebf1;
+    background: #FEFEFE;
 }
 
-.spotlight-label {
+.content-layout {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    align-items: flex-start;
+    gap: 100px;
+}
+
+/* Sticky side nav – stops before banner because parent starts after banner */
+.content-section-nav {
+    margin-left: -100px;
+    position: sticky;
+    top: 100px; /* sits below header, never reaches banner */
+    flex: 0 0 230px;
+    width: 230px;
+    z-index: 10;
+    align-self: flex-start;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.content-section-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.content-section-nav li {
+    margin-bottom: 18px;
+}
+
+.content-section-nav a {
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: #718896;
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.4;
+    padding: 7px 0 7px 16px;
+    border-left: 2px solid transparent;
+    transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.content-section-nav svg {
+    width: 23px;
+    height: 23px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.content-section-nav a:hover {
+    color: #0DC8EA;
+}
+
+.content-section-nav a.active {
+    color: #0DC8EA;
+    border-left-color: #0DC8EA;
+}
+
+.content-main {
+    flex: 1;
+    max-width: 950px;
+    text-align: left; /* everything left-aligned */
+}
+
+/* Shared section styles – left aligned, no boxes */
+.content-block {
+    margin-bottom: 100px;
+    scroll-margin-top: 120px;
+}
+
+.content-block .section-label {
     color: #557083;
     font-size: 1rem;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
-.spotlight-section h2 {
+.content-block h2 {
     color: #17324d;
     font-size: clamp(2.2rem, 5vw, 3.5rem);
     font-weight: normal;
@@ -194,15 +275,32 @@ nav a.active::after {
     line-height: 1.2;
 }
 
-.spotlight-subtitle {
+.content-block .section-desc {
     color: #557083;
-    font-size: 1.1rem;
-    margin-bottom: 36px;
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 800px;
+    margin-bottom: 28px;
 }
 
+.content-block h3 {
+    color: #17324d;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: normal;
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+
+.content-block p {
+    color: #557083;
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 800px;
+}
+
+/* Spotlight box (keeps its card look) */
 .spotlight-box {
     max-width: 420px;
-    margin: 0 auto;
     background: #FEFEFE;
     border: 1px solid #dcebf1;
     border-radius: 16px;
@@ -243,30 +341,8 @@ nav a.active::after {
     color: #718896;
     font-size: 0.9rem;
 }
-/* ===== END SPOTLIGHT SECTION ===== */
 
-/* ===== HOW IT WORKS SECTION ===== */
-.how-section {
-    width: 90%;
-    max-width: 900px;
-    margin: 0 auto 90px;
-    text-align: center;
-}
-
-.how-label {
-    color: #557083;
-    font-size: 1rem;
-    margin-bottom: 6px;
-}
-
-.how-section h2 {
-    color: #17324d;
-    font-size: clamp(2rem, 4.5vw, 3.2rem);
-    font-weight: normal;
-    margin: 6px 0 50px;
-    line-height: 1.2;
-}
-
+/* How it works points */
 .how-point {
     display: flex;
     align-items: flex-start;
@@ -314,38 +390,8 @@ nav a.active::after {
     border-top: 1px solid #dcebf1;
     margin: 0;
 }
-/* ===== END HOW IT WORKS SECTION ===== */
 
-/* ===== PREVIOUS WINNERS SECTION ===== */
-.winners-section {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto 90px;
-    text-align: center;
-}
-
-.winners-label {
-    color: #557083;
-    font-size: 1rem;
-    margin-bottom: 6px;
-}
-
-.winners-section h2 {
-    color: #17324d;
-    font-size: clamp(2rem, 4.5vw, 3.2rem);
-    font-weight: normal;
-    margin: 6px 0 14px;
-    line-height: 1.2;
-}
-
-.winners-desc {
-    color: #557083;
-    font-size: 1.05rem;
-    max-width: 620px;
-    margin: 0 auto 32px;
-    line-height: 1.6;
-}
-
+/* Previous Winners */
 .winners-btn {
     display: inline-flex;
     align-items: center;
@@ -373,7 +419,7 @@ nav a.active::after {
 .winners-carousel-wrapper {
     display: none;
     position: relative;
-    margin-top: 40px;
+    margin-top: 36px;
     width: 100%;
 }
 
@@ -388,11 +434,11 @@ nav a.active::after {
     scroll-behavior: smooth;
     padding: 10px 4px 20px;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
 }
 
 .winners-carousel::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
+    display: none;
 }
 
 .winner-card {
@@ -477,155 +523,12 @@ nav a.active::after {
     opacity: 0;
     pointer-events: none;
 }
-/* ===== END PREVIOUS WINNERS SECTION ===== */
 
 footer {
     text-align: center;
     padding: 30px 20px;
     color: #718896;
     font-size: 0.9rem;
-}
-
-.about-section {
-    position: relative;
-    width: 100%;
-    padding: 110px 0 120px;
-    border-top: 1px solid #dcebf1;
-    background: #FEFEFE;
-    scroll-margin-top: 30px;
-}
-
-.about-layout {
-    width: 100%;
-    max-width: 1500px;
-    margin: 0 auto;
-    padding: 0 40px;
-    display: flex;
-    align-items: flex-start;
-    gap: 100px;
-}
-
-.about-section-nav {
-    margin-left: -100px;
-    position: sticky;
-    top: 35vh;
-    flex: 0 0 230px;
-    width: 230px;
-    z-index: 10;
-}
-
-.about-section-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.about-section-nav li {
-    margin-bottom: 20px;
-}
-
-.about-section-nav a {
-    display: flex;
-    align-items: center;
-    position: relative;
-    color: #718896;
-    text-decoration: none;
-    font-size: 1.05rem;
-    font-weight: 600;
-    line-height: 1.4;
-    padding: 7px 0 7px 16px;
-    border-left: 2px solid transparent;
-    transition: color 0.25s ease, border-color 0.25s ease;
-}
-
-.about-section-nav svg {
-    width: 23px;
-    height: 23px;
-    margin-right: 12px;
-    flex-shrink: 0;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.about-section-nav a:hover {
-    color: #0DC8EA;
-}
-
-.about-section-nav a.active {
-    color: #0DC8EA;
-    border-left-color: #0DC8EA;
-}
-
-.about-content {
-    flex: 1;
-    max-width: 950px;
-}
-
-.about-intro {
-    margin-bottom: 110px;
-}
-
-.about-intro p:first-child {
-    color: #557083;
-    font-size: 1rem;
-    margin-bottom: 4px;
-}
-
-.about-intro h2 {
-    color: #17324d;
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
-    font-weight: normal;
-    margin: 6px 0;
-    line-height: 1.2;
-}
-
-.about-intro p:last-child {
-    color: #557083;
-    font-size: 1rem;
-    margin-top: 8px;
-}
-
-.about-text {
-    margin-bottom: 100px;
-    max-width: 850px;
-}
-
-.about-text h3 {
-    color: #17324d;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: normal;
-    line-height: 1.15;
-    margin-bottom: 20px;
-}
-
-.about-text p {
-    color: #557083;
-    font-size: 1rem;
-    line-height: 1.8;
-    max-width: 800px;
-}
-
-.about-highlight {
-    margin-top: 20px;
-    padding-bottom: 20px;
-}
-
-.about-highlight h3 {
-    color: #17324d;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: normal;
-    line-height: 1.15;
-    margin-bottom: 20px;
-}
-
-.about-highlight p {
-    color: #557083;
-    font-size: 1rem;
-    line-height: 1.8;
-    max-width: 800px;
 }
 
 .fade-in {
@@ -640,19 +543,19 @@ footer {
 }
 
 @media (max-width: 1100px) {
-    .about-layout {
+    .content-layout {
         gap: 45px;
         padding: 0 40px;
     }
-    .about-section-nav {
+    .content-section-nav {
         margin-left: -60px;
         flex: 0 0 200px;
         width: 200px;
     }
-    .about-section-nav a {
+    .content-section-nav a {
         font-size: 1rem;
     }
-    .about-section-nav svg {
+    .content-section-nav svg {
         width: 21px;
         height: 21px;
     }
@@ -662,15 +565,15 @@ footer {
     .cards {
         grid-template-columns: repeat(2, 1fr);
     }
-    .about-layout {
+    .content-layout {
         width: 90%;
         display: block;
         padding: 0;
     }
-    .about-section-nav {
+    .content-section-nav {
         display: none;
     }
-    .about-content {
+    .content-main {
         max-width: 100%;
     }
 }
@@ -715,20 +618,20 @@ footer {
     .card {
         padding: 20px;
     }
-    .spotlight-section {
-        width: 94%;
-        margin-bottom: 60px;
+    .content-section {
+        padding: 50px 0 90px;
     }
-    .spotlight-section h2 {
+    .content-layout {
+        width: 94%;
+    }
+    .content-block {
+        margin-bottom: 75px;
+    }
+    .content-block h2 {
         font-size: 2rem;
     }
-    .how-section {
-        width: 94%;
-        margin-bottom: 70px;
-    }
-    .how-section h2 {
-        font-size: 1.9rem;
-        margin-bottom: 36px;
+    .content-block h3 {
+        font-size: 2rem;
     }
     .how-point {
         gap: 18px;
@@ -741,13 +644,6 @@ footer {
     .how-point-title {
         font-size: 1.1rem;
     }
-    .winners-section {
-        width: 94%;
-        margin-bottom: 70px;
-    }
-    .winners-section h2 {
-        font-size: 1.9rem;
-    }
     .winner-card {
         flex: 0 0 180px;
     }
@@ -756,22 +652,6 @@ footer {
     }
     .carousel-arrow.right {
         right: -4px;
-    }
-    .about-section {
-        padding: 80px 0 90px;
-    }
-    .about-layout {
-        width: 94%;
-    }
-    .about-intro {
-        margin-bottom: 75px;
-    }
-    .about-text {
-        margin-bottom: 75px;
-    }
-    .about-text h3,
-    .about-highlight h3 {
-        font-size: 2rem;
     }
 }
 
@@ -815,7 +695,6 @@ footer {
 </div>
 
 <main class="main-content">
-
     <section class="intro fade-in">
         <p>The purpose behind recognition</p>
         <h1>Celebrating what makes a difference</h1>
@@ -856,196 +735,44 @@ footer {
     <div class="bottom-line fade-in">
         Every contribution matters. Together, we make a difference.
     </div>
-
 </main>
 
-<!-- ===== SPOTLIGHT SECTION ===== -->
-<section class="spotlight-section fade-in">
-    <p class="spotlight-label">The next spotlight</p>
-    <h2>Who's next?</h2>
-    <p class="spotlight-subtitle">A new chapter of excellence is waiting to unfold.</p>
-    <div class="spotlight-box">
-        <div class="spotlight-box-image">
-            <img src="/spotlight.jpg" alt="Next spotlight">
-        </div>
-        <p class="spotlight-box-text">Your name could be here</p>
-        <p class="spotlight-box-text">Recognized for outstanding impact</p>
-        <p class="spotlight-box-text">Making a difference every day</p>
-        <hr class="spotlight-box-divider">
-        <p class="spotlight-box-footer">Nominate someone who inspires you</p>
-    </div>
-</section>
+<!-- ===== FULL CONTENT SECTION WITH STICKY NAV ===== -->
+<section class="content-section">
 
-<!-- ===== HOW IT WORKS SECTION ===== -->
-<section class="how-section fade-in">
-    <p class="how-label">How it works</p>
-    <h2>Every great story starts somewhere</h2>
+    <div class="content-layout">
 
-    <div class="how-point">
-        <div class="how-point-image">
-            <img src="/step1.jpg" alt="Step 1">
-        </div>
-        <div class="how-point-content">
-            <div class="how-point-title">Nominate someone special</div>
-            <p class="how-point-desc">
-                Share the story of a colleague who goes above and beyond. Tell us what they did and why it mattered.
-            </p>
-        </div>
-    </div>
-    <hr class="how-point-divider">
-
-    <div class="how-point">
-        <div class="how-point-image">
-            <img src="/step2.jpg" alt="Step 2">
-        </div>
-        <div class="how-point-content">
-            <div class="how-point-title">We review every nomination</div>
-            <p class="how-point-desc">
-                Each submission is carefully reviewed so that meaningful contributions are recognized fairly and thoughtfully.
-            </p>
-        </div>
-    </div>
-    <hr class="how-point-divider">
-
-    <div class="how-point">
-        <div class="how-point-image">
-            <img src="/step3.jpg" alt="Step 3">
-        </div>
-        <div class="how-point-content">
-            <div class="how-point-title">Celebrate the difference made</div>
-            <p class="how-point-desc">
-                Winners are announced and celebrated, shining a light on the people who inspire us every day.
-            </p>
-        </div>
-    </div>
-    <hr class="how-point-divider">
-</section>
-
-<!-- ===== PREVIOUS WINNERS SECTION ===== -->
-<section class="winners-section fade-in">
-
-    <p class="winners-label">Previous Winners</p>
-    <h2>Our people. Our pride</h2>
-    <p class="winners-desc">
-        Meet the colleagues whose dedication, care and excellence have already been recognized.
-        Their stories continue to inspire us all.
-    </p>
-
-    <button class="winners-btn" id="meetWinnersBtn">
-        Meet Our Winners →
-    </button>
-
-    <div class="winners-carousel-wrapper" id="winnersCarousel">
-        <button class="carousel-arrow left hidden" id="prevArrow" aria-label="Previous winners">‹</button>
-
-        <div class="winners-carousel" id="winnersTrack">
-
-            <!-- Winner cards (15 placeholders) -->
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner1.jpg" alt="Winner 1"></div>
-                <h3>Sara Al-Harbi</h3>
-                <div class="winner-role">Q1 2025</div>
-                <p>Exceptional patient care and teamwork.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner2.jpg" alt="Winner 2"></div>
-                <h3>Omar Khalid</h3>
-                <div class="winner-role">Q4 2024</div>
-                <p>Outstanding leadership and innovation.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner3.jpg" alt="Winner 3"></div>
-                <h3>Layla Mansour</h3>
-                <div class="winner-role">Q3 2024</div>
-                <p>Compassionate support that made a difference.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner4.jpg" alt="Winner 4"></div>
-                <h3>Yusuf Ibrahim</h3>
-                <div class="winner-role">Q2 2024</div>
-                <p>Going above and beyond every single day.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner5.jpg" alt="Winner 5"></div>
-                <h3>Noura Al-Sayed</h3>
-                <div class="winner-role">Q1 2024</div>
-                <p>Excellence in clinical practice and mentoring.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner6.jpg" alt="Winner 6"></div>
-                <h3>Faisal Rahman</h3>
-                <div class="winner-role">Q4 2023</div>
-                <p>Reliable, dedicated and always ready to help.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner7.jpg" alt="Winner 7"></div>
-                <h3>Hanaa Qureshi</h3>
-                <div class="winner-role">Q3 2023</div>
-                <p>Creating a positive environment for everyone.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner8.jpg" alt="Winner 8"></div>
-                <h3>Khaled Nasser</h3>
-                <div class="winner-role">Q2 2023</div>
-                <p>Innovative solutions that improved care.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner9.jpg" alt="Winner 9"></div>
-                <h3>Amira Hassan</h3>
-                <div class="winner-role">Q1 2023</div>
-                <p>Warmth, professionalism and true dedication.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner10.jpg" alt="Winner 10"></div>
-                <h3>Tariq Al-Faraj</h3>
-                <div class="winner-role">Q4 2022</div>
-                <p>Consistent excellence and quiet leadership.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner11.jpg" alt="Winner 11"></div>
-                <h3>Rania Saleh</h3>
-                <div class="winner-role">Q3 2022</div>
-                <p>Making every patient feel seen and cared for.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner12.jpg" alt="Winner 12"></div>
-                <h3>Majed Al-Rashid</h3>
-                <div class="winner-role">Q2 2022</div>
-                <p>Teamwork and commitment that lifted everyone.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner13.jpg" alt="Winner 13"></div>
-                <h3>Dalia Farouk</h3>
-                <div class="winner-role">Q1 2022</div>
-                <p>Compassion in action, every single shift.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner14.jpg" alt="Winner 14"></div>
-                <h3>Samir Haddad</h3>
-                <div class="winner-role">Q4 2021</div>
-                <p>Reliability and excellence that set the standard.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner15.jpg" alt="Winner 15"></div>
-                <h3>Lina Al-Mutairi</h3>
-                <div class="winner-role">Q3 2021</div>
-                <p>A true role model of care and dedication.</p>
-            </div>
-
-        </div>
-
-        <button class="carousel-arrow right" id="nextArrow" aria-label="Next winners">›</button>
-    </div>
-
-</section>
-<!-- ===== END PREVIOUS WINNERS SECTION ===== -->
-
-<section class="about-section" id="about">
-    <div class="about-layout">
-        <nav class="about-section-nav">
+        <!-- Sticky side navigation -->
+        <nav class="content-section-nav">
             <ul>
                 <li>
-                    <a href="#about-intro" class="active">
+                    <a href="#spotlight" class="active">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="12" r="4"></circle>
+                            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+                        </svg>
+                        <span>The Next Spotlight</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#how-it-works">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        <span>How It Works</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#previous-winners">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3z"></path>
+                        </svg>
+                        <span>Previous Winners</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#about-intro">
                         <svg viewBox="0 0 24 24" aria-hidden="true">
                             <circle cx="12" cy="8" r="3"></circle>
                             <path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"></path>
@@ -1101,14 +828,197 @@ footer {
             </ul>
         </nav>
 
-        <div class="about-content">
-            <section class="about-intro fade-in" id="about-intro">
-                <p>About the Recognition Program</p>
-                <h2>Celebrating Our People</h2>
-                <p>Recognizing the people who make a difference every day.</p>
+        <!-- Main content – all left-aligned -->
+        <div class="content-main">
+
+            <!-- The Next Spotlight -->
+            <section class="content-block fade-in" id="spotlight">
+                <p class="section-label">The next spotlight</p>
+                <h2>Who's next?</h2>
+                <p class="section-desc">
+                    A new chapter of excellence is waiting to unfold.
+                </p>
+
+                <div class="spotlight-box">
+                    <div class="spotlight-box-image">
+                        <img src="/spotlight.jpg" alt="Next spotlight">
+                    </div>
+                    <p class="spotlight-box-text">Your name could be here</p>
+                    <p class="spotlight-box-text">Recognized for outstanding impact</p>
+                    <p class="spotlight-box-text">Making a difference every day</p>
+                    <hr class="spotlight-box-divider">
+                    <p class="spotlight-box-footer">Nominate someone who inspires you</p>
+                </div>
             </section>
 
-            <section class="about-text fade-in" id="purpose">
+            <!-- How it works -->
+            <section class="content-block fade-in" id="how-it-works">
+                <p class="section-label">How it works</p>
+                <h2>Every great story starts somewhere</h2>
+
+                <div class="how-point">
+                    <div class="how-point-image">
+                        <img src="/step1.jpg" alt="Step 1">
+                    </div>
+                    <div class="how-point-content">
+                        <div class="how-point-title">Nominate someone special</div>
+                        <p class="how-point-desc">
+                            Share the story of a colleague who goes above and beyond. Tell us what they did and why it mattered.
+                        </p>
+                    </div>
+                </div>
+                <hr class="how-point-divider">
+
+                <div class="how-point">
+                    <div class="how-point-image">
+                        <img src="/step2.jpg" alt="Step 2">
+                    </div>
+                    <div class="how-point-content">
+                        <div class="how-point-title">We review every nomination</div>
+                        <p class="how-point-desc">
+                            Each submission is carefully reviewed so that meaningful contributions are recognized fairly and thoughtfully.
+                        </p>
+                    </div>
+                </div>
+                <hr class="how-point-divider">
+
+                <div class="how-point">
+                    <div class="how-point-image">
+                        <img src="/step3.jpg" alt="Step 3">
+                    </div>
+                    <div class="how-point-content">
+                        <div class="how-point-title">Celebrate the difference made</div>
+                        <p class="how-point-desc">
+                            Winners are announced and celebrated, shining a light on the people who inspire us every day.
+                        </p>
+                    </div>
+                </div>
+                <hr class="how-point-divider">
+            </section>
+
+            <!-- Previous Winners -->
+            <section class="content-block fade-in" id="previous-winners">
+                <p class="section-label">Previous Winners</p>
+                <h2>Our people. Our pride</h2>
+                <p class="section-desc">
+                    Meet the colleagues whose dedication, care and excellence have already been recognized.
+                    Their stories continue to inspire us all.
+                </p>
+
+                <button class="winners-btn" id="meetWinnersBtn">
+                    Meet Our Winners →
+                </button>
+
+                <div class="winners-carousel-wrapper" id="winnersCarousel">
+                    <button class="carousel-arrow left hidden" id="prevArrow" aria-label="Previous winners">‹</button>
+
+                    <div class="winners-carousel" id="winnersTrack">
+                        <div class="winner-card">
+                            <div class="winner-card-image"><img src="/winner1.jpg" alt="Winner 1"></div>
+                            <h3>Sara Al-Harbi</h3>
+                            <div class="winner-role">Q1 2025</div>
+                            <p>Exceptional patient care and teamwork.</p>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-card-image"><img src="/winner2.jpg" alt="Winner 2"></div>
+                            <h3>Omar Khalid</h3>
+                            <div class="winner-role">Q4 2024</div>
+                            <p>Outstanding leadership and innovation.</p>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-card-image"><img src="/winner3.jpg" alt="Winner 3"></div>
+                            <h3>Layla Mansour</h3>
+                            <div class="winner-role">Q3 2024</div>
+                            <p>Compassionate support that made a difference.</p>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-card-image"><img src="/winner4.jpg" alt="Winner 4"></div>
+                            <h3>Yusuf Ibrahim</h3>
+                            <div class="winner-role">Q2 2024</div>
+                            <p>Going above and beyond every single day.</p>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-card-image"><img src="/winner5.jpg" alt="Winner 5"></div>
+                            <h3>Noura Al-Sayed</h3>
+                            <div class="winner-role">Q1 2024</div>
+                            <p>Excellence in clinical practice and mentoring.</p>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-card-image"><img src="/winner6.jpg" alt="Winner 6"></div>
+                            <h3>Faisal Rahman</h3>
+                            <div class="winner-role">Q4 2023</div>
+                            <p>Reliable, dedicated and always ready to help.</p>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-card-image"><img src="/winner7.jpg" alt="Winner 7"></div>
+                            <h3>Hanaa Qureshi</h3>
+                            <div class="winner-role">Q3 2023</div>
+                            <p>Creating a positive environment for everyone.</p>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-card-image"><img src="/winner8.jpg" alt="Winner 8"></div>
+                            <h3>Khaled Nasser</h3>
+                            <div class="winner-role">Q2 2023</div>
+                            <p>Innovative solutions that improved care.</p>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-card-image"><img src="/winner9.jpg" alt="Winner 9"></div>
+                            <h3>Amira Hassan</h3>
+                            <div class="winner-role">Q1 2023</div>
+                            <p>Warmth, professionalism and true dedication.</p>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-card-image"><img src="/winner10.jpg" alt="Winner 10"></div>
+                            <h3>Tariq Al-Faraj</h3>
+                            <div class="winner-role">Q4 2022</div>
+                            <p>Consistent excellence and quiet leadership.</p>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-card-image"><img src="/winner11.jpg" alt="Winner 11"></div>
+                            <h3>Rania Saleh</h3>
+                            <div class="winner-role">Q3 2022</div>
+                            <p>Making every patient feel seen and cared for.</p>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-card-image"><img src="/winner12.jpg" alt="Winner 12"></div>
+                            <h3>Majed Al-Rashid</h3>
+                            <div class="winner-role">Q2 2022</div>
+                            <p>Teamwork and commitment that lifted everyone.</p>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-card-image"><img src="/winner13.jpg" alt="Winner 13"></div>
+                            <h3>Dalia Farouk</h3>
+                            <div class="winner-role">Q1 2022</div>
+                            <p>Compassion in action, every single shift.</p>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-card-image"><img src="/winner14.jpg" alt="Winner 14"></div>
+                            <h3>Samir Haddad</h3>
+                            <div class="winner-role">Q4 2021</div>
+                            <p>Reliability and excellence that set the standard.</p>
+                        </div>
+                        <div class="winner-card">
+                            <div class="winner-card-image"><img src="/winner15.jpg" alt="Winner 15"></div>
+                            <h3>Lina Al-Mutairi</h3>
+                            <div class="winner-role">Q3 2021</div>
+                            <p>A true role model of care and dedication.</p>
+                        </div>
+                    </div>
+
+                    <button class="carousel-arrow right" id="nextArrow" aria-label="Next winners">›</button>
+                </div>
+            </section>
+
+            <!-- About -->
+            <section class="content-block fade-in" id="about-intro">
+                <p class="section-label">About the Recognition Program</p>
+                <h2>Celebrating Our People</h2>
+                <p>
+                    Recognizing the people who make a difference every day.
+                </p>
+            </section>
+
+            <section class="content-block fade-in" id="purpose">
                 <h3>Our Purpose</h3>
                 <p>
                     The Recognition Program exists to celebrate the
@@ -1119,7 +1029,7 @@ footer {
                 </p>
             </section>
 
-            <section class="about-text fade-in" id="recognition">
+            <section class="content-block fade-in" id="recognition">
                 <h3>Why Recognition Matters</h3>
                 <p>
                     Recognition is more than simply saying thank you.
@@ -1131,7 +1041,7 @@ footer {
                 </p>
             </section>
 
-            <section class="about-text fade-in" id="celebrate">
+            <section class="content-block fade-in" id="celebrate">
                 <h3>What We Celebrate</h3>
                 <p>
                     We celebrate the people who demonstrate care, teamwork,
@@ -1142,7 +1052,7 @@ footer {
                 </p>
             </section>
 
-            <section class="about-text fade-in" id="goal">
+            <section class="content-block fade-in" id="goal">
                 <h3>Our Goal</h3>
                 <p>
                     Our goal is to create an environment where appreciation
@@ -1152,7 +1062,7 @@ footer {
                 </p>
             </section>
 
-            <section class="about-highlight fade-in" id="contribution">
+            <section class="content-block fade-in" id="contribution">
                 <h3>Every Contribution Matters</h3>
                 <p>
                     Every person has a role to play. Every effort contributes
@@ -1160,6 +1070,7 @@ footer {
                     who help make a difference every day.
                 </p>
             </section>
+
         </div>
     </div>
 </section>
@@ -1181,27 +1092,43 @@ const fadeObserver = new IntersectionObserver((entries) => {
         }
     });
 }, { threshold: 0.15 });
-fadeElements.forEach((element) => fadeObserver.observe(element));
+fadeElements.forEach((el) => fadeObserver.observe(el));
 
-/* About nav observer */
-const aboutSections = document.querySelectorAll(
-    "#about-intro, #purpose, #recognition, #celebrate, #goal, #contribution"
+/* Side-nav active state for ALL sections */
+const allSections = document.querySelectorAll(
+    "#spotlight, #how-it-works, #previous-winners, #about-intro, #purpose, #recognition, #celebrate, #goal, #contribution"
 );
-const aboutNavLinks = document.querySelectorAll(".about-section-nav a");
-const aboutObserver = new IntersectionObserver((entries) => {
+const navLinks = document.querySelectorAll(".content-section-nav a");
+
+const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
-            aboutNavLinks.forEach((link) => link.classList.remove("active"));
-            const activeLink = document.querySelector(
-                '.about-section-nav a[href="#' + entry.target.id + '"]'
+            navLinks.forEach((link) => link.classList.remove("active"));
+            const active = document.querySelector(
+                '.content-section-nav a[href="#' + entry.target.id + '"]'
             );
-            if (activeLink) activeLink.classList.add("active");
+            if (active) active.classList.add("active");
         }
     });
-}, { rootMargin: "-35% 0px -50% 0px", threshold: 0 });
-aboutSections.forEach((section) => aboutObserver.observe(section));
+}, {
+    rootMargin: "-30% 0px -55% 0px",
+    threshold: 0
+});
 
-/* ===== Previous Winners carousel logic ===== */
+allSections.forEach((section) => sectionObserver.observe(section));
+
+/* Smooth scroll for nav clicks (optional enhancement) */
+navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute("href"));
+        if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    });
+});
+
+/* Previous Winners carousel */
 const meetBtn = document.getElementById("meetWinnersBtn");
 const carouselWrapper = document.getElementById("winnersCarousel");
 const track = document.getElementById("winnersTrack");
@@ -1218,7 +1145,6 @@ meetBtn.addEventListener("click", () => {
         carouselWrapper.classList.add("visible");
         meetBtn.classList.add("active");
         meetBtn.innerHTML = "Hide Winners ↑";
-        // Reset scroll and update arrows after showing
         track.scrollLeft = 0;
         updateArrows();
     }
@@ -1226,13 +1152,11 @@ meetBtn.addEventListener("click", () => {
 
 function updateArrows() {
     const maxScroll = track.scrollWidth - track.clientWidth;
-    // Left arrow: show only when scrolled away from start
     if (track.scrollLeft > 10) {
         prevArrow.classList.remove("hidden");
     } else {
         prevArrow.classList.add("hidden");
     }
-    // Right arrow: show only when more content remains
     if (track.scrollLeft < maxScroll - 10) {
         nextArrow.classList.remove("hidden");
     } else {
@@ -1243,18 +1167,12 @@ function updateArrows() {
 nextArrow.addEventListener("click", () => {
     track.scrollBy({ left: 260, behavior: "smooth" });
 });
-
 prevArrow.addEventListener("click", () => {
     track.scrollBy({ left: -260, behavior: "smooth" });
 });
-
 track.addEventListener("scroll", updateArrows);
-
-// Also update on resize
 window.addEventListener("resize", () => {
-    if (carouselWrapper.classList.contains("visible")) {
-        updateArrows();
-    }
+    if (carouselWrapper.classList.contains("visible")) updateArrows();
 });
 
 </script>
