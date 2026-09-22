@@ -15,13 +15,13 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #FEFEFE;
+    background: #FAF9F6; /* Off-white */
     color: #17324d;
     line-height: 1.6;
 }
 
 header {
-    background: #FEFEFE;
+    background: #FAF9F6;
     border-bottom: 1px solid #dcebf1;
     padding: 8px 5%;
 }
@@ -83,7 +83,7 @@ nav a.active::after {
     width: 100%;
     margin: 0 0 34px;
     overflow: hidden;
-    background: #FEFEFE;
+    background: #FAF9F6;
     position: relative;
 }
 
@@ -178,7 +178,7 @@ nav a.active::after {
     width: 100%;
     padding: 60px 0 120px;
     border-top: 1px solid #dcebf1;
-    background: #FEFEFE;
+    background: #FAF9F6;
 }
 
 .content-layout {
@@ -191,11 +191,11 @@ nav a.active::after {
     gap: 100px;
 }
 
-/* Sticky side nav – stops before banner because parent starts after banner */
+/* Sticky side nav – stops before banner */
 .content-section-nav {
     margin-left: -100px;
     position: sticky;
-    top: 100px; /* sits below header, never reaches banner */
+    top: 100px;
     flex: 0 0 230px;
     width: 230px;
     z-index: 10;
@@ -252,22 +252,22 @@ nav a.active::after {
 .content-main {
     flex: 1;
     max-width: 950px;
-    text-align: left; /* everything left-aligned */
 }
 
-/* Shared section styles – left aligned, no boxes */
-.content-block {
+/* Centered blocks (Spotlight, How it works, Previous Winners) */
+.content-block.centered {
+    text-align: center;
     margin-bottom: 100px;
     scroll-margin-top: 120px;
 }
 
-.content-block .section-label {
+.content-block.centered .section-label {
     color: #557083;
     font-size: 1rem;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
-.content-block h2 {
+.content-block.centered h2 {
     color: #17324d;
     font-size: clamp(2.2rem, 5vw, 3.5rem);
     font-weight: normal;
@@ -275,15 +275,36 @@ nav a.active::after {
     line-height: 1.2;
 }
 
-.content-block .section-desc {
+.content-block.centered .section-desc {
     color: #557083;
-    font-size: 1rem;
-    line-height: 1.8;
-    max-width: 800px;
-    margin-bottom: 28px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 620px;
+    margin: 0 auto 28px;
 }
 
-.content-block h3 {
+/* Left-aligned About blocks */
+.content-block.left {
+    text-align: left;
+    margin-bottom: 100px;
+    scroll-margin-top: 120px;
+}
+
+.content-block.left .section-label {
+    color: #557083;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.content-block.left h2 {
+    color: #17324d;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: normal;
+    margin: 6px 0 12px;
+    line-height: 1.2;
+}
+
+.content-block.left h3 {
     color: #17324d;
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: normal;
@@ -291,16 +312,17 @@ nav a.active::after {
     margin-bottom: 20px;
 }
 
-.content-block p {
+.content-block.left p {
     color: #557083;
     font-size: 1rem;
     line-height: 1.8;
     max-width: 800px;
 }
 
-/* Spotlight box (keeps its card look) */
+/* Spotlight box */
 .spotlight-box {
     max-width: 420px;
+    margin: 0 auto;
     background: #FEFEFE;
     border: 1px solid #dcebf1;
     border-radius: 16px;
@@ -342,12 +364,17 @@ nav a.active::after {
     font-size: 0.9rem;
 }
 
-/* How it works points */
+/* How it works – keep points left inside a centered section */
+.how-points-wrap {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: left;
+}
+
 .how-point {
     display: flex;
     align-items: flex-start;
     gap: 28px;
-    text-align: left;
     padding: 8px 0 28px;
 }
 
@@ -492,7 +519,7 @@ nav a.active::after {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: #fff;
+    background: #FEFEFE;
     border: 1px solid #dcebf1;
     color: #17324d;
     font-size: 1.5rem;
@@ -529,6 +556,7 @@ footer {
     padding: 30px 20px;
     color: #718896;
     font-size: 0.9rem;
+    background: #FAF9F6;
 }
 
 .fade-in {
@@ -624,13 +652,15 @@ footer {
     .content-layout {
         width: 94%;
     }
-    .content-block {
+    .content-block.centered,
+    .content-block.left {
         margin-bottom: 75px;
     }
-    .content-block h2 {
+    .content-block.centered h2,
+    .content-block.left h2 {
         font-size: 2rem;
     }
-    .content-block h3 {
+    .content-block.left h3 {
         font-size: 2rem;
     }
     .how-point {
@@ -828,11 +858,11 @@ footer {
             </ul>
         </nav>
 
-        <!-- Main content – all left-aligned -->
+        <!-- Main content -->
         <div class="content-main">
 
-            <!-- The Next Spotlight -->
-            <section class="content-block fade-in" id="spotlight">
+            <!-- The Next Spotlight (centered) -->
+            <section class="content-block centered fade-in" id="spotlight">
                 <p class="section-label">The next spotlight</p>
                 <h2>Who's next?</h2>
                 <p class="section-desc">
@@ -851,53 +881,55 @@ footer {
                 </div>
             </section>
 
-            <!-- How it works -->
-            <section class="content-block fade-in" id="how-it-works">
+            <!-- How it works (centered headings, left-aligned points) -->
+            <section class="content-block centered fade-in" id="how-it-works">
                 <p class="section-label">How it works</p>
                 <h2>Every great story starts somewhere</h2>
 
-                <div class="how-point">
-                    <div class="how-point-image">
-                        <img src="/step1.jpg" alt="Step 1">
+                <div class="how-points-wrap">
+                    <div class="how-point">
+                        <div class="how-point-image">
+                            <img src="/step1.jpg" alt="Step 1">
+                        </div>
+                        <div class="how-point-content">
+                            <div class="how-point-title">Nominate someone special</div>
+                            <p class="how-point-desc">
+                                Share the story of a colleague who goes above and beyond. Tell us what they did and why it mattered.
+                            </p>
+                        </div>
                     </div>
-                    <div class="how-point-content">
-                        <div class="how-point-title">Nominate someone special</div>
-                        <p class="how-point-desc">
-                            Share the story of a colleague who goes above and beyond. Tell us what they did and why it mattered.
-                        </p>
-                    </div>
-                </div>
-                <hr class="how-point-divider">
+                    <hr class="how-point-divider">
 
-                <div class="how-point">
-                    <div class="how-point-image">
-                        <img src="/step2.jpg" alt="Step 2">
+                    <div class="how-point">
+                        <div class="how-point-image">
+                            <img src="/step2.jpg" alt="Step 2">
+                        </div>
+                        <div class="how-point-content">
+                            <div class="how-point-title">We review every nomination</div>
+                            <p class="how-point-desc">
+                                Each submission is carefully reviewed so that meaningful contributions are recognized fairly and thoughtfully.
+                            </p>
+                        </div>
                     </div>
-                    <div class="how-point-content">
-                        <div class="how-point-title">We review every nomination</div>
-                        <p class="how-point-desc">
-                            Each submission is carefully reviewed so that meaningful contributions are recognized fairly and thoughtfully.
-                        </p>
-                    </div>
-                </div>
-                <hr class="how-point-divider">
+                    <hr class="how-point-divider">
 
-                <div class="how-point">
-                    <div class="how-point-image">
-                        <img src="/step3.jpg" alt="Step 3">
+                    <div class="how-point">
+                        <div class="how-point-image">
+                            <img src="/step3.jpg" alt="Step 3">
+                        </div>
+                        <div class="how-point-content">
+                            <div class="how-point-title">Celebrate the difference made</div>
+                            <p class="how-point-desc">
+                                Winners are announced and celebrated, shining a light on the people who inspire us every day.
+                            </p>
+                        </div>
                     </div>
-                    <div class="how-point-content">
-                        <div class="how-point-title">Celebrate the difference made</div>
-                        <p class="how-point-desc">
-                            Winners are announced and celebrated, shining a light on the people who inspire us every day.
-                        </p>
-                    </div>
+                    <hr class="how-point-divider">
                 </div>
-                <hr class="how-point-divider">
             </section>
 
-            <!-- Previous Winners -->
-            <section class="content-block fade-in" id="previous-winners">
+            <!-- Previous Winners (centered) -->
+            <section class="content-block centered fade-in" id="previous-winners">
                 <p class="section-label">Previous Winners</p>
                 <h2>Our people. Our pride</h2>
                 <p class="section-desc">
@@ -1009,8 +1041,8 @@ footer {
                 </div>
             </section>
 
-            <!-- About -->
-            <section class="content-block fade-in" id="about-intro">
+            <!-- About (left-aligned) -->
+            <section class="content-block left fade-in" id="about-intro">
                 <p class="section-label">About the Recognition Program</p>
                 <h2>Celebrating Our People</h2>
                 <p>
@@ -1018,7 +1050,7 @@ footer {
                 </p>
             </section>
 
-            <section class="content-block fade-in" id="purpose">
+            <section class="content-block left fade-in" id="purpose">
                 <h3>Our Purpose</h3>
                 <p>
                     The Recognition Program exists to celebrate the
@@ -1029,7 +1061,7 @@ footer {
                 </p>
             </section>
 
-            <section class="content-block fade-in" id="recognition">
+            <section class="content-block left fade-in" id="recognition">
                 <h3>Why Recognition Matters</h3>
                 <p>
                     Recognition is more than simply saying thank you.
@@ -1041,7 +1073,7 @@ footer {
                 </p>
             </section>
 
-            <section class="content-block fade-in" id="celebrate">
+            <section class="content-block left fade-in" id="celebrate">
                 <h3>What We Celebrate</h3>
                 <p>
                     We celebrate the people who demonstrate care, teamwork,
@@ -1052,7 +1084,7 @@ footer {
                 </p>
             </section>
 
-            <section class="content-block fade-in" id="goal">
+            <section class="content-block left fade-in" id="goal">
                 <h3>Our Goal</h3>
                 <p>
                     Our goal is to create an environment where appreciation
@@ -1062,7 +1094,7 @@ footer {
                 </p>
             </section>
 
-            <section class="content-block fade-in" id="contribution">
+            <section class="content-block left fade-in" id="contribution">
                 <h3>Every Contribution Matters</h3>
                 <p>
                     Every person has a role to play. Every effort contributes
@@ -1117,7 +1149,7 @@ const sectionObserver = new IntersectionObserver((entries) => {
 
 allSections.forEach((section) => sectionObserver.observe(section));
 
-/* Smooth scroll for nav clicks (optional enhancement) */
+/* Smooth scroll for nav clicks */
 navLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
         e.preventDefault();
