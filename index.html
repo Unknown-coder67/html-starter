@@ -172,7 +172,7 @@ nav a.active::after {
     font-weight: 600;
 }
 
-/* ===== NEW SPOTLIGHT SECTION ===== */
+/* ===== SPOTLIGHT SECTION ===== */
 .spotlight-section {
     width: 90%;
     max-width: 1200px;
@@ -203,7 +203,7 @@ nav a.active::after {
 .spotlight-box {
     max-width: 420px;
     margin: 0 auto;
-    background: #FEFEFE;
+    background: #001E4D;
     border: 1px solid #dcebf1;
     border-radius: 16px;
     padding: 28px 24px 24px;
@@ -244,6 +244,77 @@ nav a.active::after {
     font-size: 0.9rem;
 }
 /* ===== END SPOTLIGHT SECTION ===== */
+
+/* ===== HOW IT WORKS SECTION ===== */
+.how-section {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto 90px;
+    text-align: center;
+}
+
+.how-label {
+    color: #557083;
+    font-size: 1rem;
+    margin-bottom: 6px;
+}
+
+.how-section h2 {
+    color: #17324d;
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-weight: normal;
+    margin: 6px 0 50px;
+    line-height: 1.2;
+}
+
+.how-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+    text-align: left;
+    padding: 8px 0 28px;
+}
+
+.how-point-image {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f0f7fa;
+}
+
+.how-point-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.how-point-content {
+    flex: 1;
+    padding-top: 4px;
+}
+
+.how-point-title {
+    color: #17324d;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.how-point-desc {
+    color: #718896;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.how-point-divider {
+    border: none;
+    border-top: 1px solid #dcebf1;
+    margin: 0;
+}
+/* ===== END HOW IT WORKS SECTION ===== */
 
 footer {
     text-align: center;
@@ -533,6 +604,30 @@ footer {
         font-size: 2rem;
     }
 
+    .how-section {
+        width: 94%;
+        margin-bottom: 70px;
+    }
+
+    .how-section h2 {
+        font-size: 1.9rem;
+        margin-bottom: 36px;
+    }
+
+    .how-point {
+        gap: 18px;
+        padding-bottom: 22px;
+    }
+
+    .how-point-image {
+        width: 56px;
+        height: 56px;
+    }
+
+    .how-point-title {
+        font-size: 1.1rem;
+    }
+
     .about-section {
         padding: 80px 0 90px;
     }
@@ -703,7 +798,7 @@ footer {
 </main>
 
 
-<!-- ===== NEW SECTION: The next spotlight ===== -->
+<!-- ===== SPOTLIGHT SECTION ===== -->
 <section class="spotlight-section fade-in">
 
     <p class="spotlight-label">
@@ -743,7 +838,64 @@ footer {
     </div>
 
 </section>
-<!-- ===== END NEW SECTION ===== -->
+<!-- ===== END SPOTLIGHT SECTION ===== -->
+
+
+<!-- ===== HOW IT WORKS SECTION ===== -->
+<section class="how-section fade-in">
+
+    <p class="how-label">
+        How it works
+    </p>
+
+    <h2>
+        Every great story starts somewhere
+    </h2>
+
+    <!-- Point 1 -->
+    <div class="how-point">
+        <div class="how-point-image">
+            <img src="/step1.jpg" alt="Step 1">
+        </div>
+        <div class="how-point-content">
+            <div class="how-point-title">Nominate someone special</div>
+            <p class="how-point-desc">
+                Share the story of a colleague who goes above and beyond. Tell us what they did and why it mattered.
+            </p>
+        </div>
+    </div>
+    <hr class="how-point-divider">
+
+    <!-- Point 2 -->
+    <div class="how-point">
+        <div class="how-point-image">
+            <img src="/step2.jpg" alt="Step 2">
+        </div>
+        <div class="how-point-content">
+            <div class="how-point-title">We review every nomination</div>
+            <p class="how-point-desc">
+                Each submission is carefully reviewed so that meaningful contributions are recognized fairly and thoughtfully.
+            </p>
+        </div>
+    </div>
+    <hr class="how-point-divider">
+
+    <!-- Point 3 -->
+    <div class="how-point">
+        <div class="how-point-image">
+            <img src="/step3.jpg" alt="Step 3">
+        </div>
+        <div class="how-point-content">
+            <div class="how-point-title">Celebrate the difference made</div>
+            <p class="how-point-desc">
+                Winners are announced and celebrated, shining a light on the people who inspire us every day.
+            </p>
+        </div>
+    </div>
+    <hr class="how-point-divider">
+
+</section>
+<!-- ===== END HOW IT WORKS SECTION ===== -->
 
 
 <section class="about-section" id="about">
