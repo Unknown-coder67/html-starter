@@ -519,33 +519,35 @@ nav a.active::after {
         <p>Select the employee who made a meaningful impact this quarter</p>
     </section>
 
-    <section class="code-section" id="codeSection">
-        <div class="code-icon">
-            <img src="/code-image.jpg" alt="Department Code">
-        </div>
+<section class="code-section" id="codeSection">
 
-        <h2>Enter Your Department Code</h2>
+    <div class="code-icon">
+        <img src="/code-image.jpg" alt="Department Code">
+    </div>
 
-        <p>
-            Please enter your authorized department code to access the voting section.
-        </p>
+    <h2>Enter Your Department Code</h2>
 
-        <input
-            type="text"
-            id="departmentCode"
-            class="code-input"
-            placeholder="Department Code"
-            autocomplete="off"
-        >
+    <p>
+        Please enter your authorized department code to access the voting section.
+    </p>
 
-        <button class="code-button" onclick="verifyCode()">
-            Continue to Voting →
-        </button>
+    <input
+        type="text"
+        id="departmentCode"
+        class="code-input"
+        placeholder="Department Code"
+        autocomplete="off"
+    >
 
-        <div class="code-error" id="codeError">
-            Invalid department code. Please try again.
-        </div>
-    </section>
+    <button class="code-button" onclick="verifyCode()">
+        Continue to Voting →
+    </button>
+
+    <div class="code-error" id="codeError">
+        Invalid department code. Please try again.
+    </div>
+
+</section>
 
     <section class="voting-section" id="votingSection">
         <div class="voting-header">
