@@ -84,7 +84,7 @@ nav a.active::after {
     margin: 0 0 34px;
     overflow: hidden;
     background: #FEFEFE;
-    position: relative; /* Allows the dark overlay to sit over the video */
+    position: relative;
 }
 
 .banner img {
@@ -172,17 +172,85 @@ nav a.active::after {
     font-weight: 600;
 }
 
+/* ===== NEW SPOTLIGHT SECTION ===== */
+.spotlight-section {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    text-align: center;
+}
+
+.spotlight-label {
+    color: #557083;
+    font-size: 1rem;
+    margin-bottom: 6px;
+}
+
+.spotlight-section h2 {
+    color: #17324d;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: normal;
+    margin: 6px 0 12px;
+    line-height: 1.2;
+}
+
+.spotlight-subtitle {
+    color: #557083;
+    font-size: 1.1rem;
+    margin-bottom: 36px;
+}
+
+.spotlight-box {
+    max-width: 420px;
+    margin: 0 auto;
+    background: #FEFEFE;
+    border: 1px solid #dcebf1;
+    border-radius: 16px;
+    padding: 28px 24px 24px;
+    text-align: center;
+}
+
+.spotlight-box-image {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 18px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f0f7fa;
+}
+
+.spotlight-box-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.spotlight-box-text {
+    color: #17324d;
+    font-size: 1rem;
+    line-height: 1.55;
+    margin-bottom: 4px;
+}
+
+.spotlight-box-divider {
+    border: none;
+    border-top: 1px solid #dcebf1;
+    margin: 18px 0 16px;
+}
+
+.spotlight-box-footer {
+    color: #718896;
+    font-size: 0.9rem;
+}
+/* ===== END SPOTLIGHT SECTION ===== */
+
 footer {
     text-align: center;
     padding: 30px 20px;
     color: #718896;
     font-size: 0.9rem;
 }
-
-
-/* =========================================================
-   ABOUT SECTION
-   ========================================================= */
 
 .about-section {
     position: relative;
@@ -193,11 +261,6 @@ footer {
     scroll-margin-top: 30px;
 }
 
-
-/* =========================================================
-   ABOUT LAYOUT
-   ========================================================= */
-
 .about-layout {
     width: 100%;
     max-width: 1500px;
@@ -206,7 +269,6 @@ footer {
     display: flex;
     align-items: flex-start;
 
-    /* Space between navigation and About text */
     gap: 100px;
 }
 
@@ -462,6 +524,15 @@ footer {
         padding: 20px;
     }
 
+    .spotlight-section {
+        width: 94%;
+        margin-bottom: 60px;
+    }
+
+    .spotlight-section h2 {
+        font-size: 2rem;
+    }
+
     .about-section {
         padding: 80px 0 90px;
     }
@@ -630,6 +701,49 @@ footer {
     </div>
 
 </main>
+
+
+<!-- ===== NEW SECTION: The next spotlight ===== -->
+<section class="spotlight-section fade-in">
+
+    <p class="spotlight-label">
+        The next spotlight
+    </p>
+
+    <h2>
+        Who's next?
+    </h2>
+
+    <p class="spotlight-subtitle">
+        A new chapter of excellence is waiting to unfold.
+    </p>
+
+    <div class="spotlight-box">
+
+        <div class="spotlight-box-image">
+            <img src="/spotlight.jpg" alt="Next spotlight">
+        </div>
+
+        <p class="spotlight-box-text">
+            Your name could be here
+        </p>
+        <p class="spotlight-box-text">
+            Recognized for outstanding impact
+        </p>
+        <p class="spotlight-box-text">
+            Making a difference every day
+        </p>
+
+        <hr class="spotlight-box-divider">
+
+        <p class="spotlight-box-footer">
+            Nominate someone who inspires you
+        </p>
+
+    </div>
+
+</section>
+<!-- ===== END NEW SECTION ===== -->
 
 
 <section class="about-section" id="about">
