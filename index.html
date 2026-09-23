@@ -103,16 +103,16 @@ header {
     width: 100%;
 }
 
-/* New header Nominate button – matches the exact values you provided */
-.nominate-btn {
+/* New header Nominate button */
+.header-nav a.nominate-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(23, 23, 29);
-    color: rgb(255, 255, 255);
+    background-color: #17171D !important;
+    color: #FFFFFF !important;
     border: none;
     border-radius: 999px;
-    padding: 12px 17px;
+    padding: 12px 22px;               /* wider */
     font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback";
     font-size: 15.04px;
     font-weight: 700;
@@ -122,15 +122,23 @@ header {
     line-height: 22.56px;
     height: 46.5625px;
     cursor: pointer;
-    text-decoration: none;
+    text-decoration: none !important;
     white-space: nowrap;
     box-sizing: border-box;
     transition: background-color 0.16s ease;
     -webkit-tap-highlight-color: transparent;
 }
 
-.nominate-btn:hover {
-    background-color: rgb(40, 40, 48);
+/* Completely remove the underline that the general nav links have */
+.header-nav a.nominate-btn::after {
+    display: none !important;
+    content: none !important;
+    width: 0 !important;
+}
+
+.header-nav a.nominate-btn:hover {
+    background-color: #17171D !important;
+    color: #FFFFFF !important;
 }
     
 /* Banner + overlapping cards */
@@ -184,7 +192,6 @@ header {
     margin: 0 auto 60px;
     position: relative;
     z-index: 10;
-    /* Pull cards up so top half sits on the banner */
     margin-top: -80px;
 }
 
@@ -602,9 +609,9 @@ footer {
     .header-nav {
         gap: 16px;
     }
-    .nominate-btn {
+    .header-nav a.nominate-btn {
         font-size: 13.5px;
-        padding: 10px 14px;
+        padding: 10px 16px;
         height: 42px;
     }
     .banner-cta {
