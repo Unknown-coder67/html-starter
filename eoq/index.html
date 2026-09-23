@@ -244,6 +244,19 @@ nav a:hover {
 
 .voting-section.visible {
     display: block;
+    animation: votingReveal 0.7s ease both;
+}
+
+@keyframes votingReveal {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .voting-header {
@@ -533,10 +546,17 @@ nav a:hover {
         transition: none;
     }
 
+    .voting-section.visible {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
     nav a::after {
         transition: none;
     }
 }
+    
 </style>
 </head>
 
@@ -593,7 +613,7 @@ nav a:hover {
     </section>
 
     <!-- Voting appears BELOW the code section (does not replace it) -->
-    <section class="voting-section fade-in" id="votingSection">
+    <section class="voting-section" id="votingSection">
         <div class="voting-header">
             <h2>Choose Your Employee of the Quarter</h2>
             <p>Please review your selection before confirming your vote.</p>
@@ -732,15 +752,16 @@ function verifyCode() {
     /* Remove box-shadow from code section */
     codeSection.classList.add("expanded");
 
-    /* Show voting section BELOW (expand) with fade-in */
-    votingSection.style.display = "block";
-    void votingSection.offsetWidth; /* force reflow */
+    /* Show voting section BELOW with fade + slide animation */
     votingSection.classList.add("visible");
 
-    /* Smooth scroll so the new content is in view */
+    /* Smoothly bring the new voting section into view */
     setTimeout(() => {
-        votingSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 100);
+        votingSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }, 150);
 }
 
 function selectCandidate(button) {
