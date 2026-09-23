@@ -419,6 +419,20 @@ nav a.active::after {
     color: #557083;
 }
 
+/* Fade-in (same timing as main page) */
+.fade-in {
+    opacity: 0;
+    transform: translateY(35px);
+    transition:
+        opacity 1.3s ease,
+        transform 1.3s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 @media (max-width: 800px) {
     .candidates {
         grid-template-columns: 1fr;
@@ -487,12 +501,20 @@ nav a.active::after {
         font-size: 0.95rem;
     }
 }
+
+@media (prefers-reduced-motion: reduce) {
+    .fade-in {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<header>
+<header class="fade-in">
     <div class="navbar">
         <a href="/">
             <img src="/logo.jpg" alt="Care Medical Jiwar" class="logo">
@@ -506,43 +528,43 @@ nav a.active::after {
 
 <main class="main-content">
 
-    <section class="intro">
+    <section class="intro fade-in">
         <p>Honoring Achievement</p>
         <h1>Employee of the Quarter</h1>
         <p>Select the employee who made a meaningful impact this quarter</p>
     </section>
 
-<section class="code-section" id="codeSection">
+    <section class="code-section fade-in" id="codeSection">
 
-    <div class="code-icon">
-        <img src="/code-image.jpg" alt="Department Code">
-    </div>
+        <div class="code-icon">
+            <img src="/code-image.jpg" alt="Department Code">
+        </div>
 
-    <h2>Enter Your Department Code</h2>
+        <h2>Enter Your Department Code</h2>
 
-    <p>
-        Please enter your authorized department code to access the voting section.
-    </p>
+        <p>
+            Please enter your authorized department code to access the voting section.
+        </p>
 
-    <input
-        type="text"
-        id="departmentCode"
-        class="code-input"
-        placeholder="Department Code"
-        autocomplete="off"
-    >
+        <input
+            type="text"
+            id="departmentCode"
+            class="code-input"
+            placeholder="Department Code"
+            autocomplete="off"
+        >
 
-    <button class="code-button" onclick="verifyCode()">
-        Continue to Voting →
-    </button>
+        <button class="code-button" onclick="verifyCode()">
+            Continue to Voting →
+        </button>
 
-    <div class="code-error" id="codeError">
-        Invalid department code. Please try again.
-    </div>
+        <div class="code-error" id="codeError">
+            Invalid department code. Please try again.
+        </div>
 
-</section>
+    </section>
 
-    <section class="voting-section" id="votingSection">
+    <section class="voting-section fade-in" id="votingSection">
         <div class="voting-header">
             <h2>Choose Your Employee of the Quarter</h2>
             <p>Please review your selection before confirming your vote.</p>
@@ -576,7 +598,7 @@ nav a.active::after {
         </div>
     </section>
 
-    <section class="success-section" id="successSection">
+    <section class="success-section fade-in" id="successSection">
         <div class="success-icon">✓</div>
         <h2>Vote Submitted Successfully</h2>
         <p>Thank you for participating in the Employee of the Quarter voting.</p>
@@ -607,11 +629,56 @@ const departmentCodes = {
 let currentDepartment = "";
 let selectedCandidate = "";
 
+/* Fade-in on page load (and when elements become visible) */
+const fadeElements = document.querySelectorAll(".fade-in");
+const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+        } else {
+            entry.target.classList.remove("visible");
+        }
+    });
+}, { threshold: 0.12 });
+
+fadeElements.forEach((el) => fadeObserver.observe(el));
+
+/* Also force a gentle fade-in shortly after load for above-the-fold content */
+window.addEventListener("load", () => {
+    document.querySelectorAll(".fade-in").forEach((el, index) => {
+        setTimeout(() => {
+            el.classList.add("visible");
+        }, 80 + index * 120);
+    });
+});
+
+/* Placeholder disappears on focus, returns on blur if empty */
+const codeInput = document.getElementById("departmentCode");
+const placeholderText = "Department Code";
+
+codeInput.addEventListener("focus", function () {
+    this.placeholder = "";
+});
+
+codeInput.addEventListener("blur", function () {
+    if (this.value.trim() === "") {
+        this.placeholder = placeholderText;
+    }
+});
+
 function verifyCode() {
     const input = document.getElementById("departmentCode");
     const error = document.getElementById("codeError");
     const code = input.value.trim().toUpperCase();
 
+    /* Empty field */
+    if (!code) {
+        error.textContent = "You must enter your department code.";
+        error.style.display = "block";
+        return;
+    }
+
+    /* Invalid code */
     if (!departmentCodes[code]) {
         error.textContent = "Invalid department code. Please try again.";
         error.style.display = "block";
@@ -632,6 +699,12 @@ function verifyCode() {
 
     document.getElementById("codeSection").style.display = "none";
     document.getElementById("votingSection").style.display = "block";
+
+    /* Trigger fade-in for the newly shown voting section */
+    requestAnimationFrame(() => {
+        document.getElementById("votingSection").classList.add("visible");
+    });
+
     error.style.display = "none";
 }
 
@@ -681,6 +754,10 @@ function confirmVote() {
     document.getElementById("votingSection").style.display = "none";
     document.getElementById("confirmationBar").style.display = "none";
     document.getElementById("successSection").style.display = "block";
+
+    requestAnimationFrame(() => {
+        document.getElementById("successSection").classList.add("visible");
+    });
 }
 
 document.getElementById("departmentCode").addEventListener("keydown", function(event) {
