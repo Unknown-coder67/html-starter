@@ -302,12 +302,12 @@ nav a:hover {
 
 .candidate {
     background: #FFFFFF;
-    border: 1px solid #dcebf1;
+    border: 2px solid #dcebf1;
     border-radius: 18px;
     padding: 20px;
     text-align: center;
     box-shadow: 0 8px 25px rgba(23, 50, 77, 0.12);
-    transition: 0.25s ease;
+    transition: transform 0.25s ease;
 }
 
 .candidate:hover {
@@ -316,8 +316,8 @@ nav a:hover {
 }
 
 .candidate.selected {
-    border: 2px solid #D79A1E;
-    box-shadow: 0 10px 30px rgba(13, 200, 234, 0.15);
+    border-color: #D79A1E;
+    box-shadow: 0 10px 30px rgba(215, 154, 30, 0.15);
 }
 
 .candidate-image {
@@ -345,7 +345,7 @@ nav a:hover {
 .vote-btn {
     width: 100%;
     height: 45px;
-    border: 1px solid #17171D;
+    border: 2px solid #17171D;
     border-radius: 18px;
     background: transparent;
     color: #17171D;
@@ -358,7 +358,8 @@ nav a:hover {
 }
 
 .candidate.selected .vote-btn {
-    border: 2px solid #D79A1E;
+    border-color: #D79A1E;
+    background: #FFFFFF;
     box-shadow: 0 10px 30px rgba(215, 154, 30, 0.15);
     color: #ffffff;
 }
