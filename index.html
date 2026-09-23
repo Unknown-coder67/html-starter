@@ -21,7 +21,7 @@ body {
 }
 
 header {
-    background: #FFFFFF;
+    background: #0B2A6D;
     border-bottom: none;
     padding: 8px 5%;
 }
@@ -62,30 +62,29 @@ header {
     display: block;
 }
 
-/* Nominate button – bottom left of banner */
+/* Nominate your stars – text only + bold underline */
 .banner-cta {
     position: absolute;
     bottom: 28px;
     left: 5%;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #0DC8EA;
-    color: #fff;
+    display: inline-block;
+    background: none;
     border: none;
-    border-radius: 10px;
-    padding: 14px 26px;
+    border-bottom: 2px solid #ffffff;
+    padding: 22px 0 5px;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 800;
+    color: #ffffff;
     text-decoration: none;
     cursor: pointer;
-    transition: background 0.25s ease, transform 0.2s ease;
+    transition: opacity 0.25s ease, border-color 0.25s ease;
     z-index: 5;
 }
 
 .banner-cta:hover {
-    background: #0bb4d4;
-    transform: translateY(-1px);
+    opacity: 0.85;
+    border-bottom-color: #0DC8EA;
+    color: #0DC8EA;
 }
 
 .main-content {
@@ -290,29 +289,28 @@ header {
     margin: 0;
 }
 
-/* Previous Winners */
+/* Meet Our Winners – text only + bold underline */
 .winners-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #0DC8EA;
-    color: #fff;
+    display: inline-block;
+    background: none;
     border: none;
-    border-radius: 10px;
-    padding: 14px 28px;
+    border-bottom: 2px solid #17324d;
+    padding: 22px 0 5px;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 800;
+    color: #17324d;
     cursor: pointer;
-    transition: background 0.25s ease, transform 0.2s ease;
+    transition: color 0.25s ease, border-color 0.25s ease;
 }
 
 .winners-btn:hover {
-    background: #0bb4d4;
-    transform: translateY(-1px);
+    color: #0DC8EA;
+    border-bottom-color: #0DC8EA;
 }
 
 .winners-btn.active {
-    background: #17324d;
+    color: #0DC8EA;
+    border-bottom-color: #0DC8EA;
 }
 
 .winners-carousel-wrapper {
@@ -442,7 +440,6 @@ header {
     gap: 100px;
 }
 
-/* Old sticky method – only lives inside this section */
 .content-section-nav {
     margin-left: -100px;
     position: sticky;
@@ -599,7 +596,7 @@ footer {
     .banner-cta {
         bottom: 16px;
         left: 4%;
-        padding: 12px 20px;
+        padding: 16px 0 4px;
         font-size: 0.9rem;
     }
     .main-content {
@@ -677,7 +674,6 @@ footer {
         <a href="/">
             <img src="/logo.jpg" alt="Company Logo" class="logo">
         </a>
-        <!-- Home page: no right-side links -->
         <nav class="header-nav"></nav>
     </div>
 </header>
@@ -695,7 +691,6 @@ footer {
         <source src="/banner.mp4" type="video/mp4">
     </video>
 
-    <!-- Nominate your stars → -->
     <a href="/eoq/" class="banner-cta">
         Nominate your stars →
     </a>
@@ -748,7 +743,6 @@ footer {
 
 <!-- ===== UPPER SECTIONS (no sticky nav) ===== -->
 
-<!-- The Next Spotlight -->
 <section class="upper-section fade-in" id="spotlight">
     <p class="section-label">The next spotlight</p>
     <h2>Who's next?</h2>
@@ -768,7 +762,6 @@ footer {
     </div>
 </section>
 
-<!-- How it works -->
 <section class="upper-section fade-in" id="how-it-works">
     <p class="section-label">How it works</p>
     <h2>Every great story starts somewhere</h2>
@@ -815,7 +808,6 @@ footer {
     </div>
 </section>
 
-<!-- Previous Winners -->
 <section class="upper-section fade-in" id="previous-winners">
     <p class="section-label">Previous Winners</p>
     <h2>Our people. Our pride</h2>
@@ -964,7 +956,6 @@ footer {
     </div>
 </section>
 
-<!-- Wide image section -->
 <section class="wide-image-section">
     <img src="/wide-banner.jpg" alt="Wide banner" width="1920" height="220">
 </section>
@@ -975,7 +966,7 @@ footer {
 
 <script>
 
-/* General fade-in for most elements */
+/* General fade-in */
 const fadeElements = document.querySelectorAll(".fade-in:not(#bannerVideo)");
 const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -995,12 +986,11 @@ const bannerObserver = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             entry.target.classList.add("visible");
         } else {
-            // isIntersecting === false only when no pixels remain in view
             entry.target.classList.remove("visible");
         }
     });
 }, {
-    threshold: 0,          // fire as soon as any pixel enters / last pixel leaves
+    threshold: 0,
     rootMargin: "0px"
 });
 bannerObserver.observe(bannerVideo);
@@ -1025,7 +1015,6 @@ const sectionObserver = new IntersectionObserver((entries) => {
 });
 bottomSections.forEach((section) => sectionObserver.observe(section));
 
-/* Smooth scroll for the 2 nav links */
 navLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
         e.preventDefault();
@@ -1057,7 +1046,7 @@ meetBtn.addEventListener("click", () => {
         meetBtn.innerHTML = "Meet Our Winners →";
     } else {
         carouselWrapper.style.display = "block";
-        void carouselWrapper.offsetWidth; // force reflow
+        void carouselWrapper.offsetWidth;
         carouselWrapper.classList.add("visible");
         meetBtn.classList.add("active");
         meetBtn.innerHTML = "Hide Winners ↑";
