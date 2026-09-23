@@ -815,7 +815,7 @@ const fadeObserver = new IntersectionObserver((entries) => {
     });
 }, {
     threshold: 0.15,
-    rootMargin: "-12% 0px -15% 0px"   // delays both scrolling up and scrolling down
+    rootMargin: "-15% 0px -15% 0px"   // delays both scrolling up and scrolling down
 });
 
 fadeElements.forEach((el) => fadeObserver.observe(el));
