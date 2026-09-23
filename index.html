@@ -56,16 +56,27 @@ header {
     position: relative;
     display: block;
     box-sizing: border-box;
-    text-decoration: none;
-    color: #171717; /* keep white on dark header for contrast */
-    font-family: "DM Sans", "DM Sans Fallback", Arial, Helvetica, sans-serif;
-    font-optical-sizing: auto;
-    font-size: 14.4px;
-    font-weight: 750;
-    font-style: normal;
-    line-height: 21.6px;
+    margin: 0;
     padding: 9px 0;
+    border: none;
+    background: none;
+    color: rgb(23, 23, 29);
     cursor: pointer;
+    font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback";
+    font-size: 14.4px;
+    font-style: normal;
+    font-weight: 750;
+    font-feature-settings: normal;
+    font-variation-settings: "opsz" 14, "wght" 750;
+    font-optical-sizing: none; /* opsz controlled explicitly above */
+    line-height: 21.6px;
+    letter-spacing: normal;
+    text-decoration: none;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .header-nav a::after {
