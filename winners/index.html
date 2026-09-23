@@ -804,6 +804,7 @@ footer {
 
 <script>
 const fadeElements = document.querySelectorAll(".fade-in");
+
 const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -812,13 +813,21 @@ const fadeObserver = new IntersectionObserver((entries) => {
             entry.target.classList.remove("visible");
         }
     });
-}, { threshold: 0.1 });
+}, {
+    threshold: 0.15,                    // needs ~15% of the element visible
+    rootMargin: "0px 0px -18% 0px"      // waits until it’s higher in the viewport
+});
 
 fadeElements.forEach((el) => fadeObserver.observe(el));
 
+// Still give the top content a gentle staggered entrance on load
 window.addEventListener("load", () => {
     document.querySelectorAll(".fade-in").forEach((el, index) => {
-        setTimeout(() => el.classList.add("visible"), 50 + index * 70);
+        // Only force-visible if the element is already near the top
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.85) {
+            setTimeout(() => el.classList.add("visible"), 40 + index * 60);
+        }
     });
 });
 </script>
