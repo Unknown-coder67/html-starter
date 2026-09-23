@@ -472,7 +472,7 @@ nav a:hover {
 
 @media (max-width: 800px) {
     .candidates {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .confirmation-inner {
@@ -621,29 +621,7 @@ nav a:hover {
         </div>
 
         <div class="candidates">
-            <div class="candidate" data-name="Ahmed Khaled">
-                <div class="candidate-image">
-                    <img src="/employee1.jpg" alt="Ahmed Khaled">
-                </div>
-                <h3>Ahmed Khaled</h3>
-                <button class="vote-btn" onclick="selectCandidate(this)">Select</button>
-            </div>
-
-            <div class="candidate" data-name="Abdullah Mohammed">
-                <div class="candidate-image">
-                    <img src="/employee2.jpg" alt="Abdullah Mohammed">
-                </div>
-                <h3>Abdullah Mohammed</h3>
-                <button class="vote-btn" onclick="selectCandidate(this)">Select</button>
-            </div>
-
-            <div class="candidate" data-name="Reem Ali">
-                <div class="candidate-image">
-                    <img src="/employee3.jpg" alt="Reem Ali">
-                </div>
-                <h3>Reem Ali</h3>
-                <button class="vote-btn" onclick="selectCandidate(this)">Select</button>
-            </div>
+        <!-- Candidates will be generated dynamically by JavaScript -->
         </div>
     </section>
 
@@ -669,10 +647,321 @@ nav a:hover {
 
 <script>
 const departmentCodes = {
-    "NUR-31PX": "Nursing",
-    "HR-84K2": "Human Resources",
-    "FIN-72QM": "Finance",
-    "IT-56LA": "Information Technology"
+    "NEU-31PX": "Neurology",
+    "PUL-84K2": "Pulmonology",
+    "OPH-72QM": "Ophthalmology",
+    "RAD-56LA": "Radiology",
+    "SUR-19TK": "General Surgery",
+    "NUT-43VW": "Clinical Nutrition",
+    "OBG-88XZ": "Obstetrics and Gynecology",
+    "PMR-27HY": "Physical Medicine and Rehabilitation",
+    "HHC-65BN": "Home Healthcare",
+    "PED-91CF": "Pediatrics",
+    "EMR-34JQ": "Emergency Department",
+    "ORT-77PL": "Orthopedics and Joint Clinic",
+    "ENT-52MD": "Otolaryngology (ENT)",
+    "URO-18KG": "Urology",
+    "DEN-69RT": "Dentistry",
+    "DIA-45WS": "Diabetes Department",
+    "HEM-83YU": "Hematology",
+    "OBE-26FV": "Obesity Department",
+    "AUD-71NX": "Audiology",
+    "FAM-39ZC": "Family Medicine",
+    "ANE-54BH": "Anesthesiology",
+    "GAS-92LM": "Gastroenterology",
+    "OMS-17PQ": "Oral and Maxillofacial Surgery",
+    "CAR-63DJ": "Cardiology"
+};
+
+const departmentEmployees = {
+    "Neurology": [
+        { name: "Sara Al-Harbi", img: "/employee1.jpg" },
+        { name: "Omar Khalid", img: "/employee2.jpg" },
+        { name: "Layla Mansour", img: "/employee3.jpg" },
+        { name: "Yusuf Ibrahim", img: "/employee1.jpg" },
+        { name: "Noura Al-Sayed", img: "/employee2.jpg" },
+        { name: "Faisal Rahman", img: "/employee3.jpg" },
+        { name: "Hanaa Qureshi", img: "/employee1.jpg" },
+        { name: "Khaled Nasser", img: "/employee2.jpg" },
+        { name: "Amira Hassan", img: "/employee3.jpg" },
+        { name: "Tariq Al-Faraj", img: "/employee1.jpg" }
+    ],
+    "Pulmonology": [
+        { name: "Rania Saleh", img: "/employee2.jpg" },
+        { name: "Majed Al-Rashid", img: "/employee3.jpg" },
+        { name: "Dalia Farouk", img: "/employee1.jpg" },
+        { name: "Samir Haddad", img: "/employee2.jpg" },
+        { name: "Lina Al-Mutairi", img: "/employee3.jpg" },
+        { name: "Nasser Al-Otaibi", img: "/employee1.jpg" },
+        { name: "Maha Al-Harbi", img: "/employee2.jpg" },
+        { name: "Ziad Mansour", img: "/employee3.jpg" },
+        { name: "Reem Al-Sayed", img: "/employee1.jpg" },
+        { name: "Hassan Qureshi", img: "/employee2.jpg" }
+    ],
+    "Ophthalmology": [
+        { name: "Sara Al-Harbi", img: "/employee1.jpg" },
+        { name: "Omar Khalid", img: "/employee2.jpg" },
+        { name: "Layla Mansour", img: "/employee3.jpg" },
+        { name: "Yusuf Ibrahim", img: "/employee1.jpg" },
+        { name: "Noura Al-Sayed", img: "/employee2.jpg" },
+        { name: "Faisal Rahman", img: "/employee3.jpg" },
+        { name: "Hanaa Qureshi", img: "/employee1.jpg" },
+        { name: "Khaled Nasser", img: "/employee2.jpg" },
+        { name: "Amira Hassan", img: "/employee3.jpg" },
+        { name: "Tariq Al-Faraj", img: "/employee1.jpg" }
+    ],
+    "Radiology": [
+        { name: "Rania Saleh", img: "/employee2.jpg" },
+        { name: "Majed Al-Rashid", img: "/employee3.jpg" },
+        { name: "Dalia Farouk", img: "/employee1.jpg" },
+        { name: "Samir Haddad", img: "/employee2.jpg" },
+        { name: "Lina Al-Mutairi", img: "/employee3.jpg" },
+        { name: "Nasser Al-Otaibi", img: "/employee1.jpg" },
+        { name: "Maha Al-Harbi", img: "/employee2.jpg" },
+        { name: "Ziad Mansour", img: "/employee3.jpg" },
+        { name: "Reem Al-Sayed", img: "/employee1.jpg" },
+        { name: "Hassan Qureshi", img: "/employee2.jpg" }
+    ],
+    "General Surgery": [
+        { name: "Sara Al-Harbi", img: "/employee1.jpg" },
+        { name: "Omar Khalid", img: "/employee2.jpg" },
+        { name: "Layla Mansour", img: "/employee3.jpg" },
+        { name: "Yusuf Ibrahim", img: "/employee1.jpg" },
+        { name: "Noura Al-Sayed", img: "/employee2.jpg" },
+        { name: "Faisal Rahman", img: "/employee3.jpg" },
+        { name: "Hanaa Qureshi", img: "/employee1.jpg" },
+        { name: "Khaled Nasser", img: "/employee2.jpg" },
+        { name: "Amira Hassan", img: "/employee3.jpg" },
+        { name: "Tariq Al-Faraj", img: "/employee1.jpg" }
+    ],
+    "Clinical Nutrition": [
+        { name: "Rania Saleh", img: "/employee2.jpg" },
+        { name: "Majed Al-Rashid", img: "/employee3.jpg" },
+        { name: "Dalia Farouk", img: "/employee1.jpg" },
+        { name: "Samir Haddad", img: "/employee2.jpg" },
+        { name: "Lina Al-Mutairi", img: "/employee3.jpg" },
+        { name: "Nasser Al-Otaibi", img: "/employee1.jpg" },
+        { name: "Maha Al-Harbi", img: "/employee2.jpg" },
+        { name: "Ziad Mansour", img: "/employee3.jpg" },
+        { name: "Reem Al-Sayed", img: "/employee1.jpg" },
+        { name: "Hassan Qureshi", img: "/employee2.jpg" }
+    ],
+    "Obstetrics and Gynecology": [
+        { name: "Sara Al-Harbi", img: "/employee1.jpg" },
+        { name: "Omar Khalid", img: "/employee2.jpg" },
+        { name: "Layla Mansour", img: "/employee3.jpg" },
+        { name: "Yusuf Ibrahim", img: "/employee1.jpg" },
+        { name: "Noura Al-Sayed", img: "/employee2.jpg" },
+        { name: "Faisal Rahman", img: "/employee3.jpg" },
+        { name: "Hanaa Qureshi", img: "/employee1.jpg" },
+        { name: "Khaled Nasser", img: "/employee2.jpg" },
+        { name: "Amira Hassan", img: "/employee3.jpg" },
+        { name: "Tariq Al-Faraj", img: "/employee1.jpg" }
+    ],
+    "Physical Medicine and Rehabilitation": [
+        { name: "Rania Saleh", img: "/employee2.jpg" },
+        { name: "Majed Al-Rashid", img: "/employee3.jpg" },
+        { name: "Dalia Farouk", img: "/employee1.jpg" },
+        { name: "Samir Haddad", img: "/employee2.jpg" },
+        { name: "Lina Al-Mutairi", img: "/employee3.jpg" },
+        { name: "Nasser Al-Otaibi", img: "/employee1.jpg" },
+        { name: "Maha Al-Harbi", img: "/employee2.jpg" },
+        { name: "Ziad Mansour", img: "/employee3.jpg" },
+        { name: "Reem Al-Sayed", img: "/employee1.jpg" },
+        { name: "Hassan Qureshi", img: "/employee2.jpg" }
+    ],
+    "Home Healthcare": [
+        { name: "Sara Al-Harbi", img: "/employee1.jpg" },
+        { name: "Omar Khalid", img: "/employee2.jpg" },
+        { name: "Layla Mansour", img: "/employee3.jpg" },
+        { name: "Yusuf Ibrahim", img: "/employee1.jpg" },
+        { name: "Noura Al-Sayed", img: "/employee2.jpg" },
+        { name: "Faisal Rahman", img: "/employee3.jpg" },
+        { name: "Hanaa Qureshi", img: "/employee1.jpg" },
+        { name: "Khaled Nasser", img: "/employee2.jpg" },
+        { name: "Amira Hassan", img: "/employee3.jpg" },
+        { name: "Tariq Al-Faraj", img: "/employee1.jpg" }
+    ],
+    "Pediatrics": [
+        { name: "Rania Saleh", img: "/employee2.jpg" },
+        { name: "Majed Al-Rashid", img: "/employee3.jpg" },
+        { name: "Dalia Farouk", img: "/employee1.jpg" },
+        { name: "Samir Haddad", img: "/employee2.jpg" },
+        { name: "Lina Al-Mutairi", img: "/employee3.jpg" },
+        { name: "Nasser Al-Otaibi", img: "/employee1.jpg" },
+        { name: "Maha Al-Harbi", img: "/employee2.jpg" },
+        { name: "Ziad Mansour", img: "/employee3.jpg" },
+        { name: "Reem Al-Sayed", img: "/employee1.jpg" },
+        { name: "Hassan Qureshi", img: "/employee2.jpg" }
+    ],
+    "Emergency Department": [
+        { name: "Sara Al-Harbi", img: "/employee1.jpg" },
+        { name: "Omar Khalid", img: "/employee2.jpg" },
+        { name: "Layla Mansour", img: "/employee3.jpg" },
+        { name: "Yusuf Ibrahim", img: "/employee1.jpg" },
+        { name: "Noura Al-Sayed", img: "/employee2.jpg" },
+        { name: "Faisal Rahman", img: "/employee3.jpg" },
+        { name: "Hanaa Qureshi", img: "/employee1.jpg" },
+        { name: "Khaled Nasser", img: "/employee2.jpg" },
+        { name: "Amira Hassan", img: "/employee3.jpg" },
+        { name: "Tariq Al-Faraj", img: "/employee1.jpg" }
+    ],
+    "Orthopedics and Joint Clinic": [
+        { name: "Rania Saleh", img: "/employee2.jpg" },
+        { name: "Majed Al-Rashid", img: "/employee3.jpg" },
+        { name: "Dalia Farouk", img: "/employee1.jpg" },
+        { name: "Samir Haddad", img: "/employee2.jpg" },
+        { name: "Lina Al-Mutairi", img: "/employee3.jpg" },
+        { name: "Nasser Al-Otaibi", img: "/employee1.jpg" },
+        { name: "Maha Al-Harbi", img: "/employee2.jpg" },
+        { name: "Ziad Mansour", img: "/employee3.jpg" },
+        { name: "Reem Al-Sayed", img: "/employee1.jpg" },
+        { name: "Hassan Qureshi", img: "/employee2.jpg" }
+    ],
+    "Otolaryngology (ENT)": [
+        { name: "Sara Al-Harbi", img: "/employee1.jpg" },
+        { name: "Omar Khalid", img: "/employee2.jpg" },
+        { name: "Layla Mansour", img: "/employee3.jpg" },
+        { name: "Yusuf Ibrahim", img: "/employee1.jpg" },
+        { name: "Noura Al-Sayed", img: "/employee2.jpg" },
+        { name: "Faisal Rahman", img: "/employee3.jpg" },
+        { name: "Hanaa Qureshi", img: "/employee1.jpg" },
+        { name: "Khaled Nasser", img: "/employee2.jpg" },
+        { name: "Amira Hassan", img: "/employee3.jpg" },
+        { name: "Tariq Al-Faraj", img: "/employee1.jpg" }
+    ],
+    "Urology": [
+        { name: "Rania Saleh", img: "/employee2.jpg" },
+        { name: "Majed Al-Rashid", img: "/employee3.jpg" },
+        { name: "Dalia Farouk", img: "/employee1.jpg" },
+        { name: "Samir Haddad", img: "/employee2.jpg" },
+        { name: "Lina Al-Mutairi", img: "/employee3.jpg" },
+        { name: "Nasser Al-Otaibi", img: "/employee1.jpg" },
+        { name: "Maha Al-Harbi", img: "/employee2.jpg" },
+        { name: "Ziad Mansour", img: "/employee3.jpg" },
+        { name: "Reem Al-Sayed", img: "/employee1.jpg" },
+        { name: "Hassan Qureshi", img: "/employee2.jpg" }
+    ],
+    "Dentistry": [
+        { name: "Sara Al-Harbi", img: "/employee1.jpg" },
+        { name: "Omar Khalid", img: "/employee2.jpg" },
+        { name: "Layla Mansour", img: "/employee3.jpg" },
+        { name: "Yusuf Ibrahim", img: "/employee1.jpg" },
+        { name: "Noura Al-Sayed", img: "/employee2.jpg" },
+        { name: "Faisal Rahman", img: "/employee3.jpg" },
+        { name: "Hanaa Qureshi", img: "/employee1.jpg" },
+        { name: "Khaled Nasser", img: "/employee2.jpg" },
+        { name: "Amira Hassan", img: "/employee3.jpg" },
+        { name: "Tariq Al-Faraj", img: "/employee1.jpg" }
+    ],
+    "Diabetes Department": [
+        { name: "Rania Saleh", img: "/employee2.jpg" },
+        { name: "Majed Al-Rashid", img: "/employee3.jpg" },
+        { name: "Dalia Farouk", img: "/employee1.jpg" },
+        { name: "Samir Haddad", img: "/employee2.jpg" },
+        { name: "Lina Al-Mutairi", img: "/employee3.jpg" },
+        { name: "Nasser Al-Otaibi", img: "/employee1.jpg" },
+        { name: "Maha Al-Harbi", img: "/employee2.jpg" },
+        { name: "Ziad Mansour", img: "/employee3.jpg" },
+        { name: "Reem Al-Sayed", img: "/employee1.jpg" },
+        { name: "Hassan Qureshi", img: "/employee2.jpg" }
+    ],
+    "Hematology": [
+        { name: "Sara Al-Harbi", img: "/employee1.jpg" },
+        { name: "Omar Khalid", img: "/employee2.jpg" },
+        { name: "Layla Mansour", img: "/employee3.jpg" },
+        { name: "Yusuf Ibrahim", img: "/employee1.jpg" },
+        { name: "Noura Al-Sayed", img: "/employee2.jpg" },
+        { name: "Faisal Rahman", img: "/employee3.jpg" },
+        { name: "Hanaa Qureshi", img: "/employee1.jpg" },
+        { name: "Khaled Nasser", img: "/employee2.jpg" },
+        { name: "Amira Hassan", img: "/employee3.jpg" },
+        { name: "Tariq Al-Faraj", img: "/employee1.jpg" }
+    ],
+    "Obesity Department": [
+        { name: "Rania Saleh", img: "/employee2.jpg" },
+        { name: "Majed Al-Rashid", img: "/employee3.jpg" },
+        { name: "Dalia Farouk", img: "/employee1.jpg" },
+        { name: "Samir Haddad", img: "/employee2.jpg" },
+        { name: "Lina Al-Mutairi", img: "/employee3.jpg" },
+        { name: "Nasser Al-Otaibi", img: "/employee1.jpg" },
+        { name: "Maha Al-Harbi", img: "/employee2.jpg" },
+        { name: "Ziad Mansour", img: "/employee3.jpg" },
+        { name: "Reem Al-Sayed", img: "/employee1.jpg" },
+        { name: "Hassan Qureshi", img: "/employee2.jpg" }
+    ],
+    "Audiology": [
+        { name: "Sara Al-Harbi", img: "/employee1.jpg" },
+        { name: "Omar Khalid", img: "/employee2.jpg" },
+        { name: "Layla Mansour", img: "/employee3.jpg" },
+        { name: "Yusuf Ibrahim", img: "/employee1.jpg" },
+        { name: "Noura Al-Sayed", img: "/employee2.jpg" },
+        { name: "Faisal Rahman", img: "/employee3.jpg" },
+        { name: "Hanaa Qureshi", img: "/employee1.jpg" },
+        { name: "Khaled Nasser", img: "/employee2.jpg" },
+        { name: "Amira Hassan", img: "/employee3.jpg" },
+        { name: "Tariq Al-Faraj", img: "/employee1.jpg" }
+    ],
+    "Family Medicine": [
+        { name: "Rania Saleh", img: "/employee2.jpg" },
+        { name: "Majed Al-Rashid", img: "/employee3.jpg" },
+        { name: "Dalia Farouk", img: "/employee1.jpg" },
+        { name: "Samir Haddad", img: "/employee2.jpg" },
+        { name: "Lina Al-Mutairi", img: "/employee3.jpg" },
+        { name: "Nasser Al-Otaibi", img: "/employee1.jpg" },
+        { name: "Maha Al-Harbi", img: "/employee2.jpg" },
+        { name: "Ziad Mansour", img: "/employee3.jpg" },
+        { name: "Reem Al-Sayed", img: "/employee1.jpg" },
+        { name: "Hassan Qureshi", img: "/employee2.jpg" }
+    ],
+    "Anesthesiology": [
+        { name: "Sara Al-Harbi", img: "/employee1.jpg" },
+        { name: "Omar Khalid", img: "/employee2.jpg" },
+        { name: "Layla Mansour", img: "/employee3.jpg" },
+        { name: "Yusuf Ibrahim", img: "/employee1.jpg" },
+        { name: "Noura Al-Sayed", img: "/employee2.jpg" },
+        { name: "Faisal Rahman", img: "/employee3.jpg" },
+        { name: "Hanaa Qureshi", img: "/employee1.jpg" },
+        { name: "Khaled Nasser", img: "/employee2.jpg" },
+        { name: "Amira Hassan", img: "/employee3.jpg" },
+        { name: "Tariq Al-Faraj", img: "/employee1.jpg" }
+    ],
+    "Gastroenterology": [
+        { name: "Rania Saleh", img: "/employee2.jpg" },
+        { name: "Majed Al-Rashid", img: "/employee3.jpg" },
+        { name: "Dalia Farouk", img: "/employee1.jpg" },
+        { name: "Samir Haddad", img: "/employee2.jpg" },
+        { name: "Lina Al-Mutairi", img: "/employee3.jpg" },
+        { name: "Nasser Al-Otaibi", img: "/employee1.jpg" },
+        { name: "Maha Al-Harbi", img: "/employee2.jpg" },
+        { name: "Ziad Mansour", img: "/employee3.jpg" },
+        { name: "Reem Al-Sayed", img: "/employee1.jpg" },
+        { name: "Hassan Qureshi", img: "/employee2.jpg" }
+    ],
+    "Oral and Maxillofacial Surgery": [
+        { name: "Sara Al-Harbi", img: "/employee1.jpg" },
+        { name: "Omar Khalid", img: "/employee2.jpg" },
+        { name: "Layla Mansour", img: "/employee3.jpg" },
+        { name: "Yusuf Ibrahim", img: "/employee1.jpg" },
+        { name: "Noura Al-Sayed", img: "/employee2.jpg" },
+        { name: "Faisal Rahman", img: "/employee3.jpg" },
+        { name: "Hanaa Qureshi", img: "/employee1.jpg" },
+        { name: "Khaled Nasser", img: "/employee2.jpg" },
+        { name: "Amira Hassan", img: "/employee3.jpg" },
+        { name: "Tariq Al-Faraj", img: "/employee1.jpg" }
+    ],
+    "Cardiology": [
+        { name: "Rania Saleh", img: "/employee2.jpg" },
+        { name: "Majed Al-Rashid", img: "/employee3.jpg" },
+        { name: "Dalia Farouk", img: "/employee1.jpg" },
+        { name: "Samir Haddad", img: "/employee2.jpg" },
+        { name: "Lina Al-Mutairi", img: "/employee3.jpg" },
+        { name: "Nasser Al-Otaibi", img: "/employee1.jpg" },
+        { name: "Maha Al-Harbi", img: "/employee2.jpg" },
+        { name: "Ziad Mansour", img: "/employee3.jpg" },
+        { name: "Reem Al-Sayed", img: "/employee1.jpg" },
+        { name: "Hassan Qureshi", img: "/employee2.jpg" }
+    ],
 };
 
 let currentDepartment = "";
@@ -720,15 +1009,14 @@ function verifyCode() {
     const code = input.value.trim().toUpperCase();
     const codeSection = document.getElementById("codeSection");
     const votingSection = document.getElementById("votingSection");
+    const candidatesContainer = document.querySelector(".candidates");
 
-    /* Empty field */
     if (!code) {
         error.textContent = "You must enter your department code.";
         error.style.display = "block";
         return;
     }
 
-    /* Invalid code */
     if (!departmentCodes[code]) {
         error.textContent = "Invalid department code. Please try again.";
         error.style.display = "block";
@@ -744,18 +1032,32 @@ function verifyCode() {
     }
 
     currentDepartment = code;
-    document.getElementById("departmentBadge").textContent =
-        departmentCodes[code] + " Department";
+    const deptName = departmentCodes[code];
+    document.getElementById("departmentBadge").textContent = deptName + " Department";
+
+    // Clear previous candidates
+    candidatesContainer.innerHTML = "";
+
+    // Generate the 10 employees for this department
+    const employees = departmentEmployees[deptName] || [];
+    employees.forEach(emp => {
+        const card = document.createElement("div");
+        card.className = "candidate";
+        card.dataset.name = emp.name;
+        card.innerHTML = `
+            <div class="candidate-image">
+                <img src="${emp.img}" alt="${emp.name}">
+            </div>
+            <h3>${emp.name}</h3>
+            <button class="vote-btn" onclick="selectCandidate(this)">Select</button>
+        `;
+        candidatesContainer.appendChild(card);
+    });
 
     error.style.display = "none";
-
-    /* Remove box-shadow from code section */
     codeSection.classList.add("expanded");
-
-    /* Show voting section BELOW with fade + slide animation */
     votingSection.classList.add("visible");
 
-    /* Smoothly bring the new voting section into view */
     setTimeout(() => {
         votingSection.scrollIntoView({
             behavior: "smooth",
