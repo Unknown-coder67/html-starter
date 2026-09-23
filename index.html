@@ -43,22 +43,9 @@ header {
     transform: translate(-8px, 3px);
 }
 
-/* On Home page the right-side nav links are hidden */
+/* Home page: no right-side nav links */
 .header-nav {
     display: none;
-}
-
-.header-nav a {
-    position: relative;
-    text-decoration: none;
-    color: #ffffff;
-    font-weight: 600;
-    padding: 8px 2px;
-    transition: color 0.25s ease;
-}
-
-.header-nav a:hover {
-    color: #0DC8EA;
 }
 
 .banner {
@@ -174,87 +161,21 @@ header {
     font-weight: 600;
 }
 
-/* ===== CONTENT SECTION (old sticky nav style) ===== */
-.content-section {
-    position: relative;
-    width: 100%;
-    padding: 110px 0 120px;
-    border-top: 1px solid #dcebf1;
-    background: #FFFFFF;
-}
-
-.content-layout {
-    width: 100%;
-    max-width: 1500px;
-    margin: 0 auto;
-    padding: 0 40px;
-    display: flex;
-    align-items: flex-start;
-    gap: 100px;
-}
-
-/* Old sticky method */
-.content-section-nav {
-    margin-left: -100px;
-    position: sticky;
-    top: 35vh;
-    flex: 0 0 230px;
-    width: 230px;
-    z-index: 10;
-}
-
-.content-section-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.content-section-nav li {
-    margin-bottom: 20px;
-}
-
-.content-section-nav a {
-    display: flex;
-    align-items: center;
-    position: relative;
-    color: #718896;
-    text-decoration: none;
-    font-size: 1.05rem;
-    font-weight: 600;
-    line-height: 1.4;
-    padding: 7px 0 7px 16px;
-    border-left: 2px solid transparent;
-    transition: color 0.25s ease, border-color 0.25s ease;
-}
-
-.content-section-nav a:hover {
-    color: #0DC8EA;
-}
-
-.content-section-nav a.active {
-    color: #0DC8EA;
-    border-left-color: #0DC8EA;
-}
-
-.content-main {
-    flex: 1;
-    max-width: 950px;
-}
-
-/* Centered blocks */
-.content-block.centered {
+/* ===== Upper sections (no sticky nav) ===== */
+.upper-section {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto 90px;
     text-align: center;
-    margin-bottom: 100px;
-    scroll-margin-top: 120px;
 }
 
-.content-block.centered .section-label {
+.upper-section .section-label {
     color: #557083;
     font-size: 1rem;
     margin-bottom: 6px;
 }
 
-.content-block.centered h2 {
+.upper-section h2 {
     color: #17324d;
     font-size: clamp(2.2rem, 5vw, 3.5rem);
     font-weight: normal;
@@ -262,48 +183,12 @@ header {
     line-height: 1.2;
 }
 
-.content-block.centered .section-desc {
+.upper-section .section-desc {
     color: #557083;
     font-size: 1.05rem;
     line-height: 1.7;
     max-width: 620px;
     margin: 0 auto 28px;
-}
-
-/* Left-aligned About blocks */
-.content-block.left {
-    text-align: left;
-    margin-bottom: 100px;
-    scroll-margin-top: 120px;
-}
-
-.content-block.left .section-label {
-    color: #557083;
-    font-size: 1rem;
-    margin-bottom: 4px;
-}
-
-.content-block.left h2 {
-    color: #17324d;
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
-    font-weight: normal;
-    margin: 6px 0 12px;
-    line-height: 1.2;
-}
-
-.content-block.left h3 {
-    color: #17324d;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: normal;
-    line-height: 1.15;
-    margin-bottom: 20px;
-}
-
-.content-block.left p {
-    color: #557083;
-    font-size: 1rem;
-    line-height: 1.8;
-    max-width: 800px;
 }
 
 /* Spotlight box */
@@ -538,7 +423,95 @@ header {
     pointer-events: none;
 }
 
-/* Wide bottom image section */
+/* ===== BOTTOM SECTION WITH STICKY NAV (only 2 items) ===== */
+.content-section {
+    position: relative;
+    width: 100%;
+    padding: 110px 0 120px;
+    border-top: 1px solid #dcebf1;
+    background: #FFFFFF;
+}
+
+.content-layout {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    align-items: flex-start;
+    gap: 100px;
+}
+
+/* Old sticky method – only lives inside this section */
+.content-section-nav {
+    margin-left: -100px;
+    position: sticky;
+    top: 35vh;
+    flex: 0 0 230px;
+    width: 230px;
+    z-index: 10;
+}
+
+.content-section-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.content-section-nav li {
+    margin-bottom: 20px;
+}
+
+.content-section-nav a {
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: #718896;
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.4;
+    padding: 7px 0 7px 16px;
+    border-left: 2px solid transparent;
+    transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.content-section-nav a:hover {
+    color: #0DC8EA;
+}
+
+.content-section-nav a.active {
+    color: #0DC8EA;
+    border-left-color: #0DC8EA;
+}
+
+.content-main {
+    flex: 1;
+    max-width: 950px;
+}
+
+.content-block {
+    text-align: left;
+    margin-bottom: 100px;
+    scroll-margin-top: 120px;
+}
+
+.content-block h3 {
+    color: #17324d;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: normal;
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+
+.content-block p {
+    color: #557083;
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 800px;
+}
+
+/* Wide bottom image */
 .wide-image-section {
     width: 100%;
     margin: 0;
@@ -562,7 +535,7 @@ footer {
     background: #0B2A6D;
 }
 
-/* Longer fade-in (0.8s + 0.5s = 1.3s) */
+/* Longer fade-in (1.3s) */
 .fade-in {
     opacity: 0;
     transform: translateY(35px);
@@ -645,21 +618,23 @@ footer {
     .card {
         padding: 20px;
     }
+    .upper-section {
+        width: 94%;
+        margin-bottom: 70px;
+    }
+    .upper-section h2 {
+        font-size: 2rem;
+    }
     .content-section {
         padding: 80px 0 90px;
     }
     .content-layout {
         width: 94%;
     }
-    .content-block.centered,
-    .content-block.left {
+    .content-block {
         margin-bottom: 75px;
     }
-    .content-block.centered h2,
-    .content-block.left h2 {
-        font-size: 2rem;
-    }
-    .content-block.left h3 {
+    .content-block h3 {
         font-size: 2rem;
     }
     .how-point {
@@ -702,11 +677,8 @@ footer {
         <a href="/">
             <img src="/logo.jpg" alt="Company Logo" class="logo">
         </a>
-
         <!-- Home page: no right-side links -->
-        <nav class="header-nav">
-            <!-- Intentionally empty on Home -->
-        </nav>
+        <nav class="header-nav"></nav>
     </div>
 </header>
 
@@ -716,15 +688,16 @@ footer {
         muted
         loop
         playsinline
+        id="bannerVideo"
         class="fade-in"
         aria-label="Company Banner"
     >
         <source src="/banner.mp4" type="video/mp4">
     </video>
 
-    <!-- Nominate your stars – bottom left of banner -->
+    <!-- Nominate your stars → -->
     <a href="/eoq/" class="banner-cta">
-        Nominate your stars
+        Nominate your stars →
     </a>
 </div>
 
@@ -773,57 +746,203 @@ footer {
 
 </main>
 
-<!-- ===== CONTENT SECTION WITH OLD STICKY NAV ===== -->
+<!-- ===== UPPER SECTIONS (no sticky nav) ===== -->
+
+<!-- The Next Spotlight -->
+<section class="upper-section fade-in" id="spotlight">
+    <p class="section-label">The next spotlight</p>
+    <h2>Who's next?</h2>
+    <p class="section-desc">
+        A new chapter of excellence is waiting to unfold.
+    </p>
+
+    <div class="spotlight-box">
+        <div class="spotlight-box-image">
+            <img src="/spotlight.jpg" alt="Next spotlight">
+        </div>
+        <p class="spotlight-box-text">Your name could be here</p>
+        <p class="spotlight-box-text">Recognized for outstanding impact</p>
+        <p class="spotlight-box-text">Making a difference every day</p>
+        <hr class="spotlight-box-divider">
+        <p class="spotlight-box-footer">Nominate someone who inspires you</p>
+    </div>
+</section>
+
+<!-- How it works -->
+<section class="upper-section fade-in" id="how-it-works">
+    <p class="section-label">How it works</p>
+    <h2>Every great story starts somewhere</h2>
+
+    <div class="how-points-wrap">
+        <div class="how-point">
+            <div class="how-point-image">
+                <img src="/step1.jpg" alt="Step 1">
+            </div>
+            <div class="how-point-content">
+                <div class="how-point-title">Nominate someone special</div>
+                <p class="how-point-desc">
+                    Share the story of a colleague who goes above and beyond. Tell us what they did and why it mattered.
+                </p>
+            </div>
+        </div>
+        <hr class="how-point-divider">
+
+        <div class="how-point">
+            <div class="how-point-image">
+                <img src="/step2.jpg" alt="Step 2">
+            </div>
+            <div class="how-point-content">
+                <div class="how-point-title">We review every nomination</div>
+                <p class="how-point-desc">
+                    Each submission is carefully reviewed so that meaningful contributions are recognized fairly and thoughtfully.
+                </p>
+            </div>
+        </div>
+        <hr class="how-point-divider">
+
+        <div class="how-point">
+            <div class="how-point-image">
+                <img src="/step3.jpg" alt="Step 3">
+            </div>
+            <div class="how-point-content">
+                <div class="how-point-title">Celebrate the difference made</div>
+                <p class="how-point-desc">
+                    Winners are announced and celebrated, shining a light on the people who inspire us every day.
+                </p>
+            </div>
+        </div>
+        <hr class="how-point-divider">
+    </div>
+</section>
+
+<!-- Previous Winners -->
+<section class="upper-section fade-in" id="previous-winners">
+    <p class="section-label">Previous Winners</p>
+    <h2>Our people. Our pride</h2>
+    <p class="section-desc">
+        Meet the colleagues whose dedication, care and excellence have already been recognized.
+        Their stories continue to inspire us all.
+    </p>
+
+    <button class="winners-btn" id="meetWinnersBtn">
+        Meet Our Winners →
+    </button>
+
+    <div class="winners-carousel-wrapper fade-in" id="winnersCarousel">
+        <button class="carousel-arrow left hidden" id="prevArrow" aria-label="Previous winners">‹</button>
+
+        <div class="winners-carousel" id="winnersTrack">
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner1.jpg" alt="Winner 1"></div>
+                <h3>Sara Al-Harbi</h3>
+                <div class="winner-role">Q1 2025</div>
+                <p>Exceptional patient care and teamwork.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner2.jpg" alt="Winner 2"></div>
+                <h3>Omar Khalid</h3>
+                <div class="winner-role">Q4 2024</div>
+                <p>Outstanding leadership and innovation.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner3.jpg" alt="Winner 3"></div>
+                <h3>Layla Mansour</h3>
+                <div class="winner-role">Q3 2024</div>
+                <p>Compassionate support that made a difference.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner4.jpg" alt="Winner 4"></div>
+                <h3>Yusuf Ibrahim</h3>
+                <div class="winner-role">Q2 2024</div>
+                <p>Going above and beyond every single day.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner5.jpg" alt="Winner 5"></div>
+                <h3>Noura Al-Sayed</h3>
+                <div class="winner-role">Q1 2024</div>
+                <p>Excellence in clinical practice and mentoring.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner6.jpg" alt="Winner 6"></div>
+                <h3>Faisal Rahman</h3>
+                <div class="winner-role">Q4 2023</div>
+                <p>Reliable, dedicated and always ready to help.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner7.jpg" alt="Winner 7"></div>
+                <h3>Hanaa Qureshi</h3>
+                <div class="winner-role">Q3 2023</div>
+                <p>Creating a positive environment for everyone.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner8.jpg" alt="Winner 8"></div>
+                <h3>Khaled Nasser</h3>
+                <div class="winner-role">Q2 2023</div>
+                <p>Innovative solutions that improved care.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner9.jpg" alt="Winner 9"></div>
+                <h3>Amira Hassan</h3>
+                <div class="winner-role">Q1 2023</div>
+                <p>Warmth, professionalism and true dedication.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner10.jpg" alt="Winner 10"></div>
+                <h3>Tariq Al-Faraj</h3>
+                <div class="winner-role">Q4 2022</div>
+                <p>Consistent excellence and quiet leadership.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner11.jpg" alt="Winner 11"></div>
+                <h3>Rania Saleh</h3>
+                <div class="winner-role">Q3 2022</div>
+                <p>Making every patient feel seen and cared for.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner12.jpg" alt="Winner 12"></div>
+                <h3>Majed Al-Rashid</h3>
+                <div class="winner-role">Q2 2022</div>
+                <p>Teamwork and commitment that lifted everyone.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner13.jpg" alt="Winner 13"></div>
+                <h3>Dalia Farouk</h3>
+                <div class="winner-role">Q1 2022</div>
+                <p>Compassion in action, every single shift.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner14.jpg" alt="Winner 14"></div>
+                <h3>Samir Haddad</h3>
+                <div class="winner-role">Q4 2021</div>
+                <p>Reliability and excellence that set the standard.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner15.jpg" alt="Winner 15"></div>
+                <h3>Lina Al-Mutairi</h3>
+                <div class="winner-role">Q3 2021</div>
+                <p>A true role model of care and dedication.</p>
+            </div>
+        </div>
+
+        <button class="carousel-arrow right" id="nextArrow" aria-label="Next winners">›</button>
+    </div>
+</section>
+
+<!-- ===== BOTTOM SECTION – sticky nav only here (2 placeholders) ===== -->
 <section class="content-section">
 
     <div class="content-layout">
 
-        <!-- Sticky side navigation – numbered placeholders only -->
         <nav class="content-section-nav">
             <ul>
                 <li>
-                    <a href="#spotlight" class="active">
+                    <a href="#section-1" class="active">
                         <span>1. Placeholder</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#how-it-works">
+                    <a href="#section-2">
                         <span>2. Placeholder</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#previous-winners">
-                        <span>3. Placeholder</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#about-intro">
-                        <span>4. Placeholder</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#purpose">
-                        <span>5. Placeholder</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#recognition">
-                        <span>6. Placeholder</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#celebrate">
-                        <span>7. Placeholder</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#goal">
-                        <span>8. Placeholder</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#contribution">
-                        <span>9. Placeholder</span>
                     </a>
                 </li>
             </ul>
@@ -831,253 +950,21 @@ footer {
 
         <div class="content-main">
 
-            <!-- The Next Spotlight -->
-            <section class="content-block centered fade-in" id="spotlight">
-                <p class="section-label">The next spotlight</p>
-                <h2>Who's next?</h2>
-                <p class="section-desc">
-                    A new chapter of excellence is waiting to unfold.
-                </p>
-
-                <div class="spotlight-box">
-                    <div class="spotlight-box-image">
-                        <img src="/spotlight.jpg" alt="Next spotlight">
-                    </div>
-                    <p class="spotlight-box-text">Your name could be here</p>
-                    <p class="spotlight-box-text">Recognized for outstanding impact</p>
-                    <p class="spotlight-box-text">Making a difference every day</p>
-                    <hr class="spotlight-box-divider">
-                    <p class="spotlight-box-footer">Nominate someone who inspires you</p>
-                </div>
+            <section class="content-block fade-in" id="section-1">
+                <h3>Title</h3>
+                <p>Description.</p>
             </section>
 
-            <!-- How it works -->
-            <section class="content-block centered fade-in" id="how-it-works">
-                <p class="section-label">How it works</p>
-                <h2>Every great story starts somewhere</h2>
-
-                <div class="how-points-wrap">
-                    <div class="how-point">
-                        <div class="how-point-image">
-                            <img src="/step1.jpg" alt="Step 1">
-                        </div>
-                        <div class="how-point-content">
-                            <div class="how-point-title">Nominate someone special</div>
-                            <p class="how-point-desc">
-                                Share the story of a colleague who goes above and beyond. Tell us what they did and why it mattered.
-                            </p>
-                        </div>
-                    </div>
-                    <hr class="how-point-divider">
-
-                    <div class="how-point">
-                        <div class="how-point-image">
-                            <img src="/step2.jpg" alt="Step 2">
-                        </div>
-                        <div class="how-point-content">
-                            <div class="how-point-title">We review every nomination</div>
-                            <p class="how-point-desc">
-                                Each submission is carefully reviewed so that meaningful contributions are recognized fairly and thoughtfully.
-                            </p>
-                        </div>
-                    </div>
-                    <hr class="how-point-divider">
-
-                    <div class="how-point">
-                        <div class="how-point-image">
-                            <img src="/step3.jpg" alt="Step 3">
-                        </div>
-                        <div class="how-point-content">
-                            <div class="how-point-title">Celebrate the difference made</div>
-                            <p class="how-point-desc">
-                                Winners are announced and celebrated, shining a light on the people who inspire us every day.
-                            </p>
-                        </div>
-                    </div>
-                    <hr class="how-point-divider">
-                </div>
-            </section>
-
-            <!-- Previous Winners -->
-            <section class="content-block centered fade-in" id="previous-winners">
-                <p class="section-label">Previous Winners</p>
-                <h2>Our people. Our pride</h2>
-                <p class="section-desc">
-                    Meet the colleagues whose dedication, care and excellence have already been recognized.
-                    Their stories continue to inspire us all.
-                </p>
-
-                <button class="winners-btn" id="meetWinnersBtn">
-                    Meet Our Winners →
-                </button>
-
-                <div class="winners-carousel-wrapper fade-in" id="winnersCarousel">
-                    <button class="carousel-arrow left hidden" id="prevArrow" aria-label="Previous winners">‹</button>
-
-                    <div class="winners-carousel" id="winnersTrack">
-                        <div class="winner-card">
-                            <div class="winner-card-image"><img src="/winner1.jpg" alt="Winner 1"></div>
-                            <h3>Sara Al-Harbi</h3>
-                            <div class="winner-role">Q1 2025</div>
-                            <p>Exceptional patient care and teamwork.</p>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-card-image"><img src="/winner2.jpg" alt="Winner 2"></div>
-                            <h3>Omar Khalid</h3>
-                            <div class="winner-role">Q4 2024</div>
-                            <p>Outstanding leadership and innovation.</p>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-card-image"><img src="/winner3.jpg" alt="Winner 3"></div>
-                            <h3>Layla Mansour</h3>
-                            <div class="winner-role">Q3 2024</div>
-                            <p>Compassionate support that made a difference.</p>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-card-image"><img src="/winner4.jpg" alt="Winner 4"></div>
-                            <h3>Yusuf Ibrahim</h3>
-                            <div class="winner-role">Q2 2024</div>
-                            <p>Going above and beyond every single day.</p>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-card-image"><img src="/winner5.jpg" alt="Winner 5"></div>
-                            <h3>Noura Al-Sayed</h3>
-                            <div class="winner-role">Q1 2024</div>
-                            <p>Excellence in clinical practice and mentoring.</p>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-card-image"><img src="/winner6.jpg" alt="Winner 6"></div>
-                            <h3>Faisal Rahman</h3>
-                            <div class="winner-role">Q4 2023</div>
-                            <p>Reliable, dedicated and always ready to help.</p>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-card-image"><img src="/winner7.jpg" alt="Winner 7"></div>
-                            <h3>Hanaa Qureshi</h3>
-                            <div class="winner-role">Q3 2023</div>
-                            <p>Creating a positive environment for everyone.</p>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-card-image"><img src="/winner8.jpg" alt="Winner 8"></div>
-                            <h3>Khaled Nasser</h3>
-                            <div class="winner-role">Q2 2023</div>
-                            <p>Innovative solutions that improved care.</p>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-card-image"><img src="/winner9.jpg" alt="Winner 9"></div>
-                            <h3>Amira Hassan</h3>
-                            <div class="winner-role">Q1 2023</div>
-                            <p>Warmth, professionalism and true dedication.</p>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-card-image"><img src="/winner10.jpg" alt="Winner 10"></div>
-                            <h3>Tariq Al-Faraj</h3>
-                            <div class="winner-role">Q4 2022</div>
-                            <p>Consistent excellence and quiet leadership.</p>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-card-image"><img src="/winner11.jpg" alt="Winner 11"></div>
-                            <h3>Rania Saleh</h3>
-                            <div class="winner-role">Q3 2022</div>
-                            <p>Making every patient feel seen and cared for.</p>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-card-image"><img src="/winner12.jpg" alt="Winner 12"></div>
-                            <h3>Majed Al-Rashid</h3>
-                            <div class="winner-role">Q2 2022</div>
-                            <p>Teamwork and commitment that lifted everyone.</p>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-card-image"><img src="/winner13.jpg" alt="Winner 13"></div>
-                            <h3>Dalia Farouk</h3>
-                            <div class="winner-role">Q1 2022</div>
-                            <p>Compassion in action, every single shift.</p>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-card-image"><img src="/winner14.jpg" alt="Winner 14"></div>
-                            <h3>Samir Haddad</h3>
-                            <div class="winner-role">Q4 2021</div>
-                            <p>Reliability and excellence that set the standard.</p>
-                        </div>
-                        <div class="winner-card">
-                            <div class="winner-card-image"><img src="/winner15.jpg" alt="Winner 15"></div>
-                            <h3>Lina Al-Mutairi</h3>
-                            <div class="winner-role">Q3 2021</div>
-                            <p>A true role model of care and dedication.</p>
-                        </div>
-                    </div>
-
-                    <button class="carousel-arrow right" id="nextArrow" aria-label="Next winners">›</button>
-                </div>
-            </section>
-
-            <!-- About -->
-            <section class="content-block left fade-in" id="about-intro">
-                <p class="section-label">About the Recognition Program</p>
-                <h2>Celebrating Our People</h2>
-                <p>
-                    Recognizing the people who make a difference every day.
-                </p>
-            </section>
-
-            <section class="content-block left fade-in" id="purpose">
-                <h3>Our Purpose</h3>
-                <p>
-                    The Recognition Program exists to celebrate the
-                    dedication, commitment and positive impact of our people.
-                    It gives us an opportunity to recognize those who
-                    consistently go above and beyond and contribute to
-                    creating a better experience for everyone.
-                </p>
-            </section>
-
-            <section class="content-block left fade-in" id="recognition">
-                <h3>Why Recognition Matters</h3>
-                <p>
-                    Recognition is more than simply saying thank you.
-                    It creates a culture where people feel valued,
-                    appreciated and motivated to continue making a difference.
-                    By recognizing meaningful contributions, we help
-                    strengthen the values and spirit that bring our
-                    organization together.
-                </p>
-            </section>
-
-            <section class="content-block left fade-in" id="celebrate">
-                <h3>What We Celebrate</h3>
-                <p>
-                    We celebrate the people who demonstrate care, teamwork,
-                    dedication, leadership, innovation and excellence.
-                    Whether it is a small everyday action or a significant
-                    achievement, every contribution has the potential to
-                    make a meaningful impact.
-                </p>
-            </section>
-
-            <section class="content-block left fade-in" id="goal">
-                <h3>Our Goal</h3>
-                <p>
-                    Our goal is to create an environment where appreciation
-                    becomes part of our everyday culture. Through recognition,
-                    we want to highlight the people and actions that inspire
-                    others and help us continue moving forward together.
-                </p>
-            </section>
-
-            <section class="content-block left fade-in" id="contribution">
-                <h3>Every Contribution Matters</h3>
-                <p>
-                    Every person has a role to play. Every effort contributes
-                    to something bigger. Together, we recognize the people
-                    who help make a difference every day.
-                </p>
+            <section class="content-block fade-in" id="section-2">
+                <h3>Title</h3>
+                <p>Description.</p>
             </section>
 
         </div>
     </div>
 </section>
 
-<!-- Wide image section (1920 × 220 style) -->
+<!-- Wide image section -->
 <section class="wide-image-section">
     <img src="/wide-banner.jpg" alt="Wide banner" width="1920" height="220">
 </section>
@@ -1088,8 +975,8 @@ footer {
 
 <script>
 
-/* Fade-in observer – longer duration already in CSS (1.3s) */
-const fadeElements = document.querySelectorAll(".fade-in");
+/* General fade-in for most elements */
+const fadeElements = document.querySelectorAll(".fade-in:not(#bannerVideo)");
 const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -1101,10 +988,25 @@ const fadeObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 fadeElements.forEach((el) => fadeObserver.observe(el));
 
-/* Side-nav active state */
-const allSections = document.querySelectorAll(
-    "#spotlight, #how-it-works, #previous-winners, #about-intro, #purpose, #recognition, #celebrate, #goal, #contribution"
-);
+/* Banner: only fade out when EVERY pixel is outside the viewport */
+const bannerVideo = document.getElementById("bannerVideo");
+const bannerObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+        } else {
+            // isIntersecting === false only when no pixels remain in view
+            entry.target.classList.remove("visible");
+        }
+    });
+}, {
+    threshold: 0,          // fire as soon as any pixel enters / last pixel leaves
+    rootMargin: "0px"
+});
+bannerObserver.observe(bannerVideo);
+
+/* Sticky nav active state (only the 2 bottom sections) */
+const bottomSections = document.querySelectorAll("#section-1, #section-2");
 const navLinks = document.querySelectorAll(".content-section-nav a");
 
 const sectionObserver = new IntersectionObserver((entries) => {
@@ -1121,9 +1023,9 @@ const sectionObserver = new IntersectionObserver((entries) => {
     rootMargin: "-35% 0px -50% 0px",
     threshold: 0
 });
-allSections.forEach((section) => sectionObserver.observe(section));
+bottomSections.forEach((section) => sectionObserver.observe(section));
 
-/* Smooth scroll for nav clicks */
+/* Smooth scroll for the 2 nav links */
 navLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
         e.preventDefault();
@@ -1134,7 +1036,7 @@ navLinks.forEach((link) => {
     });
 });
 
-/* Previous Winners – show with same fade-in effect */
+/* Previous Winners carousel + fade */
 const meetBtn = document.getElementById("meetWinnersBtn");
 const carouselWrapper = document.getElementById("winnersCarousel");
 const track = document.getElementById("winnersTrack");
@@ -1145,9 +1047,7 @@ meetBtn.addEventListener("click", () => {
     const isVisible = carouselWrapper.classList.contains("visible");
 
     if (isVisible) {
-        // Hide with fade-out
         carouselWrapper.classList.remove("visible");
-        // After transition ends, hide completely
         setTimeout(() => {
             if (!carouselWrapper.classList.contains("visible")) {
                 carouselWrapper.style.display = "none";
@@ -1156,10 +1056,8 @@ meetBtn.addEventListener("click", () => {
         meetBtn.classList.remove("active");
         meetBtn.innerHTML = "Meet Our Winners →";
     } else {
-        // Show + trigger fade-in
         carouselWrapper.style.display = "block";
-        // Force reflow so transition runs
-        void carouselWrapper.offsetWidth;
+        void carouselWrapper.offsetWidth; // force reflow
         carouselWrapper.classList.add("visible");
         meetBtn.classList.add("active");
         meetBtn.innerHTML = "Hide Winners ↑";
