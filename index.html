@@ -23,7 +23,7 @@ body {
 }
 
 header {
-    background: #FFFFFF;
+    background: #0B2A6D;
     border-bottom: none;
     padding: 8px 5%;
 }
@@ -45,26 +45,30 @@ header {
     transform: translate(-8px, 3px);
 }
 
-/* Home page: no right-side nav links */
 .header-nav {
     display: none;
 }
 
+/* Banner + overlapping cards */
+.banner-wrap {
+    position: relative;
+    width: 100%;
+    margin: 0 0 0;
+}
+
 .banner {
     width: 100%;
-    margin: 0 0 34px;
     overflow: hidden;
     background: #FFFFFF;
     position: relative;
 }
 
-.banner img {
+.banner video {
     width: 100%;
     height: auto;
     display: block;
 }
 
-/* Nominate your stars – text only + bold underline */
 .banner-cta {
     position: absolute;
     bottom: 28px;
@@ -89,10 +93,15 @@ header {
     color: #0DC8EA;
 }
 
+/* Cards overlap bottom half of banner */
 .main-content {
     width: 90%;
     max-width: 1200px;
     margin: 0 auto 60px;
+    position: relative;
+    z-index: 10;
+    /* Pull cards up so top half sits on the banner */
+    margin-top: -80px;
 }
 
 .intro {
@@ -125,6 +134,7 @@ header {
     border-radius: 16px;
     padding: 18px;
     text-align: center;
+    box-shadow: 0 8px 28px rgba(23, 50, 77, 0.1);
 }
 
 .card-image {
@@ -163,7 +173,7 @@ header {
     font-weight: 600;
 }
 
-/* ===== Upper sections (no sticky nav) ===== */
+/* Upper sections */
 .upper-section {
     width: 90%;
     max-width: 1200px;
@@ -193,7 +203,7 @@ header {
     margin: 0 auto 28px;
 }
 
-/* Spotlight box */
+/* Spotlight */
 .spotlight-box {
     max-width: 420px;
     margin: 0 auto;
@@ -292,140 +302,63 @@ header {
     margin: 0;
 }
 
-/* Meet Our Winners – text only + bold underline */
-.winners-btn {
-    display: inline-block;
-    background: none;
-    border: none;
-    border-bottom: 2px solid #17324d;
-    padding: 22px 0 5px;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #17324d;
-    cursor: pointer;
-    transition: color 0.25s ease, border-color 0.25s ease;
-}
-
-.winners-btn:hover {
-    color: #0DC8EA;
-    border-bottom-color: #0DC8EA;
-}
-
-.winners-btn.active {
-    color: #0DC8EA;
-    border-bottom-color: #0DC8EA;
-}
-
-.winners-carousel-wrapper {
-    display: none;
+/* Previous Winners – video background section */
+.winners-video-section {
     position: relative;
-    margin-top: 36px;
     width: 100%;
-}
-
-.winners-carousel-wrapper.visible {
-    display: block;
-}
-
-.winners-carousel {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    padding: 10px 4px 20px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-}
-
-.winners-carousel::-webkit-scrollbar {
-    display: none;
-}
-
-.winner-card {
-    flex: 0 0 220px;
-    background: #FFFFFF;
-    border: 1px solid #dcebf1;
-    border-radius: 16px;
-    padding: 20px 16px;
-    text-align: center;
-}
-
-.winner-card-image {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 14px;
-    border-radius: 50%;
+    min-height: 420px;
+    margin: 0 0 90px;
     overflow: hidden;
-    background: #f0f7fa;
-}
-
-.winner-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.winner-card h3 {
-    color: #17324d;
-    font-size: 1.05rem;
-    margin-bottom: 4px;
-    font-weight: 600;
-}
-
-.winner-card .winner-role {
-    color: #0DC8EA;
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-bottom: 6px;
-}
-
-.winner-card p {
-    color: #718896;
-    font-size: 0.85rem;
-    line-height: 1.45;
-}
-
-.carousel-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: #FFFFFF;
-    border: 1px solid #dcebf1;
-    color: #17324d;
-    font-size: 1.5rem;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 5;
-    box-shadow: 0 2px 10px rgba(23, 50, 77, 0.08);
-    transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
 }
 
-.carousel-arrow:hover {
-    background: #0DC8EA;
-    color: #fff;
-    border-color: #0DC8EA;
+.winners-video-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
 }
 
-.carousel-arrow.left {
-    left: -8px;
+.winners-video-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 42, 109, 0.55);
+    z-index: 1;
 }
 
-.carousel-arrow.right {
-    right: -8px;
+.winners-video-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 60px 20px;
+    max-width: 700px;
 }
 
-.carousel-arrow.hidden {
-    opacity: 0;
-    pointer-events: none;
+.winners-video-content .section-label {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1rem;
+    margin-bottom: 8px;
 }
 
-/* ===== BOTTOM SECTION WITH STICKY NAV (only 2 items) ===== */
+.winners-video-content h2 {
+    color: #ffffff;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    margin: 6px 0 14px;
+    line-height: 1.2;
+}
+
+.winners-video-content .section-desc {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+/* Bottom sticky section */
 .content-section {
     position: relative;
     width: 100%;
@@ -466,7 +399,6 @@ header {
 .content-section-nav a {
     display: flex;
     align-items: center;
-    position: relative;
     color: #718896;
     text-decoration: none;
     font-size: 1.05rem;
@@ -512,7 +444,6 @@ header {
     max-width: 800px;
 }
 
-/* Wide bottom image */
 .wide-image-section {
     width: 100%;
     margin: 0;
@@ -536,13 +467,10 @@ footer {
     background: #0B2A6D;
 }
 
-/* Longer fade-in (1.3s) */
 .fade-in {
     opacity: 0;
     transform: translateY(35px);
-    transition:
-        opacity 1.3s ease,
-        transform 1.3s ease;
+    transition: opacity 1.3s ease, transform 1.3s ease;
 }
 
 .fade-in.visible {
@@ -560,9 +488,6 @@ footer {
         flex: 0 0 200px;
         width: 200px;
     }
-    .content-section-nav a {
-        font-size: 1rem;
-    }
 }
 
 @media (max-width: 900px) {
@@ -577,8 +502,8 @@ footer {
     .content-section-nav {
         display: none;
     }
-    .content-main {
-        max-width: 100%;
+    .main-content {
+        margin-top: -60px;
     }
 }
 
@@ -588,14 +513,10 @@ footer {
     }
     .navbar {
         height: 58px;
-        gap: 8px;
     }
     .logo {
         width: 62px;
         height: 62px;
-    }
-    .banner {
-        margin-bottom: 26px;
     }
     .banner-cta {
         bottom: 16px;
@@ -605,9 +526,7 @@ footer {
     }
     .main-content {
         width: 94%;
-    }
-    .intro {
-        margin-bottom: 28px;
+        margin-top: -50px;
     }
     .intro h1 {
         font-size: 2rem;
@@ -616,9 +535,6 @@ footer {
         grid-template-columns: 1fr;
         gap: 14px;
     }
-    .card {
-        padding: 20px;
-    }
     .upper-section {
         width: 94%;
         margin-bottom: 70px;
@@ -626,37 +542,22 @@ footer {
     .upper-section h2 {
         font-size: 2rem;
     }
+    .winners-video-section {
+        min-height: 360px;
+        margin-bottom: 70px;
+    }
     .content-section {
         padding: 80px 0 90px;
     }
     .content-layout {
         width: 94%;
     }
-    .content-block {
-        margin-bottom: 75px;
-    }
     .content-block h3 {
         font-size: 2rem;
-    }
-    .how-point {
-        gap: 18px;
-        padding-bottom: 22px;
     }
     .how-point-image {
         width: 56px;
         height: 56px;
-    }
-    .how-point-title {
-        font-size: 1.1rem;
-    }
-    .winner-card {
-        flex: 0 0 180px;
-    }
-    .carousel-arrow.left {
-        left: -4px;
-    }
-    .carousel-arrow.right {
-        right: -4px;
     }
 }
 
@@ -667,7 +568,6 @@ footer {
         transition: none;
     }
 }
-
 </style>
 </head>
 
@@ -682,16 +582,24 @@ footer {
     </div>
 </header>
 
-<div class="banner">
-    <img
-    src="/banner.jpg"
-    alt="Company Banner"
-    class="fade-in"
->
+<div class="banner-wrap">
+    <div class="banner">
+        <video
+            autoplay
+            muted
+            loop
+            playsinline
+            id="bannerVideo"
+            class="fade-in"
+            aria-label="Company Banner"
+        >
+            <source src="/banner.mp4" type="video/mp4">
+        </video>
 
-    <a href="/eoq/" class="banner-cta">
-        Nominate your stars →
-    </a>
+        <a href="/eoq/" class="banner-cta">
+            Nominate your stars →
+        </a>
+    </div>
 </div>
 
 <main class="main-content">
@@ -702,6 +610,7 @@ footer {
         <p>Recognizing the people who make a difference every day.</p>
     </section>
 
+    <!-- Cards overlap the banner from below -->
     <section class="cards">
         <div class="card fade-in">
             <div class="card-image">
@@ -738,8 +647,6 @@ footer {
     </div>
 
 </main>
-
-<!-- ===== UPPER SECTIONS (no sticky nav) ===== -->
 
 <section class="upper-section fade-in" id="spotlight">
     <p class="section-label">The next spotlight</p>
@@ -806,123 +713,22 @@ footer {
     </div>
 </section>
 
-<section class="upper-section fade-in" id="previous-winners">
-    <p class="section-label">Previous Winners</p>
-    <h2>Our people. Our pride</h2>
-    <p class="section-desc">
-        Meet the colleagues whose dedication, care and excellence have already been recognized.
-        Their stories continue to inspire us all.
-    </p>
-
-    <button class="winners-btn" id="meetWinnersBtn">
-        Meet Our Winners →
-    </button>
-
-    <div class="winners-carousel-wrapper fade-in" id="winnersCarousel">
-        <button class="carousel-arrow left hidden" id="prevArrow" aria-label="Previous winners">‹</button>
-
-        <div class="winners-carousel" id="winnersTrack">
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner1.jpg" alt="Winner 1"></div>
-                <h3>Sara Al-Harbi</h3>
-                <div class="winner-role">Q1 2025</div>
-                <p>Exceptional patient care and teamwork.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner2.jpg" alt="Winner 2"></div>
-                <h3>Omar Khalid</h3>
-                <div class="winner-role">Q4 2024</div>
-                <p>Outstanding leadership and innovation.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner3.jpg" alt="Winner 3"></div>
-                <h3>Layla Mansour</h3>
-                <div class="winner-role">Q3 2024</div>
-                <p>Compassionate support that made a difference.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner4.jpg" alt="Winner 4"></div>
-                <h3>Yusuf Ibrahim</h3>
-                <div class="winner-role">Q2 2024</div>
-                <p>Going above and beyond every single day.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner5.jpg" alt="Winner 5"></div>
-                <h3>Noura Al-Sayed</h3>
-                <div class="winner-role">Q1 2024</div>
-                <p>Excellence in clinical practice and mentoring.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner6.jpg" alt="Winner 6"></div>
-                <h3>Faisal Rahman</h3>
-                <div class="winner-role">Q4 2023</div>
-                <p>Reliable, dedicated and always ready to help.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner7.jpg" alt="Winner 7"></div>
-                <h3>Hanaa Qureshi</h3>
-                <div class="winner-role">Q3 2023</div>
-                <p>Creating a positive environment for everyone.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner8.jpg" alt="Winner 8"></div>
-                <h3>Khaled Nasser</h3>
-                <div class="winner-role">Q2 2023</div>
-                <p>Innovative solutions that improved care.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner9.jpg" alt="Winner 9"></div>
-                <h3>Amira Hassan</h3>
-                <div class="winner-role">Q1 2023</div>
-                <p>Warmth, professionalism and true dedication.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner10.jpg" alt="Winner 10"></div>
-                <h3>Tariq Al-Faraj</h3>
-                <div class="winner-role">Q4 2022</div>
-                <p>Consistent excellence and quiet leadership.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner11.jpg" alt="Winner 11"></div>
-                <h3>Rania Saleh</h3>
-                <div class="winner-role">Q3 2022</div>
-                <p>Making every patient feel seen and cared for.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner12.jpg" alt="Winner 12"></div>
-                <h3>Majed Al-Rashid</h3>
-                <div class="winner-role">Q2 2022</div>
-                <p>Teamwork and commitment that lifted everyone.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner13.jpg" alt="Winner 13"></div>
-                <h3>Dalia Farouk</h3>
-                <div class="winner-role">Q1 2022</div>
-                <p>Compassion in action, every single shift.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner14.jpg" alt="Winner 14"></div>
-                <h3>Samir Haddad</h3>
-                <div class="winner-role">Q4 2021</div>
-                <p>Reliability and excellence that set the standard.</p>
-            </div>
-            <div class="winner-card">
-                <div class="winner-card-image"><img src="/winner15.jpg" alt="Winner 15"></div>
-                <h3>Lina Al-Mutairi</h3>
-                <div class="winner-role">Q3 2021</div>
-                <p>A true role model of care and dedication.</p>
-            </div>
-        </div>
-
-        <button class="carousel-arrow right" id="nextArrow" aria-label="Next winners">›</button>
+<!-- Previous Winners – video backgrounds cycle when each ends -->
+<section class="winners-video-section fade-in" id="previous-winners">
+    <video class="winners-video-bg" id="winnersBgVideo" muted playsinline></video>
+    <div class="winners-video-overlay"></div>
+    <div class="winners-video-content">
+        <p class="section-label">Previous Winners</p>
+        <h2>Our people. Our pride</h2>
+        <p class="section-desc">
+            Meet the colleagues whose dedication, care and excellence have already been recognized.
+            Their stories continue to inspire us all.
+        </p>
     </div>
 </section>
 
-<!-- ===== BOTTOM SECTION – sticky nav only here (2 placeholders) ===== -->
 <section class="content-section">
-
     <div class="content-layout">
-
         <nav class="content-section-nav">
             <ul>
                 <li>
@@ -939,17 +745,14 @@ footer {
         </nav>
 
         <div class="content-main">
-
             <section class="content-block fade-in" id="section-1">
                 <h3>Title</h3>
                 <p>Description.</p>
             </section>
-
             <section class="content-block fade-in" id="section-2">
                 <h3>Title</h3>
                 <p>Description.</p>
             </section>
-
         </div>
     </div>
 </section>
@@ -964,8 +767,8 @@ footer {
 
 <script>
 
-/* General fade-in */
-const fadeElements = document.querySelectorAll(".fade-in");
+/* Fade-in */
+const fadeElements = document.querySelectorAll(".fade-in:not(#bannerVideo)");
 const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -977,10 +780,22 @@ const fadeObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 fadeElements.forEach((el) => fadeObserver.observe(el));
 
-/* Sticky nav active state (only the 2 bottom sections) */
+/* Banner only fades when fully out of view */
+const bannerVideo = document.getElementById("bannerVideo");
+const bannerObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+        } else {
+            entry.target.classList.remove("visible");
+        }
+    });
+}, { threshold: 0, rootMargin: "0px" });
+bannerObserver.observe(bannerVideo);
+
+/* Sticky nav */
 const bottomSections = document.querySelectorAll("#section-1, #section-2");
 const navLinks = document.querySelectorAll(".content-section-nav a");
-
 const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -991,76 +806,34 @@ const sectionObserver = new IntersectionObserver((entries) => {
             if (active) active.classList.add("active");
         }
     });
-}, {
-    rootMargin: "-35% 0px -50% 0px",
-    threshold: 0
-});
+}, { rootMargin: "-35% 0px -50% 0px", threshold: 0 });
 bottomSections.forEach((section) => sectionObserver.observe(section));
 
 navLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
         e.preventDefault();
         const target = document.querySelector(link.getAttribute("href"));
-        if (target) {
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
     });
 });
 
-/* Previous Winners carousel + fade */
-const meetBtn = document.getElementById("meetWinnersBtn");
-const carouselWrapper = document.getElementById("winnersCarousel");
-const track = document.getElementById("winnersTrack");
-const prevArrow = document.getElementById("prevArrow");
-const nextArrow = document.getElementById("nextArrow");
+/* Previous Winners – cycle background videos when each ends */
+const winnersVideos = [
+    "/winners-bg-1.mp4",
+    "/winners-bg-2.mp4",
+    "/winners-bg-3.mp4"
+];
+let winnersVideoIndex = 0;
+const winnersBgVideo = document.getElementById("winnersBgVideo");
 
-meetBtn.addEventListener("click", () => {
-    const isVisible = carouselWrapper.classList.contains("visible");
-
-    if (isVisible) {
-        carouselWrapper.classList.remove("visible");
-        setTimeout(() => {
-            if (!carouselWrapper.classList.contains("visible")) {
-                carouselWrapper.style.display = "none";
-            }
-        }, 1300);
-        meetBtn.classList.remove("active");
-        meetBtn.innerHTML = "Meet Our Winners →";
-    } else {
-        carouselWrapper.style.display = "block";
-        void carouselWrapper.offsetWidth;
-        carouselWrapper.classList.add("visible");
-        meetBtn.classList.add("active");
-        meetBtn.innerHTML = "Hide Winners ↑";
-        track.scrollLeft = 0;
-        updateArrows();
-    }
-});
-
-function updateArrows() {
-    const maxScroll = track.scrollWidth - track.clientWidth;
-    if (track.scrollLeft > 10) {
-        prevArrow.classList.remove("hidden");
-    } else {
-        prevArrow.classList.add("hidden");
-    }
-    if (track.scrollLeft < maxScroll - 10) {
-        nextArrow.classList.remove("hidden");
-    } else {
-        nextArrow.classList.add("hidden");
-    }
+function playNextWinnersVideo() {
+    winnersBgVideo.src = winnersVideos[winnersVideoIndex];
+    winnersBgVideo.play().catch(() => {});
+    winnersVideoIndex = (winnersVideoIndex + 1) % winnersVideos.length;
 }
 
-nextArrow.addEventListener("click", () => {
-    track.scrollBy({ left: 260, behavior: "smooth" });
-});
-prevArrow.addEventListener("click", () => {
-    track.scrollBy({ left: -260, behavior: "smooth" });
-});
-track.addEventListener("scroll", updateArrows);
-window.addEventListener("resize", () => {
-    if (carouselWrapper.classList.contains("visible")) updateArrows();
-});
+winnersBgVideo.addEventListener("ended", playNextWinnersVideo);
+playNextWinnersVideo();
 
 </script>
 
