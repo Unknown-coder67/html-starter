@@ -320,8 +320,36 @@ footer {
     }
 
     .winners-grid {
-        grid-template-columns: 1fr;
-        gap: 28px;
+        grid-template-columns: repeat(2, 1fr);   /* 2 cards per row on iPhone */
+        gap: 20px 14px;
+    }
+    
+    .winner-card-image {
+        width: 52px;
+        height: 52px;
+        margin-bottom: 8px;
+    }
+
+    .winner-card h3 {
+        font-size: 0.9rem;
+    }
+
+    .winner-card .department {
+        font-size: 0.72rem;
+        margin-bottom: 4px;
+    }
+
+    .winner-card p {
+        font-size: 0.78rem;
+        line-height: 1.35;
+    }
+
+    .quarter-block {
+        margin-bottom: 40px;
+    }
+
+    .main-content {
+        padding-top: 30px;
     }
 }
 
