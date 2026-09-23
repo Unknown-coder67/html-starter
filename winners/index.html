@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Winners | Care Medical Jiwar</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    background: #0B2A6D;
+    color: #ffffff;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+header {
+    background: #0B2A6D;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 8px 5%;
+}
+
+.navbar {
+    max-width: 1920px;
+    height: 58px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.logo {
+    width: 200px;
+    height: 50px;
+    object-fit: contain;
+    transform: translate(-8px, 3px);
+}
+
+nav a {
+    position: relative;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 2px;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background: #ffffff;
+    transition: width 200ms ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+.main-content {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    padding-top: 50px;
+}
+
+.intro {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.intro .label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.intro h1 {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.intro p {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.05rem;
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+.winners-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.winner-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 24px 20px;
+    text-align: center;
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.winner-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-4px);
+}
+
+.winner-card-image {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.winner-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.winner-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.winner-card .quarter {
+    color: #0DC8EA;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.winner-card p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 1.3s ease, transform 1.3s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 900px) {
+    .winners-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 700px) {
+    .logo {
+        width: 62px;
+        height: 62px;
+        transform: none;
+    }
+
+    .main-content {
+        width: 94%;
+        padding-top: 36px;
+    }
+
+    .intro h1 {
+        font-size: 2rem;
+    }
+
+    .winners-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fade-in {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="fade-in">
+    <div class="navbar">
+        <a href="/">
+            <img src="/logo.jpg" alt="Care Medical Jiwar" class="logo">
+        </a>
+        <nav>
+            <a href="/">Home</a>
+        </nav>
+    </div>
+</header>
+
+<main class="main-content">
+
+    <section class="intro fade-in">
+        <p class="label">Recognition Hall</p>
+        <h1>Our Winners</h1>
+        <p>
+            Celebrating the people whose dedication, care and excellence
+            have shaped our culture every quarter.
+        </p>
+    </section>
+
+    <section class="winners-grid">
+
+        <div class="winner-card fade-in">
+            <div class="winner-card-image"><img src="/winner1.jpg" alt="Sara Al-Harbi"></div>
+            <h3>Sara Al-Harbi</h3>
+            <div class="quarter">Q1 2025</div>
+            <p>Exceptional patient care and teamwork.</p>
+        </div>
+
+        <div class="winner-card fade-in">
+            <div class="winner-card-image"><img src="/winner2.jpg" alt="Omar Khalid"></div>
+            <h3>Omar Khalid</h3>
+            <div class="quarter">Q4 2024</div>
+            <p>Outstanding leadership and innovation.</p>
+        </div>
+
+        <div class="winner-card fade-in">
+            <div class="winner-card-image"><img src="/winner3.jpg" alt="Layla Mansour"></div>
+            <h3>Layla Mansour</h3>
+            <div class="quarter">Q3 2024</div>
+            <p>Compassionate support that made a difference.</p>
+        </div>
+
+        <div class="winner-card fade-in">
+            <div class="winner-card-image"><img src="/winner4.jpg" alt="Yusuf Ibrahim"></div>
+            <h3>Yusuf Ibrahim</h3>
+            <div class="quarter">Q2 2024</div>
+            <p>Going above and beyond every single day.</p>
+        </div>
+
+        <div class="winner-card fade-in">
+            <div class="winner-card-image"><img src="/winner5.jpg" alt="Noura Al-Sayed"></div>
+            <h3>Noura Al-Sayed</h3>
+            <div class="quarter">Q1 2024</div>
+            <p>Excellence in clinical practice and mentoring.</p>
+        </div>
+
+        <div class="winner-card fade-in">
+            <div class="winner-card-image"><img src="/winner6.jpg" alt="Faisal Rahman"></div>
+            <h3>Faisal Rahman</h3>
+            <div class="quarter">Q4 2023</div>
+            <p>Reliable, dedicated and always ready to help.</p>
+        </div>
+
+        <div class="winner-card fade-in">
+            <div class="winner-card-image"><img src="/winner7.jpg" alt="Hanaa Qureshi"></div>
+            <h3>Hanaa Qureshi</h3>
+            <div class="quarter">Q3 2023</div>
+            <p>Creating a positive environment for everyone.</p>
+        </div>
+
+        <div class="winner-card fade-in">
+            <div class="winner-card-image"><img src="/winner8.jpg" alt="Khaled Nasser"></div>
+            <h3>Khaled Nasser</h3>
+            <div class="quarter">Q2 2023</div>
+            <p>Innovative solutions that improved care.</p>
+        </div>
+
+        <div class="winner-card fade-in">
+            <div class="winner-card-image"><img src="/winner9.jpg" alt="Amira Hassan"></div>
+            <h3>Amira Hassan</h3>
+            <div class="quarter">Q1 2023</div>
+            <p>Warmth, professionalism and true dedication.</p>
+        </div>
+
+        <div class="winner-card fade-in">
+            <div class="winner-card-image"><img src="/winner10.jpg" alt="Tariq Al-Faraj"></div>
+            <h3>Tariq Al-Faraj</h3>
+            <div class="quarter">Q4 2022</div>
+            <p>Consistent excellence and quiet leadership.</p>
+        </div>
+
+        <div class="winner-card fade-in">
+            <div class="winner-card-image"><img src="/winner11.jpg" alt="Rania Saleh"></div>
+            <h3>Rania Saleh</h3>
+            <div class="quarter">Q3 2022</div>
+            <p>Making every patient feel seen and cared for.</p>
+        </div>
+
+        <div class="winner-card fade-in">
+            <div class="winner-card-image"><img src="/winner12.jpg" alt="Majed Al-Rashid"></div>
+            <h3>Majed Al-Rashid</h3>
+            <div class="quarter">Q2 2022</div>
+            <p>Teamwork and commitment that lifted everyone.</p>
+        </div>
+
+        <div class="winner-card fade-in">
+            <div class="winner-card-image"><img src="/winner13.jpg" alt="Dalia Farouk"></div>
+            <h3>Dalia Farouk</h3>
+            <div class="quarter">Q1 2022</div>
+            <p>Compassion in action, every single shift.</p>
+        </div>
+
+        <div class="winner-card fade-in">
+            <div class="winner-card-image"><img src="/winner14.jpg" alt="Samir Haddad"></div>
+            <h3>Samir Haddad</h3>
+            <div class="quarter">Q4 2021</div>
+            <p>Reliability and excellence that set the standard.</p>
+        </div>
+
+        <div class="winner-card fade-in">
+            <div class="winner-card-image"><img src="/winner15.jpg" alt="Lina Al-Mutairi"></div>
+            <h3>Lina Al-Mutairi</h3>
+            <div class="quarter">Q3 2021</div>
+            <p>A true role model of care and dedication.</p>
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 Care Medical Jiwar. All rights reserved.
+</footer>
+
+<script>
+const fadeElements = document.querySelectorAll(".fade-in");
+const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+        } else {
+            entry.target.classList.remove("visible");
+        }
+    });
+}, { threshold: 0.12 });
+
+fadeElements.forEach((el) => fadeObserver.observe(el));
+
+window.addEventListener("load", () => {
+    document.querySelectorAll(".fade-in").forEach((el, index) => {
+        setTimeout(() => el.classList.add("visible"), 60 + index * 80);
+    });
+});
+</script>
+
+</body>
+</html>
