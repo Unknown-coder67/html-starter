@@ -46,7 +46,36 @@ header {
 }
 
 .header-nav {
-    display: none;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.header-nav a {
+    position: relative;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 2px;
+}
+
+.header-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background: #ffffff;
+    transition: width 200ms ease;
+}
+
+.header-nav a:hover {
+    color: #ffffff;
+}
+
+.header-nav a:hover::after {
+    width: 100%;
 }
 
 /* Banner + overlapping cards */
@@ -575,7 +604,9 @@ footer {
         <a href="/">
             <img src="/logo.jpg" alt="Company Logo" class="logo">
         </a>
-        <nav class="header-nav"></nav>
+        <nav class="header-nav">
+            <a href="/winners/">Winners</a>
+        </nav>
     </div>
 </header>
 
