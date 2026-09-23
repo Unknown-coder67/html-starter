@@ -7,7 +7,7 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap');
-    
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -22,7 +22,7 @@ body {
     font-weight: 750;
     font-style: normal;
     background: #0B2A6D;
-    color: #17171D;
+    color: #FFFFFF;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -74,96 +74,160 @@ nav a:hover::after {
     width: 100%;
 }
 
+/* ========== MAIN ========== */
 .main-content {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto 80px;
+    width: 92%;
+    max-width: 1280px;
+    margin: 0 auto 100px;
     padding-top: 50px;
 }
 
 .intro {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 70px;
 }
 
 .intro .label {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 1rem;
-    margin-bottom: 8px;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 10px;
 }
 
 .intro h1 {
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
     font-weight: 750;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+    color: #FFFFFF;
 }
 
 .intro p {
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.72);
     font-size: 1.05rem;
-    max-width: 560px;
+    max-width: 540px;
     margin: 0 auto;
     line-height: 1.7;
+    font-weight: 500;
 }
 
+/* ========== QUARTER SECTIONS ========== */
+.quarter-block {
+    display: flex;
+    gap: 0;
+    margin-bottom: 72px;
+    position: relative;
+}
+
+.quarter-label {
+    width: 200px;
+    flex-shrink: 0;
+    padding-right: 28px;
+    padding-top: 8px;
+}
+
+.quarter-label h2 {
+    font-size: 1.35rem;
+    font-weight: 750;
+    color: #FFFFFF;
+    line-height: 1.3;
+    margin-bottom: 6px;
+}
+
+.quarter-label .status {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.quarter-label .status.stay-tuned {
+    color: #0DC8EA;
+}
+
+/* Vertical line */
+.timeline-line {
+    width: 2px;
+    background: linear-gradient(to bottom, #0DC8EA 0%, rgba(13, 200, 234, 0.25) 100%);
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-right: 36px;
+    align-self: stretch;
+}
+
+/* Winners grid (6 cards) */
 .winners-grid {
+    flex: 1;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 20px 24px;
 }
 
+/* Semi-card – no solid background */
 .winner-card {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 16px;
-    padding: 24px 20px;
-    text-align: center;
-    transition: background 0.25s ease, transform 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 4px 0;
+    transition: transform 0.25s ease;
 }
 
 .winner-card:hover {
-    background: rgba(255, 255, 255, 0.12);
-    transform: translateY(-4px);
+    transform: translateY(-3px);
 }
 
 .winner-card-image {
-    width: 90px;
-    height: 90px;
-    margin: 0 auto 16px;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.12);
 }
 
 .winner-card-image img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     display: block;
 }
 
 .winner-card h3 {
-    font-size: 1.15rem;
-    margin-bottom: 6px;
+    font-size: 1.05rem;
     font-weight: 750;
+    color: #FFFFFF;
+    margin-bottom: 3px;
+    line-height: 1.3;
 }
 
-.winner-card .quarter {
+.winner-card .department {
+    font-size: 0.82rem;
+    font-weight: 600;
     color: #0DC8EA;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
 }
 
 .winner-card p {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.68);
     line-height: 1.5;
 }
 
+/* Stay-tuned special state */
+.stay-tuned-block {
+    margin-bottom: 64px;
+}
+
+.stay-tuned-block .quarter-label {
+    width: auto;
+}
+
+/* Fade animation */
 .fade-in {
     opacity: 0;
-    transform: translateY(35px);
-    transition: opacity 1.3s ease, transform 1.3s ease;
+    transform: translateY(28px);
+    transition: opacity 1.1s ease, transform 1.1s ease;
 }
 
 .fade-in.visible {
@@ -171,17 +235,24 @@ nav a:hover::after {
     transform: translateY(0);
 }
 
+/* Footer */
 footer {
     text-align: center;
-    padding: 30px 20px;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 28px 20px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.88rem;
+    font-weight: 500;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-@media (max-width: 900px) {
+/* ========== RESPONSIVE ========== */
+@media (max-width: 980px) {
     .winners-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .quarter-label {
+        width: 160px;
     }
 }
 
@@ -193,7 +264,7 @@ footer {
     }
 
     .main-content {
-        width: 94%;
+        width: 92%;
         padding-top: 36px;
     }
 
@@ -201,9 +272,25 @@ footer {
         font-size: 2rem;
     }
 
+    .quarter-block {
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 56px;
+    }
+
+    .quarter-label {
+        width: 100%;
+        padding-right: 0;
+        padding-top: 0;
+    }
+
+    .timeline-line {
+        display: none;
+    }
+
     .winners-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 28px;
     }
 }
 
@@ -241,114 +328,473 @@ footer {
         </p>
     </section>
 
-    <section class="winners-grid">
-
-        <div class="winner-card fade-in">
-            <div class="winner-card-image"><img src="/winner1.jpg" alt="Sara Al-Harbi"></div>
-            <h3>Sara Al-Harbi</h3>
-            <div class="quarter">Q1 2025</div>
-            <p>Exceptional patient care and teamwork.</p>
+    <!-- ========== Q3 2026 – Stay tuned ========== -->
+    <div class="stay-tuned-block fade-in">
+        <div class="quarter-label">
+            <h2>Q3 2026</h2>
+            <div class="status stay-tuned">Stay tuned</div>
         </div>
+    </div>
 
-        <div class="winner-card fade-in">
-            <div class="winner-card-image"><img src="/winner2.jpg" alt="Omar Khalid"></div>
-            <h3>Omar Khalid</h3>
-            <div class="quarter">Q4 2024</div>
-            <p>Outstanding leadership and innovation.</p>
+    <!-- ========== Q2 2026 ========== -->
+    <div class="quarter-block fade-in">
+        <div class="quarter-label">
+            <h2>Q2 2026</h2>
         </div>
-
-        <div class="winner-card fade-in">
-            <div class="winner-card-image"><img src="/winner3.jpg" alt="Layla Mansour"></div>
-            <h3>Layla Mansour</h3>
-            <div class="quarter">Q3 2024</div>
-            <p>Compassionate support that made a difference.</p>
+        <div class="timeline-line"></div>
+        <div class="winners-grid">
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner1.jpg" alt="Sara Al-Harbi"></div>
+                <h3>Sara Al-Harbi</h3>
+                <div class="department">Nursing</div>
+                <p>Exceptional patient care and seamless teamwork across shifts.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner2.jpg" alt="Omar Khalid"></div>
+                <h3>Omar Khalid</h3>
+                <div class="department">Pharmacy</div>
+                <p>Streamlined medication safety protocols that reduced errors.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner3.jpg" alt="Layla Mansour"></div>
+                <h3>Layla Mansour</h3>
+                <div class="department">Radiology</div>
+                <p>Delivered clear imaging results with outstanding patient comfort.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner4.jpg" alt="Yusuf Ibrahim"></div>
+                <h3>Yusuf Ibrahim</h3>
+                <div class="department">Laboratory</div>
+                <p>Maintained accuracy under high volume with calm precision.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner5.jpg" alt="Noura Al-Sayed"></div>
+                <h3>Noura Al-Sayed</h3>
+                <div class="department">Administration</div>
+                <p>Improved coordination between departments and front-line staff.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner6.jpg" alt="Faisal Rahman"></div>
+                <h3>Faisal Rahman</h3>
+                <div class="department">Patient Services</div>
+                <p>Created a welcoming experience for every visitor and family.</p>
+            </div>
         </div>
+    </div>
 
-        <div class="winner-card fade-in">
-            <div class="winner-card-image"><img src="/winner4.jpg" alt="Yusuf Ibrahim"></div>
-            <h3>Yusuf Ibrahim</h3>
-            <div class="quarter">Q2 2024</div>
-            <p>Going above and beyond every single day.</p>
+    <!-- ========== Q1 2026 ========== -->
+    <div class="quarter-block fade-in">
+        <div class="quarter-label">
+            <h2>Q1 2026</h2>
         </div>
-
-        <div class="winner-card fade-in">
-            <div class="winner-card-image"><img src="/winner5.jpg" alt="Noura Al-Sayed"></div>
-            <h3>Noura Al-Sayed</h3>
-            <div class="quarter">Q1 2024</div>
-            <p>Excellence in clinical practice and mentoring.</p>
+        <div class="timeline-line"></div>
+        <div class="winners-grid">
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner7.jpg" alt="Hanaa Qureshi"></div>
+                <h3>Hanaa Qureshi</h3>
+                <div class="department">Nursing</div>
+                <p>Led with empathy and clinical excellence during peak periods.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner8.jpg" alt="Khaled Nasser"></div>
+                <h3>Khaled Nasser</h3>
+                <div class="department">Pharmacy</div>
+                <p>Introduced smarter inventory practices that saved time daily.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner9.jpg" alt="Amira Hassan"></div>
+                <h3>Amira Hassan</h3>
+                <div class="department">Radiology</div>
+                <p>Combined technical skill with genuine patient reassurance.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner10.jpg" alt="Tariq Al-Faraj"></div>
+                <h3>Tariq Al-Faraj</h3>
+                <div class="department">Laboratory</div>
+                <p>Consistently delivered reliable results under tight timelines.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner11.jpg" alt="Rania Saleh"></div>
+                <h3>Rania Saleh</h3>
+                <div class="department">Administration</div>
+                <p>Kept operations smooth and communication clear across teams.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner12.jpg" alt="Majed Al-Rashid"></div>
+                <h3>Majed Al-Rashid</h3>
+                <div class="department">Patient Services</div>
+                <p>Turned every interaction into a moment of genuine care.</p>
+            </div>
         </div>
+    </div>
 
-        <div class="winner-card fade-in">
-            <div class="winner-card-image"><img src="/winner6.jpg" alt="Faisal Rahman"></div>
-            <h3>Faisal Rahman</h3>
-            <div class="quarter">Q4 2023</div>
-            <p>Reliable, dedicated and always ready to help.</p>
+    <!-- ========== Q4 2025 ========== -->
+    <div class="quarter-block fade-in">
+        <div class="quarter-label">
+            <h2>Q4 2025</h2>
         </div>
-
-        <div class="winner-card fade-in">
-            <div class="winner-card-image"><img src="/winner7.jpg" alt="Hanaa Qureshi"></div>
-            <h3>Hanaa Qureshi</h3>
-            <div class="quarter">Q3 2023</div>
-            <p>Creating a positive environment for everyone.</p>
+        <div class="timeline-line"></div>
+        <div class="winners-grid">
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner13.jpg" alt="Dalia Farouk"></div>
+                <h3>Dalia Farouk</h3>
+                <div class="department">Nursing</div>
+                <p>Mentored new staff while maintaining the highest care standards.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner14.jpg" alt="Samir Haddad"></div>
+                <h3>Samir Haddad</h3>
+                <div class="department">Pharmacy</div>
+                <p>Ensured every prescription was handled with precision and speed.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner15.jpg" alt="Lina Al-Mutairi"></div>
+                <h3>Lina Al-Mutairi</h3>
+                <div class="department">Radiology</div>
+                <p>Elevated imaging quality and patient experience together.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner1.jpg" alt="Nasser Al-Otaibi"></div>
+                <h3>Nasser Al-Otaibi</h3>
+                <div class="department">Laboratory</div>
+                <p>Maintained rigorous standards even during the busiest weeks.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner2.jpg" alt="Maha Al-Harbi"></div>
+                <h3>Maha Al-Harbi</h3>
+                <div class="department">Administration</div>
+                <p>Improved internal processes that benefited every department.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner3.jpg" alt="Ziad Mansour"></div>
+                <h3>Ziad Mansour</h3>
+                <div class="department">Patient Services</div>
+                <p>Made families feel supported from the moment they arrived.</p>
+            </div>
         </div>
+    </div>
 
-        <div class="winner-card fade-in">
-            <div class="winner-card-image"><img src="/winner8.jpg" alt="Khaled Nasser"></div>
-            <h3>Khaled Nasser</h3>
-            <div class="quarter">Q2 2023</div>
-            <p>Innovative solutions that improved care.</p>
+    <!-- ========== Q3 2025 ========== -->
+    <div class="quarter-block fade-in">
+        <div class="quarter-label">
+            <h2>Q3 2025</h2>
         </div>
-
-        <div class="winner-card fade-in">
-            <div class="winner-card-image"><img src="/winner9.jpg" alt="Amira Hassan"></div>
-            <h3>Amira Hassan</h3>
-            <div class="quarter">Q1 2023</div>
-            <p>Warmth, professionalism and true dedication.</p>
+        <div class="timeline-line"></div>
+        <div class="winners-grid">
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner4.jpg" alt="Reem Al-Sayed"></div>
+                <h3>Reem Al-Sayed</h3>
+                <div class="department">Nursing</div>
+                <p>Brought calm leadership and clinical excellence to every shift.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner5.jpg" alt="Hassan Qureshi"></div>
+                <h3>Hassan Qureshi</h3>
+                <div class="department">Pharmacy</div>
+                <p>Strengthened safety checks that protected every patient.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner6.jpg" alt="Farah Nasser"></div>
+                <h3>Farah Nasser</h3>
+                <div class="department">Radiology</div>
+                <p>Delivered accurate imaging with exceptional patient care.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner7.jpg" alt="Yousef Al-Faraj"></div>
+                <h3>Yousef Al-Faraj</h3>
+                <div class="department">Laboratory</div>
+                <p>Kept results precise and turnaround times consistently fast.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner8.jpg" alt="Salma Hassan"></div>
+                <h3>Salma Hassan</h3>
+                <div class="department">Administration</div>
+                <p>Coordinated seamlessly across teams during busy periods.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner9.jpg" alt="Karim Saleh"></div>
+                <h3>Karim Saleh</h3>
+                <div class="department">Patient Services</div>
+                <p>Created positive first impressions that lasted the whole visit.</p>
+            </div>
         </div>
+    </div>
 
-        <div class="winner-card fade-in">
-            <div class="winner-card-image"><img src="/winner10.jpg" alt="Tariq Al-Faraj"></div>
-            <h3>Tariq Al-Faraj</h3>
-            <div class="quarter">Q4 2022</div>
-            <p>Consistent excellence and quiet leadership.</p>
+    <!-- ========== Q2 2025 ========== -->
+    <div class="quarter-block fade-in">
+        <div class="quarter-label">
+            <h2>Q2 2025</h2>
         </div>
-
-        <div class="winner-card fade-in">
-            <div class="winner-card-image"><img src="/winner11.jpg" alt="Rania Saleh"></div>
-            <h3>Rania Saleh</h3>
-            <div class="quarter">Q3 2022</div>
-            <p>Making every patient feel seen and cared for.</p>
+        <div class="timeline-line"></div>
+        <div class="winners-grid">
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner10.jpg" alt="Nadia Al-Rashid"></div>
+                <h3>Nadia Al-Rashid</h3>
+                <div class="department">Nursing</div>
+                <p>Combined clinical skill with deep compassion every day.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner11.jpg" alt="Bilal Farouk"></div>
+                <h3>Bilal Farouk</h3>
+                <div class="department">Pharmacy</div>
+                <p>Optimized workflows that improved both speed and accuracy.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner12.jpg" alt="Jana Haddad"></div>
+                <h3>Jana Haddad</h3>
+                <div class="department">Radiology</div>
+                <p>Made complex procedures feel safe and understandable.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner13.jpg" alt="Omar Al-Mutairi"></div>
+                <h3>Omar Al-Mutairi</h3>
+                <div class="department">Laboratory</div>
+                <p>Upheld the highest standards of quality and reliability.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner14.jpg" alt="Leen Al-Otaibi"></div>
+                <h3>Leen Al-Otaibi</h3>
+                <div class="department">Administration</div>
+                <p>Improved scheduling and communication across the clinic.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner15.jpg" alt="Rami Al-Harbi"></div>
+                <h3>Rami Al-Harbi</h3>
+                <div class="department">Patient Services</div>
+                <p>Ensured every patient felt welcomed and well-informed.</p>
+            </div>
         </div>
+    </div>
 
-        <div class="winner-card fade-in">
-            <div class="winner-card-image"><img src="/winner12.jpg" alt="Majed Al-Rashid"></div>
-            <h3>Majed Al-Rashid</h3>
-            <div class="quarter">Q2 2022</div>
-            <p>Teamwork and commitment that lifted everyone.</p>
+    <!-- ========== Q1 2025 ========== -->
+    <div class="quarter-block fade-in">
+        <div class="quarter-label">
+            <h2>Q1 2025</h2>
         </div>
-
-        <div class="winner-card fade-in">
-            <div class="winner-card-image"><img src="/winner13.jpg" alt="Dalia Farouk"></div>
-            <h3>Dalia Farouk</h3>
-            <div class="quarter">Q1 2022</div>
-            <p>Compassion in action, every single shift.</p>
+        <div class="timeline-line"></div>
+        <div class="winners-grid">
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner1.jpg" alt="Sara Al-Harbi"></div>
+                <h3>Sara Al-Harbi</h3>
+                <div class="department">Nursing</div>
+                <p>Exceptional patient care and teamwork that inspired others.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner2.jpg" alt="Omar Khalid"></div>
+                <h3>Omar Khalid</h3>
+                <div class="department">Pharmacy</div>
+                <p>Outstanding leadership and continuous process improvement.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner3.jpg" alt="Layla Mansour"></div>
+                <h3>Layla Mansour</h3>
+                <div class="department">Radiology</div>
+                <p>Compassionate support that truly made a difference.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner4.jpg" alt="Yusuf Ibrahim"></div>
+                <h3>Yusuf Ibrahim</h3>
+                <div class="department">Laboratory</div>
+                <p>Went above and beyond with accuracy and reliability.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner5.jpg" alt="Noura Al-Sayed"></div>
+                <h3>Noura Al-Sayed</h3>
+                <div class="department">Administration</div>
+                <p>Excellence in coordination and mentoring junior colleagues.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner6.jpg" alt="Faisal Rahman"></div>
+                <h3>Faisal Rahman</h3>
+                <div class="department">Patient Services</div>
+                <p>Reliable, dedicated, and always ready to help families.</p>
+            </div>
         </div>
+    </div>
 
-        <div class="winner-card fade-in">
-            <div class="winner-card-image"><img src="/winner14.jpg" alt="Samir Haddad"></div>
-            <h3>Samir Haddad</h3>
-            <div class="quarter">Q4 2021</div>
-            <p>Reliability and excellence that set the standard.</p>
+    <!-- ========== Q4 2024 ========== -->
+    <div class="quarter-block fade-in">
+        <div class="quarter-label">
+            <h2>Q4 2024</h2>
         </div>
-
-        <div class="winner-card fade-in">
-            <div class="winner-card-image"><img src="/winner15.jpg" alt="Lina Al-Mutairi"></div>
-            <h3>Lina Al-Mutairi</h3>
-            <div class="quarter">Q3 2021</div>
-            <p>A true role model of care and dedication.</p>
+        <div class="timeline-line"></div>
+        <div class="winners-grid">
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner7.jpg" alt="Hanaa Qureshi"></div>
+                <h3>Hanaa Qureshi</h3>
+                <div class="department">Nursing</div>
+                <p>Created a positive and supportive environment for patients.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner8.jpg" alt="Khaled Nasser"></div>
+                <h3>Khaled Nasser</h3>
+                <div class="department">Pharmacy</div>
+                <p>Innovative solutions that improved daily care delivery.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner9.jpg" alt="Amira Hassan"></div>
+                <h3>Amira Hassan</h3>
+                <div class="department">Radiology</div>
+                <p>Warmth, professionalism, and true dedication every day.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner10.jpg" alt="Tariq Al-Faraj"></div>
+                <h3>Tariq Al-Faraj</h3>
+                <div class="department">Laboratory</div>
+                <p>Consistent excellence and quiet, effective leadership.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner11.jpg" alt="Rania Saleh"></div>
+                <h3>Rania Saleh</h3>
+                <div class="department">Administration</div>
+                <p>Made every colleague and patient feel seen and valued.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner12.jpg" alt="Majed Al-Rashid"></div>
+                <h3>Majed Al-Rashid</h3>
+                <div class="department">Patient Services</div>
+                <p>Teamwork and commitment that lifted the entire team.</p>
+            </div>
         </div>
+    </div>
 
-    </section>
+    <!-- ========== Q3 2024 ========== -->
+    <div class="quarter-block fade-in">
+        <div class="quarter-label">
+            <h2>Q3 2024</h2>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="winners-grid">
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner13.jpg" alt="Dalia Farouk"></div>
+                <h3>Dalia Farouk</h3>
+                <div class="department">Nursing</div>
+                <p>Compassion in action on every single shift.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner14.jpg" alt="Samir Haddad"></div>
+                <h3>Samir Haddad</h3>
+                <div class="department">Pharmacy</div>
+                <p>Reliability and excellence that set the standard.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner15.jpg" alt="Lina Al-Mutairi"></div>
+                <h3>Lina Al-Mutairi</h3>
+                <div class="department">Radiology</div>
+                <p>A true role model of care and technical skill.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner1.jpg" alt="Nasser Al-Otaibi"></div>
+                <h3>Nasser Al-Otaibi</h3>
+                <div class="department">Laboratory</div>
+                <p>Precision and calm focus under pressure.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner2.jpg" alt="Maha Al-Harbi"></div>
+                <h3>Maha Al-Harbi</h3>
+                <div class="department">Administration</div>
+                <p>Kept everything running smoothly behind the scenes.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner3.jpg" alt="Ziad Mansour"></div>
+                <h3>Ziad Mansour</h3>
+                <div class="department">Patient Services</div>
+                <p>Turned ordinary visits into positive experiences.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== Q2 2024 ========== -->
+    <div class="quarter-block fade-in">
+        <div class="quarter-label">
+            <h2>Q2 2024</h2>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="winners-grid">
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner4.jpg" alt="Reem Al-Sayed"></div>
+                <h3>Reem Al-Sayed</h3>
+                <div class="department">Nursing</div>
+                <p>Clinical excellence paired with genuine human connection.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner5.jpg" alt="Hassan Qureshi"></div>
+                <h3>Hassan Qureshi</h3>
+                <div class="department">Pharmacy</div>
+                <p>Strengthened safety and efficiency for the whole team.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner6.jpg" alt="Farah Nasser"></div>
+                <h3>Farah Nasser</h3>
+                <div class="department">Radiology</div>
+                <p>Delivered clarity and comfort in equal measure.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner7.jpg" alt="Yousef Al-Faraj"></div>
+                <h3>Yousef Al-Faraj</h3>
+                <div class="department">Laboratory</div>
+                <p>Reliable results that clinicians could always trust.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner8.jpg" alt="Salma Hassan"></div>
+                <h3>Salma Hassan</h3>
+                <div class="department">Administration</div>
+                <p>Improved coordination that made everyone’s job easier.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner9.jpg" alt="Karim Saleh"></div>
+                <h3>Karim Saleh</h3>
+                <div class="department">Patient Services</div>
+                <p>Warm hospitality that reflected our values daily.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== Q1 2024 ========== -->
+    <div class="quarter-block fade-in">
+        <div class="quarter-label">
+            <h2>Q1 2024</h2>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="winners-grid">
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner10.jpg" alt="Nadia Al-Rashid"></div>
+                <h3>Nadia Al-Rashid</h3>
+                <div class="department">Nursing</div>
+                <p>Set a high standard of care and mentorship for the team.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner11.jpg" alt="Bilal Farouk"></div>
+                <h3>Bilal Farouk</h3>
+                <div class="department">Pharmacy</div>
+                <p>Introduced practical improvements that stuck.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner12.jpg" alt="Jana Haddad"></div>
+                <h3>Jana Haddad</h3>
+                <div class="department">Radiology</div>
+                <p>Combined expertise with a calm, reassuring presence.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner13.jpg" alt="Omar Al-Mutairi"></div>
+                <h3>Omar Al-Mutairi</h3>
+                <div class="department">Laboratory</div>
+                <p>Quiet consistency that raised the bar for everyone.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner14.jpg" alt="Leen Al-Otaibi"></div>
+                <h3>Leen Al-Otaibi</h3>
+                <div class="department">Administration</div>
+                <p>Made complex processes feel simple and reliable.</p>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner15.jpg" alt="Rami Al-Harbi"></div>
+                <h3>Rami Al-Harbi</h3>
+                <div class="department">Patient Services</div>
+                <p>Ensured every person left feeling cared for.</p>
+            </div>
+        </div>
+    </div>
 
 </main>
 
@@ -366,13 +812,13 @@ const fadeObserver = new IntersectionObserver((entries) => {
             entry.target.classList.remove("visible");
         }
     });
-}, { threshold: 0.12 });
+}, { threshold: 0.1 });
 
 fadeElements.forEach((el) => fadeObserver.observe(el));
 
 window.addEventListener("load", () => {
     document.querySelectorAll(".fade-in").forEach((el, index) => {
-        setTimeout(() => el.classList.add("visible"), 60 + index * 80);
+        setTimeout(() => el.classList.add("visible"), 50 + index * 70);
     });
 });
 </script>
