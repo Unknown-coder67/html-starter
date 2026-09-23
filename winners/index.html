@@ -814,16 +814,15 @@ const fadeObserver = new IntersectionObserver((entries) => {
         }
     });
 }, {
-    threshold: 0.15,                    // needs ~15% of the element visible
-    rootMargin: "0px 0px -18% 0px"      // waits until it’s higher in the viewport
+    threshold: 0.15,
+    rootMargin: "-12% 0px -15% 0px"   // delays both scrolling up and scrolling down
 });
 
 fadeElements.forEach((el) => fadeObserver.observe(el));
 
-// Still give the top content a gentle staggered entrance on load
+// Gentle staggered entrance only for elements already near the top on load
 window.addEventListener("load", () => {
     document.querySelectorAll(".fade-in").forEach((el, index) => {
-        // Only force-visible if the element is already near the top
         const rect = el.getBoundingClientRect();
         if (rect.top < window.innerHeight * 0.85) {
             setTimeout(() => el.classList.add("visible"), 40 + index * 60);
