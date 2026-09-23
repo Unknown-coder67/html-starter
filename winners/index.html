@@ -30,7 +30,7 @@ body {
 
 header {
     background: #FFFFFF;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     padding: 8px 5%;
 }
 
@@ -74,40 +74,53 @@ nav a:hover::after {
     width: 100%;
 }
 
-/* ========== MAIN ========== */
-.main-content {
-    width: 92%;
-    max-width: 1280px;
-    margin: 0 auto 100px;
-    padding-top: 50px;
-}
-
-.intro {
+/* ========== WHITE INTRO SECTION ========== */
+.intro-section {
+    background-color: #FFFFFF;
+    /* Subtle gray grid decoration */
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+    padding: 60px 5% 70px;
     text-align: center;
-    margin-bottom: 70px;
 }
 
-.intro .label {
-    color: rgba(255, 255, 255, 0.65);
+.intro-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.intro-section .label {
+    color: #557083;
     font-size: 0.95rem;
     letter-spacing: 0.04em;
     margin-bottom: 10px;
+    font-weight: 500;
 }
 
-.intro h1 {
+.intro-section h1 {
     font-size: clamp(2.2rem, 5vw, 3.4rem);
     font-weight: 750;
     margin-bottom: 14px;
-    color: #FFFFFF;
+    color: #17171D;
 }
 
-.intro p {
-    color: rgba(255, 255, 255, 0.72);
+.intro-section p {
+    color: #557083;
     font-size: 1.05rem;
     max-width: 540px;
     margin: 0 auto;
     line-height: 1.7;
     font-weight: 500;
+}
+
+/* ========== DARK CONTENT (from Q3 onwards) ========== */
+.main-content {
+    width: 92%;
+    max-width: 1280px;
+    margin: 0 auto 100px;
+    padding-top: 60px;
 }
 
 /* ========== QUARTER SECTIONS ========== */
@@ -262,12 +275,16 @@ footer {
         transform: none;
     }
 
-    .main-content {
-        width: 92%;
-        padding-top: 36px;
+    .intro-section {
+        padding: 40px 5% 50px;
     }
 
-    .intro h1 {
+    .main-content {
+        width: 92%;
+        padding-top: 40px;
+    }
+
+    .intro-section h1 {
         font-size: 2rem;
     }
 
@@ -316,16 +333,20 @@ footer {
     </div>
 </header>
 
-<main class="main-content">
-
-    <section class="intro fade-in">
+<!-- WHITE INTRO SECTION -->
+<section class="intro-section fade-in">
+    <div class="intro-inner">
         <p class="label">Recognition Hall</p>
         <h1>Our Winners</h1>
         <p>
             Celebrating the people whose dedication, care and excellence
             have shaped our culture every quarter.
         </p>
-    </section>
+    </div>
+</section>
+
+<!-- DARK CONTENT STARTS HERE -->
+<main class="main-content">
 
     <!-- ========== Q3 2026 – Stay tuned ========== -->
     <div class="stay-tuned-block fade-in">
@@ -814,12 +835,11 @@ const fadeObserver = new IntersectionObserver((entries) => {
     });
 }, {
     threshold: 0.15,
-    rootMargin: "-15% 0px -15% 0px"   // delays both scrolling up and scrolling down
+    rootMargin: "-15% 0px -15% 0px"
 });
 
 fadeElements.forEach((el) => fadeObserver.observe(el));
 
-// Gentle staggered entrance only for elements already near the top on load
 window.addEventListener("load", () => {
     document.querySelectorAll(".fade-in").forEach((el, index) => {
         const rect = el.getBoundingClientRect();
