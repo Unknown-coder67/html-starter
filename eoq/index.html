@@ -371,8 +371,21 @@ nav a:hover {
     border-top: 1px solid #dcebf1;
     box-shadow: 0 -8px 25px rgba(23, 50, 77, 0.08);
     padding: 15px 5%;
-    display: none;
     z-index: 100;
+
+    /* Slide animation */
+    transform: translateY(100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.25s ease,
+                visibility 0.38s;
+}
+
+.confirmation-bar.show {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
 }
 
 .confirmation-inner {
@@ -1084,7 +1097,7 @@ function selectCandidate(button) {
     selectedCandidate = candidate.dataset.name;
 
     document.getElementById("selectedName").textContent = selectedCandidate;
-    document.getElementById("confirmationBar").style.display = "block";
+    document.getElementById("confirmationBar").classList.add("show");
 }
 
 function changeSelection() {
@@ -1094,7 +1107,7 @@ function changeSelection() {
     });
 
     selectedCandidate = "";
-    document.getElementById("confirmationBar").style.display = "none";
+    document.getElementById("confirmationBar").classList.remove("show");
 }
 
 function confirmVote() {
@@ -1120,7 +1133,7 @@ function confirmVote() {
 
     /* Fade out voting, then show success below */
     votingSection.classList.remove("visible");
-    document.getElementById("confirmationBar").style.display = "none";
+    document.getElementById("confirmationBar").classList.remove("show");
 
     setTimeout(() => {
         votingSection.style.display = "none";
