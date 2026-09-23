@@ -58,7 +58,7 @@ header {
     position: relative;
 }
 
-.banner video {
+.banner img {
     width: 100%;
     height: auto;
     display: block;
@@ -683,17 +683,11 @@ footer {
 </header>
 
 <div class="banner">
-    <video
-        autoplay
-        muted
-        loop
-        playsinline
-        id="bannerVideo"
-        class="fade-in"
-        aria-label="Company Banner"
-    >
-        <source src="/banner.mp4" type="video/mp4">
-    </video>
+    <img
+    src="/banner.jpg"
+    alt="Company Banner"
+    class="fade-in"
+>
 
     <a href="/eoq/" class="banner-cta">
         Nominate your stars →
@@ -971,7 +965,7 @@ footer {
 <script>
 
 /* General fade-in */
-const fadeElements = document.querySelectorAll(".fade-in:not(#bannerVideo)");
+const fadeElements = document.querySelectorAll(".fade-in");
 const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -982,22 +976,6 @@ const fadeObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.15 });
 fadeElements.forEach((el) => fadeObserver.observe(el));
-
-/* Banner: only fade out when EVERY pixel is outside the viewport */
-const bannerVideo = document.getElementById("bannerVideo");
-const bannerObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-        } else {
-            entry.target.classList.remove("visible");
-        }
-    });
-}, {
-    threshold: 0,
-    rootMargin: "0px"
-});
-bannerObserver.observe(bannerVideo);
 
 /* Sticky nav active state (only the 2 bottom sections) */
 const bottomSections = document.querySelectorAll("#section-1, #section-2");
