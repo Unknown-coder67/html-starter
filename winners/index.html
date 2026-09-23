@@ -26,11 +26,18 @@ body {
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    padding-top: 74px; /* space for the fixed header */
 }
 
+/* Fixed header – exact method you requested */
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
     background: #FFFFFF;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: none;
     padding: 8px 5%;
 }
 
@@ -74,7 +81,7 @@ nav a:hover::after {
     width: 100%;
 }
 
-/* ========== WHITE INTRO SECTION ========== */
+/* ========== WHITE INTRO SECTION (no fade) ========== */
 .intro-section {
     background-color: #FFFFFF;
     /* Subtle gray grid decoration */
@@ -236,7 +243,7 @@ nav a:hover::after {
     width: auto;
 }
 
-/* Fade animation */
+/* Fade animation (only for dark content) */
 .fade-in {
     opacity: 0;
     transform: translateY(28px);
@@ -269,6 +276,10 @@ footer {
 }
 
 @media (max-width: 700px) {
+    body {
+        padding-top: 74px;
+    }
+
     .logo {
         width: 62px;
         height: 62px;
@@ -322,7 +333,7 @@ footer {
 
 <body>
 
-<header class="fade-in">
+<header>
     <div class="navbar">
         <a href="/">
             <img src="/logo.jpg" alt="Care Medical Jiwar" class="logo">
@@ -333,8 +344,8 @@ footer {
     </div>
 </header>
 
-<!-- WHITE INTRO SECTION -->
-<section class="intro-section fade-in">
+<!-- WHITE INTRO SECTION – no fade class -->
+<section class="intro-section">
     <div class="intro-inner">
         <p class="label">Recognition Hall</p>
         <h1>Our Winners</h1>
