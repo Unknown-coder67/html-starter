@@ -57,32 +57,32 @@ nav {
     gap: 28px;
 }
 
+/* Home link – underline fills left → right on hover (200ms), no color change */
 nav a {
     position: relative;
     text-decoration: none;
     color: #24516b;
     font-weight: 600;
     padding: 8px 2px;
-    transition: color 0.25s ease;
 }
 
-nav a:hover {
-    color: #0DC8EA;
-}
-
-nav a.active {
-    color: #0DC8EA;
-}
-
-nav a.active::after {
+nav a::after {
     content: "";
     position: absolute;
     left: 0;
-    right: 0;
     bottom: -5px;
+    width: 0;
     height: 2px;
-    background: #0DC8EA;
-    border-radius: 2px;
+    background: #24516b;
+    transition: width 200ms ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+nav a:hover {
+    color: #24516b; /* keep same color */
 }
 
 .main-content {
@@ -142,11 +142,17 @@ nav a.active::after {
 .code-section {
     max-width: 570px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.97);
+    background: #FFFFFF;
     border-radius: 18px;
     padding: 40px;
     text-align: center;
     box-shadow: 0 12px 35px rgba(23, 50, 77, 0.12);
+    transition: box-shadow 0.4s ease;
+}
+
+/* After successful code entry – remove shadow */
+.code-section.expanded {
+    box-shadow: none;
 }
 
 .code-icon {
@@ -194,21 +200,26 @@ nav a.active::after {
     box-shadow: 0 0 0 3px rgba(13, 200, 234, 0.12);
 }
 
+/* Continue to Voting – text only + underline (same style as home buttons) */
 .code-button {
-    width: 100%;
-    height: 52px;
-    margin-top: 15px;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    margin-top: 20px;
+    background: none;
     border: none;
-    border-radius: 10px;
-    background: #001E4D;
-    color: #ffffff;
+    border-bottom: 2px solid #17324d;
+    padding: 22px 0 5px;
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 800;
+    color: #17324d;
     cursor: pointer;
+    transition: color 0.25s ease, border-color 0.25s ease;
 }
 
 .code-button:hover {
-    background: #00275f;
+    color: #0DC8EA;
+    border-bottom-color: #0DC8EA;
 }
 
 .code-error {
@@ -218,14 +229,20 @@ nav a.active::after {
     margin-top: 12px;
 }
 
+/* Voting section – expands below, starts hidden */
 .voting-section {
     display: none;
+    margin-top: 50px;
+}
+
+.voting-section.visible {
+    display: block;
 }
 
 .voting-header {
     text-align: center;
     margin-bottom: 30px;
-    background: rgba(255, 255, 255, 0.94);
+    background: #FFFFFF;
     padding: 25px;
     border-radius: 18px;
 }
@@ -258,7 +275,7 @@ nav a.active::after {
 }
 
 .candidate {
-    background: rgba(255, 255, 255, 0.97);
+    background: #FFFFFF;
     border: 1px solid #dcebf1;
     border-radius: 18px;
     padding: 20px;
@@ -387,9 +404,9 @@ nav a.active::after {
 .success-section {
     display: none;
     max-width: 600px;
-    margin: 0 auto;
+    margin: 50px auto 0;
     text-align: center;
-    background: rgba(255, 255, 255, 0.97);
+    background: #FFFFFF;
     border: 1px solid #dcebf1;
     border-radius: 18px;
     padding: 45px 30px;
@@ -508,6 +525,10 @@ nav a.active::after {
         transform: none;
         transition: none;
     }
+
+    nav a::after {
+        transition: none;
+    }
 }
 </style>
 </head>
@@ -564,6 +585,7 @@ nav a.active::after {
 
     </section>
 
+    <!-- Voting appears BELOW the code section (does not replace it) -->
     <section class="voting-section fade-in" id="votingSection">
         <div class="voting-header">
             <h2>Choose Your Employee of the Quarter</h2>
@@ -629,7 +651,7 @@ const departmentCodes = {
 let currentDepartment = "";
 let selectedCandidate = "";
 
-/* Fade-in on page load (and when elements become visible) */
+/* Fade-in on load */
 const fadeElements = document.querySelectorAll(".fade-in");
 const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -643,7 +665,6 @@ const fadeObserver = new IntersectionObserver((entries) => {
 
 fadeElements.forEach((el) => fadeObserver.observe(el));
 
-/* Also force a gentle fade-in shortly after load for above-the-fold content */
 window.addEventListener("load", () => {
     document.querySelectorAll(".fade-in").forEach((el, index) => {
         setTimeout(() => {
@@ -652,7 +673,7 @@ window.addEventListener("load", () => {
     });
 });
 
-/* Placeholder disappears on focus, returns on blur if empty */
+/* Placeholder disappears on focus */
 const codeInput = document.getElementById("departmentCode");
 const placeholderText = "Department Code";
 
@@ -670,6 +691,8 @@ function verifyCode() {
     const input = document.getElementById("departmentCode");
     const error = document.getElementById("codeError");
     const code = input.value.trim().toUpperCase();
+    const codeSection = document.getElementById("codeSection");
+    const votingSection = document.getElementById("votingSection");
 
     /* Empty field */
     if (!code) {
@@ -697,15 +720,20 @@ function verifyCode() {
     document.getElementById("departmentBadge").textContent =
         departmentCodes[code] + " Department";
 
-    document.getElementById("codeSection").style.display = "none";
-    document.getElementById("votingSection").style.display = "block";
-
-    /* Trigger fade-in for the newly shown voting section */
-    requestAnimationFrame(() => {
-        document.getElementById("votingSection").classList.add("visible");
-    });
-
     error.style.display = "none";
+
+    /* Remove box-shadow from code section */
+    codeSection.classList.add("expanded");
+
+    /* Show voting section BELOW (expand) with fade-in */
+    votingSection.style.display = "block";
+    void votingSection.offsetWidth; /* force reflow */
+    votingSection.classList.add("visible");
+
+    /* Smooth scroll so the new content is in view */
+    setTimeout(() => {
+        votingSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
 }
 
 function selectCandidate(button) {
@@ -751,13 +779,20 @@ function confirmVote() {
     localStorage.setItem("eoqVotes", JSON.stringify(votes));
     localStorage.setItem("eoqUsedCodes", JSON.stringify(usedCodes));
 
-    document.getElementById("votingSection").style.display = "none";
-    document.getElementById("confirmationBar").style.display = "none";
-    document.getElementById("successSection").style.display = "block";
+    const votingSection = document.getElementById("votingSection");
+    const successSection = document.getElementById("successSection");
 
-    requestAnimationFrame(() => {
-        document.getElementById("successSection").classList.add("visible");
-    });
+    /* Fade out voting, then show success below */
+    votingSection.classList.remove("visible");
+    document.getElementById("confirmationBar").style.display = "none";
+
+    setTimeout(() => {
+        votingSection.style.display = "none";
+        successSection.style.display = "block";
+        void successSection.offsetWidth;
+        successSection.classList.add("visible");
+        successSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 400);
 }
 
 document.getElementById("departmentCode").addEventListener("keydown", function(event) {
