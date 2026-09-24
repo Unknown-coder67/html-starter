@@ -189,18 +189,19 @@ header {
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0 24px 0 20px;
     display: flex;
     align-items: flex-start;
-    gap: 80px;
+    gap: 60px;
 }
 
 .celebrating-nav {
     position: sticky;
     top: 28vh;
-    flex: 0 0 280px;
-    width: 280px;
+    flex: 0 0 260px;
+    width: 260px;
     z-index: 10;
+    margin-left: 0;
 }
 
 .celebrating-nav ul {
@@ -228,12 +229,12 @@ header {
 }
 
 .celebrating-nav a:hover {
-    color: #0DC8EA;
+    color: #02102B;
 }
 
 .celebrating-nav a.active {
-    color: #0DC8EA;
-    border-left-color: #0DC8EA;
+    color: #02102B;
+    border-left-color: #02102B;
 }
 
 .celebrating-nav-img {
@@ -274,7 +275,7 @@ header {
 .celebrating-block p {
     color: #557083;
     font-size: 1.05rem;
-    line-height: 1.7;
+    line-height: 1.75;
     max-width: 640px;
 }
 
@@ -388,14 +389,14 @@ header {
     background-image:
         linear-gradient(#e8e8e8 1px, transparent 1px),
         linear-gradient(90deg, #e8e8e8 1px, transparent 1px);
-    background-size: 40px 40px;
+    background-size: 56px 56px;
     border-top: 1px solid #e5e5e5;
 }
 
 .jiwar-inner {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0 50px 0 50px;
     display: flex;
     align-items: flex-start;
     gap: 60px;
@@ -463,7 +464,6 @@ header {
 .jiwar-right {
     flex: 1;
     min-height: 280px;
-    /* Reserved for future cards / wall notes */
     position: relative;
 }
 
@@ -503,16 +503,16 @@ footer {
 
 @media (max-width: 1100px) {
     .celebrating-layout {
-        gap: 50px;
-        padding: 0 30px;
+        gap: 40px;
+        padding: 0 20px 0 16px;
     }
     .celebrating-nav {
-        flex: 0 0 240px;
-        width: 240px;
+        flex: 0 0 220px;
+        width: 220px;
     }
     .jiwar-inner {
         gap: 40px;
-        padding: 0 30px;
+        padding: 0 40px 0 40px;
     }
     .jiwar-left {
         flex: 0 0 320px;
@@ -522,11 +522,56 @@ footer {
 
 @media (max-width: 900px) {
     .celebrating-layout {
-        display: block;
-        padding: 0 24px;
+        display: flex;
+        flex-direction: column;
+        padding: 0 20px;
+        gap: 28px;
     }
     .celebrating-nav {
+        position: sticky;
+        top: 70px;
+        flex: none;
+        width: 100%;
+        margin-left: 0;
+        background: #FFFFFF;
+        z-index: 50;
+        padding: 12px 0 8px;
+        border-bottom: 1px solid #e8eef2;
+    }
+    .celebrating-nav ul {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 8px;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .celebrating-nav ul::-webkit-scrollbar {
         display: none;
+    }
+    .celebrating-nav li {
+        margin-bottom: 0;
+        flex-shrink: 0;
+    }
+    .celebrating-nav a {
+        border-left: none;
+        border-bottom: 2px solid transparent;
+        padding: 6px 10px 8px;
+        flex-direction: column;
+        gap: 6px;
+        font-size: 0.85rem;
+        text-align: center;
+        min-width: 72px;
+    }
+    .celebrating-nav a.active {
+        border-left-color: transparent;
+        border-bottom-color: #02102B;
+        color: #02102B;
+    }
+    .celebrating-nav-img {
+        width: 40px;
+        height: 40px;
     }
     .celebrating-main {
         max-width: 100%;
@@ -536,7 +581,7 @@ footer {
     }
     .jiwar-inner {
         flex-direction: column;
-        padding: 0 24px;
+        padding: 0 50px;
     }
     .jiwar-left {
         flex: none;
@@ -574,6 +619,12 @@ footer {
     .celebrating-section {
         padding: 24px 0 70px;
     }
+    .celebrating-layout {
+        padding: 0 16px;
+    }
+    .celebrating-nav {
+        top: 62px;
+    }
     .upper-section {
         width: 94%;
         margin-bottom: 70px;
@@ -587,8 +638,17 @@ footer {
     .jiwar-section {
         padding: 60px 0;
     }
+    .jiwar-inner {
+        padding: 0 50px;
+    }
     .jiwar-headline {
         font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .jiwar-inner {
+        padding: 0 50px;
     }
 }
 
@@ -641,7 +701,7 @@ footer {
         <nav class="celebrating-nav">
             <ul>
                 <li>
-                    <a href="#recognize" class="active">
+                    <a href="#recognize" class="active" data-section="recognize">
                         <div class="celebrating-nav-img">
                             <img src="/employee1.jpg" alt="Recognize">
                         </div>
@@ -649,7 +709,7 @@ footer {
                     </a>
                 </li>
                 <li>
-                    <a href="#inspire">
+                    <a href="#inspire" data-section="inspire">
                         <div class="celebrating-nav-img">
                             <img src="/employee2.jpg" alt="Inspire">
                         </div>
@@ -657,7 +717,7 @@ footer {
                     </a>
                 </li>
                 <li>
-                    <a href="#connect">
+                    <a href="#connect" data-section="connect">
                         <div class="celebrating-nav-img">
                             <img src="/employee3.jpg" alt="Connect">
                         </div>
@@ -665,7 +725,7 @@ footer {
                     </a>
                 </li>
                 <li>
-                    <a href="#grow">
+                    <a href="#grow" data-section="grow">
                         <div class="celebrating-nav-img">
                             <img src="/employee4.jpg" alt="Grow">
                         </div>
@@ -678,19 +738,19 @@ footer {
         <div class="celebrating-main">
             <section class="celebrating-block fade-in" id="recognize">
                 <h3>RECOGNIZE</h3>
-                <p>Contributions that make a difference.</p>
+                <p>Contributions that make a difference. Every effort, big or small, deserves to be seen and celebrated — because when we notice the work that moves us forward, we strengthen the culture that holds us together.</p>
             </section>
             <section class="celebrating-block fade-in" id="inspire">
                 <h3>INSPIRE</h3>
-                <p>People who feel valued and appreciated.</p>
+                <p>People who feel valued and appreciated. Recognition lights a spark that spreads — when one person is lifted up, others are encouraged to give their best and to believe their work truly matters.</p>
             </section>
             <section class="celebrating-block fade-in" id="connect">
                 <h3>CONNECT</h3>
-                <p>Collaboration and shared success.</p>
+                <p>Collaboration and shared success. Celebrating together builds trust and belonging, turning individual wins into collective pride and reminding us that we achieve more when we support one another.</p>
             </section>
             <section class="celebrating-block fade-in" id="grow">
                 <h3>GROW</h3>
-                <p>Excellence and lasting impact.</p>
+                <p>Excellence and lasting impact. By recognizing progress and potential, we nurture a culture of continuous improvement — one that compounds over time into meaningful, lasting results for everyone.</p>
             </section>
         </div>
     </div>
@@ -792,27 +852,52 @@ const fadeObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 fadeElements.forEach((el) => fadeObserver.observe(el));
 
-/* Celebrating sticky nav */
+/* Celebrating sticky nav – fixed click + scroll highlighting */
 const celebratingSections = document.querySelectorAll("#recognize, #inspire, #connect, #grow");
 const celebratingLinks = document.querySelectorAll(".celebrating-nav a");
-const celebratingObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            celebratingLinks.forEach((link) => link.classList.remove("active"));
-            const active = document.querySelector(
-                '.celebrating-nav a[href="#' + entry.target.id + '"]'
-            );
-            if (active) active.classList.add("active");
+let isClickScrolling = false;
+let clickScrollTimeout = null;
+
+function setActiveLink(id) {
+    celebratingLinks.forEach((link) => {
+        if (link.getAttribute("href") === "#" + id) {
+            link.classList.add("active");
+        } else {
+            link.classList.remove("active");
         }
     });
-}, { rootMargin: "-35% 0px -50% 0px", threshold: 0 });
+}
+
+const celebratingObserver = new IntersectionObserver((entries) => {
+    if (isClickScrolling) return;
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            setActiveLink(entry.target.id);
+        }
+    });
+}, { rootMargin: "-40% 0px -45% 0px", threshold: 0 });
+
 celebratingSections.forEach((section) => celebratingObserver.observe(section));
 
 celebratingLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
         e.preventDefault();
-        const target = document.querySelector(link.getAttribute("href"));
-        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        const href = link.getAttribute("href");
+        const target = document.querySelector(href);
+        if (!target) return;
+
+        const id = href.slice(1);
+        setActiveLink(id);
+
+        isClickScrolling = true;
+        if (clickScrollTimeout) clearTimeout(clickScrollTimeout);
+
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+        // Re-enable observer after smooth scroll finishes
+        clickScrollTimeout = setTimeout(() => {
+            isClickScrolling = false;
+        }, 900);
     });
 });
 </script>
