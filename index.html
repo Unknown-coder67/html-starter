@@ -168,20 +168,34 @@ header {
 
 .banner-cta {
     position: absolute;
-    bottom: 28px;
-    left: 5%;
-    display: inline-block;
-    background: none;
-    border: none;
-    border-bottom: 2px solid #ffffff;
-    padding: 22px 0 5px;
-    font-size: 1rem;
-    font-weight: 750;
-    color: #ffffff;
+    bottom: 45px;
+    left: 10%;
+
+    /* Button shape */
+    padding: 14px 24px;
+    border: 2px solid #D79A1E;
+    border-radius: 6px;
+
+    /* White center with gold around the edges */
+    background: linear-gradient(
+        to bottom,
+        #D79A1E 0%,
+        #FFFFFF 12%,
+        #FFFFFF 88%,
+        #D79A1E 100%
+    );
+
+    /* Text */
+    color: #D79A1E;
     text-decoration: none;
-    cursor: pointer;
-    transition: opacity 0.25s ease, border-color 0.25s ease;
-    z-index: 5;
+
+    /* Gold glow */
+    box-shadow:
+        0 0 6px rgba(215, 154, 30, 0.8),
+        0 0 14px rgba(215, 154, 30, 0.5);
+
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 
 .banner-cta:hover {
