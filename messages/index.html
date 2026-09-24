@@ -21,6 +21,8 @@ body {
     color: #17171D;
     line-height: 1.6;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -59,11 +61,11 @@ header {
 
 .header-nav a {
     position: relative;
-    color: rgb(23, 23, 29);
     text-decoration: none;
-    font-size: 14.4px;
+    color: #17171D;
     font-weight: 750;
-    padding: 9px 0;
+    padding: 8px 2px;
+    font-size: 14.4px;
 }
 
 .header-nav a::after {
@@ -73,39 +75,32 @@ header {
     bottom: 5px;
     width: 0;
     height: 2px;
-    background: #171717;
+    background: #17171D;
     transition: width 200ms ease;
 }
 
-.header-nav a:hover::after { width: 100%; }
-
-.header-nav a.nominate-btn {
-    display: flex;
-    align-items: center;
-    background-color: rgb(23, 23, 29) !important;
-    color: #fff !important;
-    border-radius: 999px;
-    padding: 12px 17px;
-    font-size: 15.04px;
-    font-weight: 700;
-    height: 46.5625px;
-    text-decoration: none !important;
-    column-gap: 16px;
-}
-
-.header-nav a.nominate-btn::after { display: none !important; }
-
-.nominate-arrow {
-    font-weight: 900;
-    -webkit-text-stroke: 1.3px currentColor;
+.header-nav a:hover::after {
+    width: 100%;
 }
 
 .page {
     position: relative;
     z-index: 1;
-    max-width: 560px;
-    margin: 0 auto;
-    padding: 110px 24px 80px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 110px 24px 60px;
+}
+
+.card {
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 40px 36px 36px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 4px 24px rgba(23, 50, 77, 0.06);
+    border: 1px solid #eef2f5;
 }
 
 .hero-line {
@@ -115,21 +110,21 @@ header {
 
 .hero-line .dark {
     color: #02102B;
-    font-size: clamp(1.5rem, 4vw, 2.1rem);
+    font-size: clamp(1.5rem, 4vw, 2rem);
     font-weight: 750;
 }
 
 .hero-sub {
     color: #0DC8EA;
-    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    font-size: clamp(1.2rem, 3vw, 1.45rem);
     font-weight: 750;
-    margin: 10px 0 36px;
+    margin: 10px 0 32px;
 }
 
 .heart { color: #0DC8EA; }
 
 .form-group {
-    margin-bottom: 28px;
+    margin-bottom: 24px;
 }
 
 .form-group label {
@@ -150,15 +145,13 @@ header {
     font-size: 1rem;
     font-weight: 600;
     color: #17171D;
-    background: rgba(255,255,255,0.92);
+    background: #FFFFFF;
     outline: none;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
     resize: vertical;
 }
 
-.form-group textarea {
-    min-height: 120px;
-}
+.form-group textarea { min-height: 110px; }
 
 .form-group input:focus,
 .form-group textarea:focus {
@@ -172,7 +165,6 @@ header {
     font-weight: 600;
 }
 
-/* Rotating placeholder overlay for message field */
 .rotating-placeholder-wrap {
     position: relative;
 }
@@ -191,15 +183,12 @@ header {
     opacity: 1;
 }
 
-.rotating-placeholder.fade-out {
-    opacity: 0;
-}
+.rotating-placeholder.fade-out { opacity: 0; }
 
 .rotating-placeholder-wrap.has-value .rotating-placeholder {
     display: none;
 }
 
-/* Radio options */
 .radio-group {
     display: flex;
     flex-direction: column;
@@ -250,12 +239,9 @@ header {
 .name-field-wrap {
     display: none;
     margin-top: 14px;
-    margin-bottom: 8px;
 }
 
-.name-field-wrap.visible {
-    display: block;
-}
+.name-field-wrap.visible { display: block; }
 
 .submit-btn {
     display: inline-flex;
@@ -270,7 +256,7 @@ header {
     font-size: 1rem;
     font-weight: 750;
     cursor: pointer;
-    margin-top: 12px;
+    margin-top: 10px;
     transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
@@ -284,39 +270,39 @@ header {
     -webkit-text-stroke: 1px currentColor;
 }
 
-/* Success state */
 .form-wrap { display: block; }
 .success-wrap {
     display: none;
-    text-align: left;
-    padding: 20px 0;
+    padding: 8px 0;
 }
-
 .success-wrap.visible { display: block; }
 .form-wrap.hidden { display: none; }
 
 .success-title {
     color: #02102B;
-    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+    font-size: clamp(1.8rem, 4.5vw, 2.4rem);
     font-weight: 750;
     line-height: 1.3;
-    margin-bottom: 8px;
 }
 
 .success-heart {
     color: #0DC8EA;
-    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+}
+
+footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 18px 20px;
+    color: #96939D;
+    font-size: 0.7rem;
+    background: #17171D;
 }
 
 @media (max-width: 700px) {
     .logo { width: 62px; height: 62px; }
-    .header-nav { gap: 16px; }
-    .header-nav a.nominate-btn {
-        font-size: 13.5px;
-        padding: 10px 14px;
-        height: 42px;
-    }
-    .page { padding: 100px 20px 60px; }
+    .page { padding: 100px 16px 40px; }
+    .card { padding: 28px 22px 28px; }
 }
 </style>
 </head>
@@ -328,64 +314,68 @@ header {
             <img src="/logo.jpg" alt="Company Logo" class="logo">
         </a>
         <nav class="header-nav">
-            <a href="/winners/">Winners</a>
-            <a href="/eoq/" class="nominate-btn">Nominate your stars <span class="nominate-arrow">→</span></a>
+            <a href="/">Home</a>
         </nav>
     </div>
 </header>
 
 <main class="page">
-    <div class="form-wrap" id="formWrap">
-        <div class="hero-line">
-            <span class="dark">Someone made your day a little better?</span>
+    <div class="card">
+        <div class="form-wrap" id="formWrap">
+            <div class="hero-line">
+                <span class="dark">Someone made your day a little better?</span>
+            </div>
+            <p class="hero-sub">Tell them. <span class="heart">♥</span></p>
+
+            <form id="messageForm" novalidate>
+                <div class="form-group">
+                    <label for="thankWho">Who would you like to thank?</label>
+                    <input type="text" id="thankWho" name="thankWho" placeholder="Name or department" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="messageText">What do you want them to know?</label>
+                    <div class="rotating-placeholder-wrap" id="placeholderWrap">
+                        <div class="rotating-placeholder" id="rotatingPlaceholder"></div>
+                        <textarea id="messageText" name="messageText" rows="4" required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Your name?</label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="identity" value="named" id="optNamed">
+                            My name
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="identity" value="anonymous" id="optAnonymous" checked>
+                            Keep it anonymous
+                        </label>
+                    </div>
+                    <div class="name-field-wrap" id="nameFieldWrap">
+                        <input type="text" id="senderName" name="senderName" placeholder="Please enter your name">
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Put it on the wall <span class="arrow">→</span>
+                </button>
+            </form>
         </div>
-        <p class="hero-sub">Tell them. <span class="heart">♥</span></p>
 
-        <form id="messageForm" novalidate>
-            <div class="form-group">
-                <label for="thankWho">Who would you like to thank?</label>
-                <input type="text" id="thankWho" name="thankWho" placeholder="Name or department" required>
-            </div>
-
-            <div class="form-group">
-                <label for="messageText">What do you want them to know?</label>
-                <div class="rotating-placeholder-wrap" id="placeholderWrap">
-                    <div class="rotating-placeholder" id="rotatingPlaceholder"></div>
-                    <textarea id="messageText" name="messageText" rows="4" required></textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Your name?</label>
-                <div class="radio-group">
-                    <label class="radio-option">
-                        <input type="radio" name="identity" value="named" id="optNamed">
-                        My name
-                    </label>
-                    <label class="radio-option">
-                        <input type="radio" name="identity" value="anonymous" id="optAnonymous" checked>
-                        Keep it anonymous
-                    </label>
-                </div>
-                <div class="name-field-wrap" id="nameFieldWrap">
-                    <input type="text" id="senderName" name="senderName" placeholder="Please enter your name">
-                </div>
-            </div>
-
-            <button type="submit" class="submit-btn">
-                Put it on the wall <span class="arrow">→</span>
-            </button>
-        </form>
-    </div>
-
-    <div class="success-wrap" id="successWrap">
-        <h2 class="success-title">IT'S ON THE WALL! <span class="success-heart">♥</span></h2>
+        <div class="success-wrap" id="successWrap">
+            <h2 class="success-title">IT'S ON THE WALL! <span class="success-heart">♥</span></h2>
+        </div>
     </div>
 </main>
 
+<footer>
+    © 2026 Care Medical Jiwar
+</footer>
+
 <script>
-/* Rotating placeholders for message field */
-const placeholders = [
+var placeholders = [
     "Thank you for always having our back",
     "Thank you for your patience, your help and your constant positivity",
     "You made a tough day feel lighter — thank you",
@@ -393,10 +383,10 @@ const placeholders = [
     "Your kindness didn't go unnoticed. Thank you."
 ];
 
-const rotatingEl = document.getElementById("rotatingPlaceholder");
-const messageTextarea = document.getElementById("messageText");
-const placeholderWrap = document.getElementById("placeholderWrap");
-let placeholderIndex = 0;
+var rotatingEl = document.getElementById("rotatingPlaceholder");
+var messageTextarea = document.getElementById("messageText");
+var placeholderWrap = document.getElementById("placeholderWrap");
+var placeholderIndex = 0;
 
 function showPlaceholder(index) {
     rotatingEl.classList.add("fade-out");
@@ -422,16 +412,9 @@ messageTextarea.addEventListener("input", function () {
     }
 });
 
-messageTextarea.addEventListener("focus", function () {
-    if (this.value.trim().length === 0) {
-        /* keep rotating visible until they type */
-    }
-});
-
-/* Show/hide name field */
-const optNamed = document.getElementById("optNamed");
-const optAnonymous = document.getElementById("optAnonymous");
-const nameFieldWrap = document.getElementById("nameFieldWrap");
+var optNamed = document.getElementById("optNamed");
+var optAnonymous = document.getElementById("optAnonymous");
+var nameFieldWrap = document.getElementById("nameFieldWrap");
 
 function updateNameField() {
     if (optNamed.checked) {
@@ -445,11 +428,10 @@ function updateNameField() {
 optNamed.addEventListener("change", updateNameField);
 optAnonymous.addEventListener("change", updateNameField);
 
-/* Form submit → success */
 document.getElementById("messageForm").addEventListener("submit", function (e) {
     e.preventDefault();
-    const who = document.getElementById("thankWho").value.trim();
-    const msg = document.getElementById("messageText").value.trim();
+    var who = document.getElementById("thankWho").value.trim();
+    var msg = document.getElementById("messageText").value.trim();
     if (!who) {
         document.getElementById("thankWho").focus();
         return;
@@ -458,13 +440,25 @@ document.getElementById("messageForm").addEventListener("submit", function (e) {
         document.getElementById("messageText").focus();
         return;
     }
+    var fromName = null;
     if (optNamed.checked) {
-        const name = document.getElementById("senderName").value.trim();
-        if (!name) {
+        fromName = document.getElementById("senderName").value.trim();
+        if (!fromName) {
             document.getElementById("senderName").focus();
             return;
         }
     }
+    /* Store for homepage wall demo (localStorage – no server needed) */
+    try {
+        var notes = JSON.parse(localStorage.getItem("jiwar_wall") || "[]");
+        notes.push({
+            to: who,
+            message: msg,
+            from: fromName,
+            at: Date.now()
+        });
+        localStorage.setItem("jiwar_wall", JSON.stringify(notes.slice(-30)));
+    } catch (err) {}
     document.getElementById("formWrap").classList.add("hidden");
     document.getElementById("successWrap").classList.add("visible");
 });
