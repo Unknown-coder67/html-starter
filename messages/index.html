@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Write a Message – Care Medical Jiwar</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback", Arial, Helvetica, sans-serif;
+    font-variation-settings: "opsz" 14, "wght" 750;
+    font-weight: 750;
+    background: #FFFFFF;
+    background-image:
+        linear-gradient(#e8e8e8 1px, transparent 1px),
+        linear-gradient(90deg, #e8e8e8 1px, transparent 1px);
+    background-size: 56px 56px;
+    color: #17171D;
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: #FFFFFF;
+    padding: 8px 5%;
+}
+
+.navbar {
+    max-width: 1920px;
+    height: 58px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.logo {
+    width: 200px;
+    height: 50px;
+    object-fit: contain;
+    transform: translate(-8px, 3px);
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.header-nav a {
+    position: relative;
+    color: rgb(23, 23, 29);
+    text-decoration: none;
+    font-size: 14.4px;
+    font-weight: 750;
+    padding: 9px 0;
+}
+
+.header-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    width: 0;
+    height: 2px;
+    background: #171717;
+    transition: width 200ms ease;
+}
+
+.header-nav a:hover::after { width: 100%; }
+
+.header-nav a.nominate-btn {
+    display: flex;
+    align-items: center;
+    background-color: rgb(23, 23, 29) !important;
+    color: #fff !important;
+    border-radius: 999px;
+    padding: 12px 17px;
+    font-size: 15.04px;
+    font-weight: 700;
+    height: 46.5625px;
+    text-decoration: none !important;
+    column-gap: 16px;
+}
+
+.header-nav a.nominate-btn::after { display: none !important; }
+
+.nominate-arrow {
+    font-weight: 900;
+    -webkit-text-stroke: 1.3px currentColor;
+}
+
+.page {
+    position: relative;
+    z-index: 1;
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 110px 24px 80px;
+}
+
+.hero-line {
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+
+.hero-line .dark {
+    color: #02102B;
+    font-size: clamp(1.5rem, 4vw, 2.1rem);
+    font-weight: 750;
+}
+
+.hero-sub {
+    color: #0DC8EA;
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    font-weight: 750;
+    margin: 10px 0 36px;
+}
+
+.heart { color: #0DC8EA; }
+
+.form-group {
+    margin-bottom: 28px;
+}
+
+.form-group label {
+    display: block;
+    color: #02102B;
+    font-size: 1rem;
+    font-weight: 750;
+    margin-bottom: 10px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    border: 1.5px solid #d0dce6;
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #17171D;
+    background: rgba(255,255,255,0.92);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    resize: vertical;
+}
+
+.form-group textarea {
+    min-height: 120px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #0DC8EA;
+    box-shadow: 0 0 0 3px rgba(13, 200, 234, 0.15);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #9aabba;
+    font-weight: 600;
+}
+
+/* Rotating placeholder overlay for message field */
+.rotating-placeholder-wrap {
+    position: relative;
+}
+
+.rotating-placeholder {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    right: 16px;
+    color: #9aabba;
+    font-size: 1rem;
+    font-weight: 600;
+    pointer-events: none;
+    line-height: 1.5;
+    transition: opacity 0.45s ease;
+    opacity: 1;
+}
+
+.rotating-placeholder.fade-out {
+    opacity: 0;
+}
+
+.rotating-placeholder-wrap.has-value .rotating-placeholder {
+    display: none;
+}
+
+/* Radio options */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    color: #02102B;
+    font-size: 1rem;
+    font-weight: 750;
+}
+
+.radio-option input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #c5d4e0;
+    border-radius: 50%;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    transition: border-color 0.2s ease;
+}
+
+.radio-option input[type="radio"]:checked {
+    border-color: #02102B;
+}
+
+.radio-option input[type="radio"]:checked::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #02102B;
+}
+
+.name-field-wrap {
+    display: none;
+    margin-top: 14px;
+    margin-bottom: 8px;
+}
+
+.name-field-wrap.visible {
+    display: block;
+}
+
+.submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #02102B;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 18px;
+    padding: 16px 26px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 750;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.submit-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.submit-btn .arrow {
+    font-weight: 900;
+    -webkit-text-stroke: 1px currentColor;
+}
+
+/* Success state */
+.form-wrap { display: block; }
+.success-wrap {
+    display: none;
+    text-align: left;
+    padding: 20px 0;
+}
+
+.success-wrap.visible { display: block; }
+.form-wrap.hidden { display: none; }
+
+.success-title {
+    color: #02102B;
+    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+    font-weight: 750;
+    line-height: 1.3;
+    margin-bottom: 8px;
+}
+
+.success-heart {
+    color: #0DC8EA;
+    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+}
+
+@media (max-width: 700px) {
+    .logo { width: 62px; height: 62px; }
+    .header-nav { gap: 16px; }
+    .header-nav a.nominate-btn {
+        font-size: 13.5px;
+        padding: 10px 14px;
+        height: 42px;
+    }
+    .page { padding: 100px 20px 60px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="navbar">
+        <a href="/">
+            <img src="/logo.jpg" alt="Company Logo" class="logo">
+        </a>
+        <nav class="header-nav">
+            <a href="/winners/">Winners</a>
+            <a href="/eoq/" class="nominate-btn">Nominate your stars <span class="nominate-arrow">→</span></a>
+        </nav>
+    </div>
+</header>
+
+<main class="page">
+    <div class="form-wrap" id="formWrap">
+        <div class="hero-line">
+            <span class="dark">Someone made your day a little better?</span>
+        </div>
+        <p class="hero-sub">Tell them. <span class="heart">♥</span></p>
+
+        <form id="messageForm" novalidate>
+            <div class="form-group">
+                <label for="thankWho">Who would you like to thank?</label>
+                <input type="text" id="thankWho" name="thankWho" placeholder="Name or department" required>
+            </div>
+
+            <div class="form-group">
+                <label for="messageText">What do you want them to know?</label>
+                <div class="rotating-placeholder-wrap" id="placeholderWrap">
+                    <div class="rotating-placeholder" id="rotatingPlaceholder"></div>
+                    <textarea id="messageText" name="messageText" rows="4" required></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Your name?</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="identity" value="named" id="optNamed">
+                        My name
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="identity" value="anonymous" id="optAnonymous" checked>
+                        Keep it anonymous
+                    </label>
+                </div>
+                <div class="name-field-wrap" id="nameFieldWrap">
+                    <input type="text" id="senderName" name="senderName" placeholder="Please enter your name">
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Put it on the wall <span class="arrow">→</span>
+            </button>
+        </form>
+    </div>
+
+    <div class="success-wrap" id="successWrap">
+        <h2 class="success-title">IT'S ON THE WALL! <span class="success-heart">♥</span></h2>
+    </div>
+</main>
+
+<script>
+/* Rotating placeholders for message field */
+const placeholders = [
+    "Thank you for always having our back",
+    "Thank you for your patience, your help and your constant positivity",
+    "You made a tough day feel lighter — thank you",
+    "Grateful for the way you show up for the team every day",
+    "Your kindness didn't go unnoticed. Thank you."
+];
+
+const rotatingEl = document.getElementById("rotatingPlaceholder");
+const messageTextarea = document.getElementById("messageText");
+const placeholderWrap = document.getElementById("placeholderWrap");
+let placeholderIndex = 0;
+
+function showPlaceholder(index) {
+    rotatingEl.classList.add("fade-out");
+    setTimeout(function () {
+        rotatingEl.textContent = placeholders[index];
+        rotatingEl.classList.remove("fade-out");
+    }, 450);
+}
+
+rotatingEl.textContent = placeholders[0];
+
+setInterval(function () {
+    if (messageTextarea.value.trim().length > 0) return;
+    placeholderIndex = (placeholderIndex + 1) % placeholders.length;
+    showPlaceholder(placeholderIndex);
+}, 4000);
+
+messageTextarea.addEventListener("input", function () {
+    if (this.value.trim().length > 0) {
+        placeholderWrap.classList.add("has-value");
+    } else {
+        placeholderWrap.classList.remove("has-value");
+    }
+});
+
+messageTextarea.addEventListener("focus", function () {
+    if (this.value.trim().length === 0) {
+        /* keep rotating visible until they type */
+    }
+});
+
+/* Show/hide name field */
+const optNamed = document.getElementById("optNamed");
+const optAnonymous = document.getElementById("optAnonymous");
+const nameFieldWrap = document.getElementById("nameFieldWrap");
+
+function updateNameField() {
+    if (optNamed.checked) {
+        nameFieldWrap.classList.add("visible");
+        document.getElementById("senderName").focus();
+    } else {
+        nameFieldWrap.classList.remove("visible");
+    }
+}
+
+optNamed.addEventListener("change", updateNameField);
+optAnonymous.addEventListener("change", updateNameField);
+
+/* Form submit → success */
+document.getElementById("messageForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const who = document.getElementById("thankWho").value.trim();
+    const msg = document.getElementById("messageText").value.trim();
+    if (!who) {
+        document.getElementById("thankWho").focus();
+        return;
+    }
+    if (!msg) {
+        document.getElementById("messageText").focus();
+        return;
+    }
+    if (optNamed.checked) {
+        const name = document.getElementById("senderName").value.trim();
+        if (!name) {
+            document.getElementById("senderName").focus();
+            return;
+        }
+    }
+    document.getElementById("formWrap").classList.add("hidden");
+    document.getElementById("successWrap").classList.add("visible");
+});
+</script>
+</body>
+</html>
