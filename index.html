@@ -187,19 +187,19 @@ header {
 
 .celebrating-layout {
     width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 24px 0 20px;
+    max-width: none;
+    margin: 0;
+    padding: 0 40px 0 24px;
     display: flex;
     align-items: flex-start;
-    gap: 60px;
+    gap: 48px;
 }
 
 .celebrating-nav {
     position: sticky;
     top: 28vh;
-    flex: 0 0 260px;
-    width: 260px;
+    flex: 0 0 240px;
+    width: 240px;
     z-index: 10;
     margin-left: 0;
 }
@@ -261,7 +261,7 @@ header {
 .celebrating-block {
     text-align: left;
     margin-bottom: 90px;
-    scroll-margin-top: 140px;
+    scroll-margin-top: 42vh;
 }
 
 .celebrating-block h3 {
@@ -394,9 +394,9 @@ header {
 }
 
 .jiwar-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 50px 0 50px;
+    max-width: none;
+    margin: 0;
+    padding: 0 40px 0 50px;
     display: flex;
     align-items: flex-start;
     gap: 60px;
@@ -503,16 +503,16 @@ footer {
 
 @media (max-width: 1100px) {
     .celebrating-layout {
-        gap: 40px;
-        padding: 0 20px 0 16px;
+        gap: 36px;
+        padding: 0 24px 0 16px;
     }
     .celebrating-nav {
-        flex: 0 0 220px;
-        width: 220px;
+        flex: 0 0 210px;
+        width: 210px;
     }
     .jiwar-inner {
         gap: 40px;
-        padding: 0 40px 0 40px;
+        padding: 0 24px 0 40px;
     }
     .jiwar-left {
         flex: 0 0 320px;
@@ -578,6 +578,7 @@ footer {
     }
     .celebrating-block {
         margin-bottom: 60px;
+        scroll-margin-top: 150px;
     }
     .jiwar-inner {
         flex-direction: column;
@@ -624,6 +625,9 @@ footer {
     }
     .celebrating-nav {
         top: 62px;
+    }
+    .celebrating-block {
+        scroll-margin-top: 140px;
     }
     .upper-section {
         width: 94%;
@@ -852,7 +856,7 @@ const fadeObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 fadeElements.forEach((el) => fadeObserver.observe(el));
 
-/* Celebrating sticky nav – fixed click + scroll highlighting */
+/* Celebrating sticky nav – center in viewport + correct highlight */
 const celebratingSections = document.querySelectorAll("#recognize, #inspire, #connect, #grow");
 const celebratingLinks = document.querySelectorAll(".celebrating-nav a");
 let isClickScrolling = false;
@@ -868,6 +872,7 @@ function setActiveLink(id) {
     });
 }
 
+/* Highlight when section is near the vertical center of the viewport */
 const celebratingObserver = new IntersectionObserver((entries) => {
     if (isClickScrolling) return;
     entries.forEach((entry) => {
@@ -875,7 +880,10 @@ const celebratingObserver = new IntersectionObserver((entries) => {
             setActiveLink(entry.target.id);
         }
     });
-}, { rootMargin: "-40% 0px -45% 0px", threshold: 0 });
+}, {
+    rootMargin: "-45% 0px -45% 0px",
+    threshold: 0
+});
 
 celebratingSections.forEach((section) => celebratingObserver.observe(section));
 
@@ -892,9 +900,8 @@ celebratingLinks.forEach((link) => {
         isClickScrolling = true;
         if (clickScrollTimeout) clearTimeout(clickScrollTimeout);
 
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
 
-        // Re-enable observer after smooth scroll finishes
         clickScrollTimeout = setTimeout(() => {
             isClickScrolling = false;
         }, 900);
