@@ -713,7 +713,6 @@ footer {
             loop
             playsinline
             id="bannerVideo"
-            class="fade-in"
             aria-label="Company Banner"
         >
             <source src="/banner.mp4" type="video/mp4">
@@ -905,19 +904,6 @@ const fadeObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.15 });
 fadeElements.forEach((el) => fadeObserver.observe(el));
-
-/* Banner only fades when fully out of view */
-const bannerVideo = document.getElementById("bannerVideo");
-const bannerObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-        } else {
-            entry.target.classList.remove("visible");
-        }
-    });
-}, { threshold: 0, rootMargin: "0px" });
-bannerObserver.observe(bannerVideo);
 
 /* Sticky nav */
 const bottomSections = document.querySelectorAll("#section-1, #section-2");
