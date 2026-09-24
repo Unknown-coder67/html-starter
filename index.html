@@ -261,7 +261,7 @@ header {
 .celebrating-block {
     text-align: left;
     margin-bottom: 90px;
-    scroll-margin-top: 10vh;
+    scroll-margin-top: 42vh;
 }
 
 .celebrating-block h3 {
@@ -465,6 +465,41 @@ header {
     flex: 1;
     min-height: 280px;
     position: relative;
+}
+
+
+/* Wall notes (from localStorage demo) */
+.jiwar-right.wall-canvas {
+    min-height: 320px;
+    position: relative;
+}
+
+.wall-note {
+    position: absolute;
+    width: 180px;
+    padding: 16px 14px 14px;
+    background: #fffef5;
+    border: 1px solid #e8e0c8;
+    box-shadow: 2px 3px 10px rgba(23, 50, 77, 0.12);
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.45;
+    color: #02102B;
+    transform-origin: center center;
+}
+
+.wall-note .wall-to {
+    font-size: 0.75rem;
+    color: #0DC8EA;
+    font-weight: 750;
+    margin-bottom: 6px;
+}
+
+.wall-note .wall-from {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    color: #718896;
+    font-weight: 750;
 }
 
 .wide-image-section {
@@ -828,8 +863,8 @@ A kind message can go a long way.</p>
                 Write a message <span class="arrow">→</span>
             </a>
         </div>
-        <div class="jiwar-right">
-            <!-- Future wall notes (random positions) will appear here -->
+        <div class="jiwar-right wall-canvas" id="wallCanvas">
+            <!-- Wall notes from localStorage appear here -->
         </div>
     </div>
 </section>
@@ -907,6 +942,56 @@ celebratingLinks.forEach((link) => {
         }, 900);
     });
 });
+
+/* Render wall notes from localStorage (demo – no server) */
+(function () {
+    var canvas = document.getElementById("wallCanvas");
+    if (!canvas) return;
+    var notes = [];
+    try {
+        notes = JSON.parse(localStorage.getItem("jiwar_wall") || "[]");
+    } catch (e) { notes = []; }
+    if (!notes.length) return;
+
+    var layouts = [
+        { top: "8%", left: "4%", rotate: -4 },
+        { top: "12%", left: "38%", rotate: 3 },
+        { top: "10%", left: "68%", rotate: -2 },
+        { top: "42%", left: "12%", rotate: 5 },
+        { top: "48%", left: "48%", rotate: -6 },
+        { top: "40%", left: "72%", rotate: 2 },
+        { top: "72%", left: "6%", rotate: -3 },
+        { top: "70%", left: "36%", rotate: 4 },
+        { top: "68%", left: "66%", rotate: -5 }
+    ];
+
+    notes.slice(-9).forEach(function (note, i) {
+        var el = document.createElement("div");
+        el.className = "wall-note";
+        var layout = layouts[i % layouts.length];
+        el.style.top = layout.top;
+        el.style.left = layout.left;
+        el.style.transform = "rotate(" + layout.rotate + "deg)";
+        var html = '<div class="wall-to">To: ' + escapeHtml(note.to || "") + "</div>";
+        html += "<div>" + escapeHtml(note.message || "") + "</div>";
+        if (note.from) {
+            html += '<div class="wall-from">— ' + escapeHtml(note.from) + "</div>";
+        } else {
+            html += '<div class="wall-from">— Anonymous</div>';
+        }
+        el.innerHTML = html;
+        canvas.appendChild(el);
+    });
+
+    function escapeHtml(s) {
+        return String(s)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
+    }
+})();
+
 </script>
 
 </body>
