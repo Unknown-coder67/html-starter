@@ -832,7 +832,16 @@ footer {
 
 <!-- Previous Winners – video backgrounds cycle when each ends -->
 <section class="winners-video-section fade-in" id="previous-winners">
-    <video class="winners-video-bg" id="winnersBgVideo" muted playsinline></video>
+    <video
+        class="winners-video-bg"
+        id="winnersBgVideo"
+        src="/winners-bg-1.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto">
+    </video>
     <div class="winners-video-overlay"></div>
     <div class="winners-video-content">
         <p class="section-label">Previous Winners</p>
@@ -933,24 +942,6 @@ navLinks.forEach((link) => {
         if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
     });
 });
-
-/* Previous Winners – cycle background videos when each ends */
-const winnersVideos = [
-    "/winners-bg-1.mp4",
-    "/winners-bg-2.mp4",
-    "/winners-bg-3.mp4"
-];
-let winnersVideoIndex = 0;
-const winnersBgVideo = document.getElementById("winnersBgVideo");
-
-function playNextWinnersVideo() {
-    winnersBgVideo.src = winnersVideos[winnersVideoIndex];
-    winnersBgVideo.play().catch(() => {});
-    winnersVideoIndex = (winnersVideoIndex + 1) % winnersVideos.length;
-}
-
-winnersBgVideo.addEventListener("ended", playNextWinnersVideo);
-playNextWinnersVideo();
 
 </script>
 
