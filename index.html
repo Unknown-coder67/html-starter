@@ -977,11 +977,12 @@ const fadeObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 fadeElements.forEach((el) => fadeObserver.observe(el));
 
-/* Celebrating sticky nav – full opacity only when ~70% visible */
+/* Celebrating sticky nav – only ONE block full opacity at a time */
 const celebratingSections = document.querySelectorAll("#recognize, #inspire, #connect, #grow");
 const celebratingLinks = document.querySelectorAll(".celebrating-nav a");
 let isClickScrolling = false;
 let clickScrollTimeout = null;
+let lockedId = null; /* while click-scrolling, force this id */
 
 function setActiveLink(id) {
     celebratingLinks.forEach((link) => {
@@ -993,60 +994,47 @@ function setActiveLink(id) {
     });
 }
 
-/** Visible ratio of element inside the viewport (0–1) */
-function visibleRatio(el) {
-    const rect = el.getBoundingClientRect();
-    const vh = window.innerHeight;
-    if (rect.bottom <= 0 || rect.top >= vh) return 0;
-    const visibleTop = Math.max(rect.top, 0);
-    const visibleBottom = Math.min(rect.bottom, vh);
-    const visibleHeight = Math.max(0, visibleBottom - visibleTop);
-    return visibleHeight / Math.max(rect.height, 1);
-}
-
-function updateCelebratingFocus() {
-    let bestId = null;
-    let bestRatio = 0;
-
+function setActiveBlock(id) {
     celebratingSections.forEach((section) => {
-        const ratio = visibleRatio(section);
-        /* Full color only when ~70% or more of the block is in view */
-        if (ratio >= 0.7) {
+        if (section.id === id) {
             section.classList.add("is-active-block");
             section.classList.remove("is-dimmed");
             section.classList.add("visible");
-            if (ratio > bestRatio) {
-                bestRatio = ratio;
-                bestId = section.id;
-            }
         } else {
             section.classList.remove("is-active-block");
             section.classList.add("is-dimmed");
-            if (ratio > bestRatio) {
-                bestRatio = ratio;
-                bestId = section.id;
-            }
+        }
+    });
+    setActiveLink(id);
+}
+
+/** Pick the single block whose center is closest to the viewport center */
+function updateCelebratingFocus() {
+    if (isClickScrolling && lockedId) {
+        setActiveBlock(lockedId);
+        return;
+    }
+
+    const viewportCenter = window.innerHeight / 2;
+    let closestId = null;
+    let closestDist = Infinity;
+
+    celebratingSections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        /* Skip blocks that are fully off-screen */
+        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+        const sectionCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(sectionCenter - viewportCenter);
+        if (dist < closestDist) {
+            closestDist = dist;
+            closestId = section.id;
         }
     });
 
-    /* Nav highlight: prefer the most-visible block that meets 70%, else most visible */
-    if (bestId && !isClickScrolling) {
-        setActiveLink(bestId);
+    if (closestId) {
+        setActiveBlock(closestId);
     }
 }
-
-const celebratingObserver = new IntersectionObserver((entries) => {
-    if (isClickScrolling) return;
-    /* Re-run focus logic when intersection changes */
-    updateCelebratingFocus();
-}, {
-    threshold: [0, 0.25, 0.5, 0.7, 0.85, 1]
-});
-
-celebratingSections.forEach((section) => {
-    section.classList.add("is-dimmed");
-    celebratingObserver.observe(section);
-});
 
 window.addEventListener("scroll", updateCelebratingFocus, { passive: true });
 window.addEventListener("resize", updateCelebratingFocus);
@@ -1060,7 +1048,8 @@ celebratingLinks.forEach((link) => {
         if (!target) return;
 
         const id = href.slice(1);
-        setActiveLink(id);
+        lockedId = id;
+        setActiveBlock(id);
 
         isClickScrolling = true;
         if (clickScrollTimeout) clearTimeout(clickScrollTimeout);
@@ -1069,8 +1058,9 @@ celebratingLinks.forEach((link) => {
 
         clickScrollTimeout = setTimeout(() => {
             isClickScrolling = false;
+            lockedId = null;
             updateCelebratingFocus();
-        }, 900);
+        }, 1000);
     });
 });
 
