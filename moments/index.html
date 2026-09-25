@@ -93,8 +93,8 @@ header {
 
 .bg-msg {
     position: absolute;
-    color: #02102B;
-    opacity: 0.11;
+    color: #666666;
+    opacity: 0.55;
     font-size: clamp(0.8rem, 1.4vw, 1rem);
     font-weight: 750;
     max-width: 200px;
@@ -239,6 +239,32 @@ header {
     color: #557083;
     font-size: 1.05rem;
     line-height: 1.7;
+    margin-bottom: 28px;
+}
+
+.success-links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.success-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #17171D;
+    font-weight: 750;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 4px 0 6px;
+    border-bottom: 2px solid #17171D;
+}
+
+.success-link .arrow {
+    font-weight: 900;
+    -webkit-text-stroke: 1px currentColor;
 }
 
 footer {
@@ -287,17 +313,17 @@ footer {
             <form id="momentForm" novalidate>
                 <div class="form-group">
                     <label for="whatHappened">Start anywhere...</label>
-                    <textarea id="whatHappened" name="whatHappened" placeholder="What happened?" required></textarea>
+                    <textarea id="whatHappened" name="whatHappened" placeholder="What happened?" maxlength="280" required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="whoWasThere">Who was there?</label>
-                    <input type="text" id="whoWasThere" name="whoWasThere" placeholder="Name, team, or role">
+                    <input type="text" id="whoWasThere" name="whoWasThere" placeholder="Name, team, or role" maxlength="48">
                 </div>
 
                 <div class="form-group">
                     <label for="whyStay">Why did it stay with you?</label>
-                    <textarea id="whyStay" name="whyStay" placeholder="What made it meaningful?"></textarea>
+                    <textarea id="whyStay" name="whyStay" placeholder="What made it meaningful?" maxlength="200"></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn">
@@ -309,6 +335,10 @@ footer {
         <div class="success-wrap" id="successWrap">
             <h2 class="success-title">You just made it a JIWAR Moment!</h2>
             <p class="success-sub">Thanks for sharing, we love hearing moments like this.</p>
+            <div class="success-links">
+                <a href="/" class="success-link">Return Home <span class="arrow">→</span></a>
+                <a href="/moments/" class="success-link" id="shareAnother">Share another moment! <span class="arrow">→</span></a>
+            </div>
         </div>
     </div>
 </main>
@@ -318,7 +348,7 @@ footer {
 </footer>
 
 <script>
-const messages = [
+var messages = [
     "Maybe it was...",
     "A colleague who stayed a little longer.",
     "A team that came together when it mattered.",
@@ -333,8 +363,8 @@ const messages = [
     "Staying late so the team could go home."
 ];
 
-const container = document.getElementById("bgMessages");
-const positions = [
+var container = document.getElementById("bgMessages");
+var positions = [
     { top: "10%", left: "4%", rotate: -7 },
     { top: "14%", right: "6%", rotate: 5 },
     { top: "28%", left: "3%", rotate: 3 },
@@ -361,6 +391,13 @@ messages.forEach(function (text, i) {
     container.appendChild(el);
 });
 
+document.getElementById("shareAnother").addEventListener("click", function (e) {
+    e.preventDefault();
+    document.getElementById("momentForm").reset();
+    document.getElementById("successWrap").classList.remove("visible");
+    document.getElementById("formWrap").classList.remove("hidden");
+});
+
 document.getElementById("momentForm").addEventListener("submit", function (e) {
     e.preventDefault();
     var what = document.getElementById("whatHappened").value.trim();
@@ -368,7 +405,6 @@ document.getElementById("momentForm").addEventListener("submit", function (e) {
         document.getElementById("whatHappened").focus();
         return;
     }
-    /* Optional: store for homepage demo */
     try {
         var moments = JSON.parse(localStorage.getItem("jiwar_moments") || "[]");
         moments.push({
