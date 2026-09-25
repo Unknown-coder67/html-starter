@@ -249,32 +249,41 @@ nav a:hover::after {
     padding-top: 8px;
 }
 
-/* Container that matches the winners-grid width */
+/* Track that matches the winners-grid width – text stays inside it */
 .stay-tuned-track {
     flex: 1;
     position: relative;
     height: 48px;
-    overflow: hidden;           /* keeps the text inside the box */
+    overflow: hidden;               /* clips the text so it disappears on the right */
     display: flex;
     align-items: center;
 }
 
-/* The moving text */
+/* The moving text – starts right next to the timeline */
 .stay-tuned-text {
     position: absolute;
+    left: 0;                        /* as close as possible to the timeline */
     white-space: nowrap;
     font-size: 0.95rem;
     font-weight: 600;
     color: #0DC8EA;
     letter-spacing: 0.03em;
-    animation: stayTunedSlide 6s ease-in-out infinite;
+    animation: stayTunedRight 11s linear infinite;
 }
 
-/* Left ↔ Right loop (never leaves the container) */
-@keyframes stayTunedSlide {
-    0%   { left: 0;    transform: translateX(0); }
-    50%  { left: 100%; transform: translateX(-100%); }
-    100% { left: 0;    transform: translateX(0); }
+/* Only moves right → disappears on the far right → reappears from left */
+@keyframes stayTunedRight {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(calc(100% + 120px)); /* fully off the right edge */
+        opacity: 0;
+    }
 }
 
 /* Fade animation */
@@ -397,6 +406,7 @@ footer {
     .stay-tuned-text {
         animation: none;
         position: static;
+        opacity: 1;
     }
 }
 </style>
@@ -429,7 +439,7 @@ footer {
 
 <main class="main-content">
 
-    <!-- Q4 2026 – Stay tuned (with short line + sliding text) -->
+    <!-- Q4 2026 – Stay tuned (short line + one-way right animation) -->
     <div class="stay-tuned-block fade-in">
         <div class="quarter-label">
             <h2>Q4 2026</h2>
