@@ -261,7 +261,7 @@ header {
 .celebrating-block {
     text-align: left;
     margin-bottom: 90px;
-    scroll-margin-top: 42vh;
+    scroll-margin-top: 12vh;
 }
 
 .celebrating-block h3 {
@@ -551,7 +551,19 @@ header {
 
 .moment-card .moment-body {
     display: -webkit-box;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.moment-card .moment-why {
+    margin-top: 8px;
+    font-size: 0.78rem;
+    color: #557083;
+    font-weight: 600;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -1070,6 +1082,9 @@ celebratingLinks.forEach((link) => {
                 html += '<div class="moment-who">' + escapeHtml(String(m.who).slice(0, 48)) + "</div>";
             }
             html += '<div class="moment-body">' + escapeHtml((m.what || "").slice(0, 280)) + "</div>";
+            if (m.why) {
+                html += '<div class="moment-why">' + escapeHtml(String(m.why).slice(0, 200)) + "</div>";
+            }
             el.innerHTML = html;
             momentsCanvas.appendChild(el);
         });
