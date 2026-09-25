@@ -468,8 +468,9 @@ header {
 }
 
 
-/* Wall notes (from localStorage demo) */
-.jiwar-right.wall-canvas {
+/* Wall notes + moment cards (localStorage demo) */
+.jiwar-right.wall-canvas,
+.jiwar-right.moments-canvas {
     min-height: 320px;
     position: relative;
 }
@@ -477,29 +478,82 @@ header {
 .wall-note {
     position: absolute;
     width: 180px;
+    max-width: 180px;
     padding: 16px 14px 14px;
     background: #fffef5;
     border: 1px solid #e8e0c8;
     box-shadow: 2px 3px 10px rgba(23, 50, 77, 0.12);
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     font-weight: 600;
     line-height: 1.45;
     color: #02102B;
     transform-origin: center center;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .wall-note .wall-to {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: #0DC8EA;
     font-weight: 750;
     margin-bottom: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wall-note .wall-body {
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .wall-note .wall-from {
     margin-top: 10px;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: #718896;
     font-weight: 750;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.moment-card {
+    position: absolute;
+    width: 200px;
+    max-width: 200px;
+    padding: 16px 14px;
+    background: #FFFFFF;
+    border: 1px solid #dcebf1;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(23, 50, 77, 0.1);
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.45;
+    color: #02102B;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.moment-card .moment-who {
+    font-size: 0.72rem;
+    color: #0DC8EA;
+    font-weight: 750;
+    margin-bottom: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.moment-card .moment-body {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .wide-image-section {
@@ -843,8 +897,8 @@ Meaningful impact.</p>
                 Share a JIWAR Moment <span class="arrow">→</span>
             </a>
         </div>
-        <div class="jiwar-right">
-            <!-- Future shared-moment cards will appear here -->
+        <div class="jiwar-right moments-canvas" id="momentsCanvas">
+            <!-- Moment cards from localStorage appear here -->
         </div>
     </div>
 </section>
@@ -943,52 +997,82 @@ celebratingLinks.forEach((link) => {
     });
 });
 
-/* Render wall notes from localStorage (demo – no server) */
+/* localStorage demos: wall notes + moments */
 (function () {
-    var canvas = document.getElementById("wallCanvas");
-    if (!canvas) return;
-    var notes = [];
-    try {
-        notes = JSON.parse(localStorage.getItem("jiwar_wall") || "[]");
-    } catch (e) { notes = []; }
-    if (!notes.length) return;
-
-    var layouts = [
-        { top: "8%", left: "4%", rotate: -4 },
-        { top: "12%", left: "38%", rotate: 3 },
-        { top: "10%", left: "68%", rotate: -2 },
-        { top: "42%", left: "12%", rotate: 5 },
-        { top: "48%", left: "48%", rotate: -6 },
-        { top: "40%", left: "72%", rotate: 2 },
-        { top: "72%", left: "6%", rotate: -3 },
-        { top: "70%", left: "36%", rotate: 4 },
-        { top: "68%", left: "66%", rotate: -5 }
-    ];
-
-    notes.slice(-9).forEach(function (note, i) {
-        var el = document.createElement("div");
-        el.className = "wall-note";
-        var layout = layouts[i % layouts.length];
-        el.style.top = layout.top;
-        el.style.left = layout.left;
-        el.style.transform = "rotate(" + layout.rotate + "deg)";
-        var html = '<div class="wall-to">To: ' + escapeHtml(note.to || "") + "</div>";
-        html += "<div>" + escapeHtml(note.message || "") + "</div>";
-        if (note.from) {
-            html += '<div class="wall-from">— ' + escapeHtml(note.from) + "</div>";
-        } else {
-            html += '<div class="wall-from">— Anonymous</div>';
-        }
-        el.innerHTML = html;
-        canvas.appendChild(el);
-    });
-
     function escapeHtml(s) {
         return String(s)
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
             .replace(/"/g, "&quot;");
+    }
+
+    /* Wall notes */
+    var wallCanvas = document.getElementById("wallCanvas");
+    if (wallCanvas) {
+        var notes = [];
+        try {
+            notes = JSON.parse(localStorage.getItem("jiwar_wall") || "[]");
+        } catch (e) { notes = []; }
+        var wallLayouts = [
+            { top: "8%", left: "4%", rotate: -4 },
+            { top: "12%", left: "38%", rotate: 3 },
+            { top: "10%", left: "68%", rotate: -2 },
+            { top: "42%", left: "12%", rotate: 5 },
+            { top: "48%", left: "48%", rotate: -6 },
+            { top: "40%", left: "72%", rotate: 2 },
+            { top: "72%", left: "6%", rotate: -3 },
+            { top: "70%", left: "36%", rotate: 4 },
+            { top: "68%", left: "66%", rotate: -5 }
+        ];
+        notes.slice(-9).forEach(function (note, i) {
+            var el = document.createElement("div");
+            el.className = "wall-note";
+            var layout = wallLayouts[i % wallLayouts.length];
+            el.style.top = layout.top;
+            el.style.left = layout.left;
+            el.style.transform = "rotate(" + layout.rotate + "deg)";
+            var html = '<div class="wall-to">To: ' + escapeHtml((note.to || "").slice(0, 32)) + "</div>";
+            html += '<div class="wall-body">' + escapeHtml((note.message || "").slice(0, 200)) + "</div>";
+            if (note.from) {
+                html += '<div class="wall-from">— ' + escapeHtml(String(note.from).slice(0, 40)) + "</div>";
+            } else {
+                html += '<div class="wall-from">— Anonymous</div>';
+            }
+            el.innerHTML = html;
+            wallCanvas.appendChild(el);
+        });
+    }
+
+    /* Moments cards */
+    var momentsCanvas = document.getElementById("momentsCanvas");
+    if (momentsCanvas) {
+        var moments = [];
+        try {
+            moments = JSON.parse(localStorage.getItem("jiwar_moments") || "[]");
+        } catch (e) { moments = []; }
+        var momentLayouts = [
+            { top: "6%", left: "4%" },
+            { top: "8%", left: "42%" },
+            { top: "10%", left: "72%" },
+            { top: "48%", left: "10%" },
+            { top: "50%", left: "48%" },
+            { top: "46%", left: "74%" }
+        ];
+        moments.slice(-6).forEach(function (m, i) {
+            var el = document.createElement("div");
+            el.className = "moment-card";
+            var layout = momentLayouts[i % momentLayouts.length];
+            el.style.top = layout.top;
+            el.style.left = layout.left;
+            var html = "";
+            if (m.who) {
+                html += '<div class="moment-who">' + escapeHtml(String(m.who).slice(0, 48)) + "</div>";
+            }
+            html += '<div class="moment-body">' + escapeHtml((m.what || "").slice(0, 280)) + "</div>";
+            el.innerHTML = html;
+            momentsCanvas.appendChild(el);
+        });
     }
 })();
 
