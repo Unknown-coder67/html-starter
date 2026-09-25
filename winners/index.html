@@ -172,12 +172,12 @@ nav a:hover::after {
     align-self: stretch;
 }
 
-/* Short timeline line – 0 gap to the track */
+/* Short timeline line – 0 gap */
 .timeline-line.short {
     height: 48px;
     align-self: flex-start;
     margin-top: 6px;
-    margin-right: 0;          /* zero gap */
+    margin-right: 0;
 }
 
 /* 5-column grid */
@@ -250,12 +250,12 @@ nav a:hover::after {
     padding-top: 8px;
 }
 
-/* Full-width track (same as winners-grid) */
+/* Full-width track – same width as the Q3 winners-grid */
 .stay-tuned-track {
     flex: 1;
     position: relative;
     height: 48px;
-    overflow: hidden;          /* the “wall” that clips the text */
+    overflow: hidden;          /* the clipping “wall” */
     display: flex;
     align-items: center;
 }
@@ -269,23 +269,24 @@ nav a:hover::after {
     font-weight: 600;
     color: #0DC8EA;
     letter-spacing: 0.03em;
-    animation: stayTunedRight 6s linear infinite;
+    animation: stayTunedRight 16s linear infinite;
 }
 
 /* 
-   Progressive clip both sides:
-   - Starts fully hidden behind the left wall (timeline)
+   Travels the FULL width of the track:
+   - Starts completely hidden behind the left wall (timeline)
    - Emerges character-by-character from the left
-   - Fully visible in the middle
+   - Crosses the entire winners-grid width
    - Disappears character-by-character behind the right wall
-   - Loops seamlessly
 */
 @keyframes stayTunedRight {
     0% {
-        transform: translateX(-100%);   /* completely behind left wall */
+        left: 0;
+        transform: translateX(-100%);   /* fully behind left wall */
     }
     100% {
-        transform: translateX(100%);    /* completely behind right wall */
+        left: 100%;
+        transform: translateX(0);       /* fully behind right wall */
     }
 }
 
@@ -410,6 +411,7 @@ footer {
         animation: none;
         position: static;
         transform: none;
+        left: auto;
     }
 }
 </style>
