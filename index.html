@@ -262,6 +262,17 @@ header {
     text-align: left;
     margin-bottom: 90px;
     scroll-margin-top: 12vh;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.celebrating-block.is-dimmed {
+    opacity: 0.18;
+    transform: translateY(8px);
+}
+
+.celebrating-block.is-active-block {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .celebrating-block h3 {
@@ -957,7 +968,7 @@ const fadeObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 fadeElements.forEach((el) => fadeObserver.observe(el));
 
-/* Celebrating sticky nav – center in viewport + correct highlight */
+/* Celebrating sticky nav – center highlight + fade siblings */
 const celebratingSections = document.querySelectorAll("#recognize, #inspire, #connect, #grow");
 const celebratingLinks = document.querySelectorAll(".celebrating-nav a");
 let isClickScrolling = false;
@@ -973,7 +984,38 @@ function setActiveLink(id) {
     });
 }
 
-/* Highlight when section is near the vertical center of the viewport */
+function updateCelebratingFocus() {
+    const viewportCenter = window.innerHeight / 2;
+    let closestId = null;
+    let closestDist = Infinity;
+
+    celebratingSections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const sectionCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(sectionCenter - viewportCenter);
+        if (dist < closestDist) {
+            closestDist = dist;
+            closestId = section.id;
+        }
+    });
+
+    celebratingSections.forEach((section) => {
+        if (section.id === closestId) {
+            section.classList.add("is-active-block");
+            section.classList.remove("is-dimmed");
+            section.classList.add("visible");
+        } else {
+            section.classList.remove("is-active-block");
+            section.classList.add("is-dimmed");
+        }
+    });
+
+    if (closestId && !isClickScrolling) {
+        setActiveLink(closestId);
+    }
+}
+
+/* Also keep observer as backup for nav highlight band */
 const celebratingObserver = new IntersectionObserver((entries) => {
     if (isClickScrolling) return;
     entries.forEach((entry) => {
@@ -988,6 +1030,10 @@ const celebratingObserver = new IntersectionObserver((entries) => {
 
 celebratingSections.forEach((section) => celebratingObserver.observe(section));
 
+window.addEventListener("scroll", updateCelebratingFocus, { passive: true });
+window.addEventListener("resize", updateCelebratingFocus);
+updateCelebratingFocus();
+
 celebratingLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
         e.preventDefault();
@@ -998,6 +1044,17 @@ celebratingLinks.forEach((link) => {
         const id = href.slice(1);
         setActiveLink(id);
 
+        celebratingSections.forEach((section) => {
+            if (section.id === id) {
+                section.classList.add("is-active-block");
+                section.classList.remove("is-dimmed");
+                section.classList.add("visible");
+            } else {
+                section.classList.remove("is-active-block");
+                section.classList.add("is-dimmed");
+            }
+        });
+
         isClickScrolling = true;
         if (clickScrollTimeout) clearTimeout(clickScrollTimeout);
 
@@ -1005,6 +1062,7 @@ celebratingLinks.forEach((link) => {
 
         clickScrollTimeout = setTimeout(() => {
             isClickScrolling = false;
+            updateCelebratingFocus();
         }, 900);
     });
 });
