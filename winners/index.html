@@ -172,6 +172,13 @@ nav a:hover::after {
     align-self: stretch;
 }
 
+/* Short timeline line for Stay tuned */
+.timeline-line.short {
+    height: 48px;
+    align-self: flex-start;
+    margin-top: 6px;
+}
+
 /* 5-column grid – original clean style */
 .winners-grid {
     flex: 1;
@@ -226,13 +233,48 @@ nav a:hover::after {
     letter-spacing: 0.02em;
 }
 
-/* Stay-tuned */
+/* ===== STAY TUNED BLOCK ===== */
 .stay-tuned-block {
+    display: flex;
+    gap: 0;
     margin-bottom: 64px;
+    position: relative;
+    align-items: flex-start;
 }
 
 .stay-tuned-block .quarter-label {
-    width: auto;
+    width: 180px;
+    flex-shrink: 0;
+    padding-right: 24px;
+    padding-top: 8px;
+}
+
+/* Container that matches the winners-grid width */
+.stay-tuned-track {
+    flex: 1;
+    position: relative;
+    height: 48px;
+    overflow: hidden;           /* keeps the text inside the box */
+    display: flex;
+    align-items: center;
+}
+
+/* The moving text */
+.stay-tuned-text {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #0DC8EA;
+    letter-spacing: 0.03em;
+    animation: stayTunedSlide 6s ease-in-out infinite;
+}
+
+/* Left ↔ Right loop (never leaves the container) */
+@keyframes stayTunedSlide {
+    0%   { left: 0;    transform: translateX(0); }
+    50%  { left: 100%; transform: translateX(-100%); }
+    100% { left: 0;    transform: translateX(0); }
 }
 
 /* Fade animation */
@@ -267,7 +309,8 @@ footer {
     .winners-grid {
         grid-template-columns: repeat(3, 1fr);
     }
-    .quarter-label {
+    .quarter-label,
+    .stay-tuned-block .quarter-label {
         width: 150px;
     }
 }
@@ -296,25 +339,33 @@ footer {
         font-size: 2rem;
     }
 
-    .quarter-block {
+    .quarter-block,
+    .stay-tuned-block {
         flex-direction: column;
-        gap: 20px;
-        margin-bottom: 56px;
+        gap: 16px;
+        margin-bottom: 40px;
     }
 
-    .quarter-label {
+    .quarter-label,
+    .stay-tuned-block .quarter-label {
         width: 100%;
         padding-right: 0;
         padding-top: 0;
     }
 
-    .timeline-line {
+    .timeline-line,
+    .timeline-line.short {
         display: none;
     }
 
     .winners-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px 14px;
+    }
+
+    .stay-tuned-track {
+        height: 40px;
+        width: 100%;
     }
     
     .winner-card-image {
@@ -332,10 +383,6 @@ footer {
         margin-bottom: 4px;
     }
 
-    .quarter-block {
-        margin-bottom: 40px;
-    }
-
     .main-content {
         padding-top: 30px;
     }
@@ -346,6 +393,10 @@ footer {
         opacity: 1;
         transform: none;
         transition: none;
+    }
+    .stay-tuned-text {
+        animation: none;
+        position: static;
     }
 }
 </style>
@@ -378,11 +429,14 @@ footer {
 
 <main class="main-content">
 
-    <!-- Q4 2026 – Stay tuned -->
+    <!-- Q4 2026 – Stay tuned (with short line + sliding text) -->
     <div class="stay-tuned-block fade-in">
         <div class="quarter-label">
             <h2>Q4 2026</h2>
-            <div class="status stay-tuned">Stay tuned</div>
+        </div>
+        <div class="timeline-line short"></div>
+        <div class="stay-tuned-track">
+            <div class="stay-tuned-text">Stay tuned</div>
         </div>
     </div>
 
