@@ -177,6 +177,69 @@ header {
     font-weight: 750;
 }
 
+/* ===== Four value cards under banner ===== */
+.cards-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 50px;
+    padding: 0 24px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: #FFFFFF;
+    border: 1px solid #dcebf1;
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center;
+    box-shadow: 0 8px 28px rgba(23, 50, 77, 0.1);
+}
+
+.card-image {
+    width: 50%;
+    height: 50px;
+    margin: 0 auto 14px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.card h3 {
+    color: #17171D;
+    font-size: 1.05rem;
+    margin-bottom: 0;
+    font-weight: 750;
+}
+
+@media (max-width: 900px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 700px) {
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+    .cards-section {
+        padding: 0 16px;
+        margin-bottom: 36px;
+    }
+}
+
 /* ===== Celebrating section (sticky nav + images) ===== */
 .celebrating-section {
     position: relative;
@@ -820,62 +883,80 @@ footer {
     <h3>Celebrating What Matters</h3>
 </div>
 
-<!-- Sticky-nav style celebrating section -->
+<!-- Four value cards -->
+<section class="cards-section">
+    <div class="cards">
+        <div class="card fade-in">
+            <div class="card-image">
+                <img src="/employee1.jpg" alt="Recognize">
+            </div>
+            <h3>RECOGNIZE</h3>
+        </div>
+        <div class="card fade-in">
+            <div class="card-image">
+                <img src="/employee2.jpg" alt="Appreciate">
+            </div>
+            <h3>APPRECIATE</h3>
+        </div>
+        <div class="card fade-in">
+            <div class="card-image">
+                <img src="/employee3.jpg" alt="Connect">
+            </div>
+            <h3>CONNECT</h3>
+        </div>
+        <div class="card fade-in">
+            <div class="card-image">
+                <img src="/employee4.jpg" alt="Inspire">
+            </div>
+            <h3>INSPIRE</h3>
+        </div>
+    </div>
+</section>
+
+<!-- Sticky-nav About section -->
 <section class="celebrating-section">
     <div class="celebrating-layout">
         <nav class="celebrating-nav">
             <ul>
                 <li>
-                    <a href="#recognize" class="active" data-section="recognize">
-                        <div class="celebrating-nav-img">
-                            <img src="/employee1.jpg" alt="Recognize">
-                        </div>
-                        <span>RECOGNIZE</span>
+                    <a href="#about" class="active" data-section="about">
+                        <span>About</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#inspire" data-section="inspire">
-                        <div class="celebrating-nav-img">
-                            <img src="/employee2.jpg" alt="Inspire">
-                        </div>
-                        <span>INSPIRE</span>
+                    <a href="#section-2" data-section="section-2">
+                        <span>2. Placeholder</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#connect" data-section="connect">
-                        <div class="celebrating-nav-img">
-                            <img src="/employee3.jpg" alt="Connect">
-                        </div>
-                        <span>CONNECT</span>
+                    <a href="#section-3" data-section="section-3">
+                        <span>3. Placeholder</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#grow" data-section="grow">
-                        <div class="celebrating-nav-img">
-                            <img src="/employee4.jpg" alt="Grow">
-                        </div>
-                        <span>GROW</span>
+                    <a href="#section-4" data-section="section-4">
+                        <span>4. Placeholder</span>
                     </a>
                 </li>
             </ul>
         </nav>
 
         <div class="celebrating-main">
-            <section class="celebrating-block fade-in" id="recognize">
-                <h3>RECOGNIZE</h3>
-                <p>Contributions that make a difference. Every effort, big or small, deserves to be seen and celebrated — because when we notice the work that moves us forward, we strengthen the culture that holds us together.</p>
+            <section class="celebrating-block fade-in" id="about">
+                <h3>About</h3>
+                <p>placeholder for now.</p>
             </section>
-            <section class="celebrating-block fade-in" id="inspire">
-                <h3>INSPIRE</h3>
-                <p>People who feel valued and appreciated. Recognition lights a spark that spreads — when one person is lifted up, others are encouraged to give their best and to believe their work truly matters.</p>
+            <section class="celebrating-block fade-in" id="section-2">
+                <h3>Title</h3>
+                <p>placeholder for now.</p>
             </section>
-            <section class="celebrating-block fade-in" id="connect">
-                <h3>CONNECT</h3>
-                <p>Collaboration and shared success. Celebrating together builds trust and belonging, turning individual wins into collective pride and reminding us that we achieve more when we support one another.</p>
+            <section class="celebrating-block fade-in" id="section-3">
+                <h3>Title</h3>
+                <p>placeholder for now.</p>
             </section>
-            <section class="celebrating-block fade-in" id="grow">
-                <h3>GROW</h3>
-                <p>Excellence and lasting impact. By recognizing progress and potential, we nurture a culture of continuous improvement — one that compounds over time into meaningful, lasting results for everyone.</p>
+            <section class="celebrating-block fade-in" id="section-4">
+                <h3>Title</h3>
+                <p>placeholder for now.</p>
             </section>
         </div>
     </div>
@@ -978,7 +1059,7 @@ const fadeObserver = new IntersectionObserver((entries) => {
 fadeElements.forEach((el) => fadeObserver.observe(el));
 
 /* Celebrating sticky nav – only ONE block full opacity at a time */
-const celebratingSections = document.querySelectorAll("#recognize, #inspire, #connect, #grow");
+const celebratingSections = document.querySelectorAll("#about, #section-2, #section-3, #section-4");
 const celebratingLinks = document.querySelectorAll(".celebrating-nav a");
 let isClickScrolling = false;
 let clickScrollTimeout = null;
