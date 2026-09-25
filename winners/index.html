@@ -129,7 +129,7 @@ nav a:hover::after {
     padding-top: 60px;
 }
 
-/* QUARTER BLOCK */
+/* QUARTER SECTIONS */
 .quarter-block {
     display: flex;
     gap: 0;
@@ -172,48 +172,35 @@ nav a:hover::after {
     align-self: stretch;
 }
 
-/* ===== MODERN MASONRY / RANDOM-FEEL GRID ===== */
+/* 5-column grid – original clean style */
 .winners-grid {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-auto-rows: 10px;          /* small row unit for masonry effect */
-    gap: 18px 20px;
-    align-items: start;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 28px 22px;
 }
 
-/* Card */
+/* Semi-card – no background */
 .winner-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 18px;
-    padding: 22px 18px 20px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-                background 0.3s ease,
-                border-color 0.3s ease,
-                box-shadow 0.3s ease;
-    /* random-looking vertical span via JS (see script) */
+    padding: 4px 0;
+    transition: transform 0.25s ease;
 }
 
 .winner-card:hover {
-    transform: translateY(-6px) scale(1.02);
-    background: rgba(13, 200, 234, 0.07);
-    border-color: rgba(13, 200, 234, 0.35);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    transform: translateY(-3px);
 }
 
 .winner-card-image {
-    width: 68px;
-    height: 68px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     overflow: hidden;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     background: rgba(255, 255, 255, 0.08);
     border: 2px solid rgba(255, 255, 255, 0.12);
-    flex-shrink: 0;
 }
 
 .winner-card-image img {
@@ -227,7 +214,7 @@ nav a:hover::after {
     font-size: 0.98rem;
     font-weight: 750;
     color: #FFFFFF;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     line-height: 1.3;
 }
 
@@ -235,8 +222,8 @@ nav a:hover::after {
     font-size: 0.78rem;
     font-weight: 600;
     color: #0DC8EA;
+    margin-bottom: 6px;
     letter-spacing: 0.02em;
-    margin-bottom: 0;
 }
 
 /* Stay-tuned */
@@ -270,13 +257,16 @@ footer {
 }
 
 /* RESPONSIVE */
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
     .winners-grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
 @media (max-width: 900px) {
+    .winners-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
     .quarter-label {
         width: 150px;
     }
@@ -324,27 +314,22 @@ footer {
 
     .winners-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 14px 12px;
-        grid-auto-rows: 8px;
+        gap: 20px 14px;
     }
-
-    .winner-card {
-        padding: 16px 14px 14px;
-        border-radius: 14px;
-    }
-
+    
     .winner-card-image {
         width: 52px;
         height: 52px;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }
 
     .winner-card h3 {
-        font-size: 0.88rem;
+        font-size: 0.9rem;
     }
 
     .winner-card .department {
         font-size: 0.72rem;
+        margin-bottom: 4px;
     }
 
     .quarter-block {
@@ -360,9 +345,6 @@ footer {
     .fade-in {
         opacity: 1;
         transform: none;
-        transition: none;
-    }
-    .winner-card {
         transition: none;
     }
 }
@@ -410,10 +392,77 @@ footer {
             <h2>Q3 2026</h2>
         </div>
         <div class="timeline-line"></div>
-
-        <!-- Masonry + random order grid -->
-        <div class="winners-grid" id="winnersGrid">
-            <!-- Cards are injected / shuffled by JS so order is random every load -->
+        <div class="winners-grid">
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner1.jpg" alt="Ahmed Al-Dajani"></div>
+                <h3>Ahmed Al-Dajani</h3>
+                <div class="department">Receptionist</div>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner2.jpg" alt="Shrooq Al-Obaidi"></div>
+                <h3>Shrooq Al-Obaidi</h3>
+                <div class="department">Supply Chain</div>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner3.jpg" alt="Sohaib Abdulrheem"></div>
+                <h3>Sohaib Abdulrheem</h3>
+                <div class="department">RCM</div>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner4.jpg" alt="Gazi Alabashi"></div>
+                <h3>Gazi Alabashi</h3>
+                <div class="department">Security</div>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner5.jpg" alt="Abdulaziz Al-Andijani"></div>
+                <h3>Abdulaziz Al-Andijani</h3>
+                <div class="department">Duty Manager</div>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner6.jpg" alt="Bandar Al-huthali"></div>
+                <h3>Bandar Al-huthali</h3>
+                <div class="department">Driver</div>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner7.jpg" alt="Rehab Hamed"></div>
+                <h3>Rehab Hamed</h3>
+                <div class="department">EDU</div>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner8.jpg" alt="Mohammed Ghonim"></div>
+                <h3>Mohammed Ghonim</h3>
+                <div class="department">ICU HN</div>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner9.jpg" alt="Abdulilah Al-Zahrani"></div>
+                <h3>Abdulilah Al-Zahrani</h3>
+                <div class="department">RT</div>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner10.jpg" alt="Fahad Al-Nufaiai"></div>
+                <h3>Fahad Al-Nufaiai</h3>
+                <div class="department">Radiology Supervisor</div>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner11.jpg" alt="Abdullah Y. Abdullah"></div>
+                <h3>Abdullah Y. Abdullah</h3>
+                <div class="department">Pharmacist Supervisor</div>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner12.jpg" alt="Abdullah Al-Hazmi"></div>
+                <h3>Abdullah Al-Hazmi</h3>
+                <div class="department">Lab</div>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner13.jpg" alt="Mohammed Rizk"></div>
+                <h3>Mohammed Rizk</h3>
+                <div class="department">QPS Specialist</div>
+            </div>
+            <div class="winner-card">
+                <div class="winner-card-image"><img src="/winner14.jpg" alt="Dina Al-Rashidi"></div>
+                <h3>Dina Al-Rashidi</h3>
+                <div class="department">Social Worker</div>
+            </div>
         </div>
     </div>
 
@@ -424,56 +473,8 @@ footer {
 </footer>
 
 <script>
-/* ===== Winner data ===== */
-const winners = [
-    { name: "Ahmed Al-Dajani",        dept: "Receptionist",           img: "/winner1.jpg" },
-    { name: "Shrooq Al-Obaidi",       dept: "Supply Chain",           img: "/winner2.jpg" },
-    { name: "Sohaib Abdulrheem",     dept: "RCM",                    img: "/winner3.jpg" },
-    { name: "Gazi Alabashi",         dept: "Security",               img: "/winner4.jpg" },
-    { name: "Abdulaziz Al-Andijani", dept: "Duty Manager",           img: "/winner5.jpg" },
-    { name: "Bandar Al-huthali",     dept: "Driver",                 img: "/winner6.jpg" },
-    { name: "Rehab Hamed",           dept: "EDU",                    img: "/winner7.jpg" },
-    { name: "Mohammed Ghonim",       dept: "ICU HN",                 img: "/winner8.jpg" },
-    { name: "Abdulilah Al-Zahrani",  dept: "RT",                     img: "/winner9.jpg" },
-    { name: "Fahad Al-Nufaiai",      dept: "Radiology Supervisor",   img: "/winner10.jpg" },
-    { name: "Abdullah Y. Abdullah",  dept: "Pharmacist Supervisor",  img: "/winner11.jpg" },
-    { name: "Abdullah Al-Hazmi",     dept: "Lab",                    img: "/winner12.jpg" },
-    { name: "Mohammed Rizk",         dept: "QPS Specialist",         img: "/winner13.jpg" },
-    { name: "Dina Al-Rashidi",       dept: "Social Worker",          img: "/winner14.jpg" }  // ← new
-];
-
-/* Fisher–Yates shuffle → true random order every page load */
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-/* Render cards with random vertical spans for a modern masonry feel */
-function renderWinners() {
-    const grid = document.getElementById("winnersGrid");
-    const shuffled = shuffle([...winners]);
-
-    grid.innerHTML = shuffled.map((w, i) => {
-        // Random-ish row span (creates the uneven “scattered” look)
-        const span = 12 + Math.floor(Math.random() * 6); // 12–17 row units
-
-        return `
-            <div class="winner-card" style="grid-row-end: span ${span}">
-                <div class="winner-card-image">
-                    <img src="${w.img}" alt="${w.name}">
-                </div>
-                <h3>${w.name}</h3>
-                <div class="department">${w.dept}</div>
-            </div>
-        `;
-    }).join("");
-}
-
-/* Fade-in observer (unchanged) */
 const fadeElements = document.querySelectorAll(".fade-in");
+
 const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -490,8 +491,6 @@ const fadeObserver = new IntersectionObserver((entries) => {
 fadeElements.forEach((el) => fadeObserver.observe(el));
 
 window.addEventListener("load", () => {
-    renderWinners();                       // shuffle + build cards
-
     document.querySelectorAll(".fade-in").forEach((el, index) => {
         const rect = el.getBoundingClientRect();
         if (rect.top < window.innerHeight * 0.85) {
