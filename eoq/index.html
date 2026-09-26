@@ -7,8 +7,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&family=PT+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap" rel="stylesheet">
 
 <style>
 * {
@@ -36,7 +35,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
     padding-top: 74px;
 }
-
 
 header {
     position: fixed;
@@ -72,7 +70,6 @@ nav {
     gap: 28px;
 }
 
-/* Home link – underline fills left → right on hover (200ms), no color change */
 nav a {
     position: relative;
     text-decoration: none;
@@ -97,7 +94,7 @@ nav a:hover::after {
 }
 
 nav a:hover {
-    color: #17171D; /* keep same color */
+    color: #17171D;
 }
 
 .main-content {
@@ -107,53 +104,7 @@ nav a:hover {
     padding-top: 55px;
 }
 
-.intro {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 50px;
-}
-
-.intro p,
-.intro h1 {
-    margin: 0;
-    padding: 0;
-}
-
-.intro p:first-of-type {
-    color: #D79A1E;
-    font-family: "PT Serif", serif;
-    font-size: 1.05rem;
-    line-height: 1.3;
-    margin-bottom: 0;
-}
-
-.intro p:first-of-type::after {
-    content: "_______";
-    display: block;
-    color: #D79A1E;
-    font-family: Arial, sans-serif;
-    font-size: 1rem;
-    line-height: 0.8;
-}
-
-.intro h1 {
-    color: #17324d;
-    font-family: "PT Serif", serif;
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
-    font-weight: 400;
-    line-height: 1.2;
-    margin: 0;
-}
-
-.intro p:last-of-type {
-    color: #17324d;
-    font-family: "PT Serif", serif;
-    font-size: 1.05rem;
-    line-height: 1.3;
-    margin-top: 20px;
-}
-
+/* ===== CODE SECTION (now contains the intro texts) ===== */
 .code-section {
     max-width: 570px;
     margin: 0 auto;
@@ -165,9 +116,35 @@ nav a:hover {
     transition: box-shadow 0.4s ease;
 }
 
-/* After successful code entry – remove shadow */
 .code-section.expanded {
     box-shadow: none;
+}
+
+/* Intro texts inside the box – same font as the rest of the page */
+.code-intro {
+    margin-bottom: 28px;
+}
+
+.code-intro .label {
+    color: #17324d;
+    font-size: 1.05rem;
+    font-weight: 750;
+    margin-bottom: 6px;
+}
+
+.code-intro h1 {
+    color: #17324d;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: 750;
+    line-height: 1.25;
+    margin-bottom: 10px;
+}
+
+.code-intro .subtitle {
+    color: #557083;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.45;
 }
 
 .code-icon {
@@ -193,7 +170,7 @@ nav a:hover {
     margin-bottom: 8px;
 }
 
-.code-section p {
+.code-section > p {
     color: #557083;
     margin-bottom: 25px;
 }
@@ -243,6 +220,7 @@ nav a:hover {
     margin-top: 12px;
 }
 
+/* ===== VOTING SECTION ===== */
 .voting-section {
     display: none;
     margin-top: 50px;
@@ -254,15 +232,8 @@ nav a:hover {
 }
 
 @keyframes votingReveal {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 .voting-header {
@@ -353,10 +324,6 @@ nav a:hover {
     cursor: pointer;
 }
 
-.vote-btn:hover {
-    background: transparent;
-}
-
 .candidate.selected .vote-btn {
     border-color: #D79A1E;
     background: #FFFFFF;
@@ -364,6 +331,7 @@ nav a:hover {
     color: #17171D;
 }
 
+/* ===== CONFIRMATION BAR ===== */
 .confirmation-bar {
     position: fixed;
     left: 0;
@@ -374,8 +342,6 @@ nav a:hover {
     box-shadow: 0 -8px 25px rgba(23, 50, 77, 0.08);
     padding: 15px 5%;
     z-index: 100;
-
-    /* Slide animation */
     transform: translateY(100%);
     opacity: 0;
     visibility: hidden;
@@ -443,6 +409,7 @@ nav a:hover {
     box-shadow: 0 0 20px rgba(215, 154, 30, 0.5);
 }
 
+/* ===== SUCCESS SECTION ===== */
 .success-section {
     display: none;
     max-width: 600px;
@@ -476,15 +443,143 @@ nav a:hover {
 
 .success-section p {
     color: #557083;
+    margin-bottom: 24px;
 }
 
-/* Fade-in (same timing as main page) */
+.success-section .view-criteria-btn {
+    display: inline-block;
+    margin-top: 8px;
+}
+
+/* ===== EVALUATION CRITERIA POPUP ===== */
+.criteria-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(23, 50, 77, 0.55);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s;
+}
+
+.criteria-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.criteria-modal {
+    background: #FFFFFF;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 640px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+.criteria-header {
+    padding: 22px 28px 16px;
+    border-bottom: 1px solid #e8f0f4;
+    flex-shrink: 0;
+}
+
+.criteria-header h2 {
+    color: #17324d;
+    font-size: 1.45rem;
+    font-weight: 750;
+    margin: 0;
+}
+
+.criteria-body {
+    padding: 20px 28px;
+    overflow-y: auto;
+    flex: 1;
+    color: #17324d;
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.criteria-body h3 {
+    color: #17324d;
+    font-size: 1.05rem;
+    font-weight: 750;
+    margin: 22px 0 8px;
+}
+
+.criteria-body h3:first-child {
+    margin-top: 0;
+}
+
+.criteria-body ol {
+    padding-left: 22px;
+    margin-bottom: 4px;
+}
+
+.criteria-body li {
+    margin-bottom: 4px;
+    color: #3a4f63;
+    font-weight: 500;
+}
+
+.criteria-footer {
+    padding: 18px 28px 24px;
+    border-top: 1px solid #e8f0f4;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.got-it-btn {
+    display: inline-block;
+    background: #D79A1E;
+    color: #17171D;
+    border: none;
+    border-radius: 18px;
+    padding: 14px 36px;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: box-shadow 0.25s ease;
+}
+
+.got-it-btn:hover {
+    box-shadow: 0 0 22px rgba(215, 154, 30, 0.5);
+}
+
+/* ===== VIEW CRITERIA BUTTON (bottom of page) ===== */
+.view-criteria-wrapper {
+    text-align: center;
+    padding: 30px 20px 50px;
+}
+
+.view-criteria-btn {
+    background: none;
+    border: 2px solid #17324D;
+    border-radius: 18px;
+    padding: 12px 28px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #17324D;
+    cursor: pointer;
+    transition: color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.view-criteria-btn:hover {
+    color: #D79A1E;
+    border-color: #D79A1E;
+    box-shadow: 0 0 18px rgba(215, 154, 30, 0.25);
+}
+
+/* Fade-in */
 .fade-in {
     opacity: 0;
     transform: translateY(35px);
-    transition:
-        opacity 1.3s ease,
-        transform 1.3s ease;
+    transition: opacity 1.3s ease, transform 1.3s ease;
 }
 
 .fade-in.visible {
@@ -492,6 +587,7 @@ nav a:hover {
     transform: translateY(0);
 }
 
+/* Responsive */
 @media (max-width: 800px) {
     .candidates {
         grid-template-columns: repeat(2, 1fr);
@@ -514,6 +610,14 @@ nav a:hover {
     .code-section {
         padding: 30px 22px;
     }
+
+    .criteria-modal {
+        max-height: 90vh;
+    }
+
+    .criteria-body {
+        padding: 16px 20px;
+    }
 }
 
 @media (max-width: 700px) {
@@ -534,8 +638,6 @@ nav a:hover {
 
     nav {
         gap: 18px;
-        flex-wrap: wrap;
-        justify-content: center;
     }
 
     nav a {
@@ -548,16 +650,8 @@ nav a:hover {
         padding-top: 40px;
     }
 
-    .intro {
-        margin-bottom: 40px;
-    }
-
-    .intro h1 {
-        font-size: 2rem;
-    }
-
-    .intro p {
-        font-size: 0.95rem;
+    .code-intro h1 {
+        font-size: 1.7rem;
     }
 }
 
@@ -578,7 +672,6 @@ nav a:hover {
         transition: none;
     }
 }
-    
 </style>
 </head>
 
@@ -589,7 +682,6 @@ nav a:hover {
         <a href="/">
             <img src="/logo.jpg" alt="Care Medical Jiwar" class="logo">
         </a>
-
         <nav>
             <a href="/">Home</a>
         </nav>
@@ -598,22 +690,24 @@ nav a:hover {
 
 <main class="main-content">
 
-    <section class="intro fade-in">
-        <p>Honoring Achievement</p>
-        <h1>Employee of the Quarter</h1>
-        <p>Select the employee who made a meaningful impact this quarter</p>
-    </section>
-
     <section class="code-section fade-in" id="codeSection">
+
+        <!-- Intro texts now inside the box -->
+        <div class="code-intro">
+            <p class="label">YOUR VOICE MATTERS</p>
+            <h1>Employee of the Quarter</h1>
+            <p class="subtitle">You see the effort. You see the impact.</p>
+            <p class="subtitle">Now, give it the recognition it deserves.</p>
+        </div>
 
         <div class="code-icon">
             <img src="/code-image.jpg" alt="Department Code">
         </div>
 
-        <h2>Enter Your Department Code</h2>
+        <h2>DEPARTMENT CODE</h2>
 
         <p>
-            Please enter your authorized department code to access the voting section.
+            Enter your department code to continue.
         </p>
 
         <input
@@ -625,7 +719,7 @@ nav a:hover {
         >
 
         <button class="code-button" onclick="verifyCode()">
-            Continue to Voting →
+            CHOOSE YOUR EMPLOYEE →
         </button>
 
         <div class="code-error" id="codeError">
@@ -634,7 +728,7 @@ nav a:hover {
 
     </section>
 
-    <!-- Voting appears BELOW the code section (does not replace it) -->
+    <!-- Voting appears BELOW the code section -->
     <section class="voting-section" id="votingSection">
         <div class="voting-header">
             <h2>Choose Your Employee of the Quarter</h2>
@@ -643,7 +737,7 @@ nav a:hover {
         </div>
 
         <div class="candidates">
-        <!-- Candidates will be generated dynamically by JavaScript -->
+            <!-- Candidates generated by JS -->
         </div>
     </section>
 
@@ -651,10 +745,17 @@ nav a:hover {
         <div class="success-icon">✓</div>
         <h2>Vote Submitted Successfully</h2>
         <p>Thank you for participating in the Employee of the Quarter voting.</p>
+        <button class="view-criteria-btn" onclick="openCriteriaPopup()">View Evaluation Criteria</button>
     </section>
 
 </main>
 
+<!-- Bottom “View Evaluation Criteria” button (always visible) -->
+<div class="view-criteria-wrapper">
+    <button class="view-criteria-btn" onclick="openCriteriaPopup()">View Evaluation Criteria</button>
+</div>
+
+<!-- Confirmation bar -->
 <div class="confirmation-bar" id="confirmationBar">
     <div class="confirmation-inner">
         <div class="selection-text">
@@ -663,6 +764,88 @@ nav a:hover {
         <div class="confirmation-buttons">
             <button class="change-btn" onclick="changeSelection()">Change Selection</button>
             <button class="confirm-btn" onclick="confirmVote()">Confirm Vote</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== EVALUATION CRITERIA POPUP ===== -->
+<div class="criteria-overlay" id="criteriaOverlay">
+    <div class="criteria-modal">
+        <div class="criteria-header">
+            <h2>Evaluation Criteria</h2>
+        </div>
+        <div class="criteria-body">
+            <h3>First: Professional and Behavioral Commitment</h3>
+            <ol>
+                <li>Adherence to working hours, attendance, and departure times.</li>
+                <li>Compliance with hospital rules and policies.</li>
+                <li>Adherence to professional ethics and medical confidentiality.</li>
+                <li>Professional appearance and adherence to the official uniform/dress code.</li>
+                <li>Respect for supervisors, colleagues, patients, and visitors.</li>
+            </ol>
+
+            <h3>Second: Quality of Job Performance</h3>
+            <ol>
+                <li>Proficiency in performing assigned job duties.</li>
+                <li>Accuracy in carrying out tasks and minimizing errors.</li>
+                <li>Timely completion of transactions and tasks without compromising quality.</li>
+                <li>Ability to work effectively under pressure.</li>
+            </ol>
+
+            <h3>Third: Patient and Visitor Relations</h3>
+            <ol>
+                <li>Courteous reception and positive communication.</li>
+                <li>Commitment to patient service and satisfaction.</li>
+                <li>Professional and tactful handling of complaints and difficult situations.</li>
+                <li>Demonstrating empathy and consideration for patients’ human needs.</li>
+                <li>Maintaining patient dignity and privacy.</li>
+            </ol>
+
+            <h3>Fourth: Teamwork and Cooperation</h3>
+            <ol>
+                <li>Cooperation with team members.</li>
+                <li>Contributing to a positive work environment.</li>
+                <li>Sharing knowledge and experience with colleagues.</li>
+                <li>Supporting other departments when needed.</li>
+            </ol>
+
+            <h3>Fifth: Discipline and Safety</h3>
+            <ol>
+                <li>Compliance with occupational health and safety procedures.</li>
+                <li>Compliance with infection prevention and control policies (for clinical staff).</li>
+                <li>Reporting hazards or professional errors.</li>
+                <li>Proper use of equipment and tools.</li>
+                <li>Proper care and protection of hospital property.</li>
+            </ol>
+
+            <h3>Sixth: Professional Development and Learning</h3>
+            <ol>
+                <li>Commitment to professional self-development.</li>
+                <li>Participation in training courses and workshops.</li>
+                <li>Applying acquired knowledge and skills in the workplace.</li>
+                <li>Keeping up to date with new instructions, policies, and guidelines.</li>
+                <li>Demonstrating a willingness to improve performance.</li>
+            </ol>
+
+            <h3>Seventh: Initiative and Innovation</h3>
+            <ol>
+                <li>Suggesting ideas to improve work processes.</li>
+                <li>Effectively identifying and solving problems.</li>
+                <li>Taking initiative without waiting for direction.</li>
+                <li>Participating in quality improvement projects.</li>
+                <li>Demonstrating flexibility and adaptability to change.</li>
+            </ol>
+
+            <h3>Eighth: Responsibility and Reliability</h3>
+            <ol>
+                <li>Taking responsibility for assigned duties.</li>
+                <li>Meeting deadlines.</li>
+                <li>Demonstrating professional honesty and integrity.</li>
+                <li>Maintaining the confidentiality and security of patient and hospital information.</li>
+            </ol>
+        </div>
+        <div class="criteria-footer">
+            <button class="got-it-btn" onclick="closeCriteriaAndContinue()">GOT IT – LET’S BEGIN</button>
         </div>
     </div>
 </div>
@@ -683,6 +866,7 @@ const departmentEmployees = {
 
 let currentDepartment = "";
 let selectedCandidate = "";
+let pendingVotingReveal = false; // true when popup is shown after valid code
 
 /* Fade-in on load */
 const fadeElements = document.querySelectorAll(".fade-in");
@@ -725,7 +909,6 @@ function verifyCode() {
     const error = document.getElementById("codeError");
     const code = input.value.trim().toUpperCase();
     const codeSection = document.getElementById("codeSection");
-    const votingSection = document.getElementById("votingSection");
     const candidatesContainer = document.querySelector(".candidates");
 
     if (!code) {
@@ -752,10 +935,8 @@ function verifyCode() {
     const deptName = departmentCodes[code];
     document.getElementById("departmentBadge").textContent = deptName + " Department";
 
-    // Clear previous candidates
+    // Clear & generate candidates
     candidatesContainer.innerHTML = "";
-
-    // Generate the 10 employees for this department
     const employees = departmentEmployees[deptName] || [];
     employees.forEach(emp => {
         const card = document.createElement("div");
@@ -773,14 +954,37 @@ function verifyCode() {
 
     error.style.display = "none";
     codeSection.classList.add("expanded");
-    votingSection.classList.add("visible");
 
-    setTimeout(() => {
-        votingSection.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-    }, 150);
+    // Show the criteria popup first
+    pendingVotingReveal = true;
+    openCriteriaPopup();
+}
+
+function openCriteriaPopup() {
+    document.getElementById("criteriaOverlay").classList.add("show");
+    document.body.style.overflow = "hidden"; // prevent background scroll
+}
+
+function closeCriteriaPopup() {
+    document.getElementById("criteriaOverlay").classList.remove("show");
+    document.body.style.overflow = "";
+}
+
+function closeCriteriaAndContinue() {
+    closeCriteriaPopup();
+
+    if (pendingVotingReveal) {
+        pendingVotingReveal = false;
+        const votingSection = document.getElementById("votingSection");
+        votingSection.classList.add("visible");
+
+        setTimeout(() => {
+            votingSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }, 150);
+    }
 }
 
 function selectCandidate(button) {
@@ -829,7 +1033,6 @@ function confirmVote() {
     const votingSection = document.getElementById("votingSection");
     const successSection = document.getElementById("successSection");
 
-    /* Fade out voting, then show success below */
     votingSection.classList.remove("visible");
     document.getElementById("confirmationBar").classList.remove("show");
 
@@ -845,6 +1048,16 @@ function confirmVote() {
 document.getElementById("departmentCode").addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
         verifyCode();
+    }
+});
+
+/* Close popup when clicking the dark overlay (optional convenience) */
+document.getElementById("criteriaOverlay").addEventListener("click", function(e) {
+    if (e.target === this) {
+        // Only close if it was opened manually (not the first-time flow)
+        if (!pendingVotingReveal) {
+            closeCriteriaPopup();
+        }
     }
 });
 </script>
