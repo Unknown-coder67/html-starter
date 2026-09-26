@@ -465,7 +465,7 @@ header {
     -webkit-text-stroke: 1.3px currentColor;
 }
 
-/* ===== JIWAR MOMENTS & JIWAR WALL ===== */
+/* ===== JIWAR WALL ===== */
 .jiwar-section {
     width: 100%;
     padding: 90px 0;
@@ -551,10 +551,8 @@ header {
     position: relative;
 }
 
-
-/* Wall notes + moment cards (localStorage demo) */
-.jiwar-right.wall-canvas,
-.jiwar-right.moments-canvas {
+/* Wall notes */
+.jiwar-right.wall-canvas {
     min-height: 320px;
     position: relative;
 }
@@ -605,51 +603,79 @@ header {
     white-space: nowrap;
 }
 
-.moment-card {
-    position: absolute;
-    width: 200px;
-    max-width: 200px;
-    padding: 16px 14px;
-    background: #FFFFFF;
-    border: 1px solid #dcebf1;
-    border-radius: 14px;
-    box-shadow: 0 6px 18px rgba(23, 50, 77, 0.1);
-    font-size: 0.85rem;
-    font-weight: 600;
-    line-height: 1.45;
-    color: #02102B;
-    overflow: hidden;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+/* ===== IDEAS HUB ===== */
+.ideas-hub-section {
+    width: 100%;
+    min-height: 420px;
+    padding: 90px 0;
+    background: #02102B url('/ideas-bg.jpg') center center / cover no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
-.moment-card .moment-who {
-    font-size: 0.72rem;
-    color: #0DC8EA;
+.ideas-hub-inner {
+    max-width: none;
+    margin: 0;
+    padding: 0 40px 0 50px;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    width: 100%;
+}
+
+.ideas-hub-left {
+    flex: 0 0 420px;
+    max-width: 420px;
+}
+
+.ideas-hub-headline {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
     font-weight: 750;
-    margin-bottom: 6px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    line-height: 1.1;
+    margin-bottom: 18px;
 }
 
-.moment-card .moment-body {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+.ideas-hub-headline .ideas {
+    color: #FFFFFF;
 }
 
-.moment-card .moment-why {
-    margin-top: 8px;
-    font-size: 0.78rem;
-    color: #557083;
-    font-weight: 600;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+.ideas-hub-headline .hub {
+    color: #0DC8EA;
+}
+
+.ideas-hub-sub {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+
+.ideas-hub-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: #FFFFFF;
+    border: 2px solid #D4AF37; /* golden */
+    border-radius: 18px;
+    padding: 14px 24px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 750;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.ideas-hub-btn:hover {
+    background: rgba(212, 175, 55, 0.15);
+    transform: translateY(-1px);
+}
+
+.ideas-hub-btn .arrow {
+    font-weight: 900;
+    -webkit-text-stroke: 1px currentColor;
 }
 
 .wide-image-section {
@@ -702,6 +728,13 @@ footer {
     .jiwar-left {
         flex: 0 0 320px;
         max-width: 320px;
+    }
+    .ideas-hub-inner {
+        padding: 0 24px 0 40px;
+    }
+    .ideas-hub-left {
+        flex: 0 0 360px;
+        max-width: 360px;
     }
 }
 
@@ -778,6 +811,15 @@ footer {
         min-height: 180px;
         width: 100%;
     }
+    .ideas-hub-inner {
+        flex-direction: column;
+        padding: 0 40px;
+    }
+    .ideas-hub-left {
+        flex: none;
+        max-width: 100%;
+        width: 100%;
+    }
 }
 
 @media (max-width: 700px) {
@@ -833,11 +875,24 @@ footer {
     .jiwar-headline {
         font-size: 2rem;
     }
+    .ideas-hub-section {
+        padding: 70px 0;
+        min-height: 360px;
+    }
+    .ideas-hub-inner {
+        padding: 0 30px;
+    }
+    .ideas-hub-headline {
+        font-size: 2.2rem;
+    }
 }
 
 @media (max-width: 480px) {
     .jiwar-inner {
         padding: 0 50px;
+    }
+    .ideas-hub-inner {
+        padding: 0 24px;
     }
 }
 
@@ -982,26 +1037,6 @@ footer {
     </div>
 </section>
 
-<!-- JIWAR MOMENTS -->
-<section class="jiwar-section fade-in" id="jiwar-moments">
-    <div class="jiwar-inner">
-        <div class="jiwar-left">
-            <p class="jiwar-label">JIWAR MOMENTS</p>
-            <h2 class="jiwar-headline">Every
-moment
-matters.</h2>
-            <p class="jiwar-sub">Small moments.
-Meaningful impact.</p>
-            <a href="/moments/" class="jiwar-btn">
-                Share a JIWAR Moment <span class="arrow">→</span>
-            </a>
-        </div>
-        <div class="jiwar-right moments-canvas" id="momentsCanvas">
-            <!-- Moment cards from localStorage appear here -->
-        </div>
-    </div>
-</section>
-
 <!-- THE JIWAR WALL -->
 <section class="jiwar-section fade-in" id="jiwar-wall">
     <div class="jiwar-inner">
@@ -1018,6 +1053,21 @@ A kind message can go a long way.</p>
         </div>
         <div class="jiwar-right wall-canvas" id="wallCanvas">
             <!-- Wall notes from localStorage appear here -->
+        </div>
+    </div>
+</section>
+
+<!-- IDEAS HUB (moved under WALL) -->
+<section class="ideas-hub-section fade-in" id="ideas-hub">
+    <div class="ideas-hub-inner">
+        <div class="ideas-hub-left">
+            <h2 class="ideas-hub-headline">
+                <span class="ideas">IDEAS</span> <span class="hub">HUB</span>
+            </h2>
+            <p class="ideas-hub-sub">Somewhere between an idea and what comes next.</p>
+            <a href="/ideas/" class="ideas-hub-btn">
+                SHARE YOUR IDEA <span class="arrow">→</span>
+            </a>
         </div>
     </div>
 </section>
@@ -1131,7 +1181,7 @@ celebratingLinks.forEach((link) => {
     });
 });
 
-/* localStorage demos: wall notes + moments */
+/* localStorage demos: wall notes */
 (function () {
     function escapeHtml(s) {
         return String(s)
@@ -1175,40 +1225,6 @@ celebratingLinks.forEach((link) => {
             }
             el.innerHTML = html;
             wallCanvas.appendChild(el);
-        });
-    }
-
-    /* Moments cards */
-    var momentsCanvas = document.getElementById("momentsCanvas");
-    if (momentsCanvas) {
-        var moments = [];
-        try {
-            moments = JSON.parse(localStorage.getItem("jiwar_moments") || "[]");
-        } catch (e) { moments = []; }
-        var momentLayouts = [
-            { top: "6%", left: "4%" },
-            { top: "8%", left: "42%" },
-            { top: "10%", left: "72%" },
-            { top: "48%", left: "10%" },
-            { top: "50%", left: "48%" },
-            { top: "46%", left: "74%" }
-        ];
-        moments.slice(-6).forEach(function (m, i) {
-            var el = document.createElement("div");
-            el.className = "moment-card";
-            var layout = momentLayouts[i % momentLayouts.length];
-            el.style.top = layout.top;
-            el.style.left = layout.left;
-            var html = "";
-            if (m.who) {
-                html += '<div class="moment-who">' + escapeHtml(String(m.who).slice(0, 48)) + "</div>";
-            }
-            html += '<div class="moment-body">' + escapeHtml((m.what || "").slice(0, 280)) + "</div>";
-            if (m.why) {
-                html += '<div class="moment-why">' + escapeHtml(String(m.why).slice(0, 200)) + "</div>";
-            }
-            el.innerHTML = html;
-            momentsCanvas.appendChild(el);
         });
     }
 })();
