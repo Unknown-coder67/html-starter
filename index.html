@@ -201,7 +201,6 @@ header {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Keep the fade-in animation working */
 .card.fade-in {
     opacity: 0;
     transform: translateY(35px);
@@ -212,7 +211,6 @@ header {
     transform: translateY(0);
 }
 
-/* Higher specificity so the lift works on hover */
 .card.fade-in.visible:hover {
     transform: translateY(-10px);
     box-shadow: 0 14px 36px rgba(23, 50, 77, 0.16);
@@ -258,7 +256,7 @@ header {
     }
 }
 
-/* ===== Celebrating section (sticky nav + images) ===== */
+/* ===== Celebrating / About section (sticky nav) ===== */
 .celebrating-section {
     position: relative;
     width: 100%;
@@ -318,22 +316,6 @@ header {
     border-left-color: #00B7E2;
 }
 
-.celebrating-nav-img {
-    width: 48px;
-    height: 48px;
-    border-radius: 10px;
-    overflow: hidden;
-    flex-shrink: 0;
-    background: #f0f7fa;
-}
-
-.celebrating-nav-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
 .celebrating-main {
     flex: 1;
     max-width: 1200px;
@@ -341,36 +323,10 @@ header {
 
 .celebrating-block {
     text-align: left;
-    margin-bottom: 90px;
+    margin-bottom: 0;
     scroll-margin-top: 12vh;
-    opacity: 0.22;
+    opacity: 1;
     transition: opacity 0.4s ease;
-}
-
-/* Override generic .fade-in for this section */
-.celebrating-block.fade-in {
-    transform: none;
-}
-
-.celebrating-block.fade-in.visible {
-    /* opacity driven by is-active-block / is-dimmed below */
-    transform: none;
-}
-
-.celebrating-block.is-dimmed {
-    opacity: 0.22 !important;
-}
-
-.celebrating-block.is-active-block {
-    opacity: 1 !important;
-}
-
-.celebrating-block h3 {
-    color: #00B7E2;
-    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-    font-weight: 750;
-    line-height: 1.2;
-    margin-bottom: 14px;
 }
 
 .celebrating-block p {
@@ -380,106 +336,152 @@ header {
     max-width: 1920px;
 }
 
-/* Upper sections */
-.upper-section {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto 90px;
-    text-align: center;
+/* ===== Who is next? section ===== */
+.next-section {
+    width: 100%;
+    background-color: rgb(244, 243, 240);
+    min-height: 680px;
+    padding: 92px 0;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 80px;
+    align-items: start;
+    box-sizing: border-box;
 }
 
-.upper-section .section-label {
-    color: #557083;
-    font-size: 1rem;
-    margin-bottom: 6px;
+.next-left {
+    padding-left: 40px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
-.upper-section h2 {
-    color: #17171D;
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
+.giant-title {
+    font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback", sans-serif;
     font-weight: 750;
-    margin: 6px 0 12px;
-    line-height: 1.2;
-}
-
-.upper-section .section-desc {
-    color: #557083;
-    font-size: 1.05rem;
-    line-height: 1.7;
-    max-width: 620px;
-    margin: 0 auto 28px;
-}
-
-.spotlight-box {
+    font-size: clamp(3.2rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: #17171D;
     margin: 0;
-    padding: 0;
-    text-align: center;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.15em;
+}
+
+.giant-title .lines {
+    display: flex;
+    flex-direction: column;
+}
+
+.giant-title .qmark {
+    font-size: 1.15em;
+    line-height: 0.95;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    height: 3.15em; /* covers the three lines */
+    font-weight: 750;
+    color: #17171D;
+}
+
+.next-right {
+    padding-right: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.accordion-item {
+    border-top: 1px solid rgb(229, 231, 235);
+    border-bottom: 1px solid rgb(229, 231, 235);
+}
+
+.accordion-item + .accordion-item {
+    border-top: none; /* shared line between them */
+}
+
+.accordion-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 28px 0;
     background: none;
     border: none;
-    box-shadow: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+    font-weight: 750;
+    color: #17171D;
+    line-height: 1.3;
+    transition: color 0.2s ease;
 }
 
-.spotlight-box-footer {
-    color: #718896;
-    font-size: 0.9rem;
-    margin-top: 12px;
+.accordion-header:hover {
+    color: #00B7E2;
 }
 
-/* Previous Winners */
-.winners-video-section {
-    position: relative;
-    width: 100%;
-    min-height: 420px;
-    margin: 0 0 0;
-    overflow: hidden;
+.accordion-icon {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1.35rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #17171D;
+    transition: transform 0.2s ease;
 }
 
-.winners-video-bg {
-    position: absolute;
-    width: 100%;
-    height: 50%;
-    object-fit: cover;
-    z-index: 0;
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding: 0;
 }
 
-.winners-video-overlay {
-    display: none;
+.accordion-item.is-open .accordion-content {
+    max-height: 280px;
+    padding-bottom: 28px;
 }
 
-.winners-video-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding: 60px 20px;
-    max-width: 700px;
-}
-
-.winners-video-content .section-label {
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 1rem;
-    margin-bottom: 8px;
-}
-
-.winners-video-content h2 {
-    color: #ffffff;
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
-    font-weight: 750;
-    margin: 6px 0 14px;
-    line-height: 1.2;
-}
-
-.winners-video-content .section-desc {
-    color: rgba(255, 255, 255, 0.9);
+.accordion-content p {
+    color: #557083;
     font-size: 1.05rem;
     line-height: 1.7;
+    font-weight: 500;
+    margin: 0 0 20px;
+    max-width: 640px;
 }
 
-.nominate-arrow {
+.winners-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #02102B;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 999px;
+    padding: 12px 20px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 750;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.winners-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.winners-btn .arrow {
     font-weight: 900;
-    -webkit-text-stroke: 1.3px currentColor;
+    -webkit-text-stroke: 1px currentColor;
 }
 
 /* ===== JIWAR WALL ===== */
@@ -568,7 +570,6 @@ header {
     position: relative;
 }
 
-/* Wall notes */
 .jiwar-right.wall-canvas {
     min-height: 320px;
     position: relative;
@@ -648,6 +649,16 @@ footer {
         flex: 0 0 210px;
         width: 210px;
     }
+    .next-section {
+        column-gap: 48px;
+        padding: 70px 0;
+    }
+    .next-left {
+        padding-left: 24px;
+    }
+    .next-right {
+        padding-right: 24px;
+    }
     .jiwar-inner {
         gap: 40px;
         padding: 0 24px 0 40px;
@@ -707,17 +718,30 @@ footer {
         border-bottom-color: #02102B;
         color: #02102B;
     }
-    .celebrating-nav-img {
-        width: 40px;
-        height: 40px;
-    }
     .celebrating-main {
         max-width: 100%;
     }
     .celebrating-block {
-        margin-bottom: 60px;
+        margin-bottom: 0;
         scroll-margin-top: 150px;
     }
+
+    .next-section {
+        grid-template-columns: 1fr;
+        row-gap: 40px;
+        padding: 60px 24px;
+        min-height: auto;
+    }
+    .next-left {
+        padding-left: 0;
+    }
+    .next-right {
+        padding-right: 0;
+    }
+    .giant-title {
+        font-size: clamp(2.8rem, 12vw, 4rem);
+    }
+
     .jiwar-inner {
         flex-direction: column;
         padding: 0 50px;
@@ -767,15 +791,12 @@ footer {
     .celebrating-block {
         scroll-margin-top: 140px;
     }
-    .upper-section {
-        width: 94%;
-        margin-bottom: 70px;
+    .next-section {
+        padding: 50px 16px;
     }
-    .upper-section h2 {
-        font-size: 2rem;
-    }
-    .winners-video-section {
-        min-height: 360px;
+    .accordion-header {
+        padding: 22px 0;
+        font-size: 1.25rem;
     }
     .jiwar-section {
         padding: 60px 0;
@@ -791,6 +812,7 @@ footer {
 @media (max-width: 480px) {
     .jiwar-inner {
         padding: 0 50px;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -866,7 +888,7 @@ footer {
     </div>
 </section>
 
-<!-- Sticky-nav About section -->
+<!-- About section (sticky nav – only About) -->
 <section class="celebrating-section">
     <div class="celebrating-layout">
         <nav class="celebrating-nav">
@@ -876,61 +898,49 @@ footer {
                         <span>About</span>
                     </a>
                 </li>
-                <li>
-                    <a href="#section-2" data-section="section-2">
-                        <span>Employee of the quarter</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#section-3" data-section="section-3"></a>
-                </li>
             </ul>
         </nav>
 
         <div class="celebrating-main">
             <section class="celebrating-block fade-in" id="about">
-                <h3>About</h3>
                 <p>We believe that care begins with people. Inspired by the spirit of this place, where countless journeys meet, this space honors the people behind the care, a place to recognize their efforts, appreciate one another, celebrate the difference they make, and give their ideas a place to grow.</p>
-            </section>
-            <section class="celebrating-block fade-in" id="section-2">
-                <h3>Employee of the Quarter</h3>
-                <p>Every quarter, we celebrate one star from every department, recognizing their dedication, teamwork, and the difference they make every day.</p>
             </section>
         </div>
     </div>
 </section>
 
-<section class="upper-section fade-in" id="spotlight">
-    <p class="section-label">The next spotlight</p>
-    <h2>Who's next?</h2>
-    <p class="section-desc">
-        Someone in every department is making a difference.
-    </p>
-    <div class="spotlight-box">
-        <p class="spotlight-box-footer">Stay tuned to discover their stories.</p>
+<!-- Who is next? section -->
+<section class="next-section fade-in" id="who-is-next">
+    <div class="next-left">
+        <h2 class="giant-title">
+            <span class="lines">
+                Who<br>
+                is<br>
+                next
+            </span>
+            <span class="qmark">?</span>
+        </h2>
     </div>
-</section>
-
-<!-- Previous Winners -->
-<section class="winners-video-section fade-in" id="previous-winners">
-    <video
-        class="winners-video-bg"
-        id="winnersBgVideo"
-        src="/winners-bg-1.mp4"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto">
-    </video>
-    <div class="winners-video-overlay"></div>
-    <div class="winners-video-content">
-        <p class="section-label">Previous Winners</p>
-        <h2>Our people. Our pride</h2>
-        <p class="section-desc">
-            Meet the colleagues whose dedication, care and excellence have already been recognized.
-            Their stories continue to inspire us all.
-        </p>
+    <div class="next-right">
+        <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+                <span>Employee of the Quarter</span>
+                <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+                <p>Every quarter, we celebrate one star from every department, recognizing their dedication, teamwork, and the difference they make every day.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+                <span>Our people. Our pride</span>
+                <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+                <p>Meet the colleagues whose dedication, care and excellence have already been recognized. Their stories continue to inspire us all.</p>
+                <a href="winners/index.html" class="winners-btn">Winners <span class="arrow">→</span></a>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -972,12 +982,9 @@ const fadeObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 fadeElements.forEach((el) => fadeObserver.observe(el));
 
-/* Celebrating sticky nav – only ONE block full opacity at a time */
-const celebratingSections = document.querySelectorAll("#about, #section-2, #section-3, #section-4");
+/* Celebrating sticky nav – only About */
+const celebratingSections = document.querySelectorAll("#about");
 const celebratingLinks = document.querySelectorAll(".celebrating-nav a");
-let isClickScrolling = false;
-let clickScrollTimeout = null;
-let lockedId = null; /* while click-scrolling, force this id */
 
 function setActiveLink(id) {
     celebratingLinks.forEach((link) => {
@@ -1003,20 +1010,13 @@ function setActiveBlock(id) {
     setActiveLink(id);
 }
 
-/** Pick the single block whose center is closest to the viewport center */
 function updateCelebratingFocus() {
-    if (isClickScrolling && lockedId) {
-        setActiveBlock(lockedId);
-        return;
-    }
-
     const viewportCenter = window.innerHeight / 2;
     let closestId = null;
     let closestDist = Infinity;
 
     celebratingSections.forEach((section) => {
         const rect = section.getBoundingClientRect();
-        /* Skip blocks that are fully off-screen */
         if (rect.bottom < 0 || rect.top > window.innerHeight) return;
         const sectionCenter = rect.top + rect.height / 2;
         const dist = Math.abs(sectionCenter - viewportCenter);
@@ -1041,21 +1041,29 @@ celebratingLinks.forEach((link) => {
         const href = link.getAttribute("href");
         const target = document.querySelector(href);
         if (!target) return;
-
         const id = href.slice(1);
-        lockedId = id;
         setActiveBlock(id);
-
-        isClickScrolling = true;
-        if (clickScrollTimeout) clearTimeout(clickScrollTimeout);
-
         target.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+});
 
-        clickScrollTimeout = setTimeout(() => {
-            isClickScrolling = false;
-            lockedId = null;
-            updateCelebratingFocus();
-        }, 1000);
+/* Accordion for Who is next? */
+document.querySelectorAll(".accordion-header").forEach((btn) => {
+    btn.addEventListener("click", () => {
+        const item = btn.closest(".accordion-item");
+        const isOpen = item.classList.contains("is-open");
+        // Close all
+        document.querySelectorAll(".accordion-item").forEach((el) => {
+            el.classList.remove("is-open");
+            el.querySelector(".accordion-header").setAttribute("aria-expanded", "false");
+            el.querySelector(".accordion-icon").textContent = "+";
+        });
+        // Open clicked if it was closed
+        if (!isOpen) {
+            item.classList.add("is-open");
+            btn.setAttribute("aria-expanded", "true");
+            item.querySelector(".accordion-icon").textContent = "−";
+        }
     });
 });
 
@@ -1069,7 +1077,6 @@ celebratingLinks.forEach((link) => {
             .replace(/"/g, "&quot;");
     }
 
-    /* Wall notes */
     var wallCanvas = document.getElementById("wallCanvas");
     if (wallCanvas) {
         var notes = [];
@@ -1106,7 +1113,6 @@ celebratingLinks.forEach((link) => {
         });
     }
 })();
-
 </script>
 
 </body>
