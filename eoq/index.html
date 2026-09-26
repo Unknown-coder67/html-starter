@@ -122,13 +122,7 @@ nav a:hover {
 
 .code-intro {
     margin-bottom: 28px;
-}
-
-.code-intro .label {
-    color: #17324d;
-    font-size: 1.05rem;
-    font-weight: 750;
-    margin-bottom: 6px;
+    text-align: left;          /* left-align the intro block */
 }
 
 .code-intro h1 {
@@ -137,6 +131,7 @@ nav a:hover {
     font-weight: 750;
     line-height: 1.25;
     margin-bottom: 10px;
+    text-align: center;        /* keep title centered */
 }
 
 .code-intro .subtitle {
@@ -144,6 +139,7 @@ nav a:hover {
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.45;
+    text-align: left;          /* left-aligned as requested */
 }
 
 .code-icon {
@@ -264,7 +260,7 @@ nav a:hover {
     font-weight: 700;
 }
 
-/* View Evaluation Criteria – under the badge, same size, no bg / no border */
+/* View Evaluation Criteria – under the badge */
 .view-criteria-inline {
     display: inline-block;
     margin-top: 10px;
@@ -284,19 +280,20 @@ nav a:hover {
     box-shadow: 0 0 18px rgba(215, 154, 30, 0.4);
 }
 
+/* 4 columns */
 .candidates {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
 }
 
 .candidate {
     background: #FFFFFF;
     border: 2px solid #dcebf1;
-    border-radius: 18px;
-    padding: 20px;
+    border-radius: 16px;
+    padding: 14px;
     text-align: center;
-    box-shadow: 0 8px 25px rgba(23, 50, 77, 0.12);
+    box-shadow: 0 6px 18px rgba(23, 50, 77, 0.10);
     transition: transform 0.25s ease;
 }
 
@@ -307,14 +304,15 @@ nav a:hover {
 
 .candidate.selected {
     border-color: #D79A1E;
-    box-shadow: 0 10px 30px rgba(215, 154, 30, 0.15);
+    box-shadow: 0 8px 22px rgba(215, 154, 30, 0.15);
 }
 
+/* Smaller image → shorter cards */
 .candidate-image {
     width: 100%;
-    height: 230px;
-    margin-bottom: 18px;
-    border-radius: 14px;
+    height: 150px;                 /* was 230px */
+    margin-bottom: 12px;
+    border-radius: 12px;
     overflow: hidden;
     background: #ffffff;
 }
@@ -328,25 +326,27 @@ nav a:hover {
 
 .candidate h3 {
     color: #17324d;
-    font-size: 1.2rem;
-    margin-bottom: 12px;
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+    line-height: 1.3;
 }
 
 .vote-btn {
     width: 100%;
-    height: 45px;
+    height: 40px;
     border: 2px solid #17171D;
-    border-radius: 18px;
+    border-radius: 14px;
     background: transparent;
     color: #17171D;
     font-weight: 700;
+    font-size: 0.9rem;
     cursor: pointer;
 }
 
 .candidate.selected .vote-btn {
     border-color: #D79A1E;
     background: #FFFFFF;
-    box-shadow: 0 10px 30px rgba(215, 154, 30, 0.15);
+    box-shadow: 0 8px 20px rgba(215, 154, 30, 0.15);
     color: #17171D;
 }
 
@@ -465,7 +465,6 @@ nav a:hover {
     margin-bottom: 24px;
 }
 
-/* Re-use the same inline style on the success page */
 .success-section .view-criteria-inline {
     margin-top: 4px;
 }
@@ -515,8 +514,9 @@ nav a:hover {
     margin: 0;
 }
 
+/* Scrollable body – button is now INSIDE this area at the very bottom */
 .criteria-body {
-    padding: 20px 28px;
+    padding: 20px 28px 32px;
     overflow-y: auto;
     flex: 1;
     color: #17324d;
@@ -546,11 +546,12 @@ nav a:hover {
     font-weight: 500;
 }
 
-.criteria-footer {
-    padding: 18px 28px 24px;
+/* Button only appears after scrolling to the bottom */
+.criteria-body .got-it-wrapper {
+    margin-top: 36px;
+    padding-top: 24px;
     border-top: 1px solid #e8f0f4;
     text-align: center;
-    flex-shrink: 0;
 }
 
 .got-it-btn {
@@ -583,6 +584,12 @@ nav a:hover {
 }
 
 /* Responsive */
+@media (max-width: 1100px) {
+    .candidates {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 @media (max-width: 800px) {
     .candidates {
         grid-template-columns: repeat(2, 1fr);
@@ -611,7 +618,7 @@ nav a:hover {
     }
 
     .criteria-body {
-        padding: 16px 20px;
+        padding: 16px 20px 28px;
     }
 }
 
@@ -647,6 +654,10 @@ nav a:hover {
 
     .code-intro h1 {
         font-size: 1.7rem;
+    }
+
+    .candidate-image {
+        height: 130px;
     }
 }
 
@@ -688,19 +699,17 @@ nav a:hover {
     <section class="code-section fade-in" id="codeSection">
 
         <div class="code-intro">
-            <p class="label">Honoring Achievement</p>
             <h1>Employee of the Quarter</h1>
-            <p class="subtitle">Select the employee who made a meaningful impact this quarter</p>
+            <p class="subtitle">You see the effort. You see the impact.</p>
+            <p class="subtitle">Now, give it the recognition it deserves.</p>
         </div>
 
         <div class="code-icon">
             <img src="/code-image.jpg" alt="Department Code">
         </div>
 
-        <h2>Enter Your Department Code</h2>
-
         <p>
-            Please enter your authorized department code to access the voting section.
+            Enter your department code to continue.
         </p>
 
         <input
@@ -712,7 +721,7 @@ nav a:hover {
         >
 
         <button class="code-button" onclick="verifyCode()">
-            Continue to Voting →
+            CHOOSE YOUR EMPLOYEE →
         </button>
 
         <div class="code-error" id="codeError">
@@ -728,7 +737,6 @@ nav a:hover {
             <p>Please review your selection before confirming your vote.</p>
             <div class="department-badge" id="departmentBadge"></div>
 
-            <!-- View Evaluation Criteria – only visible after valid code -->
             <button class="view-criteria-inline" onclick="openCriteriaPopup()">
                 View Evaluation Criteria
             </button>
@@ -838,9 +846,11 @@ nav a:hover {
                 <li>Demonstrating professional honesty and integrity.</li>
                 <li>Maintaining the confidentiality and security of patient and hospital information.</li>
             </ol>
-        </div>
-        <div class="criteria-footer">
-            <button class="got-it-btn" onclick="closeCriteriaAndContinue()">GOT IT – LET’S BEGIN</button>
+
+            <!-- Button only visible after scrolling to the bottom -->
+            <div class="got-it-wrapper">
+                <button class="got-it-btn" onclick="closeCriteriaAndContinue()">GOT IT – LET’S BEGIN</button>
+            </div>
         </div>
     </div>
 </div>
