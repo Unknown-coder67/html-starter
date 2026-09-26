@@ -629,13 +629,13 @@ if (stayTunedBlock) {
     stayTunedObserver.observe(stayTunedBlock);
 }
 
-// Q3 winners: fade in only once when ~70% is in viewport
+// Q3 winners: fade in/out when ~70% is in viewport
 const quarterObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
             entry.target.classList.add("visible");
-            // Unobserve so it only fades in once and never fades out
-            quarterObserver.unobserve(entry.target);
+        } else {
+            entry.target.classList.remove("visible");
         }
     });
 }, {
