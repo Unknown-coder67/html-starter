@@ -104,7 +104,7 @@ nav a:hover {
     padding-top: 55px;
 }
 
-/* ===== CODE SECTION (now contains the intro texts) ===== */
+/* ===== CODE SECTION ===== */
 .code-section {
     max-width: 570px;
     margin: 0 auto;
@@ -120,7 +120,6 @@ nav a:hover {
     box-shadow: none;
 }
 
-/* Intro texts inside the box – same font as the rest of the page */
 .code-intro {
     margin-bottom: 28px;
 }
@@ -263,6 +262,26 @@ nav a:hover {
     color: #087c98;
     font-size: 0.85rem;
     font-weight: 700;
+}
+
+/* View Evaluation Criteria – under the badge, same size, no bg / no border */
+.view-criteria-inline {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: none;
+    border: none;
+    color: #087c98;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: box-shadow 0.25s ease, color 0.25s ease;
+}
+
+.view-criteria-inline:hover {
+    color: #D79A1E;
+    box-shadow: 0 0 18px rgba(215, 154, 30, 0.4);
 }
 
 .candidates {
@@ -446,9 +465,9 @@ nav a:hover {
     margin-bottom: 24px;
 }
 
-.success-section .view-criteria-btn {
-    display: inline-block;
-    margin-top: 8px;
+/* Re-use the same inline style on the success page */
+.success-section .view-criteria-inline {
+    margin-top: 4px;
 }
 
 /* ===== EVALUATION CRITERIA POPUP ===== */
@@ -549,30 +568,6 @@ nav a:hover {
 
 .got-it-btn:hover {
     box-shadow: 0 0 22px rgba(215, 154, 30, 0.5);
-}
-
-/* ===== VIEW CRITERIA BUTTON (bottom of page) ===== */
-.view-criteria-wrapper {
-    text-align: center;
-    padding: 30px 20px 50px;
-}
-
-.view-criteria-btn {
-    background: none;
-    border: 2px solid #17324D;
-    border-radius: 18px;
-    padding: 12px 28px;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #17324D;
-    cursor: pointer;
-    transition: color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-.view-criteria-btn:hover {
-    color: #D79A1E;
-    border-color: #D79A1E;
-    box-shadow: 0 0 18px rgba(215, 154, 30, 0.25);
 }
 
 /* Fade-in */
@@ -692,22 +687,20 @@ nav a:hover {
 
     <section class="code-section fade-in" id="codeSection">
 
-        <!-- Intro texts now inside the box -->
         <div class="code-intro">
-            <p class="label">YOUR VOICE MATTERS</p>
+            <p class="label">Honoring Achievement</p>
             <h1>Employee of the Quarter</h1>
-            <p class="subtitle">You see the effort. You see the impact.</p>
-            <p class="subtitle">Now, give it the recognition it deserves.</p>
+            <p class="subtitle">Select the employee who made a meaningful impact this quarter</p>
         </div>
 
         <div class="code-icon">
             <img src="/code-image.jpg" alt="Department Code">
         </div>
 
-        <h2>DEPARTMENT CODE</h2>
+        <h2>Enter Your Department Code</h2>
 
         <p>
-            Enter your department code to continue.
+            Please enter your authorized department code to access the voting section.
         </p>
 
         <input
@@ -719,7 +712,7 @@ nav a:hover {
         >
 
         <button class="code-button" onclick="verifyCode()">
-            CHOOSE YOUR EMPLOYEE →
+            Continue to Voting →
         </button>
 
         <div class="code-error" id="codeError">
@@ -734,6 +727,11 @@ nav a:hover {
             <h2>Choose Your Employee of the Quarter</h2>
             <p>Please review your selection before confirming your vote.</p>
             <div class="department-badge" id="departmentBadge"></div>
+
+            <!-- View Evaluation Criteria – only visible after valid code -->
+            <button class="view-criteria-inline" onclick="openCriteriaPopup()">
+                View Evaluation Criteria
+            </button>
         </div>
 
         <div class="candidates">
@@ -745,15 +743,12 @@ nav a:hover {
         <div class="success-icon">✓</div>
         <h2>Vote Submitted Successfully</h2>
         <p>Thank you for participating in the Employee of the Quarter voting.</p>
-        <button class="view-criteria-btn" onclick="openCriteriaPopup()">View Evaluation Criteria</button>
+        <button class="view-criteria-inline" onclick="openCriteriaPopup()">
+            View Evaluation Criteria
+        </button>
     </section>
 
 </main>
-
-<!-- Bottom “View Evaluation Criteria” button (always visible) -->
-<div class="view-criteria-wrapper">
-    <button class="view-criteria-btn" onclick="openCriteriaPopup()">View Evaluation Criteria</button>
-</div>
 
 <!-- Confirmation bar -->
 <div class="confirmation-bar" id="confirmationBar">
@@ -866,7 +861,7 @@ const departmentEmployees = {
 
 let currentDepartment = "";
 let selectedCandidate = "";
-let pendingVotingReveal = false; // true when popup is shown after valid code
+let pendingVotingReveal = false;
 
 /* Fade-in on load */
 const fadeElements = document.querySelectorAll(".fade-in");
@@ -962,7 +957,7 @@ function verifyCode() {
 
 function openCriteriaPopup() {
     document.getElementById("criteriaOverlay").classList.add("show");
-    document.body.style.overflow = "hidden"; // prevent background scroll
+    document.body.style.overflow = "hidden";
 }
 
 function closeCriteriaPopup() {
@@ -1051,13 +1046,10 @@ document.getElementById("departmentCode").addEventListener("keydown", function(e
     }
 });
 
-/* Close popup when clicking the dark overlay (optional convenience) */
+/* Close popup when clicking the dark overlay (only if not the first-time flow) */
 document.getElementById("criteriaOverlay").addEventListener("click", function(e) {
-    if (e.target === this) {
-        // Only close if it was opened manually (not the first-time flow)
-        if (!pendingVotingReveal) {
-            closeCriteriaPopup();
-        }
+    if (e.target === this && !pendingVotingReveal) {
+        closeCriteriaPopup();
     }
 });
 </script>
