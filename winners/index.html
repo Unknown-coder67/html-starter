@@ -176,9 +176,21 @@ nav a:hover::after {
 
 .winners-grid {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.dim-group {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 28px 22px;
+    opacity: 0.22;
+    transition: opacity 0.4s ease;
+}
+
+.dim-group.is-active-block {
+    opacity: 1 !important;
 }
 
 .winner-card {
@@ -274,19 +286,12 @@ nav a:hover::after {
 }
 
 /* Dimmed effect (same idea as .celebrating-block on the main page) */
-.stay-tuned-block,
-.quarter-block {
+.stay-tuned-block {
     opacity: 0.22;
     transition: opacity 0.4s ease;
 }
 
-.stay-tuned-block.is-dimmed,
-.quarter-block.is-dimmed {
-    opacity: 0.22 !important;
-}
-
-.stay-tuned-block.is-active-block,
-.quarter-block.is-active-block {
+.stay-tuned-block.is-active-block {
     opacity: 1 !important;
 }
 
@@ -327,13 +332,13 @@ footer {
 }
 
 @media (max-width: 1200px) {
-    .winners-grid {
+    .dim-group {
         grid-template-columns: repeat(4, 1fr);
     }
 }
 
 @media (max-width: 900px) {
-    .winners-grid {
+    .dim-group {
         grid-template-columns: repeat(3, 1fr);
     }
     .quarter-label,
@@ -385,9 +390,13 @@ footer {
         display: none;
     }
 
-    .winners-grid {
+    .dim-group {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px 14px;
+    }
+
+    .winners-grid {
+        gap: 20px;
     }
 
     .stay-tuned-track {
@@ -417,7 +426,7 @@ footer {
 
 @media (prefers-reduced-motion: reduce) {
     .stay-tuned-block,
-    .quarter-block {
+    .dim-group {
         opacity: 1 !important;
         transition: none;
     }
@@ -475,140 +484,150 @@ footer {
 
     <div class="winners-grid">
 
-        <div class="winner-card">
-            <div class="winner-card-image">
-                <img src="/Abdulaziz%20Al-Andijani.jpg" alt="Abdulaziz Al-Andijani">
+        <!-- Column / Group 1 (first 5) -->
+        <div class="dim-group">
+            <div class="winner-card">
+                <div class="winner-card-image">
+                    <img src="/Abdulaziz%20Al-Andijani.jpg" alt="Abdulaziz Al-Andijani">
+                </div>
+                <h3>Abdulaziz Al-Andijani</h3>
+                <div class="department">Duty Manager</div>
+                <p>Exceptional patient care and clinical excellence.</p>
             </div>
-            <h3>Abdulaziz Al-Andijani</h3>
-            <div class="department">Duty Manager</div>
-            <p>Exceptional patient care and clinical excellence.</p>
+
+            <div class="winner-card">
+                <div class="winner-card-image">
+                    <img src="/Sohaib%20Abdulrheem.jpg" alt="Sohaib Abdulrheem">
+                </div>
+                <h3>Sohaib Abdulrheem</h3>
+                <div class="department">RCM</div>
+                <p>Outstanding dedication and teamwork.</p>
+            </div>
+
+            <div class="winner-card">
+                <div class="winner-card-image">
+                    <img src="/Mohammed%20Rizk.jpg" alt="Mohammed Rizk">
+                </div>
+                <h3>Mohammed Rizk</h3>
+                <div class="department">QPS Specialist</div>
+                <p>Compassionate support that made a difference.</p>
+            </div>
+
+            <div class="winner-card">
+                <div class="winner-card-image">
+                    <img src="/Abdulilah%20Al-Zahrani.jpg" alt="Abdulilah Al-Zahrani">
+                </div>
+                <h3>Abdulilah Al-Zahrani</h3>
+                <div class="department">RT</div>
+                <p>Going above and beyond every single day.</p>
+            </div>
+
+            <div class="winner-card">
+                <div class="winner-card-image">
+                    <img src="/Fahad%20Al-Nufaiai.jpg" alt="Fahad Al-Nufaiai">
+                </div>
+                <h3>Fahad Al-Nufaiai</h3>
+                <div class="department">Radiology Supervisor</div>
+                <p>Excellence in clinical practice and mentoring.</p>
+            </div>
         </div>
 
-        <div class="winner-card">
-            <div class="winner-card-image">
-                <img src="/Sohaib%20Abdulrheem.jpg" alt="Sohaib Abdulrheem">
+        <!-- Column / Group 2 (next 5) -->
+        <div class="dim-group">
+            <div class="winner-card">
+                <div class="winner-card-image">
+                    <img src="/Mohammed%20Ghonim.jpg" alt="Mohammed Ghonim">
+                </div>
+                <h3>Mohammed Ghonim</h3>
+                <div class="department">ICU HN</div>
+                <p>Reliable, dedicated and always ready to help.</p>
             </div>
-            <h3>Sohaib Abdulrheem</h3>
-            <div class="department">RCM</div>
-            <p>Outstanding dedication and teamwork.</p>
+
+            <div class="winner-card">
+                <div class="winner-card-image">
+                    <img src="/Rehab%20Hamed.jpg" alt="Rehab Hamed">
+                </div>
+                <h3>Rehab Hamed</h3>
+                <div class="department">EDU</div>
+                <p>Creating a positive environment for everyone.</p>
+            </div>
+
+            <div class="winner-card">
+                <div class="winner-card-image">
+                    <img src="/Negm%20Eid.jpg" alt="Negm Eid">
+                </div>
+                <h3>Negm Eid</h3>
+                <div class="department">Emergency Department</div>
+                <p>A true role model of care and dedication.</p>
+            </div>
+
+            <div class="winner-card">
+                <div class="winner-card-image">
+                    <img src="/m-employee-placeholder.jpg" alt="Bandar Al-huthali">
+                </div>
+                <h3>Bandar Al-huthali</h3>
+                <div class="department">Driver</div>
+                <p>Innovative solutions that improved care.</p>
+            </div>
+
+            <div class="winner-card">
+                <div class="winner-card-image">
+                    <img src="/m-employee-placeholder.jpg" alt="Gazi Alabashi">
+                </div>
+                <h3>Gazi Alabashi</h3>
+                <div class="department">Security</div>
+                <p>Warmth, professionalism and true dedication.</p>
+            </div>
         </div>
 
-        <div class="winner-card">
-            <div class="winner-card-image">
-                <img src="/Mohammed%20Rizk.jpg" alt="Mohammed Rizk">
+        <!-- Column / Group 3 (last 5) -->
+        <div class="dim-group">
+            <div class="winner-card">
+                <div class="winner-card-image">
+                    <img src="/m-employee-placeholder.jpg" alt="Ahmed Al-Dajani">
+                </div>
+                <h3>Ahmed Al-Dajani</h3>
+                <div class="department">Receptionist</div>
+                <p>Consistent excellence and quiet leadership.</p>
             </div>
-            <h3>Mohammed Rizk</h3>
-            <div class="department">QPS Specialist</div>
-            <p>Compassionate support that made a difference.</p>
+
+            <div class="winner-card">
+                <div class="winner-card-image">
+                    <img src="/m-employee-placeholder.jpg" alt="Abdullah Y. Abdullah">
+                </div>
+                <h3>Abdullah Y. Abdullah</h3>
+                <div class="department">Pharmacist Supervisor</div>
+                <p>Making every patient feel seen and cared for.</p>
+            </div>
+
+            <div class="winner-card">
+                <div class="winner-card-image">
+                    <img src="/m-employee-placeholder.jpg" alt="Abdullah Al-Hazmi">
+                </div>
+                <h3>Abdullah Al-Hazmi</h3>
+                <div class="department">Lab</div>
+                <p>Teamwork and commitment that lifted everyone.</p>
+            </div>
+
+            <div class="winner-card">
+                <div class="winner-card-image">
+                    <img src="/f-employee-placeholder.jpg" alt="Shrooq Al-Obaidi">
+                </div>
+                <h3>Shrooq Al-Obaidi</h3>
+                <div class="department">Supply Chain</div>
+                <p>Compassion in action, every single shift.</p>
+            </div>
+
+            <div class="winner-card">
+                <div class="winner-card-image">
+                    <img src="/f-employee-placeholder.jpg" alt="Dina Al-Rashidi">
+                </div>
+                <h3>Dina Al-Rashidi</h3>
+                <div class="department">Social Worker</div>
+                <p>Reliability and excellence that set the standard.</p>
+            </div>
         </div>
 
-        <div class="winner-card">
-            <div class="winner-card-image">
-                <img src="/Abdulilah%20Al-Zahrani.jpg" alt="Abdulilah Al-Zahrani">
-            </div>
-            <h3>Abdulilah Al-Zahrani</h3>
-            <div class="department">RT</div>
-            <p>Going above and beyond every single day.</p>
-        </div>
-
-        <div class="winner-card">
-            <div class="winner-card-image">
-                <img src="/Fahad%20Al-Nufaiai.jpg" alt="Fahad Al-Nufaiai">
-            </div>
-            <h3>Fahad Al-Nufaiai</h3>
-            <div class="department">Radiology Supervisor</div>
-            <p>Excellence in clinical practice and mentoring.</p>
-        </div>
-
-        <div class="winner-card">
-            <div class="winner-card-image">
-                <img src="/Mohammed%20Ghonim.jpg" alt="Mohammed Ghonim">
-            </div>
-            <h3>Mohammed Ghonim</h3>
-            <div class="department">ICU HN</div>
-            <p>Reliable, dedicated and always ready to help.</p>
-        </div>
-
-        <div class="winner-card">
-            <div class="winner-card-image">
-                <img src="/Rehab%20Hamed.jpg" alt="Rehab Hamed">
-            </div>
-            <h3>Rehab Hamed</h3>
-            <div class="department">EDU</div>
-            <p>Creating a positive environment for everyone.</p>
-        </div>
-
-        <div class="winner-card">
-            <div class="winner-card-image">
-                <img src="/Negm%20Eid.jpg" alt="Negm Eid">
-            </div>
-            <h3>Negm Eid</h3>
-            <div class="department">Emergency Department</div>
-            <p>A true role model of care and dedication.</p>
-        </div>
-        
-        <div class="winner-card">
-            <div class="winner-card-image">
-                <img src="/m-employee-placeholder.jpg" alt="Bandar Al-huthali">
-            </div>
-            <h3>Bandar Al-huthali</h3>
-            <div class="department">Driver</div>
-            <p>Innovative solutions that improved care.</p>
-        </div>
-
-        <div class="winner-card">
-            <div class="winner-card-image">
-                <img src="/m-employee-placeholder.jpg" alt="Gazi Alabashi">
-            </div>
-            <h3>Gazi Alabashi</h3>
-            <div class="department">Security</div>
-            <p>Warmth, professionalism and true dedication.</p>
-        </div>
-
-        <div class="winner-card">
-            <div class="winner-card-image">
-                <img src="/m-employee-placeholder.jpg" alt="Ahmed Al-Dajani">
-            </div>
-            <h3>Ahmed Al-Dajani</h3>
-            <div class="department">Receptionist</div>
-            <p>Consistent excellence and quiet leadership.</p>
-        </div>
-
-        <div class="winner-card">
-            <div class="winner-card-image">
-                <img src="/m-employee-placeholder.jpg" alt="Abdullah Y. Abdullah">
-            </div>
-            <h3>Abdullah Y. Abdullah</h3>
-            <div class="department">Pharmacist Supervisor</div>
-            <p>Making every patient feel seen and cared for.</p>
-        </div>
-
-        <div class="winner-card">
-            <div class="winner-card-image">
-                <img src="/m-employee-placeholder.jpg" alt="Abdullah Al-Hazmi">
-            </div>
-            <h3>Abdullah Al-Hazmi</h3>
-            <div class="department">Lab</div>
-            <p>Teamwork and commitment that lifted everyone.</p>
-        </div>
-
-        <div class="winner-card">
-            <div class="winner-card-image">
-                <img src="/f-employee-placeholder.jpg" alt="Shrooq Al-Obaidi">
-            </div>
-            <h3>Shrooq Al-Obaidi</h3>
-            <div class="department">Supply Chain</div>
-            <p>Compassion in action, every single shift.</p>
-        </div>
-
-        <div class="winner-card">
-            <div class="winner-card-image">
-                <img src="/f-employee-placeholder.jpg" alt="Dina Al-Rashidi">
-            </div>
-            <h3>Dina Al-Rashidi</h3>
-            <div class="department">Social Worker</div>
-            <p>Reliability and excellence that set the standard.</p>
-        </div>
     </div>
 </div>
 
@@ -625,43 +644,28 @@ footer {
 </footer>
 
 <script>
-/* Dimmed effect – only ONE block at full opacity at a time
-   (same logic as .celebrating-block on the main page) */
-const dimBlocks = document.querySelectorAll(".stay-tuned-block, .quarter-block");
+/* Progressive dimmed effect
+   - Everything starts dimmed (opacity 0.22)
+   - A block becomes fully visible when its center reaches the viewport center
+   - Once undimmed it STAYS undimmed (never re-dims when scrolling past)
+*/
+const dimBlocks = document.querySelectorAll(".stay-tuned-block, .dim-group");
 
-function setActiveBlock(activeEl) {
-    dimBlocks.forEach((block) => {
-        if (block === activeEl) {
-            block.classList.add("is-active-block");
-            block.classList.remove("is-dimmed");
-        } else {
-            block.classList.remove("is-active-block");
-            block.classList.add("is-dimmed");
-        }
-    });
-}
-
-/** Pick the single block whose center is closest to the viewport center */
 function updateDimFocus() {
     const viewportCenter = window.innerHeight / 2;
-    let closestEl = null;
-    let closestDist = Infinity;
 
     dimBlocks.forEach((block) => {
+        /* Already activated – leave it alone */
+        if (block.classList.contains("is-active-block")) return;
+
         const rect = block.getBoundingClientRect();
-        /* Skip blocks that are fully off-screen */
-        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
         const blockCenter = rect.top + rect.height / 2;
-        const dist = Math.abs(blockCenter - viewportCenter);
-        if (dist < closestDist) {
-            closestDist = dist;
-            closestEl = block;
+
+        /* Undim only when the block's center has reached or passed the viewport center */
+        if (blockCenter <= viewportCenter) {
+            block.classList.add("is-active-block");
         }
     });
-
-    if (closestEl) {
-        setActiveBlock(closestEl);
-    }
 }
 
 window.addEventListener("scroll", updateDimFocus, { passive: true });
