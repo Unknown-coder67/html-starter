@@ -122,8 +122,8 @@ nav a:hover::after {
 .main-content {
     width: 92%;
     max-width: 1400px;
-    margin: 0 auto 100px;
-    padding-top: 60px;
+    margin: 0 auto 40px;
+    padding-top: 90px;
 }
 
 .quarter-block {
@@ -229,7 +229,8 @@ nav a:hover::after {
 .stay-tuned-block {
     display: flex;
     gap: 0;
-    margin-bottom: 64px;
+    margin-bottom: 80px;
+    margin-top: 20px;
     position: relative;
     align-items: flex-start;
 }
@@ -281,6 +282,24 @@ nav a:hover::after {
 .fade-in.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+.story-continues {
+    text-align: center;
+    padding: 40px 5% 50px;
+    background: #02102B;
+}
+
+.story-continues .label {
+    color: #888888;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.story-continues .label:last-child {
+    margin-bottom: 0;
 }
 
 footer {
@@ -574,28 +593,26 @@ footer {
             <div class="department">Social Worker</div>
             <p>Reliability and excellence that set the standard.</p>
         </div>
-
-        <div class="winner-card">
-            <div class="winner-card-image">
-                <img src="/Negm%20Eid.jpg" alt="Negm Eid">
-            </div>
-            <h3>Negm Eid</h3>
-            <div class="department">Emergency Department</div>
-            <p>A true role model of care and dedication.</p>
-        </div>
     </div>
 </div>
 
 </main>
+
+<div class="story-continues">
+    <p class="label">THE STORY CONTINUES</p>
+    <p class="label">Every quarter, another name joins the hall.</p>
+</div>
 
 <footer>
     © 2026 Care Medical Jiwar
 </footer>
 
 <script>
-const fadeElements = document.querySelectorAll(".fade-in");
+const stayTunedBlock = document.querySelector(".stay-tuned-block");
+const quarterBlock = document.querySelector(".quarter-block");
 
-const fadeObserver = new IntersectionObserver((entries) => {
+// Q4 stay-tuned: fade in/out with lower threshold (original behavior)
+const stayTunedObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
             entry.target.classList.add("visible");
@@ -608,15 +625,35 @@ const fadeObserver = new IntersectionObserver((entries) => {
     rootMargin: "-15% 0px -15% 0px"
 });
 
-fadeElements.forEach((el) => fadeObserver.observe(el));
+if (stayTunedBlock) {
+    stayTunedObserver.observe(stayTunedBlock);
+}
 
-window.addEventListener("load", () => {
-    document.querySelectorAll(".fade-in").forEach((el, index) => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.85) {
-            setTimeout(() => el.classList.add("visible"), 40 + index * 60);
+// Q3 winners: fade in only once when ~70% is in viewport
+const quarterObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            // Unobserve so it only fades in once and never fades out
+            quarterObserver.unobserve(entry.target);
         }
     });
+}, {
+    threshold: 0.7
+});
+
+if (quarterBlock) {
+    quarterObserver.observe(quarterBlock);
+}
+
+// On load: only auto-show the stay-tuned block if already in view; never auto-show Q3
+window.addEventListener("load", () => {
+    if (stayTunedBlock) {
+        const rect = stayTunedBlock.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.85) {
+            setTimeout(() => stayTunedBlock.classList.add("visible"), 40);
+        }
+    }
 });
 </script>
 
