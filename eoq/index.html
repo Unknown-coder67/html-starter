@@ -113,16 +113,27 @@ nav a:hover {
     padding: 40px;
     text-align: center;
     box-shadow: 0 12px 35px rgba(23, 50, 77, 0.12);
-    transition: box-shadow 0.4s ease;
+    transition: opacity 0.6s ease, transform 0.6s ease, margin 0.6s ease, padding 0.6s ease, height 0.6s ease;
 }
 
 .code-section.expanded {
     box-shadow: none;
 }
 
+/* Fade-out after GOT IT */
+.code-section.hidden {
+    opacity: 0;
+    transform: translateY(-30px);
+    pointer-events: none;
+    height: 0;
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+}
+
 .code-intro {
     margin-bottom: 28px;
-    text-align: left;          /* left-align the intro block */
 }
 
 .code-intro h1 {
@@ -131,15 +142,14 @@ nav a:hover {
     font-weight: 750;
     line-height: 1.25;
     margin-bottom: 10px;
-    text-align: center;        /* keep title centered */
 }
 
 .code-intro .subtitle {
     color: #557083;
-    font-size: 1rem;
+    font-size: 0.92rem;          /* slightly smaller */
     font-weight: 500;
     line-height: 1.45;
-    text-align: left;          /* left-aligned as requested */
+    text-align: center;          /* centered again */
 }
 
 .code-icon {
@@ -159,14 +169,9 @@ nav a:hover {
     display: block;
 }
 
-.code-section h2 {
-    color: #17324d;
-    font-size: 1.7rem;
-    margin-bottom: 8px;
-}
-
 .code-section > p {
     color: #557083;
+    font-size: 0.92rem;          /* slightly smaller */
     margin-bottom: 25px;
 }
 
@@ -250,8 +255,9 @@ nav a:hover {
 }
 
 .department-badge {
-    display: inline-block;
-    margin-top: 12px;
+    display: block;               /* forces next element under it */
+    width: fit-content;
+    margin: 12px auto 0;
     padding: 6px 14px;
     border-radius: 20px;
     background: #e8f6f8;
@@ -262,8 +268,9 @@ nav a:hover {
 
 /* View Evaluation Criteria – under the badge */
 .view-criteria-inline {
-    display: inline-block;
-    margin-top: 10px;
+    display: block;               /* sits under the badge */
+    width: fit-content;
+    margin: 10px auto 0;
     padding: 6px 14px;
     border-radius: 20px;
     background: none;
@@ -307,10 +314,9 @@ nav a:hover {
     box-shadow: 0 8px 22px rgba(215, 154, 30, 0.15);
 }
 
-/* Smaller image → shorter cards */
 .candidate-image {
     width: 100%;
-    height: 150px;                 /* was 230px */
+    height: 150px;
     margin-bottom: 12px;
     border-radius: 12px;
     overflow: hidden;
@@ -462,11 +468,7 @@ nav a:hover {
 
 .success-section p {
     color: #557083;
-    margin-bottom: 24px;
-}
-
-.success-section .view-criteria-inline {
-    margin-top: 4px;
+    margin-bottom: 0;
 }
 
 /* ===== EVALUATION CRITERIA POPUP ===== */
@@ -514,7 +516,6 @@ nav a:hover {
     margin: 0;
 }
 
-/* Scrollable body – button is now INSIDE this area at the very bottom */
 .criteria-body {
     padding: 20px 28px 32px;
     overflow-y: auto;
@@ -546,7 +547,6 @@ nav a:hover {
     font-weight: 500;
 }
 
-/* Button only appears after scrolling to the bottom */
 .criteria-body .got-it-wrapper {
     margin-top: 36px;
     padding-top: 24px;
@@ -674,6 +674,10 @@ nav a:hover {
         transform: none;
     }
 
+    .code-section.hidden {
+        transition: none;
+    }
+
     nav a::after {
         transition: none;
     }
@@ -737,6 +741,7 @@ nav a:hover {
             <p>Please review your selection before confirming your vote.</p>
             <div class="department-badge" id="departmentBadge"></div>
 
+            <!-- Now forced under the badge -->
             <button class="view-criteria-inline" onclick="openCriteriaPopup()">
                 View Evaluation Criteria
             </button>
@@ -751,9 +756,6 @@ nav a:hover {
         <div class="success-icon">✓</div>
         <h2>Vote Submitted Successfully</h2>
         <p>Thank you for participating in the Employee of the Quarter voting.</p>
-        <button class="view-criteria-inline" onclick="openCriteriaPopup()">
-            View Evaluation Criteria
-        </button>
     </section>
 
 </main>
@@ -847,7 +849,6 @@ nav a:hover {
                 <li>Maintaining the confidentiality and security of patient and hospital information.</li>
             </ol>
 
-            <!-- Button only visible after scrolling to the bottom -->
             <div class="got-it-wrapper">
                 <button class="got-it-btn" onclick="closeCriteriaAndContinue()">GOT IT – LET’S BEGIN</button>
             </div>
@@ -980,6 +981,11 @@ function closeCriteriaAndContinue() {
 
     if (pendingVotingReveal) {
         pendingVotingReveal = false;
+
+        // Fade out the entire code section
+        const codeSection = document.getElementById("codeSection");
+        codeSection.classList.add("hidden");
+
         const votingSection = document.getElementById("votingSection");
         votingSection.classList.add("visible");
 
@@ -1037,9 +1043,13 @@ function confirmVote() {
 
     const votingSection = document.getElementById("votingSection");
     const successSection = document.getElementById("successSection");
+    const codeSection = document.getElementById("codeSection");
 
     votingSection.classList.remove("visible");
     document.getElementById("confirmationBar").classList.remove("show");
+
+    // Also hide the code section completely on success
+    codeSection.classList.add("hidden");
 
     setTimeout(() => {
         votingSection.style.display = "none";
