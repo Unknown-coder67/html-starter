@@ -339,9 +339,8 @@ header {
 /* ===== Who is next? section ===== */
 .next-section {
     width: 100%;
-    background-color: rgb(244, 243, 240);
-    min-height: 680px;
-    padding: 92px 0;
+    background-color: #FFFFFF;
+    padding: 56px 0 48px;
     display: grid;
     grid-template-columns: 1fr 2fr;
     column-gap: 80px;
@@ -364,8 +363,8 @@ header {
     color: #17171D;
     margin: 0;
     display: flex;
-    align-items: flex-start;
-    gap: 0.15em;
+    align-items: stretch;
+    gap: 0.12em;
 }
 
 .giant-title .lines {
@@ -373,15 +372,26 @@ header {
     flex-direction: column;
 }
 
+.giant-title .lines span {
+    display: block;
+}
+
+.giant-title .lines .center-word {
+    text-align: center;
+}
+
 .giant-title .qmark {
-    font-size: 1.15em;
-    line-height: 0.95;
-    align-self: stretch;
-    display: flex;
-    align-items: center;
-    height: 3.15em; /* covers the three lines */
+    font-size: 3.25em;
+    line-height: 0.92;
     font-weight: 750;
     color: #17171D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    /* Stretch to match the full height of the three stacked lines */
+    height: 3.15em;
+    margin-top: -0.05em;
 }
 
 .next-right {
@@ -390,70 +400,36 @@ header {
     flex-direction: column;
 }
 
-.accordion-item {
-    border-top: 1px solid rgb(229, 231, 235);
-    border-bottom: 1px solid rgb(229, 231, 235);
-}
-
-.accordion-item + .accordion-item {
-    border-top: none; /* shared line between them */
-}
-
-.accordion-header {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
+.focus-item {
+    border-top: 2px solid #b0b8c0;
+    border-bottom: 2px solid #b0b8c0;
     padding: 28px 0;
-    background: none;
-    border: none;
-    cursor: pointer;
-    text-align: left;
-    font-family: inherit;
+    opacity: 0.32;
+    transition: opacity 0.35s ease;
+}
+
+.focus-item + .focus-item {
+    border-top: none; /* shared thicker line between them */
+}
+
+.focus-item.is-near {
+    opacity: 1;
+}
+
+.focus-title {
     font-size: clamp(1.35rem, 2.5vw, 1.75rem);
     font-weight: 750;
     color: #17171D;
     line-height: 1.3;
-    transition: color 0.2s ease;
+    margin: 0 0 14px;
 }
 
-.accordion-header:hover {
-    color: #00B7E2;
-}
-
-.accordion-icon {
-    flex-shrink: 0;
-    width: 22px;
-    height: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.35rem;
-    font-weight: 400;
-    line-height: 1;
-    color: #17171D;
-    transition: transform 0.2s ease;
-}
-
-.accordion-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.35s ease, padding 0.35s ease;
-    padding: 0;
-}
-
-.accordion-item.is-open .accordion-content {
-    max-height: 280px;
-    padding-bottom: 28px;
-}
-
-.accordion-content p {
+.focus-body p {
     color: #557083;
     font-size: 1.05rem;
     line-height: 1.7;
     font-weight: 500;
-    margin: 0 0 20px;
+    margin: 0 0 18px;
     max-width: 640px;
 }
 
@@ -651,7 +627,7 @@ footer {
     }
     .next-section {
         column-gap: 48px;
-        padding: 70px 0;
+        padding: 48px 0 40px;
     }
     .next-left {
         padding-left: 24px;
@@ -728,9 +704,8 @@ footer {
 
     .next-section {
         grid-template-columns: 1fr;
-        row-gap: 40px;
-        padding: 60px 24px;
-        min-height: auto;
+        row-gap: 32px;
+        padding: 44px 24px 36px;
     }
     .next-left {
         padding-left: 0;
@@ -792,10 +767,12 @@ footer {
         scroll-margin-top: 140px;
     }
     .next-section {
-        padding: 50px 16px;
+        padding: 40px 16px 32px;
     }
-    .accordion-header {
+    .focus-item {
         padding: 22px 0;
+    }
+    .focus-title {
         font-size: 1.25rem;
     }
     .jiwar-section {
@@ -914,29 +891,23 @@ footer {
     <div class="next-left">
         <h2 class="giant-title">
             <span class="lines">
-                Who<br>
-                is<br>
-                next
+                <span>Who</span>
+                <span class="center-word">is</span>
+                <span>next</span>
             </span>
             <span class="qmark">?</span>
         </h2>
     </div>
     <div class="next-right">
-        <div class="accordion-item">
-            <button class="accordion-header" aria-expanded="false">
-                <span>Employee of the Quarter</span>
-                <span class="accordion-icon">+</span>
-            </button>
-            <div class="accordion-content">
+        <div class="focus-item">
+            <h3 class="focus-title">Employee of the Quarter</h3>
+            <div class="focus-body">
                 <p>Every quarter, we celebrate one star from every department, recognizing their dedication, teamwork, and the difference they make every day.</p>
             </div>
         </div>
-        <div class="accordion-item">
-            <button class="accordion-header" aria-expanded="false">
-                <span>Our people. Our pride</span>
-                <span class="accordion-icon">+</span>
-            </button>
-            <div class="accordion-content">
+        <div class="focus-item">
+            <h3 class="focus-title">Our people. Our pride</h3>
+            <div class="focus-body">
                 <p>Meet the colleagues whose dedication, care and excellence have already been recognized. Their stories continue to inspire us all.</p>
                 <a href="winners/index.html" class="winners-btn">Winners <span class="arrow">→</span></a>
             </div>
@@ -1047,25 +1018,29 @@ celebratingLinks.forEach((link) => {
     });
 });
 
-/* Accordion for Who is next? */
-document.querySelectorAll(".accordion-header").forEach((btn) => {
-    btn.addEventListener("click", () => {
-        const item = btn.closest(".accordion-item");
-        const isOpen = item.classList.contains("is-open");
-        // Close all
-        document.querySelectorAll(".accordion-item").forEach((el) => {
-            el.classList.remove("is-open");
-            el.querySelector(".accordion-header").setAttribute("aria-expanded", "false");
-            el.querySelector(".accordion-icon").textContent = "+";
+/* Focus items – undim when near viewport center (±400px) */
+(function () {
+    const focusItems = document.querySelectorAll(".focus-item");
+    const RANGE = 400; /* pixels from viewport center */
+
+    function updateFocusItems() {
+        const viewportCenter = window.innerHeight / 2;
+        focusItems.forEach((item) => {
+            const rect = item.getBoundingClientRect();
+            const itemCenter = rect.top + rect.height / 2;
+            const dist = Math.abs(itemCenter - viewportCenter);
+            if (dist <= RANGE) {
+                item.classList.add("is-near");
+            } else {
+                item.classList.remove("is-near");
+            }
         });
-        // Open clicked if it was closed
-        if (!isOpen) {
-            item.classList.add("is-open");
-            btn.setAttribute("aria-expanded", "true");
-            item.querySelector(".accordion-icon").textContent = "−";
-        }
-    });
-});
+    }
+
+    window.addEventListener("scroll", updateFocusItems, { passive: true });
+    window.addEventListener("resize", updateFocusItems);
+    updateFocusItems();
+})();
 
 /* localStorage demos: wall notes */
 (function () {
