@@ -273,15 +273,21 @@ nav a:hover::after {
     }
 }
 
-.fade-in {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 1.1s ease, transform 1.1s ease;
+/* Dimmed effect (same idea as .celebrating-block on the main page) */
+.stay-tuned-block,
+.quarter-block {
+    opacity: 0.22;
+    transition: opacity 0.4s ease;
 }
 
-.fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
+.stay-tuned-block.is-dimmed,
+.quarter-block.is-dimmed {
+    opacity: 0.22 !important;
+}
+
+.stay-tuned-block.is-active-block,
+.quarter-block.is-active-block {
+    opacity: 1 !important;
 }
 
 .story-continues {
@@ -410,9 +416,9 @@ footer {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .fade-in {
-        opacity: 1;
-        transform: none;
+    .stay-tuned-block,
+    .quarter-block {
+        opacity: 1 !important;
         transition: none;
     }
     .stay-tuned-text {
@@ -450,7 +456,7 @@ footer {
 
 <main class="main-content">
 
-    <div class="stay-tuned-block fade-in">
+    <div class="stay-tuned-block">
         <div class="quarter-label">
             <h2>Q4 2026</h2>
         </div>
@@ -460,7 +466,7 @@ footer {
         </div>
     </div>
 
-<div class="quarter-block fade-in">
+<div class="quarter-block">
     <div class="quarter-label">
         <h2>Q3 2026</h2>
     </div>
@@ -619,55 +625,49 @@ footer {
 </footer>
 
 <script>
-const stayTunedBlock = document.querySelector(".stay-tuned-block");
-const quarterBlock = document.querySelector(".quarter-block");
+/* Dimmed effect – only ONE block at full opacity at a time
+   (same logic as .celebrating-block on the main page) */
+const dimBlocks = document.querySelectorAll(".stay-tuned-block, .quarter-block");
 
-// Shared options — low threshold so tall sections (especially on mobile) still trigger
-const observerOptions = {
-    threshold: 0.15,
-    rootMargin: "0px 0px -10% 0px"
-};
-
-// Q4 stay-tuned: fade in/out
-const stayTunedObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
+function setActiveBlock(activeEl) {
+    dimBlocks.forEach((block) => {
+        if (block === activeEl) {
+            block.classList.add("is-active-block");
+            block.classList.remove("is-dimmed");
         } else {
-            entry.target.classList.remove("visible");
+            block.classList.remove("is-active-block");
+            block.classList.add("is-dimmed");
         }
     });
-}, observerOptions);
-
-if (stayTunedBlock) {
-    stayTunedObserver.observe(stayTunedBlock);
 }
 
-// Q3 winners: fade in only once (never fades out)
-const quarterObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            quarterObserver.unobserve(entry.target);
+/** Pick the single block whose center is closest to the viewport center */
+function updateDimFocus() {
+    const viewportCenter = window.innerHeight / 2;
+    let closestEl = null;
+    let closestDist = Infinity;
+
+    dimBlocks.forEach((block) => {
+        const rect = block.getBoundingClientRect();
+        /* Skip blocks that are fully off-screen */
+        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+        const blockCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(blockCenter - viewportCenter);
+        if (dist < closestDist) {
+            closestDist = dist;
+            closestEl = block;
         }
     });
-}, observerOptions);
 
-if (quarterBlock) {
-    quarterObserver.observe(quarterBlock);
+    if (closestEl) {
+        setActiveBlock(closestEl);
+    }
 }
 
-// On load: show any fade-in block that is already near the viewport
-// (important on iOS where IntersectionObserver can be delayed)
-window.addEventListener("load", () => {
-    document.querySelectorAll(".fade-in").forEach((el, index) => {
-        const rect = el.getBoundingClientRect();
-        const inView = rect.top < window.innerHeight * 0.9 && rect.bottom > 0;
-        if (inView) {
-            setTimeout(() => el.classList.add("visible"), 40 + index * 80);
-        }
-    });
-});
+window.addEventListener("scroll", updateDimFocus, { passive: true });
+window.addEventListener("resize", updateDimFocus);
+window.addEventListener("load", updateDimFocus);
+updateDimFocus();
 </script>
 
 </body>
