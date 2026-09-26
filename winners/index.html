@@ -290,6 +290,16 @@ nav a:hover::after {
     background: #02102B;
 }
 
+.story-continues .logo-icon {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    margin-bottom: 16px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .story-continues .label {
     color: #888888;
     font-size: 0.95rem;
@@ -599,6 +609,7 @@ footer {
 </main>
 
 <div class="story-continues">
+    <img src="/winners-logo.jpg" alt="" class="logo-icon">
     <p class="label">THE STORY CONTINUES</p>
     <p class="label">Every quarter, another name joins the hall.</p>
 </div>
@@ -611,7 +622,13 @@ footer {
 const stayTunedBlock = document.querySelector(".stay-tuned-block");
 const quarterBlock = document.querySelector(".quarter-block");
 
-// Q4 stay-tuned: fade in/out with lower threshold (original behavior)
+// Shared options — low threshold so tall sections (especially on mobile) still trigger
+const observerOptions = {
+    threshold: 0.15,
+    rootMargin: "0px 0px -10% 0px"
+};
+
+// Q4 stay-tuned: fade in/out
 const stayTunedObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -620,40 +637,36 @@ const stayTunedObserver = new IntersectionObserver((entries) => {
             entry.target.classList.remove("visible");
         }
     });
-}, {
-    threshold: 0.15,
-    rootMargin: "-15% 0px -15% 0px"
-});
+}, observerOptions);
 
 if (stayTunedBlock) {
     stayTunedObserver.observe(stayTunedBlock);
 }
 
-// Q3 winners: fade in/out when ~70% is in viewport
+// Q3 winners: fade in only once (never fades out)
 const quarterObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
             entry.target.classList.add("visible");
-        } else {
-            entry.target.classList.remove("visible");
+            quarterObserver.unobserve(entry.target);
         }
     });
-}, {
-    threshold: 0.7
-});
+}, observerOptions);
 
 if (quarterBlock) {
     quarterObserver.observe(quarterBlock);
 }
 
-// On load: only auto-show the stay-tuned block if already in view; never auto-show Q3
+// On load: show any fade-in block that is already near the viewport
+// (important on iOS where IntersectionObserver can be delayed)
 window.addEventListener("load", () => {
-    if (stayTunedBlock) {
-        const rect = stayTunedBlock.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.85) {
-            setTimeout(() => stayTunedBlock.classList.add("visible"), 40);
+    document.querySelectorAll(".fade-in").forEach((el, index) => {
+        const rect = el.getBoundingClientRect();
+        const inView = rect.top < window.innerHeight * 0.9 && rect.bottom > 0;
+        if (inView) {
+            setTimeout(() => el.classList.add("visible"), 40 + index * 80);
         }
-    }
+    });
 });
 </script>
 
