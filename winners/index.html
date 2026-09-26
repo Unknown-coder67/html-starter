@@ -29,7 +29,6 @@ body {
     padding-top: 74px;
 }
 
-/* Fixed header */
 header {
     position: fixed;
     top: 0;
@@ -81,7 +80,6 @@ nav a:hover::after {
     width: 100%;
 }
 
-/* INTRO SECTION */
 .intro-section {
     background-color: #02102B;
     background-image:
@@ -121,7 +119,6 @@ nav a:hover::after {
     font-weight: 500;
 }
 
-/* MAIN CONTENT */
 .main-content {
     width: 92%;
     max-width: 1400px;
@@ -129,7 +126,6 @@ nav a:hover::after {
     padding-top: 60px;
 }
 
-/* QUARTER SECTIONS */
 .quarter-block {
     display: flex;
     gap: 0;
@@ -162,7 +158,6 @@ nav a:hover::after {
     color: #0DC8EA;
 }
 
-/* Vertical line */
 .timeline-line {
     width: 2px;
     background: linear-gradient(to bottom, #0DC8EA 0%, rgba(13, 200, 234, 0.25) 100%);
@@ -172,7 +167,6 @@ nav a:hover::after {
     align-self: stretch;
 }
 
-/* Short timeline line – 0 gap */
 .timeline-line.short {
     height: 48px;
     align-self: flex-start;
@@ -180,7 +174,6 @@ nav a:hover::after {
     margin-right: 0;
 }
 
-/* 5-column grid */
 .winners-grid {
     flex: 1;
     display: grid;
@@ -188,7 +181,6 @@ nav a:hover::after {
     gap: 28px 22px;
 }
 
-/* Semi-card – no background */
 .winner-card {
     display: flex;
     flex-direction: column;
@@ -234,7 +226,6 @@ nav a:hover::after {
     letter-spacing: 0.02em;
 }
 
-/* ===== STAY TUNED BLOCK ===== */
 .stay-tuned-block {
     display: flex;
     gap: 0;
@@ -250,47 +241,37 @@ nav a:hover::after {
     padding-top: 8px;
 }
 
-/* Full-width track – same width as the Q3 winners-grid */
 .stay-tuned-track {
     flex: 1;
     position: relative;
     height: 48px;
-    overflow: hidden;          /* the clipping “wall” */
+    overflow: hidden;
     display: flex;
     align-items: center;
 }
 
-/* Text starts right against the timeline (0 gap) */
 .stay-tuned-text {
     position: absolute;
     left: 0;
     white-space: nowrap;
     font-size: 0.95rem;
     font-weight: 600;
-    color: #FBB61E;
+    color: #FFFFFF;
     letter-spacing: 0.03em;
     animation: stayTunedRight 16s linear infinite;
 }
 
-/* 
-   Travels the FULL width of the track:
-   - Starts completely hidden behind the left wall (timeline)
-   - Emerges character-by-character from the left
-   - Crosses the entire winners-grid width
-   - Disappears character-by-character behind the right wall
-*/
 @keyframes stayTunedRight {
     0% {
         left: 0;
-        transform: translateX(-100%);   /* fully behind left wall */
+        transform: translateX(-100%);
     }
     100% {
         left: 100%;
-        transform: translateX(0);       /* fully behind right wall */
+        transform: translateX(0);
     }
 }
 
-/* Fade animation */
 .fade-in {
     opacity: 0;
     transform: translateY(28px);
@@ -302,7 +283,6 @@ nav a:hover::after {
     transform: translateY(0);
 }
 
-/* Footer */
 footer {
     text-align: center;
     padding: 18px 20px;
@@ -311,7 +291,6 @@ footer {
     background: #17171D;
 }
 
-/* RESPONSIVE */
 @media (max-width: 1200px) {
     .winners-grid {
         grid-template-columns: repeat(4, 1fr);
@@ -430,7 +409,6 @@ footer {
     </div>
 </header>
 
-<!-- INTRO -->
 <section class="intro-section">
     <div class="intro-inner">
         <p class="label">Recognition Hall</p>
@@ -444,7 +422,6 @@ footer {
 
 <main class="main-content">
 
-    <!-- Q4 2026 – Stay tuned -->
     <div class="stay-tuned-block fade-in">
         <div class="quarter-label">
             <h2>Q4 2026</h2>
@@ -455,7 +432,6 @@ footer {
         </div>
     </div>
 
-    <!-- ========== Q3 2026 ========== -->
     <div class="quarter-block fade-in">
         <div class="quarter-label">
             <h2>Q3 2026</h2>
