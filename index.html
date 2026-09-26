@@ -178,12 +178,17 @@ header {
     font-weight: 750;
 }
 
-/* ===== Four value cards under banner ===== */
 .cards-section {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto 50px;
     padding: 0 24px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
 }
 
 .card {
@@ -196,7 +201,7 @@ header {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Keep the fade-in animation */
+/* Keep the fade-in animation working */
 .card.fade-in {
     opacity: 0;
     transform: translateY(35px);
@@ -207,12 +212,12 @@ header {
     transform: translateY(0);
 }
 
-/* This must come after the rules above and has higher specificity */
+/* Higher specificity so the lift works on hover */
 .card.fade-in.visible:hover {
     transform: translateY(-10px);
     box-shadow: 0 14px 36px rgba(23, 50, 77, 0.16);
 }
-    
+
 .card-image {
     width: 50%;
     height: 50px;
@@ -235,7 +240,7 @@ header {
     margin-bottom: 0;
     font-weight: 750;
 }
-
+    
 @media (max-width: 900px) {
     .cards {
         grid-template-columns: repeat(2, 1fr);
