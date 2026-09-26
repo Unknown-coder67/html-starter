@@ -185,12 +185,6 @@ nav a:hover::after {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 28px 22px;
-    opacity: 0.22;
-    transition: opacity 0.4s ease;
-}
-
-.dim-group.is-active-block {
-    opacity: 1 !important;
 }
 
 .winner-card {
@@ -286,12 +280,22 @@ nav a:hover::after {
 }
 
 /* Dimmed effect (same idea as .celebrating-block on the main page) */
-.stay-tuned-block {
+.stay-tuned-block,
+.dim-group,
+.quarter-block .quarter-label,
+.quarter-block .timeline-line {
     opacity: 0.22;
     transition: opacity 0.4s ease;
 }
 
-.stay-tuned-block.is-active-block {
+.stay-tuned-block.is-active-block,
+.dim-group.is-active-block {
+    opacity: 1 !important;
+}
+
+/* When any Q3 group is active, also brighten the Q3 label + timeline */
+.quarter-block.has-active-group .quarter-label,
+.quarter-block.has-active-group .timeline-line {
     opacity: 1 !important;
 }
 
@@ -426,7 +430,9 @@ footer {
 
 @media (prefers-reduced-motion: reduce) {
     .stay-tuned-block,
-    .dim-group {
+    .dim-group,
+    .quarter-block .quarter-label,
+    .quarter-block .timeline-line {
         opacity: 1 !important;
         transition: none;
     }
@@ -644,34 +650,58 @@ footer {
 </footer>
 
 <script>
-/* Progressive dimmed effect
-   - Everything starts dimmed (opacity 0.22)
-   - A block becomes fully visible when its center reaches the viewport center
-   - Once undimmed it STAYS undimmed (never re-dims when scrolling past)
-*/
+/* Dimmed effect – the single block closest to the viewport center is fully visible.
+   Others stay dimmed. Works in both scroll directions and for the last group. */
 const dimBlocks = document.querySelectorAll(".stay-tuned-block, .dim-group");
+const quarterBlock = document.querySelector(".quarter-block");
+
+function setActiveBlock(activeEl) {
+    dimBlocks.forEach((block) => {
+        if (block === activeEl) {
+            block.classList.add("is-active-block");
+        } else {
+            block.classList.remove("is-active-block");
+        }
+    });
+
+    /* Brighten Q3 label + timeline only while a Q3 group is the active one */
+    if (quarterBlock) {
+        const isQ3Active = activeEl && activeEl.classList.contains("dim-group");
+        quarterBlock.classList.toggle("has-active-group", !!isQ3Active);
+    }
+}
 
 function updateDimFocus() {
     const viewportCenter = window.innerHeight / 2;
+    let closestEl = null;
+    let closestDist = Infinity;
 
     dimBlocks.forEach((block) => {
-        /* Already activated – leave it alone */
-        if (block.classList.contains("is-active-block")) return;
-
         const rect = block.getBoundingClientRect();
-        const blockCenter = rect.top + rect.height / 2;
+        /* Skip fully off-screen blocks */
+        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
 
-        /* Undim only when the block's center has reached or passed the viewport center */
-        if (blockCenter <= viewportCenter) {
-            block.classList.add("is-active-block");
+        const blockCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(blockCenter - viewportCenter);
+        if (dist < closestDist) {
+            closestDist = dist;
+            closestEl = block;
         }
     });
+
+    if (closestEl) {
+        setActiveBlock(closestEl);
+    }
 }
 
 window.addEventListener("scroll", updateDimFocus, { passive: true });
 window.addEventListener("resize", updateDimFocus);
 window.addEventListener("load", updateDimFocus);
-updateDimFocus();
+
+/* Run once after layout so the initially closest block (usually Q4) is undimmed */
+requestAnimationFrame(() => {
+    requestAnimationFrame(updateDimFocus);
+});
 </script>
 
 </body>
