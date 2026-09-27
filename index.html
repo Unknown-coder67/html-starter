@@ -167,87 +167,121 @@ header {
 
 /* =========================================================
    BANNER TEXT OVERLAY
-   Manual positioning – change top / left / transform below.
+   Each line has its own independent controls below.
    ========================================================= */
+
+/* ---- CONTAINER (holds all three lines) ---- */
 .banner-overlay {
     position: absolute;
-    /* ---- POSITION CONTROLS (edit these) ---- */
+    /* overall starting point of the whole text block */
     top: 28%;                    /* higher = further up   | lower % = further down  */
-    left: 8%;                    /* smaller = further left | larger % = further right */
-    /* right: auto; */           /* set a value + left:auto if you prefer anchoring from the right */
-    /* bottom: auto; */
-    transform: translateY(-10%); /* fine-tune vertical shift (negative = up, positive = down) */
-    /* ----------------------------------------- */
-
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;     /* left-align the text block */
-    text-align: left;
-    max-width: 55%;              /* how wide the text block can grow */
+    left: 12%;                    /* smaller = further left | larger % = further right */
+    transform: translateY(-10%); /* fine vertical nudge for the whole block (neg = up) */
+    max-width: 55%;              /* max width of the whole block */
     padding: 0;
     pointer-events: none;
     z-index: 2;
-    /* Optional dark gradient for better text readability over bright video:
-    background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.35) 100%);
-    */
 }
 
-/* --- Headline: "Recognizing Our People" --- */
+/* =========================================================
+   LINE 1 – Headline: "Recognizing Our People"
+   ========================================================= */
 .banner-headline {
-    margin: 0 0 16px;            /* space below the headline */
-    font-size: clamp(2.2rem, 5.5vw, 3.8rem);  /* font size – min, preferred, max */
+    /* position relative to the container */
+    position: relative;
+    top: 0;                      /* nudge this line up/down (e.g. -10px or 5%) */
+    left: 0;                     /* nudge this line left/right */
+
+    margin: 0 0 16px 0;          /* top | right | bottom | left  – space around this line */
+    padding: 0;                  /* inner padding if needed */
+
+    font-size: clamp(2.2rem, 5.5vw, 3.8rem);  /* size: min, preferred, max */
     font-weight: 750;
     line-height: 1.15;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.02em;     /* space between letters of the whole headline */
+    text-align: left;
 }
 
 .banner-headline .headline-white {
     color: #FFFFFF;              /* "Recognizing" color */
+    /* individual word tweaks if needed: */
+    /* margin-right: 0.15em; */
+    /* letter-spacing: 0.02em; */
 }
 
 .banner-headline .headline-accent {
     color: #00B7E2;              /* "Our People" color */
-    margin-left: 0.25em;         /* small gap between the two words */
+    margin-left: 0.25em;         /* space between "Recognizing" and "Our People" */
+    /* letter-spacing: 0.02em; */
 }
 
-/* --- Subtitle paragraph --- */
+/* =========================================================
+   LINE 2 – Subtitle
+   ========================================================= */
 .banner-sub {
-    margin: 0 0 20px;            /* space below the subtitle */
-    max-width: 720px;            /* how wide the paragraph can get */
-    color: #FFFFFF;              /* subtitle color */
-    font-size: clamp(0.95rem, 2vw, 1.2rem);  /* font size */
+    position: relative;
+    top: 0;                      /* nudge this line up/down */
+    left: 0;                     /* nudge this line left/right */
+
+    margin: 0 0 20px 0;          /* top | right | bottom | left */
+    padding: 0;
+    max-width: 720px;            /* how wide this paragraph can get */
+
+    color: #FFFFFF;
+    font-size: clamp(0.95rem, 2vw, 1.2rem);
     font-weight: 500;
-    line-height: 1.55;
+    line-height: 1.55;           /* vertical space between the two lines of this paragraph */
+    letter-spacing: 0.01em;      /* space between letters */
+    word-spacing: 0.05em;        /* space between words */
+    text-align: left;
 }
 
-/* --- Values line: CARE | EXCELLENCE | ... --- */
+/* =========================================================
+   LINE 3 – Values: CARE | EXCELLENCE | TEAMWORK | INTEGRITY
+   ========================================================= */
 .banner-values {
-    margin: 0;
-    color: #00B7E2;              /* values color */
-    font-size: clamp(0.8rem, 1.6vw, 1rem);   /* font size */
+    position: relative;
+    top: 0;                      /* nudge this line up/down */
+    left: 0;                     /* nudge this line left/right */
+
+    margin: 0;                   /* top | right | bottom | left */
+    padding: 0;
+
+    color: #00B7E2;
+    font-size: clamp(0.8rem, 1.6vw, 1rem);
     font-weight: 750;
-    letter-spacing: 0.12em;      /* spacing between letters */
+    letter-spacing: 0.12em;      /* space between letters */
+    word-spacing: 0.15em;        /* space between the words / pipes */
     text-transform: uppercase;
+    text-align: left;
 }
 
-/* Mobile adjustments for banner text */
+/* =========================================================
+   MOBILE overrides (each line can be adjusted separately)
+   ========================================================= */
 @media (max-width: 700px) {
     .banner-overlay {
-        top: 22%;                /* mobile vertical position */
-        left: 5%;                /* mobile horizontal position */
+        top: 22%;
+        left: 5%;
         max-width: 90%;
         transform: none;
     }
     .banner-headline {
+        top: 0;
+        left: 0;
         margin-bottom: 12px;
         font-size: clamp(1.6rem, 7vw, 2.4rem);
     }
     .banner-sub {
+        top: 0;
+        left: 0;
         margin-bottom: 14px;
         font-size: 0.9rem;
         max-width: 100%;
     }
     .banner-values {
+        top: 0;
+        left: 0;
         font-size: 0.72rem;
         letter-spacing: 0.08em;
     }
