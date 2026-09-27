@@ -215,7 +215,7 @@ header {
     position: absolute;
     /* ---- MOVE THIS LINE ---- */
     top: 10%;                    /* % from top of video   | smaller = higher */
-    left: 8%;                    /* % from left of video  | smaller = further left */
+    left: 12%;                    /* % from left of video  | smaller = further left */
     /* ------------------------- */
 
     margin: 0;
@@ -242,29 +242,6 @@ header {
     display: block;
     color: #051C47;              /* "Our People" color */
     margin-left: 0;              /* no horizontal gap now that they are stacked */
-}
-
-/* =========================================================
-   LINE 2 – Subtitle
-   ========================================================= */
-.banner-sub {
-    position: absolute;
-    /* ---- MOVE THIS LINE ---- */
-    top: 45%;                    /* % from top of video */
-    left: 8%;                    /* % from left of video – increase to move right */
-    /* ------------------------- */
-
-    margin: 0;
-    padding: 0;
-    max-width: 55%;
-
-    color: #051C47;
-    font-size: clamp(0.95rem, 2vw, 1.2rem);
-    font-weight: 500;
-    line-height: 1.55;           /* vertical space inside the paragraph */
-    letter-spacing: 0.01em;      /* space between letters */
-    word-spacing: 0.05em;        /* space between words */
-    text-align: left;
 }
 
 /* =========================================================
@@ -297,18 +274,10 @@ header {
     .banner-headline {
         top: 14%;
         left: 5%;
-        max-width: 80%;
+        max-width: 90%;
         font-size: clamp(0.9rem, 4vw, 1.25rem);
         gap: 0.02em;
         line-height: 1.15;
-    }
-
-    .banner-sub {
-        top: 36%;
-        left: 5%;
-        max-width: 90%;
-        font-size: clamp(0.55rem, 2.5vw, 0.75rem);
-        line-height: 1.4;
     }
 
     .banner-values {
@@ -1035,10 +1004,6 @@ footer {
                 <span class="headline-white">Recognizing</span>
                 <span class="headline-accent">Our People</span>
             </h1>
-            <p class="banner-sub">
-                At JIWAR, we celebrate the dedication, compassion
-                and teamwork that make exceptional care possible.
-            </p>
             <p class="banner-values">CARE | EXCELLENCE | TEAMWORK | INTEGRITY</p>
         </div>
         <!-- ========== END BANNER TEXT OVERLAY ========== -->
