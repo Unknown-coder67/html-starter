@@ -156,7 +156,7 @@ header {
     width: 100%;
     overflow: hidden;
     background: #FFFFFF;
-    position: relative;
+    position: relative; /* needed so the overlay can sit on top of the video */
 }
 
 .banner video {
@@ -164,6 +164,88 @@ header {
     height: auto;
     display: block;
 }
+
+/* =========================================================
+   BANNER TEXT OVERLAY
+   Tweak these values to change position, size, spacing, etc.
+   ========================================================= */
+.banner-overlay {
+    position: absolute;
+    inset: 0;                    /* covers the whole video area */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;     /* vertical position: center | flex-start | flex-end */
+    align-items: center;         /* horizontal position: center | flex-start | flex-end */
+    text-align: center;
+    padding: 0 24px;             /* side padding so text doesn't touch edges */
+    pointer-events: none;        /* clicks pass through to the video if needed */
+    z-index: 2;
+    /* Optional dark gradient for better text readability over bright video:
+    background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.35) 100%);
+    */
+}
+
+/* --- Headline: "Recognizing Our People" --- */
+.banner-headline {
+    margin: 0 0 16px;            /* space below the headline (adjust spacing here) */
+    font-size: clamp(2.2rem, 5.5vw, 3.8rem);  /* font size – min, preferred, max */
+    font-weight: 750;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.banner-headline .headline-white {
+    color: #FFFFFF;              /* "Recognizing" color */
+}
+
+.banner-headline .headline-accent {
+    color: #00B7E2;              /* "Our People" color */
+    margin-left: 0.25em;         /* small gap between the two words */
+}
+
+/* --- Subtitle paragraph --- */
+.banner-sub {
+    margin: 0 0 20px;            /* space below the subtitle */
+    max-width: 720px;            /* how wide the paragraph can get */
+    color: #FFFFFF;              /* subtitle color */
+    font-size: clamp(0.95rem, 2vw, 1.2rem);  /* font size */
+    font-weight: 500;
+    line-height: 1.55;
+}
+
+/* --- Values line: CARE | EXCELLENCE | ... --- */
+.banner-values {
+    margin: 0;
+    color: #00B7E2;              /* values color */
+    font-size: clamp(0.8rem, 1.6vw, 1rem);   /* font size */
+    font-weight: 750;
+    letter-spacing: 0.12em;      /* spacing between letters */
+    text-transform: uppercase;
+}
+
+/* Mobile adjustments for banner text */
+@media (max-width: 700px) {
+    .banner-overlay {
+        padding: 0 16px;
+        justify-content: center; /* keep centered on mobile, or change to flex-end */
+    }
+    .banner-headline {
+        margin-bottom: 12px;
+        font-size: clamp(1.6rem, 7vw, 2.4rem);
+    }
+    .banner-sub {
+        margin-bottom: 14px;
+        font-size: 0.9rem;
+        max-width: 100%;
+    }
+    .banner-values {
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+    }
+}
+/* =========================================================
+   END BANNER TEXT OVERLAY
+   ========================================================= */
 
 .bottom-line {
     text-align: center;
@@ -848,6 +930,20 @@ footer {
         >
             <source src="/banner.mp4" type="video/mp4">
         </video>
+
+        <!-- ========== BANNER TEXT OVERLAY (edit content here) ========== -->
+        <div class="banner-overlay">
+            <h1 class="banner-headline">
+                <span class="headline-white">Recognizing</span>
+                <span class="headline-accent">Our People</span>
+            </h1>
+            <p class="banner-sub">
+                At JIWAR, we celebrate the dedication, compassion<br>
+                and teamwork that make exceptional care possible.
+            </p>
+            <p class="banner-values">CARE | EXCELLENCE | TEAMWORK | INTEGRITY</p>
+        </div>
+        <!-- ========== END BANNER TEXT OVERLAY ========== -->
     </div>
 </div>
 
