@@ -277,19 +277,21 @@ nav a:hover::after {
     font-weight: 600;
     color: #FFFFFF;
     letter-spacing: 0.03em;
-    will-change: transform;
+    will-change: transform, left;
     animation: stayTunedRight 18s linear infinite;
-    /* ensure it paints even when partially off-screen */
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
 
+/* Fully enters from left of track, fully exits to right of track, then loops */
 @keyframes stayTunedRight {
     0% {
+        left: 0;
         transform: translateY(-50%) translateX(-100%);
     }
     100% {
-        transform: translateY(-50%) translateX(calc(100% + 100%));
+        left: 100%;
+        transform: translateY(-50%) translateX(0);
     }
 }
 
@@ -477,17 +479,7 @@ footer {
 
     .stay-tuned-text {
         font-size: 0.82rem;
-        /* animation starts fully left of the track and exits fully right */
-        animation: stayTunedMobile 14s linear infinite;
-    }
-
-    @keyframes stayTunedMobile {
-        0% {
-            transform: translateY(-50%) translateX(-105%);
-        }
-        100% {
-            transform: translateY(-50%) translateX(calc(100% + 5%));
-        }
+        animation: stayTunedRight 14s linear infinite; /* same keyframes, just faster */
     }
 }
 
