@@ -266,6 +266,7 @@ nav a:hover::after {
     display: flex;
     align-items: center;
     min-width: 0; /* critical for flex shrink */
+    container-type: inline-size; /* enables 100cqw = track width */
 }
 
 .stay-tuned-text {
@@ -277,21 +278,24 @@ nav a:hover::after {
     font-weight: 600;
     color: #FFFFFF;
     letter-spacing: 0.03em;
-    will-change: transform, left;
+    will-change: transform;
     animation: stayTunedRight 18s linear infinite;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
 
-/* Fully enters from left of track, fully exits to right of track, then loops */
+/*
+  Pure transform only (GPU-friendly, no layout thrashing).
+  0%   : fully off the left edge  ( - text width )
+  100% : fully off the right edge ( track width + text width )
+  So the jump back to 0% is invisible.
+*/
 @keyframes stayTunedRight {
     0% {
-        left: 0;
         transform: translateY(-50%) translateX(-100%);
     }
     100% {
-        left: 100%;
-        transform: translateY(-50%) translateX(0);
+        transform: translateY(-50%) translateX(calc(100cqw + 100%));
     }
 }
 
