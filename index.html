@@ -110,6 +110,11 @@ header {
     width: 100%;
 }
 
+
+/* =========================================
+   NOMINATE + WINNERS BUTTONS
+   ========================================= */
+
 .header-nav a.nominate-btn,
 .header-nav a.winners-btn-header {
     display: flex;
@@ -140,55 +145,28 @@ header {
     column-gap: 8px;
 }
 
-/* Underline */
+
+/* Special underline color */
 .header-nav a.nominate-btn::after,
 .header-nav a.winners-btn-header::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 5px;
-
-    width: 0;
-    height: 2px;
-
     background: #08245B;
-
-    transition: width 200ms ease;
 }
 
-/* Hover */
+
+/* Hover text */
 .header-nav a.nominate-btn:hover,
 .header-nav a.winners-btn-header:hover {
+    background: transparent !important;
     color: #08245B !important;
+    opacity: 1;
+    transform: none;
 }
 
-/* Underline animation: left → right */
+
+/* Hover underline */
 .header-nav a.nominate-btn:hover::after,
 .header-nav a.winners-btn-header:hover::after {
     width: 100%;
-}
-
-.header-nav a.nominate-btn::after,
-.header-nav a.winners-btn-header::after {
-    display: none !important;
-    content: none !important;
-    width: 0 !important;
-}
-
-.header-nav a.nominate-btn:hover,
-.header-nav a.winners-btn-header:hover {
-    background-color: rgb(23, 23, 29) !important;
-    color: rgb(255, 255, 255) !important;
-    opacity: 0.9;
-    transform: translateY(-1px);
-}
-
-.header-nav a.winners-btn-header {
-    background-color: #08245B !important;
-}
-
-.header-nav a.winners-btn-header:hover {
-    background-color: #08245B !important;
 }
     
 .banner-wrap {
