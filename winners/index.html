@@ -273,15 +273,17 @@ nav a:hover::after {
     color: #FFFFFF;
     letter-spacing: 0.03em;
     will-change: transform;
-    animation: stayTunedRight 18s linear infinite;
+    animation: stayTunedRight 12s linear infinite;
+    z-index: 2;
 }
 
 @keyframes stayTunedRight {
     0% {
-        transform: translateY(-50%) translateX(-100%);
+        transform: translate3d(-100%, -50%, 0);
     }
+
     100% {
-        transform: translateY(-50%) translateX(100vw);
+        transform: translate3d(100%, -50%, 0);
     }
 }
 
@@ -387,9 +389,16 @@ footer {
         padding-top: 0;
     }
 
-    .timeline-line,
+    .timeline-line {
+    display: none;
+    }
+
     .timeline-line.short {
-        display: none;
+        display: block;
+        width: 2px;
+        height: 48px;
+        margin: 0;
+        align-self: flex-start;
     }
 
     .winners-grid {
