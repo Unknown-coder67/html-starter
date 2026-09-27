@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Care Medical Jiwar</title>
-
 <link rel="icon" type="image/png" href="/favicon.png">
-
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap');
     
@@ -292,26 +290,33 @@ header {
 }
 
 /* =========================================================
-   MOBILE – each line has its own top/left here too
+   MOBILE – same relative positions & spacing as desktop,
+   just scaled so nothing overlaps
    ========================================================= */
 @media (max-width: 700px) {
     .banner-headline {
-        top: 22%;
-        left: 5%;
-        max-width: 90%;
-        font-size: clamp(1.6rem, 7vw, 2.4rem);
+        top: 15%;                 /* same % as desktop */
+        left: 6%;
+        max-width: 88%;
+        font-size: clamp(1.55rem, 6.5vw, 2.15rem);
+        gap: 0.04em;
+        line-height: 1.12;
     }
     .banner-sub {
-        top: 36%;
-        left: 5%;
-        max-width: 90%;
-        font-size: 0.9rem;
+        top: 38%;                 /* kept proportional gap from headline */
+        left: 6%;
+        max-width: 88%;
+        font-size: clamp(0.82rem, 3.4vw, 0.95rem);
+        line-height: 1.5;
     }
     .banner-values {
-        top: 52%;
-        left: 5%;
-        font-size: 0.72rem;
-        letter-spacing: 0.08em;
+        top: 54%;                 /* kept proportional gap from subtitle */
+        left: 6%;
+        max-width: 90%;
+        font-size: clamp(0.65rem, 2.8vw, 0.78rem);
+        letter-spacing: 0.06em;
+        word-spacing: 0.08em;
+        white-space: nowrap;      /* keep values on one line */
     }
 }
 /* =========================================================
@@ -696,22 +701,23 @@ header {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: #08245B;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 18px;
-    padding: 14px 22px;
+    background: transparent;          /* removed background */
+    color: #08245B;                   /* same dark blue as most text */
+    border: none;                     /* already none, kept explicit */
+    border-radius: 0;
+    padding: 0;                       /* no extra padding needed without bg */
     font-family: inherit;
     font-size: 1rem;
     font-weight: 750;
     cursor: pointer;
     text-decoration: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: color 0.2s ease, opacity 0.2s ease;
 }
 
 .jiwar-btn:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
+    color: #00B7E2;
+    opacity: 1;
+    transform: none;
 }
 
 .jiwar-btn .arrow {
@@ -997,9 +1003,7 @@ footer {
 }
 </style>
 </head>
-
 <body>
-
 <header>
     <div class="navbar">
         <a href="/">
@@ -1011,7 +1015,6 @@ footer {
         </nav>
     </div>
 </header>
-
 <div class="banner-wrap">
     <div class="banner">
         <video
@@ -1024,7 +1027,6 @@ footer {
         >
             <source src="/banner.mp4" type="video/mp4">
         </video>
-
         <!-- ========== BANNER TEXT OVERLAY (edit content here) ========== -->
         <div class="banner-overlay">
             <h1 class="banner-headline">
@@ -1040,7 +1042,6 @@ footer {
         <!-- ========== END BANNER TEXT OVERLAY ========== -->
     </div>
 </div>
-
 <!-- 1. About section (moved above Celebrating What Matters) -->
 <section class="celebrating-section">
     <div class="celebrating-layout">
@@ -1053,7 +1054,6 @@ footer {
                 </li>
             </ul>
         </nav>
-
         <div class="celebrating-main">
             <section class="celebrating-block fade-in" id="about">
                 <p>We believe that care begins with people. Inspired by the spirit of this place, where countless journeys meet, this space honors the people behind the care, a place to recognize their efforts, appreciate one another, celebrate the difference they make, and give their ideas a place to grow.</p>
@@ -1061,11 +1061,9 @@ footer {
         </div>
     </div>
 </section>
-
     <div class="bottom-line fade-in">
     <h3>Celebrating What Matters</h3>
 </div>
-
 <section class="cards-section">
     <div class="cards">
         <div class="card fade-in">
@@ -1094,7 +1092,6 @@ footer {
         </div>
     </div>
 </section>
-
 <!-- 2. Who is next? section -->
 <section class="next-section fade-in" id="who-is-next">
     <div class="next-left">
@@ -1129,7 +1126,6 @@ Every role has its place, and every person brings something of their own.</p>
         </div>
     </div>
 </section>
-
 <!-- 4. THE JIWAR WALL -->
 <section class="jiwar-section fade-in" id="jiwar-wall">
     <div class="jiwar-inner">
@@ -1149,11 +1145,9 @@ Who made things a little better</p>
         </div>
     </div>
 </section>
-
 <footer>
     © 2026 Care Medical Jiwar
 </footer>
-
 <script>
 /* Fade-in */
 const fadeElements = document.querySelectorAll(".fade-in:not(#bannerVideo)");
@@ -1305,6 +1299,5 @@ celebratingLinks.forEach((link) => {
     }
 })();
 </script>
-
 </body>
 </html>
