@@ -489,6 +489,12 @@ header {
     align-items: center; /* vertically center ? next to the three lines */
     gap: 0.06em;
     white-space: nowrap;
+    transition: transform 0.3s ease;
+    cursor: default;
+}
+
+.giant-title:hover {
+    transform: scale(1.06);
 }
 
 .giant-title .lines {
