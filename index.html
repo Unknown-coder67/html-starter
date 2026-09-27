@@ -193,20 +193,26 @@ header {
     padding: 0;
     max-width: 55%;
 
+    display: flex;
+    flex-direction: column;      /* stacks the two words under each other */
+    gap: 0.05em;                 /* space between "Recognizing" and "Our People" – increase for more gap */
+
     font-size: clamp(2.2rem, 5.5vw, 3.8rem);
     font-weight: 750;
-    line-height: 1.15;
+    line-height: 1.1;
     letter-spacing: -0.02em;     /* space between letters */
     text-align: left;
 }
 
 .banner-headline .headline-white {
-    color: #FFFFFF;              /* "Recognizing" color */
+    display: block;
+    color: #051C47;              /* "Recognizing" color */
 }
 
 .banner-headline .headline-accent {
-    color: #FFFFFF;              /* "Our People" color */
-    margin-left: 0.25em;         /* space between the two words */
+    display: block;
+    color: #051C47;              /* "Our People" color */
+    margin-left: 0;              /* no horizontal gap now that they are stacked */
 }
 
 /* =========================================================
@@ -223,7 +229,7 @@ header {
     padding: 0;
     max-width: 55%;
 
-    color: #02102B;
+    color: #051C47;
     font-size: clamp(0.95rem, 2vw, 1.2rem);
     font-weight: 500;
     line-height: 1.55;           /* vertical space inside the paragraph */
