@@ -146,10 +146,18 @@ header {
 }
 
 
-/* Special underline color */
+/* Underline */
 .header-nav a.nominate-btn::after,
 .header-nav a.winners-btn-header::after {
+    left: 17px;
+    width: calc(100% - 34px);
+    height: 2px;
+    bottom: 10px;
     background: #08245B;
+
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease;
 }
 
 
@@ -166,7 +174,7 @@ header {
 /* Hover underline */
 .header-nav a.nominate-btn:hover::after,
 .header-nav a.winners-btn-header:hover::after {
-    width: 100%;
+    transform: scaleX(1);
 }
     
 .banner-wrap {
@@ -923,6 +931,11 @@ footer {
         padding: 9px 12px;
         height: 40px;
     }
+    .header-nav a.nominate-btn::after,
+    .header-nav a.winners-btn-header::after {
+        left: 12px;
+        width: calc(100% - 24px);
+    }
     .bottom-line {
         margin: 28px 0 12px;
     }
@@ -967,6 +980,11 @@ footer {
         font-size: 11.5px;
         padding: 8px 10px;
         height: 36px;
+    }
+    .header-nav a.nominate-btn::after,
+    .header-nav a.winners-btn-header::after {
+        left: 10px;
+        width: calc(100% - 20px);
     }
 }
 
