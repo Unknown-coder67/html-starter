@@ -265,37 +265,44 @@ nav a:hover::after {
     overflow: hidden;
     display: flex;
     align-items: center;
-    min-width: 0; /* critical for flex shrink */
-    container-type: inline-size; /* enables 100cqw = track width */
+    min-width: 0;
 }
 
 .stay-tuned-text {
     position: absolute;
     top: 50%;
     left: 0;
+    display: flex;
+    width: max-content;
     white-space: nowrap;
     font-size: 0.95rem;
     font-weight: 600;
     color: #FFFFFF;
     letter-spacing: 0.03em;
     will-change: transform;
-    animation: stayTunedRight 18s linear infinite;
+    animation: stayTunedRight 12s linear infinite;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
 
+.stay-tuned-segment {
+    flex-shrink: 0;
+    padding-right: 3.5em; /* gap between repeats – feels natural */
+}
+
 /*
-  Pure transform only (GPU-friendly, no layout thrashing).
-  0%   : fully off the left edge  ( - text width )
-  100% : fully off the right edge ( track width + text width )
-  So the jump back to 0% is invisible.
+  Seamless rightward loop:
+  Two identical copies side-by-side.
+  Animate by exactly 50% of the wrapper (= one copy + its gap).
+  When the last letter of copy A exits right, the first letter of
+  copy B is already entering left — no gap, no flash.
 */
 @keyframes stayTunedRight {
     0% {
-        transform: translateY(-50%) translateX(-100%);
+        transform: translateY(-50%) translateX(-50%);
     }
     100% {
-        transform: translateY(-50%) translateX(calc(100cqw + 100%));
+        transform: translateY(-50%) translateX(0);
     }
 }
 
@@ -483,7 +490,7 @@ footer {
 
     .stay-tuned-text {
         font-size: 0.82rem;
-        animation: stayTunedRight 14s linear infinite; /* same keyframes, just faster */
+        animation: stayTunedRight 10s linear infinite;
     }
 }
 
@@ -578,7 +585,14 @@ footer {
         </div>
         <div class="timeline-line short"></div>
         <div class="stay-tuned-track">
-            <div class="stay-tuned-text"><span style="color: #FFFFFF;">The next story </span><span style="color: #0DC8EA;">is already being written</span></div>
+            <div class="stay-tuned-text">
+                <span class="stay-tuned-segment">
+                    <span style="color: #FFFFFF;">The next story </span><span style="color: #0DC8EA;">is already being written</span>
+                </span>
+                <span class="stay-tuned-segment" aria-hidden="true">
+                    <span style="color: #FFFFFF;">The next story </span><span style="color: #0DC8EA;">is already being written</span>
+                </span>
+            </div>
         </div>
     </div>
 
