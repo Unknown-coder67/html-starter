@@ -363,13 +363,16 @@ header {
     color: #17171D;
     margin: 0;
     display: flex;
-    align-items: stretch;
-    gap: 0.12em;
+    flex-direction: row;
+    align-items: center; /* vertically center ? next to the three lines */
+    gap: 0.06em;
+    white-space: nowrap;
 }
 
 .giant-title .lines {
     display: flex;
     flex-direction: column;
+    line-height: 1.05;
 }
 
 .giant-title .lines span {
@@ -381,17 +384,13 @@ header {
 }
 
 .giant-title .qmark {
-    font-size: 3.25em;
-    line-height: 0.92;
+    /* font-size relative to .giant-title so ~3 lines tall, stays beside the text */
+    font-size: 3.15em;
+    line-height: 1;
     font-weight: 750;
     color: #17171D;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-self: stretch;
-    /* Stretch to match the full height of the three stacked lines */
-    height: 3.15em;
-    margin-top: -0.05em;
+    display: block;
+    flex-shrink: 0;
 }
 
 .next-right {
@@ -405,23 +404,39 @@ header {
     border-bottom: 2px solid #b0b8c0;
     padding: 28px 0;
     opacity: 0.32;
-    transition: opacity 0.35s ease;
+    transition: opacity 0.35s ease, transform 0.3s ease;
+    transform: translateY(0);
 }
 
 .focus-item + .focus-item {
     border-top: none; /* shared thicker line between them */
+    margin-left: 50px; /* staggered slightly to the right */
 }
 
 .focus-item.is-near {
     opacity: 1;
 }
 
+.focus-item:hover {
+    transform: translateY(-8px);
+    opacity: 1; /* undim on hover as well */
+}
+
+.focus-item:hover .focus-title {
+    font-size: clamp(1.45rem, 2.7vw, 1.9rem);
+}
+
+.focus-item:hover .focus-body p {
+    font-size: 1.12rem;
+}
+
 .focus-title {
     font-size: clamp(1.35rem, 2.5vw, 1.75rem);
     font-weight: 750;
-    color: #17171D;
+    color: #00B7E2;
     line-height: 1.3;
     margin: 0 0 14px;
+    transition: font-size 0.3s ease;
 }
 
 .focus-body p {
@@ -431,6 +446,7 @@ header {
     font-weight: 500;
     margin: 0 0 18px;
     max-width: 640px;
+    transition: font-size 0.3s ease;
 }
 
 .winners-btn {
@@ -1018,10 +1034,10 @@ celebratingLinks.forEach((link) => {
     });
 });
 
-/* Focus items – undim when near viewport center (±400px) */
+/* Focus items – undim when near viewport center (±250px), dim again when past */
 (function () {
     const focusItems = document.querySelectorAll(".focus-item");
-    const RANGE = 400; /* pixels from viewport center */
+    const RANGE = 250; /* pixels from viewport center */
 
     function updateFocusItems() {
         const viewportCenter = window.innerHeight / 2;
@@ -1029,6 +1045,7 @@ celebratingLinks.forEach((link) => {
             const rect = item.getBoundingClientRect();
             const itemCenter = rect.top + rect.height / 2;
             const dist = Math.abs(itemCenter - viewportCenter);
+            /* Undim only while within range of center; dim when approaching OR scrolling past */
             if (dist <= RANGE) {
                 item.classList.add("is-near");
             } else {
