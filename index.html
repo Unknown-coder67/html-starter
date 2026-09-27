@@ -167,18 +167,14 @@ header {
 
 /* =========================================================
    BANNER TEXT OVERLAY
-   Each line has its own independent controls below.
+   Each line is positioned independently with its own top/left.
+   Change the top / left values on each line to move it freely.
    ========================================================= */
 
-/* ---- CONTAINER (holds all three lines) ---- */
+/* ---- CONTAINER (full size of the video – don't move lines here) ---- */
 .banner-overlay {
     position: absolute;
-    /* overall starting point of the whole text block */
-    top: 28%;                    /* higher = further up   | lower % = further down  */
-    left: 12%;                    /* smaller = further left | larger % = further right */
-    transform: translateY(-10%); /* fine vertical nudge for the whole block (neg = up) */
-    max-width: 55%;              /* max width of the whole block */
-    padding: 0;
+    inset: 0;                    /* covers the whole video */
     pointer-events: none;
     z-index: 2;
 }
@@ -187,50 +183,50 @@ header {
    LINE 1 – Headline: "Recognizing Our People"
    ========================================================= */
 .banner-headline {
-    /* position relative to the container */
-    position: relative;
-    top: 0;                      /* nudge this line up/down (e.g. -10px or 5%) */
-    left: 0;                     /* nudge this line left/right */
+    position: absolute;
+    /* ---- MOVE THIS LINE ---- */
+    top: 28%;                    /* % from top of video   | smaller = higher */
+    left: 8%;                    /* % from left of video  | smaller = further left */
+    /* ------------------------- */
 
-    margin: 0 0 16px 0;          /* top | right | bottom | left  – space around this line */
-    padding: 0;                  /* inner padding if needed */
+    margin: 0;
+    padding: 0;
+    max-width: 55%;
 
-    font-size: clamp(2.2rem, 5.5vw, 3.8rem);  /* size: min, preferred, max */
+    font-size: clamp(2.2rem, 5.5vw, 3.8rem);
     font-weight: 750;
     line-height: 1.15;
-    letter-spacing: -0.02em;     /* space between letters of the whole headline */
+    letter-spacing: -0.02em;     /* space between letters */
     text-align: left;
 }
 
 .banner-headline .headline-white {
     color: #FFFFFF;              /* "Recognizing" color */
-    /* individual word tweaks if needed: */
-    /* margin-right: 0.15em; */
-    /* letter-spacing: 0.02em; */
 }
 
 .banner-headline .headline-accent {
     color: #00B7E2;              /* "Our People" color */
-    margin-left: 0.25em;         /* space between "Recognizing" and "Our People" */
-    /* letter-spacing: 0.02em; */
+    margin-left: 0.25em;         /* space between the two words */
 }
 
 /* =========================================================
    LINE 2 – Subtitle
    ========================================================= */
 .banner-sub {
-    position: relative;
-    top: 0;                      /* nudge this line up/down */
-    left: 0;                     /* nudge this line left/right */
+    position: absolute;
+    /* ---- MOVE THIS LINE ---- */
+    top: 42%;                    /* % from top of video */
+    left: 8%;                    /* % from left of video – increase to move right */
+    /* ------------------------- */
 
-    margin: 0 0 20px 0;          /* top | right | bottom | left */
+    margin: 0;
     padding: 0;
-    max-width: 720px;            /* how wide this paragraph can get */
+    max-width: 55%;
 
     color: #FFFFFF;
     font-size: clamp(0.95rem, 2vw, 1.2rem);
     font-weight: 500;
-    line-height: 1.55;           /* vertical space between the two lines of this paragraph */
+    line-height: 1.55;           /* vertical space inside the paragraph */
     letter-spacing: 0.01em;      /* space between letters */
     word-spacing: 0.05em;        /* space between words */
     text-align: left;
@@ -240,48 +236,43 @@ header {
    LINE 3 – Values: CARE | EXCELLENCE | TEAMWORK | INTEGRITY
    ========================================================= */
 .banner-values {
-    position: relative;
-    top: 5;                      /* nudge this line up/down */
-    left: 10;                     /* nudge this line left/right */
+    position: absolute;
+    /* ---- MOVE THIS LINE ---- */
+    top: 56%;                    /* % from top of video – increase to move down */
+    left: 8%;                    /* % from left of video – increase to move right */
+    /* ------------------------- */
 
-    margin: 0;                   /* top | right | bottom | left */
+    margin: 0;
     padding: 0;
 
     color: #00B7E2;
     font-size: clamp(0.8rem, 1.6vw, 1rem);
     font-weight: 750;
     letter-spacing: 0.12em;      /* space between letters */
-    word-spacing: 0.30em;        /* space between the words / pipes */
+    word-spacing: 0.15em;        /* space between words / pipes */
     text-transform: uppercase;
     text-align: left;
 }
 
 /* =========================================================
-   MOBILE overrides (each line can be adjusted separately)
+   MOBILE – each line has its own top/left here too
    ========================================================= */
 @media (max-width: 700px) {
-    .banner-overlay {
+    .banner-headline {
         top: 22%;
         left: 5%;
         max-width: 90%;
-        transform: none;
-    }
-    .banner-headline {
-        top: 0;
-        left: 0;
-        margin-bottom: 12px;
         font-size: clamp(1.6rem, 7vw, 2.4rem);
     }
     .banner-sub {
-        top: 0;
-        left: 0;
-        margin-bottom: 14px;
+        top: 36%;
+        left: 5%;
+        max-width: 90%;
         font-size: 0.9rem;
-        max-width: 100%;
     }
     .banner-values {
-        top: 0;
-        left: 0;
+        top: 52%;
+        left: 5%;
         font-size: 0.72rem;
         letter-spacing: 0.08em;
     }
