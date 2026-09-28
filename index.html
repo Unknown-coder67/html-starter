@@ -178,19 +178,23 @@ header {
 .banner-wrap {
     position: relative;
     width: 100%;
-    margin: 74px 0 0;
+    height: 100vh;                 /* full viewport height */
+    margin: 0;
+    overflow: hidden;
 }
 
 .banner {
     width: 100%;
+    height: 100%;
     overflow: hidden;
     background: #FFFFFF;
-    position: relative; /* needed so the overlay can sit on top of the video */
+    position: relative;
 }
 
 .banner video {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;             /* covers the entire area */
     display: block;
 }
 
@@ -1096,12 +1100,12 @@ footer {
         <video
             autoplay
             muted
-            loop
             playsinline
+            preload="auto"
             id="bannerVideo"
             aria-label="Company Banner"
         >
-            <source src="/banner.mp4" type="video/mp4">
+            <source src="/banner.mp4" type="video/mp4">  <!-- ← put your new 4s video path here -->
         </video>
     </div>
 </div>
@@ -1217,6 +1221,54 @@ Who made things a little better</p>
     © 2026 Care Medical Jiwar
 </footer>
 <script>
+/* ===== Banner video control ===== */
+(function () {
+    const video = document.getElementById("bannerVideo");
+    if (!video) return;
+
+    const SCROLL_AT = 3.5;          // seconds – when to auto-scroll
+    const STORAGE_KEY = "bannerPlayed";
+
+    // If the intro already played in this session → jump to last frame and stop
+    if (sessionStorage.getItem(STORAGE_KEY)) {
+        video.pause();
+        video.currentTime = 999;    // force last frame
+        return;
+    }
+
+    let hasScrolled = false;
+
+    // Auto-scroll at 3.5 seconds
+    video.addEventListener("timeupdate", () => {
+        if (!hasScrolled && video.currentTime >= SCROLL_AT) {
+            hasScrolled = true;
+            sessionStorage.setItem(STORAGE_KEY, "1");
+
+            // Smooth scroll so the banner is completely out of view
+            const firstSection = document.querySelector(".celebrating-section");
+            if (firstSection) {
+                firstSection.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        }
+    });
+
+    // When video ends → freeze on last frame (browsers keep the last frame automatically)
+    video.addEventListener("ended", () => {
+        video.pause();
+        sessionStorage.setItem(STORAGE_KEY, "1");
+    });
+
+    // Safety: if the user scrolls manually before 3.5s, mark as played
+    // so it won't replay when they come back
+    let manualScrollHandled = false;
+    window.addEventListener("scroll", () => {
+        if (!manualScrollHandled && window.scrollY > 50) {
+            manualScrollHandled = true;
+            sessionStorage.setItem(STORAGE_KEY, "1");
+        }
+    }, { passive: true });
+})();
+
 /* Fade-in */
 const fadeElements = document.querySelectorAll(".fade-in:not(#bannerVideo)");
 const fadeObserver = new IntersectionObserver((entries) => {
