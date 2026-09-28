@@ -1226,11 +1226,22 @@ Who made things a little better</p>
     © 2026 Care Medical Jiwar
 </footer>
 <script>
+    
 /* ===== Banner video control ===== */
 (function () {
     const video = document.getElementById("bannerVideo");
     const bannerWrap = document.querySelector(".banner-wrap");
     if (!video || !bannerWrap) return;
+
+    // Force page to the very top on every load / reload
+    if (history.scrollRestoration) {
+        history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+
+    // Make sure video starts from the beginning
+    video.currentTime = 0;
+    video.play().catch(() => {});   // ignore autoplay errors
 
     let hasScrolled = false;
 
@@ -1254,7 +1265,7 @@ Who made things a little better</p>
             if (progress < 1) {
                 requestAnimationFrame(animate);
             } else {
-                // Scroll finished → collapse the banner smoothly
+                // Scroll finished → collapse the banner
                 collapseBanner();
             }
         }
@@ -1263,23 +1274,33 @@ Who made things a little better</p>
     }
 
     function collapseBanner() {
-        // Smoothly shrink the banner height to 0 and remove it from layout
         bannerWrap.style.transition = "height 0.8s ease, opacity 0.6s ease";
         bannerWrap.style.height = "0";
         bannerWrap.style.opacity = "0";
         bannerWrap.style.overflow = "hidden";
 
-        // After the animation finishes, completely remove it
         setTimeout(() => {
             bannerWrap.style.display = "none";
         }, 850);
     }
 
-    // When video ends → start the slow scroll
-    video.addEventListener("ended", () => {
-        if (hasScrolled) return;
-        hasScrolled = true;
+    // Trigger scroll at 3.5 seconds
+    video.addEventListener("timeupdate", () => {
+        if (!hasScrolled && video.currentTime >= 3.5) {
+            hasScrolled = true;
+            startScroll();
+        }
+    });
 
+    // Fallback: if video ends before 3.5s for any reason
+    video.addEventListener("ended", () => {
+        if (!hasScrolled) {
+            hasScrolled = true;
+            startScroll();
+        }
+    });
+
+    function startScroll() {
         const firstSection = document.querySelector(".celebrating-section");
         if (!firstSection) return;
 
@@ -1290,18 +1311,15 @@ Who made things a little better</p>
 
         const targetPosition = firstSection.getBoundingClientRect().top + window.scrollY - offset;
 
-        // Slow scroll (1800ms). Change the number to make it slower/faster
-        slowScrollTo(targetPosition, 1800);
-    });
+        slowScrollTo(targetPosition, 1800);  // ← change 1800 to make scroll slower/faster
+    }
 
-    // If user scrolls manually early → also collapse the banner later
+    // If user scrolls manually early → collapse banner after a short delay
     let manualScrollHandled = false;
     window.addEventListener("scroll", () => {
         if (!manualScrollHandled && window.scrollY > 80) {
             manualScrollHandled = true;
             hasScrolled = true;
-
-            // Wait a tiny bit then collapse
             setTimeout(collapseBanner, 400);
         }
     }, { passive: true });
