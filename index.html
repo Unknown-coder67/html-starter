@@ -499,9 +499,11 @@ header {
     color: #08245B;
     margin: 0;
 
-    /* Lock the box to the previous size */
-    width: 441px;
-    height: 372px;
+    /* Responsive size – no more horizontal overflow */
+    width: 100%;
+    max-width: 441px;
+    height: auto;
+    aspect-ratio: 441 / 372;   /* keeps the same proportions */
 
     padding: 40px;
     box-sizing: border-box;
@@ -514,7 +516,6 @@ header {
     transition: transform 0.28s ease;
     cursor: default;
 
-    /* Keep the flex behavior that was present before */
     display: flex;
     align-items: center;
     justify-content: center;
