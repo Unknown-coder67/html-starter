@@ -201,7 +201,11 @@ header {
    ========================================================= */
 
 /* ---- CONTAINER (full size of the video – don't move lines here) ---- */
-    
+.banner-overlay {
+    position: absolute;
+    inset: 0;                    /* covers the whole video */
+    pointer-events: none;
+    z-index: 2;
 }
 
 /* =========================================================
@@ -265,12 +269,7 @@ header {
 /* =========================================================
    MOBILE – smaller fonts so the three lines never overlap
    (desktop sizes stay unchanged)
-   ========================================================= */.banner-overlay {
-    position: absolute;
-    inset: 0;                    /* covers the whole video */
-    pointer-events: none;
-    z-index: 2;
-    
+   ========================================================= */
 @media (max-width: 700px) {
     .banner-headline {
         top: 14%;
