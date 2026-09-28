@@ -393,7 +393,7 @@ header {
 .celebrating-section {
     position: relative;
     width: 100%;
-    padding: 40px 0 60px;
+    padding: 100px 0 60px;   /* increased top padding so content clears the header */
     background: #FFFFFF;
 }
 
@@ -1027,7 +1027,7 @@ footer {
         margin: 28px 0 12px;
     }
     .celebrating-section {
-        padding: 24px 0 40px;
+        padding: 90px 0 40px;
     }
     .celebrating-layout {
         padding: 0 16px;
@@ -1244,8 +1244,7 @@ Who made things a little better</p>
     video.currentTime = 0;
     video.play().catch(() => {});
 
-    let hasAutoScrolled = false;
-    let userHasScrolled = false;
+    let hasScrolled = false;
 
     // Custom slow smooth scroll
     function slowScrollTo(targetY, duration = 1500) {
@@ -1284,53 +1283,45 @@ Who made things a little better</p>
     }
 
     function startAutoScroll() {
-        if (hasAutoScrolled || userHasScrolled) return;
-        hasAutoScrolled = true;
+        if (hasScrolled) return;
+        hasScrolled = true;
 
         // Collapse banner first
         collapseBanner();
 
-        // Wait for collapse, then scroll to a safe position
+        // Wait for collapse, then scroll
         setTimeout(() => {
             const firstSection = document.querySelector(".celebrating-section");
             if (!firstSection) return;
 
             const headerHeight = header ? header.offsetHeight : 74;
 
-            // Extra space so sticky nav + first line are fully visible
+            // Final safe position (extra space so sticky nav + text are fully visible)
             const isMobile = window.innerWidth <= 700;
-            const extraOffset = isMobile ? 90 : 30;   // ← adjust these if needed
+            const extra = isMobile ? 20 : 10;
 
-            const targetPosition = firstSection.offsetTop - headerHeight - extraOffset;
+            const targetPosition = firstSection.offsetTop - headerHeight - extra;
 
             slowScrollTo(Math.max(0, targetPosition), 1500);
         }, 650);
     }
 
-    // Trigger auto-scroll at 5 seconds (only if user hasn't scrolled)
+    // Trigger at 5 seconds
     video.addEventListener("timeupdate", () => {
-        if (!hasAutoScrolled && !userHasScrolled && video.currentTime >= 5) {
+        if (!hasScrolled && video.currentTime >= 5) {
             startAutoScroll();
         }
     });
 
     // Fallback
     video.addEventListener("ended", () => {
-        if (!hasAutoScrolled && !userHasScrolled) {
-            startAutoScroll();
-        }
+        startAutoScroll();
     });
 
-    // Detect manual scrolling → cancel auto-scroll and just collapse the banner
+    // If user scrolls manually early → still run the auto-scroll to reposition them
     window.addEventListener("scroll", () => {
-        if (window.scrollY > 40) {
-            userHasScrolled = true;
-
-            // Still remove the banner, but don't force any scroll
-            if (!hasAutoScrolled) {
-                hasAutoScrolled = true;
-                collapseBanner();
-            }
+        if (!hasScrolled && window.scrollY > 60) {
+            startAutoScroll();
         }
     }, { passive: true });
 })();
