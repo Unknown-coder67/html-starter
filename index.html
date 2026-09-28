@@ -1105,7 +1105,11 @@ footer {
             id="bannerVideo"
             aria-label="Company Banner"
         >
-            <source src="/banner.mp4" type="video/mp4">  <!-- ← put your new 4s video path here -->
+            <!-- Mobile version (608x1080) -->
+            <source src="/banner2.mp4" type="video/mp4" media="(max-width: 700px)">
+
+            <!-- Desktop version (1920x1080) -->
+            <source src="/banner.mp4" type="video/mp4">
         </video>
     </div>
 </div>
