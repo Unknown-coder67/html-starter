@@ -570,9 +570,11 @@ header {
    ========================================================= */
 
 .giant-title .next-line {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    font-size: 0.5em;                    /* ← stays at the full size of the parent */
+    font-size: 0.5em;
     font-weight: 750;
     font-variation-settings: "opsz" 14, "wght" 750;
     line-height: 1;
@@ -581,7 +583,58 @@ header {
     margin: 0;
     padding: 0;
     letter-spacing: -0.02em;
-    transform: translateX(0);
+}
+
+/* =========================================================
+   DECORATION — glowing diamond + fading lines under NEXT?
+   ========================================================= */
+
+.title-deco {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.deco-diamond {
+    width: 11px;
+    height: 11px;
+    background: #08245B;
+    transform: rotate(45deg);
+    flex-shrink: 0;
+
+    box-shadow:
+        0 0 6px #08245B,
+        0 0 12px rgba(8, 36, 91, 0.55),
+        0 0 20px rgba(8, 36, 91, 0.3);
+}
+
+.deco-line {
+    height: 1.5px;
+    flex: 1;
+    max-width: 90px;
+}
+
+.deco-line.left {
+    background: linear-gradient(
+        to left,
+        #08245B 0%,
+        rgba(8, 36, 91, 0.6) 40%,
+        rgba(8, 36, 91, 0.2) 75%,
+        transparent 100%
+    );
+}
+
+.deco-line.right {
+    background: linear-gradient(
+        to right,
+        #08245B 0%,
+        rgba(8, 36, 91, 0.6) 40%,
+        rgba(8, 36, 91, 0.2) 75%,
+        transparent 100%
+    );
 }
     
 .next-right {
@@ -1112,7 +1165,14 @@ footer {
     <h2 class="giant-title">
         <span class="lines">
             <span class="who-line">WHO'S</span>
-            <span class="next-line">NEXT?</span>
+            <span class="next-line">
+                NEXT?
+                <span class="title-deco">
+                    <span class="deco-line left"></span>
+                    <span class="deco-diamond"></span>
+                    <span class="deco-line right"></span>
+                </span>
+            </span>
         </span>
     </h2>
     </div>
