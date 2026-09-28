@@ -540,8 +540,9 @@ header {
 
     font-family: "DM Sans", Arial, sans-serif;
     font-size: 1em;
-    font-weight: 100 !important;
+    font-weight: 100;
     font-style: normal;
+    font-variation-settings: "opsz" 14, "wght" 100;  /* ← this is the key fix */
     line-height: 1;
 
     text-align: center;
@@ -560,23 +561,21 @@ header {
    ========================================================= */
 
 .giant-title .next-line {
-    display: block;                          /* Makes NEXT? its own line */
+    display: block;
 
-    font-size: 1em;                          /* SAME SIZE as WHO'S */
+    font-size: 1em;
+    font-weight: 750;
+    font-variation-settings: "opsz" 14, "wght" 750;  /* keep it bold */
+    line-height: 1;
 
-    font-weight: 750;                        /* Bold NEXT? */
+    text-align: center;
 
-    line-height: 1;                          /* Controls vertical height of NEXT? */
+    margin: 0;
+    padding: 0;
 
-    text-align: center;                      /* Centers the text */
+    letter-spacing: -0.02em;
 
-    margin: 0;                               /* Space outside NEXT? */
-    padding: 0;                              /* Space inside NEXT? */
-
-    letter-spacing: -0.02em;                /* Controls spacing between letters */
-
-    /* MANUAL POSITIONING */
-    transform: translateX(0);                /* Move left/right: -20px or 20px */
+    transform: translateX(0);
 }
     
 .next-right {
