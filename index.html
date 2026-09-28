@@ -595,13 +595,13 @@ header {
 }
 
 .deco-diamond {
-    width: 11px;
-    height: 11px;
-    background: #00B7E2;
-    transform: rotate(45deg);
+    font-size: 18px;               /* size of the star – adjust as you like */
+    line-height: 1;
+    color: #00B7E2;
     flex-shrink: 0;
 
-    box-shadow:
+    /* glow */
+    text-shadow:
         0 0 6px #00B7E2,
         0 0 12px rgba(0, 183, 226, 0.55),
         0 0 20px rgba(0, 183, 226, 0.3);
@@ -1165,7 +1165,7 @@ footer {
                 NEXT?
                 <span class="title-deco">
                     <span class="deco-line left"></span>
-                    <span class="deco-diamond"></span>
+                    <span class="deco-diamond">🟆</span>
                     <span class="deco-line right"></span>
                 </span>
             </span>
