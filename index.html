@@ -1244,10 +1244,23 @@ Who made things a little better</p>
             hasScrolled = true;
             sessionStorage.setItem(STORAGE_KEY, "1");
 
-            // Smooth scroll so the banner is completely out of view
+            // Smooth scroll with different offsets for mobile / desktop
             const firstSection = document.querySelector(".celebrating-section");
             if (firstSection) {
-                firstSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                const isMobile = window.innerWidth <= 700;   // same breakpoint you use in CSS
+
+                // Adjust these two numbers as you like:
+                const desktopOffset = 40;     // pixels to stop above the section (0 = top of section)
+                const mobileOffset  = 65;    // usually need a bit more on mobile because of the header
+
+                const offset = isMobile ? mobileOffset : desktopOffset;
+
+                const targetPosition = firstSection.getBoundingClientRect().top + window.scrollY - offset;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: "smooth"
+                });
             }
         }
     });
