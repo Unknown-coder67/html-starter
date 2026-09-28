@@ -489,7 +489,7 @@ header {
    ========================================================= */
 
 .giant-title {
-    font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback", sans-serif;
+    font-family: "DM Sans", Arial, sans-serif;
     font-size: clamp(3.2rem, 7vw, 5.5rem); /* Overall text size: min 3.2rem, scales with screen, max 5.5rem */
     line-height: 1;                         /* Vertical height of each line */
     color: #08245B;                         /* Main text color */
@@ -536,33 +536,22 @@ header {
    ========================================================= */
 
 .giant-title .who-line {
-    display: block;                          /* Makes WHO'S behave as its own line */
+    display: block;
 
-    font-size: 1em;                          /* SAME SIZE as NEXT? — do not make smaller */
-    
-    font-weight: 100;                        /* VERY THIN font weight */
-    /* 100 = thinnest
-       200 = extra thin
-       300 = light
-       400 = normal
-       500 = medium
-       700 = bold
-       750 = your current bold weight */
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 1em;
+    font-weight: 100 !important;
+    font-style: normal;
+    line-height: 1;
 
-    line-height: 0.8;                          /* Controls vertical height of WHO'S */
+    text-align: center;
 
-    text-align: center;                      /* Centers the text */
+    margin: 0;
+    padding: 0;
 
-    margin: 0;                               /* Space outside WHO'S */
-    padding: 0;                              /* Space inside WHO'S */
+    letter-spacing: -0.02em;
 
-    letter-spacing: -0.02em;                /* Controls spacing between letters */
-    /* 0 = normal
-       0.02em = more spacing
-       -0.02em = tighter spacing */
-
-    /* MANUAL POSITIONING */
-    transform: translateX(0);                /* Move left/right: -20px or 20px */
+    transform: translateX(0);
 }
 
 
