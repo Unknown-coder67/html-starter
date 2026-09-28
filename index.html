@@ -1244,10 +1244,11 @@ Who made things a little better</p>
     video.currentTime = 0;
     video.play().catch(() => {});
 
-    let hasScrolled = false;
+    let hasAutoScrolled = false;
+    let userHasScrolled = false;
 
     // Custom slow smooth scroll
-    function slowScrollTo(targetY, duration = 1600) {
+    function slowScrollTo(targetY, duration = 1500) {
         const startY = window.scrollY;
         const distance = targetY - startY;
         const startTime = performance.now();
@@ -1271,52 +1272,65 @@ Who made things a little better</p>
         requestAnimationFrame(animate);
     }
 
-    function startScrollAndCollapse() {
-        if (hasScrolled) return;
-        hasScrolled = true;
-
-        // 1. Collapse the banner
+    function collapseBanner() {
         bannerWrap.style.transition = "height 0.6s ease, opacity 0.4s ease";
         bannerWrap.style.height = "0";
         bannerWrap.style.opacity = "0";
         bannerWrap.style.overflow = "hidden";
 
-        // 2. Wait until the banner has finished collapsing, then scroll accurately
+        setTimeout(() => {
+            bannerWrap.style.display = "none";
+        }, 650);
+    }
+
+    function startAutoScroll() {
+        if (hasAutoScrolled || userHasScrolled) return;
+        hasAutoScrolled = true;
+
+        // Collapse banner first
+        collapseBanner();
+
+        // Wait for collapse, then scroll to a safe position
         setTimeout(() => {
             const firstSection = document.querySelector(".celebrating-section");
             if (!firstSection) return;
 
-            // Account for the fixed header height
-            const headerHeight = header ? header.offsetHeight : 70;
-            const targetPosition = firstSection.offsetTop - headerHeight;
+            const headerHeight = header ? header.offsetHeight : 74;
 
-            slowScrollTo(targetPosition, 1500);
+            // Extra space so sticky nav + first line are fully visible
+            const isMobile = window.innerWidth <= 700;
+            const extraOffset = isMobile ? 90 : 30;   // ← adjust these if needed
 
-            // Fully remove the banner
-            setTimeout(() => {
-                bannerWrap.style.display = "none";
-            }, 100);
-        }, 650); // wait for the height transition to finish
+            const targetPosition = firstSection.offsetTop - headerHeight - extraOffset;
+
+            slowScrollTo(Math.max(0, targetPosition), 1500);
+        }, 650);
     }
 
-    // Trigger at 3 seconds
+    // Trigger auto-scroll at 5 seconds (only if user hasn't scrolled)
     video.addEventListener("timeupdate", () => {
-        if (!hasScrolled && video.currentTime >= 5) {
-            startScrollAndCollapse();
+        if (!hasAutoScrolled && !userHasScrolled && video.currentTime >= 5) {
+            startAutoScroll();
         }
     });
 
     // Fallback
     video.addEventListener("ended", () => {
-        startScrollAndCollapse();
+        if (!hasAutoScrolled && !userHasScrolled) {
+            startAutoScroll();
+        }
     });
 
-    // Manual scroll also collapses the banner
-    let manualScrollHandled = false;
+    // Detect manual scrolling → cancel auto-scroll and just collapse the banner
     window.addEventListener("scroll", () => {
-        if (!manualScrollHandled && window.scrollY > 80) {
-            manualScrollHandled = true;
-            startScrollAndCollapse();
+        if (window.scrollY > 40) {
+            userHasScrolled = true;
+
+            // Still remove the banner, but don't force any scroll
+            if (!hasAutoScrolled) {
+                hasAutoScrolled = true;
+                collapseBanner();
+            }
         }
     }, { passive: true });
 })();
