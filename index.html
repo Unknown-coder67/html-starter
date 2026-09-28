@@ -1231,6 +1231,7 @@ Who made things a little better</p>
 (function () {
     const video = document.getElementById("bannerVideo");
     const bannerWrap = document.querySelector(".banner-wrap");
+    const header = document.querySelector("header");
     if (!video || !bannerWrap) return;
 
     // Force page to the very top on every load / reload
@@ -1274,26 +1275,28 @@ Who made things a little better</p>
         if (hasScrolled) return;
         hasScrolled = true;
 
-        // 1. Collapse the banner first
-        bannerWrap.style.transition = "height 0.7s ease, opacity 0.5s ease";
+        // 1. Collapse the banner
+        bannerWrap.style.transition = "height 0.6s ease, opacity 0.4s ease";
         bannerWrap.style.height = "0";
         bannerWrap.style.opacity = "0";
         bannerWrap.style.overflow = "hidden";
 
-        // 2. After the height starts changing, scroll to the real top of About
+        // 2. Wait until the banner has finished collapsing, then scroll accurately
         setTimeout(() => {
             const firstSection = document.querySelector(".celebrating-section");
-            if (firstSection) {
-                // Now that banner height is 0, offsetTop is correct
-                const targetPosition = firstSection.offsetTop;
-                slowScrollTo(targetPosition, 1600);
-            }
+            if (!firstSection) return;
 
-            // Fully remove the banner from the DOM after the transition
+            // Account for the fixed header height
+            const headerHeight = header ? header.offsetHeight : 70;
+            const targetPosition = firstSection.offsetTop - headerHeight;
+
+            slowScrollTo(targetPosition, 1500);
+
+            // Fully remove the banner
             setTimeout(() => {
                 bannerWrap.style.display = "none";
-            }, 750);
-        }, 50);
+            }, 100);
+        }, 650); // wait for the height transition to finish
     }
 
     // Trigger at 3 seconds
@@ -1303,7 +1306,7 @@ Who made things a little better</p>
         }
     });
 
-    // Fallback if video ends early
+    // Fallback
     video.addEventListener("ended", () => {
         startScrollAndCollapse();
     });
