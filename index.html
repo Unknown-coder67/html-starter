@@ -490,20 +490,30 @@ header {
 
 .giant-title {
     font-family: "DM Sans", Arial, sans-serif;
-    font-size: clamp(3.2rem, 7vw, 5.5rem); /* Overall text size: min 3.2rem, scales with screen, max 5.5rem */
-    line-height: 1;                         /* Vertical height of each line */
-    color: #08245B;                         /* Main text color */
-    margin: 0;                              /* Space outside the title */
+    font-size: clamp(3.2rem, 7vw, 5.5rem);
+    line-height: 1;
+    color: #08245B;
+    margin: 0;
 
-    padding: 40px;                         /* Space INSIDE the title box: top/right/bottom/left */
+    /* Lock the box to the previous size */
+    width: 441px;
+    height: 372px;
 
-    background-image: url("/who-is-next.jpg"); /* Background image */
-    background-size: cover;                    /* Makes image cover the entire title area */
-    background-position: center;               /* Controls which part of image is visible */
-    background-repeat: no-repeat;              /* Prevents image from repeating */
+    padding: 40px;
+    box-sizing: border-box;
 
-    transition: transform 0.28s ease;       /* Speed of hover movement */
-    cursor: default;                        /* Normal mouse cursor */
+    background-image: url("/who-is-next.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    transition: transform 0.28s ease;
+    cursor: default;
+
+    /* Keep the flex behavior that was present before */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
@@ -540,9 +550,9 @@ header {
 
     font-family: "DM Sans", Arial, sans-serif;
     font-size: 1em;
-    font-weight: 100;
+    font-weight: 300;
     font-style: normal;
-    font-variation-settings: "opsz" 14, "wght" 100;  /* ← this is the key fix */
+    font-variation-settings: "opsz" 14, "wght" 300;  /* ← this is the key fix */
     line-height: 1;
 
     text-align: center;
