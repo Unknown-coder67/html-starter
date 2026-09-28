@@ -484,63 +484,112 @@ header {
     justify-content: flex-start;
 }
 
+/* =========================================================
+   WHO IS NEXT? — MAIN TITLE
+   ========================================================= */
+
 .giant-title {
     font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback", sans-serif;
-    font-weight: 750;
-    font-size: clamp(3.2rem, 7vw, 5.5rem);
-    line-height: 1.05;
-    color: #08245B;
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.06em;
-    white-space: nowrap;
-    transition: transform 0.28s ease;
-    cursor: default;
+    font-size: clamp(3.2rem, 7vw, 5.5rem); /* Overall text size: min 3.2rem, scales with screen, max 5.5rem */
+    line-height: 1;                         /* Vertical height of each line */
+    color: #08245B;                         /* Main text color */
+    margin: 0;                              /* Space outside the title */
 
-    /* Background image */
-    background-image: url("/who-is-next.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    padding: 40px;                         /* Space INSIDE the title box: top/right/bottom/left */
 
-    /* Space around the text without changing font size */
-    padding: 40px;
+    background-image: url("/who-is-next.jpg"); /* Background image */
+    background-size: cover;                    /* Makes image cover the entire title area */
+    background-position: center;               /* Controls which part of image is visible */
+    background-repeat: no-repeat;              /* Prevents image from repeating */
+
+    transition: transform 0.28s ease;       /* Speed of hover movement */
+    cursor: default;                        /* Normal mouse cursor */
 }
 
+
+/* Move the entire title slightly upward when hovered */
 .giant-title:hover {
-    transform: translateY(-6px);
+    transform: translateY(-6px);             /* -6px = move upward; change to 0 to disable */
 }
+
+
+/* =========================================================
+   TWO TITLE LINES — WHO'S / NEXT?
+   ========================================================= */
 
 .giant-title .lines {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.05;
+    display: flex;                           /* Allows us to control the two lines */
+    flex-direction: column;                  /* Places WHO'S above NEXT? */
+
+    align-items: center;                     /* Centers BOTH lines horizontally */
+
+    gap: 0;                                  /* Space between WHO'S and NEXT? */
+    /* Example: gap: 10px; = more space
+       Example: gap: -5px; = lines overlap */
+
+    width: 100%;                             /* Makes the line container fill the title */
 }
 
-.giant-title .lines span {
-    display: block;
+
+/* =========================================================
+   WHO'S — FIRST LINE
+   ========================================================= */
+
+.giant-title .who-line {
+    display: block;                          /* Makes WHO'S behave as its own line */
+
+    font-size: 1em;                          /* SAME SIZE as NEXT? — do not make smaller */
+    
+    font-weight: 300;                        /* VERY THIN font weight */
+    /* 100 = thinnest
+       200 = extra thin
+       300 = light
+       400 = normal
+       500 = medium
+       700 = bold
+       750 = your current bold weight */
+
+    line-height: 1;                          /* Controls vertical height of WHO'S */
+
+    text-align: center;                      /* Centers the text */
+
+    margin: 0;                               /* Space outside WHO'S */
+    padding: 0;                              /* Space inside WHO'S */
+
+    letter-spacing: -0.02em;                /* Controls spacing between letters */
+    /* 0 = normal
+       0.02em = more spacing
+       -0.02em = tighter spacing */
+
+    /* MANUAL POSITIONING */
+    transform: translateX(0);                /* Move left/right: -20px or 20px */
 }
 
-.giant-title .lines .center-word {
-    text-align: center;
-}
 
-.giant-title .lines {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.05;
-}
+/* =========================================================
+   NEXT? — SECOND LINE
+   ========================================================= */
 
-.giant-title .lines span {
-    display: block;
-}
+.giant-title .next-line {
+    display: block;                          /* Makes NEXT? its own line */
 
-.giant-title .lines .center-word {
-    text-align: center;
-}
+    font-size: 1em;                          /* SAME SIZE as WHO'S */
 
+    font-weight: 750;                        /* Bold NEXT? */
+
+    line-height: 1;                          /* Controls vertical height of NEXT? */
+
+    text-align: center;                      /* Centers the text */
+
+    margin: 0;                               /* Space outside NEXT? */
+    padding: 0;                              /* Space inside NEXT? */
+
+    letter-spacing: -0.02em;                /* Controls spacing between letters */
+
+    /* MANUAL POSITIONING */
+    transform: translateX(0);                /* Move left/right: -20px or 20px */
+}
+    
 .next-right {
     padding-right: 40px;
     display: flex;
@@ -1070,6 +1119,7 @@ footer {
             <span class="lines">
                 <span>WHO'S</span>
                 <span>NEXT</span>
+            </span>
         </h2>
     </div>
     <div class="next-right">
