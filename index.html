@@ -108,11 +108,6 @@ header {
     width: 100%;
 }
 
-
-/* =========================================
-   NOMINATE + WINNERS BUTTONS
-   ========================================= */
-
 .header-nav a.nominate-btn,
 .header-nav a.winners-btn-header {
     display: flex;
@@ -143,8 +138,6 @@ header {
     column-gap: 8px;
 }
 
-
-/* Underline */
 .header-nav a.nominate-btn::after,
 .header-nav a.winners-btn-header::after {
     left: 17px;
@@ -158,8 +151,6 @@ header {
     transition: transform 200ms ease;
 }
 
-
-/* Hover text */
 .header-nav a.nominate-btn:hover,
 .header-nav a.winners-btn-header:hover {
     background: transparent !important;
@@ -168,8 +159,6 @@ header {
     transform: none;
 }
 
-
-/* Hover underline */
 .header-nav a.nominate-btn:hover::after,
 .header-nav a.winners-btn-header:hover::after {
     transform: scaleX(1);
@@ -178,7 +167,7 @@ header {
 .banner-wrap {
     position: relative;
     width: 100%;
-    height: 100vh;                 /* full viewport height */
+    height: 100vh;
     margin: 0;
     overflow: hidden;
 }
@@ -194,109 +183,9 @@ header {
 .banner video {
     width: 100%;
     height: 100%;
-    object-fit: cover;             /* covers the entire area */
+    object-fit: cover;
     display: block;
 }
-
-/* =========================================================
-   BANNER TEXT OVERLAY
-   Each line is positioned independently with its own top/left.
-   Change the top / left values on each line to move it freely.
-   ========================================================= */
-
-/* ---- CONTAINER (full size of the video – don't move lines here) ---- */
-.banner-overlay {
-    position: absolute;
-    inset: 0;                    /* covers the whole video */
-    pointer-events: none;
-    z-index: 2;
-}
-
-/* =========================================================
-   LINE 1 – Headline: "Recognizing Our People"
-   ========================================================= */
-.banner-headline {
-    position: absolute;
-    /* ---- MOVE THIS LINE ---- */
-    top: 30%;                    /* % from top of video   | smaller = higher */
-    left: 20%;                    /* % from left of video  | smaller = further left */
-    /* ------------------------- */
-
-    margin: 0;
-    padding: 0;
-    max-width: 55%;
-
-    display: flex;
-    flex-direction: column;      /* stacks the two words under each other */
-    gap: 0.01em;                 /* space between "Recognizing" and "Our People" – increase for more gap */
-
-    font-size: clamp(2.2rem, 5.5vw, 3.8rem);
-    font-weight: 750;
-    line-height: 1.1;
-    letter-spacing: -0.02em;     /* space between letters */
-    text-align: left;
-}
-
-.banner-headline .headline-white {
-    display: block;
-    color: #051C47;              /* "Recognizing" color */
-}
-
-.banner-headline .headline-accent {
-    display: block;
-    color: #051C47;              /* "Our People" color */
-    margin-left: 0;              /* no horizontal gap now that they are stacked */
-}
-
-/* =========================================================
-   LINE 3 – Values: CARE | EXCELLENCE | TEAMWORK | INTEGRITY
-   ========================================================= */
-.banner-values {
-    position: absolute;
-    /* ---- MOVE THIS LINE ---- */
-    top: 60%;                    /* % from top of video – increase to move down */
-    left: 20%;                    /* % from left of video – increase to move right */
-    /* ------------------------- */
-
-    margin: 0;
-    padding: 0;
-
-    color: #00B7E2;
-    font-size: clamp(0.6rem, 1.2vw, 0.75rem);
-    font-weight: 750;
-    letter-spacing: 0.12em;      /* space between letters */
-    word-spacing: 0.15em;        /* space between words / pipes */
-    text-transform: uppercase;
-    text-align: left;
-}
-
-/* =========================================================
-   MOBILE – smaller fonts so the three lines never overlap
-   (desktop sizes stay unchanged)
-   ========================================================= */
-@media (max-width: 700px) {
-    .banner-headline {
-        top: 14%;
-        left: 5%;
-        max-width: 90%;
-        font-size: clamp(0.9rem, 4vw, 1.25rem);
-        gap: 0.02em;
-        line-height: 1.15;
-    }
-
-    .banner-values {
-        top: 52%;
-        left: 5%;
-        max-width: 92%;
-        font-size: clamp(0.294rem, 1.4vw, 0.455rem);
-        letter-spacing: 0.04em;
-        word-spacing: 0.04em;
-        white-space: nowrap;
-    }
-}
-/* =========================================================
-   END BANNER TEXT OVERLAY
-   ========================================================= */
 
 .bottom-line {
     text-align: center;
@@ -389,11 +278,10 @@ header {
     }
 }
 
-/* ===== Celebrating / About section (sticky nav) ===== */
 .celebrating-section {
     position: relative;
     width: 100%;
-    padding: 100px 0 60px;   /* increased top padding so content clears the header */
+    padding: 100px 0 60px;
     background: #FFFFFF;
 }
 
@@ -469,7 +357,6 @@ header {
     max-width: 1920px;
 }
 
-/* ===== Who's next? section ===== */
 .next-section {
     width: 100%;
     background-color: #FFFFFF;
@@ -488,10 +375,6 @@ header {
     justify-content: flex-start;
 }
 
-/* =========================================================
-   WHO IS NEXT? — MAIN TITLE
-   ========================================================= */
-
 .giant-title {
     font-family: "DM Sans", Arial, sans-serif;
     font-size: clamp(3.2rem, 7vw, 5.5rem);
@@ -499,11 +382,10 @@ header {
     color: #08245B;
     margin: 0;
 
-    /* Responsive size – no more horizontal overflow */
     width: 100%;
     max-width: 441px;
     height: auto;
-    aspect-ratio: 441 / 372;   /* keeps the same proportions */
+    aspect-ratio: 441 / 372;
 
     padding: 40px;
     box-sizing: border-box;
@@ -522,15 +404,9 @@ header {
 }
 
 
-/* Move the entire title slightly upward when hovered */
 .giant-title:hover {
-    transform: translateY(-6px);             /* -6px = move upward; change to 0 to disable */
+    transform: translateY(-6px);
 }
-
-
-/* =========================================================
-   TWO TITLE LINES — WHO'S / NEXT?
-   ========================================================= */
 
 .giant-title .lines {
     display: flex;
@@ -539,21 +415,15 @@ header {
     gap: 0;
     width: 100%;
 
-    /* Push both lines down a little (adjust the value as you like) */
-    transform: translateY(45px);   /* ← increase = more down, decrease = less */
+    transform: translateY(45px);
 }
-
-
-/* =========================================================
-   WHO'S — FIRST LINE (smaller)
-   ========================================================= */
 
 .giant-title .who-line {
     display: block;
 
     font-family: "DM Sans", Arial, sans-serif;
-    font-size: 0.32em;                 /* ← smaller than NEXT? (try 0.65em – 0.8em) */
-    font-weight: 300;                  /* your current weight */
+    font-size: 0.32em;
+    font-weight: 300;
     font-style: normal;
     font-variation-settings: "opsz" 14, "wght" 300;
     line-height: 0.7;
@@ -564,11 +434,6 @@ header {
     letter-spacing: -0.02em;
     transform: translateX(0);
 }
-
-
-/* =========================================================
-   NEXT? — SECOND LINE (larger / normal)
-   ========================================================= */
 
 .giant-title .next-line {
     display: flex;
@@ -586,10 +451,6 @@ header {
     letter-spacing: -0.02em;
 }
 
-/* =========================================================
-   DECORATION — glowing diamond + fading lines under NEXT?
-   ========================================================= */
-
 .title-deco {
     display: flex;
     align-items: center;
@@ -599,8 +460,9 @@ header {
     width: 100%;
 }
 
+/* ===== DESKTOP GLOW ===== */
 .deco-diamond {
-    font-size: 18px;               /* size of the star – adjust as you like */
+    font-size: 18px;
     line-height: 1;
     color: #00B7E2;
     flex-shrink: 0;
@@ -637,11 +499,22 @@ header {
         transparent 100%
     );
 }
-    
+
 .next-right {
     padding-right: 40px;
     display: flex;
     flex-direction: column;
+}
+
+
+/* ===== MOBILE GLOW, 50% LESS ===== */
+@media (max-width: 700px) {
+    .deco-diamond {
+        text-shadow:
+            0 0 3px #00B7E2,
+            0 0 6px rgba(0, 183, 226, 0.275),
+            0 0 10px rgba(0, 183, 226, 0.15);
+    }
 }
 
 .focus-item {
@@ -650,12 +523,11 @@ header {
     padding: 28px 0;
     opacity: 0.32;
     transition: opacity 0.35s ease;
-    /* transform lives on inner wrapper to avoid layout/border glitches */
 }
 
 .focus-item + .focus-item {
-    border-top: none; /* shared thicker line between them */
-    margin-left: 50px; /* staggered slightly to the right */
+    border-top: none;
+    margin-left: 50px;
 }
 
 .focus-item.is-near {
@@ -669,7 +541,7 @@ header {
 }
 
 .focus-item:hover {
-    opacity: 1; /* undim on hover as well */
+    opacity: 1;
 }
 
 .focus-item:hover .focus-item-inner {
@@ -725,7 +597,6 @@ header {
     -webkit-text-stroke: 1px currentColor;
 }
 
-/* ===== JIWAR WALL ===== */
 .jiwar-section {
     width: 100%;
     padding: 90px 0;
@@ -782,11 +653,11 @@ header {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: transparent;          /* removed background */
-    color: #08245B;                   /* same dark blue as most text */
-    border: none;                     /* already none, kept explicit */
+    background: transparent;
+    color: #08245B;
+    border: none;
     border-radius: 0;
-    padding: 0;                       /* no extra padding needed without bg */
+    padding: 0;
     font-family: inherit;
     font-size: 1rem;
     font-weight: 750;
@@ -1106,15 +977,13 @@ footer {
             id="bannerVideo"
             aria-label="Company Banner"
         >
-            <!-- Mobile version (608x1080) -->
-            <source src="/banner2.mp4" type="video/mp4" media="(max-width: 700px)">
+            <source src="/banner.mp4" type="video/mp4" media="(max-width: 700px)">
 
-            <!-- Desktop version (1920x1080) -->
             <source src="/banner.mp4" type="video/mp4">
         </video>
     </div>
 </div>
-<!-- 1. About section (moved above Celebrating What Matters) -->
+
 <section class="celebrating-section">
     <div class="celebrating-layout">
         <nav class="celebrating-nav">
@@ -1164,7 +1033,7 @@ footer {
         </div>
     </div>
 </section>
-<!-- 2. Who is next? section -->
+
 <section class="next-section fade-in" id="who-is-next">
     <div class="next-left">
     <h2 class="giant-title">
@@ -1203,7 +1072,7 @@ Every role has a purpose. every contribution has its place. Together, they are w
         </div>
     </div>
 </section>
-<!-- 4. THE JIWAR WALL -->
+
 <section class="jiwar-section fade-in" id="jiwar-wall">
     <div class="jiwar-inner">
         <div class="jiwar-left">
@@ -1218,7 +1087,6 @@ Who made things a little better</p>
             </a>
         </div>
         <div class="jiwar-right wall-canvas" id="wallCanvas">
-            <!-- Wall notes from localStorage appear here -->
         </div>
     </div>
 </section>
@@ -1234,20 +1102,17 @@ Who made things a little better</p>
     const header = document.querySelector("header");
     if (!video || !bannerWrap) return;
 
-    // Force page to the very top on every load / reload
     if (history.scrollRestoration) {
         history.scrollRestoration = "manual";
     }
     window.scrollTo(0, 0);
 
-    // Make sure video starts from the beginning
     video.currentTime = 0;
     video.play().catch(() => {});
 
     let hasScrolled = false;
 
-    // Custom slow smooth scroll
-    function slowScrollTo(targetY, duration = 9000) {
+    function slowScrollTo(targetY, duration = 1500) {
         const startY = window.scrollY;
         const distance = targetY - startY;
         const startTime = performance.now();
@@ -1286,17 +1151,14 @@ Who made things a little better</p>
         if (hasScrolled) return;
         hasScrolled = true;
 
-        // Collapse banner first
         collapseBanner();
 
-        // Wait for collapse, then scroll
         setTimeout(() => {
             const firstSection = document.querySelector(".celebrating-section");
             if (!firstSection) return;
 
             const headerHeight = header ? header.offsetHeight : 74;
 
-            // Final safe position (extra space so sticky nav + text are fully visible)
             const isMobile = window.innerWidth <= 700;
             const extra = isMobile ? 20 : 10;
 
@@ -1306,19 +1168,16 @@ Who made things a little better</p>
         }, 650);
     }
 
-    // Trigger at 5 seconds
     video.addEventListener("timeupdate", () => {
         if (!hasScrolled && video.currentTime >= 5) {
             startAutoScroll();
         }
     });
 
-    // Fallback
     video.addEventListener("ended", () => {
         startAutoScroll();
     });
 
-    // If user scrolls manually early → still run the auto-scroll to reposition them
     window.addEventListener("scroll", () => {
         if (!hasScrolled && window.scrollY > 60) {
             startAutoScroll();
@@ -1326,7 +1185,6 @@ Who made things a little better</p>
     }, { passive: true });
 })();
     
-/* Fade-in */
 const fadeElements = document.querySelectorAll(".fade-in:not(#bannerVideo)");
 const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -1339,7 +1197,6 @@ const fadeObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 fadeElements.forEach((el) => fadeObserver.observe(el));
 
-/* Celebrating sticky nav – only About */
 const celebratingSections = document.querySelectorAll("#about");
 const celebratingLinks = document.querySelectorAll(".celebrating-nav a");
 
@@ -1404,10 +1261,9 @@ celebratingLinks.forEach((link) => {
     });
 });
 
-/* Focus items – undim when near viewport center (±250px), dim again when past */
 (function () {
     const focusItems = document.querySelectorAll(".focus-item");
-    const RANGE = 250; /* pixels from viewport center */
+    const RANGE = 250;
 
     function updateFocusItems() {
         const viewportCenter = window.innerHeight / 2;
@@ -1415,7 +1271,6 @@ celebratingLinks.forEach((link) => {
             const rect = item.getBoundingClientRect();
             const itemCenter = rect.top + rect.height / 2;
             const dist = Math.abs(itemCenter - viewportCenter);
-            /* Undim only while within range of center; dim when approaching OR scrolling past */
             if (dist <= RANGE) {
                 item.classList.add("is-near");
             } else {
@@ -1429,7 +1284,7 @@ celebratingLinks.forEach((link) => {
     updateFocusItems();
 })();
 
-/* localStorage demos: wall notes */
+/* localStorage demo: wall notes */
 (function () {
     function escapeHtml(s) {
         return String(s)
