@@ -1241,12 +1241,12 @@ Who made things a little better</p>
 
     // Make sure video starts from the beginning
     video.currentTime = 0;
-    video.play().catch(() => {});   // ignore autoplay errors
+    video.play().catch(() => {});
 
     let hasScrolled = false;
 
     // Custom slow smooth scroll
-    function slowScrollTo(targetY, duration = 1800) {
+    function slowScrollTo(targetY, duration = 1600) {
         const startY = window.scrollY;
         const distance = targetY - startY;
         const startTime = performance.now();
@@ -1264,67 +1264,60 @@ Who made things a little better</p>
 
             if (progress < 1) {
                 requestAnimationFrame(animate);
-            } else {
-                // Scroll finished → collapse the banner
-                collapseBanner();
             }
         }
 
         requestAnimationFrame(animate);
     }
 
-    function collapseBanner() {
-        bannerWrap.style.transition = "height 0.8s ease, opacity 0.6s ease";
+    function startScrollAndCollapse() {
+        if (hasScrolled) return;
+        hasScrolled = true;
+
+        // 1. Collapse the banner first
+        bannerWrap.style.transition = "height 0.7s ease, opacity 0.5s ease";
         bannerWrap.style.height = "0";
         bannerWrap.style.opacity = "0";
         bannerWrap.style.overflow = "hidden";
 
+        // 2. After the height starts changing, scroll to the real top of About
         setTimeout(() => {
-            bannerWrap.style.display = "none";
-        }, 850);
+            const firstSection = document.querySelector(".celebrating-section");
+            if (firstSection) {
+                // Now that banner height is 0, offsetTop is correct
+                const targetPosition = firstSection.offsetTop;
+                slowScrollTo(targetPosition, 1600);
+            }
+
+            // Fully remove the banner from the DOM after the transition
+            setTimeout(() => {
+                bannerWrap.style.display = "none";
+            }, 750);
+        }, 50);
     }
 
-    // Trigger scroll at 3.5 seconds
+    // Trigger at 3 seconds
     video.addEventListener("timeupdate", () => {
-        if (!hasScrolled && video.currentTime >= 3.5) {
-            hasScrolled = true;
-            startScroll();
+        if (!hasScrolled && video.currentTime >= 3) {
+            startScrollAndCollapse();
         }
     });
 
-    // Fallback: if video ends before 3.5s for any reason
+    // Fallback if video ends early
     video.addEventListener("ended", () => {
-        if (!hasScrolled) {
-            hasScrolled = true;
-            startScroll();
-        }
+        startScrollAndCollapse();
     });
 
-    function startScroll() {
-        const firstSection = document.querySelector(".celebrating-section");
-        if (!firstSection) return;
-
-        const isMobile = window.innerWidth <= 700;
-        const desktopOffset = 40;
-        const mobileOffset  = 65;
-        const offset = isMobile ? mobileOffset : desktopOffset;
-
-        const targetPosition = firstSection.getBoundingClientRect().top + window.scrollY - offset;
-
-        slowScrollTo(targetPosition, 1800);  // ← change 1800 to make scroll slower/faster
-    }
-
-    // If user scrolls manually early → collapse banner after a short delay
+    // Manual scroll also collapses the banner
     let manualScrollHandled = false;
     window.addEventListener("scroll", () => {
         if (!manualScrollHandled && window.scrollY > 80) {
             manualScrollHandled = true;
-            hasScrolled = true;
-            setTimeout(collapseBanner, 400);
+            startScrollAndCollapse();
         }
     }, { passive: true });
 })();
-
+    
 /* Fade-in */
 const fadeElements = document.querySelectorAll(".fade-in:not(#bannerVideo)");
 const fadeObserver = new IntersectionObserver((entries) => {
