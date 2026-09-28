@@ -527,64 +527,60 @@ header {
    TWO TITLE LINES — WHO'S / NEXT?
    ========================================================= */
 
+/* =========================================================
+   TWO TITLE LINES — WHO'S / NEXT?
+   ========================================================= */
+
 .giant-title .lines {
-    display: flex;                           /* Allows us to control the two lines */
-    flex-direction: column;                  /* Places WHO'S above NEXT? */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: 100%;
 
-    align-items: center;                     /* Centers BOTH lines horizontally */
-
-    gap: 0;                                  /* Space between WHO'S and NEXT? */
-    /* Example: gap: 10px; = more space
-       Example: gap: -5px; = lines overlap */
-
-    width: 100%;                             /* Makes the line container fill the title */
+    /* Push both lines down a little (adjust the value as you like) */
+    transform: translateY(18px);   /* ← increase = more down, decrease = less */
 }
 
 
 /* =========================================================
-   WHO'S — FIRST LINE
+   WHO'S — FIRST LINE (smaller)
    ========================================================= */
 
 .giant-title .who-line {
     display: block;
 
     font-family: "DM Sans", Arial, sans-serif;
-    font-size: 1em;
-    font-weight: 300;
+    font-size: 0.72em;                 /* ← smaller than NEXT? (try 0.65em – 0.8em) */
+    font-weight: 200;                  /* your current weight */
     font-style: normal;
-    font-variation-settings: "opsz" 14, "wght" 300;  /* ← this is the key fix */
+    font-variation-settings: "opsz" 14, "wght" 200;
     line-height: 1;
 
     text-align: center;
-
     margin: 0;
     padding: 0;
-
     letter-spacing: -0.02em;
-
     transform: translateX(0);
 }
 
 
 /* =========================================================
-   NEXT? — SECOND LINE
+   NEXT? — SECOND LINE (larger / normal)
    ========================================================= */
 
 .giant-title .next-line {
     display: block;
 
-    font-size: 1em;
+    font-size: 1em;                    /* ← stays at the full size of the parent */
     font-weight: 750;
-    font-variation-settings: "opsz" 14, "wght" 750;  /* keep it bold */
+    font-variation-settings: "opsz" 14, "wght" 750;
     line-height: 1;
 
     text-align: center;
-
     margin: 0;
     padding: 0;
-
     letter-spacing: -0.02em;
-
     transform: translateX(0);
 }
     
