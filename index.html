@@ -1102,16 +1102,20 @@ Who made things a little better</p>
     const header = document.querySelector("header");
     if (!video || !bannerWrap) return;
 
-    if (history.scrollRestoration) {
-        history.scrollRestoration = "manual";
+    const SCROLL_KEY = "jiwar_home_scroll";
+
+    // Detect if this is a hard reload
+    const navEntry = performance.getEntriesByType("navigation")[0];
+    const isHardReload = navEntry && navEntry.type === "reload";
+
+    // ---------- Helper functions ----------
+    function collapseBannerImmediately() {
+        bannerWrap.style.transition = "none";
+        bannerWrap.style.height = "0";
+        bannerWrap.style.opacity = "0";
+        bannerWrap.style.overflow = "hidden";
+        bannerWrap.style.display = "none";
     }
-    window.scrollTo(0, 0);
-
-    video.currentTime = 0;
-    video.play().catch(() => {});
-
-    let autoScrollDone = false;   // has the automatic sequence already run?
-    let userInterrupted = false;  // did the user scroll/touch/wheel manually?
 
     function slowScrollTo(targetY, duration = 1500) {
         const startY = window.scrollY;
@@ -1123,7 +1127,6 @@ Who made things a little better</p>
         }
 
         function animate(currentTime) {
-            // Stop the animation if the user starts scrolling mid-way
             if (userInterrupted) return;
 
             const elapsed = currentTime - startTime;
@@ -1151,15 +1154,54 @@ Who made things a little better</p>
         }, 650);
     }
 
+    // ---------- Restore previous position (coming back from another page) ----------
+    if (!isHardReload) {
+        const saved = sessionStorage.getItem(SCROLL_KEY);
+
+        if (saved !== null) {
+            // User is returning → restore position and skip everything
+            const scrollY = parseInt(saved, 10) || 0;
+
+            // Hide banner instantly (no animation, no video)
+            collapseBannerImmediately();
+
+            // Prevent browser from jumping around
+            if (history.scrollRestoration) {
+                history.scrollRestoration = "manual";
+            }
+
+            // Restore the exact position the user left at
+            window.scrollTo(0, scrollY);
+
+            // Make sure we never run the auto-scroll logic
+            return; // ← exit the whole banner script
+        }
+    }
+
+    // ---------- Normal first-visit / hard-reload behavior ----------
+    // Clear any old saved position on hard reload
+    if (isHardReload) {
+        sessionStorage.removeItem(SCROLL_KEY);
+    }
+
+    if (history.scrollRestoration) {
+        history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+
+    video.currentTime = 0;
+    video.play().catch(() => {});
+
+    let autoScrollDone = false;
+    let userInterrupted = false;
+
     function startAutoScroll() {
-        // Don't run if already done or if user already scrolled
         if (autoScrollDone || userInterrupted) return;
         autoScrollDone = true;
 
         collapseBanner();
 
         setTimeout(() => {
-            // Double-check the user didn't interrupt during the collapse
             if (userInterrupted) return;
 
             const firstSection = document.querySelector(".celebrating-section");
@@ -1174,7 +1216,6 @@ Who made things a little better</p>
         }, 650);
     }
 
-    // Video triggers (only if user hasn't touched anything)
     video.addEventListener("timeupdate", () => {
         if (!autoScrollDone && !userInterrupted && video.currentTime >= 5) {
             startAutoScroll();
@@ -1185,22 +1226,17 @@ Who made things a little better</p>
         startAutoScroll();
     });
 
-    // Detect real user interaction
     function markUserInterrupted() {
         if (userInterrupted) return;
         userInterrupted = true;
 
-        // Still collapse the banner so it doesn't stay covering the page,
-        // but do NOT force any scroll position.
         if (!autoScrollDone) {
             autoScrollDone = true;
             collapseBanner();
         }
     }
 
-    // Listen for actual user scrolling / wheel / touch
     window.addEventListener("scroll", () => {
-        // Only count it as user action if they actually moved a bit
         if (window.scrollY > 30) {
             markUserInterrupted();
         }
@@ -1208,6 +1244,18 @@ Who made things a little better</p>
 
     window.addEventListener("wheel", markUserInterrupted, { passive: true });
     window.addEventListener("touchmove", markUserInterrupted, { passive: true });
+
+    // ---------- Save scroll position when leaving the page ----------
+    function saveScrollPosition() {
+        sessionStorage.setItem(SCROLL_KEY, window.scrollY);
+    }
+
+    window.addEventListener("beforeunload", saveScrollPosition);
+    document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") {
+            saveScrollPosition();
+        }
+    });
 })();
     
 const fadeElements = document.querySelectorAll(".fade-in:not(#bannerVideo)");
