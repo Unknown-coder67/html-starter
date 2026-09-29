@@ -408,7 +408,7 @@ footer {
 <script>
   const SUPABASE_URL = 'https://fthkfenbpetpzlcpxvoc.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0aGtmZW5icGV0cHpsY3B4dm9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MjI3MTEsImV4cCI6MjEwNjA5ODcxMX0.-gd99emQuWNRazrc1DenTJpAYxfa_rt2A_BA_Vmqkrk';
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   // Placeholders
   var placeholders = [
@@ -504,7 +504,7 @@ footer {
     btn.disabled = true;
     btn.textContent = "Saving...";
 
-    const { error } = await supabase.from("wall_notes").insert([
+    const { error } = await sb.from("wall_notes").insert([
       {
         to_name: who.slice(0, 32),
         message: msg.slice(0, 200),
@@ -520,6 +520,7 @@ footer {
       return;
     }
 
+    // Success
     document.getElementById("formWrap").classList.add("hidden");
     document.getElementById("successWrap").classList.add("visible");
   });
