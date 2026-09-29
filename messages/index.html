@@ -404,61 +404,68 @@ footer {
     © 2026 Care Medical Jiwar
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-var placeholders = [
+  const SUPABASE_URL = 'https://fthkfenbpetpzlcpxvoc.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0aGtmZW5icGV0cHpsY3B4dm9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MjI3MTEsImV4cCI6MjEwNjA5ODcxMX0.-gd99emQuWNRazrc1DenTJpAYxfa_rt2A_BA_Vmqkrk';
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // Placeholders
+  var placeholders = [
     "Thank you for always having our back",
     "Thank you for your patience, your help and your constant positivity",
     "You made a tough day feel lighter — thank you",
     "Grateful for the way you show up for the team every day",
     "Your kindness didn't go unnoticed. Thank you."
-];
+  ];
 
-var rotatingEl = document.getElementById("rotatingPlaceholder");
-var messageTextarea = document.getElementById("messageText");
-var placeholderWrap = document.getElementById("placeholderWrap");
-var placeholderIndex = 0;
+  var rotatingEl = document.getElementById("rotatingPlaceholder");
+  var messageTextarea = document.getElementById("messageText");
+  var placeholderWrap = document.getElementById("placeholderWrap");
+  var placeholderIndex = 0;
 
-function showPlaceholder(index) {
+  function showPlaceholder(index) {
     rotatingEl.classList.add("fade-out");
     setTimeout(function () {
-        rotatingEl.textContent = placeholders[index];
-        rotatingEl.classList.remove("fade-out");
+      rotatingEl.textContent = placeholders[index];
+      rotatingEl.classList.remove("fade-out");
     }, 450);
-}
+  }
 
-rotatingEl.textContent = placeholders[0];
+  rotatingEl.textContent = placeholders[0];
 
-setInterval(function () {
+  setInterval(function () {
     if (messageTextarea.value.trim().length > 0) return;
     placeholderIndex = (placeholderIndex + 1) % placeholders.length;
     showPlaceholder(placeholderIndex);
-}, 4000);
+  }, 4000);
 
-messageTextarea.addEventListener("input", function () {
+  messageTextarea.addEventListener("input", function () {
     if (this.value.trim().length > 0) {
-        placeholderWrap.classList.add("has-value");
+      placeholderWrap.classList.add("has-value");
     } else {
-        placeholderWrap.classList.remove("has-value");
+      placeholderWrap.classList.remove("has-value");
     }
-});
+  });
 
-var optNamed = document.getElementById("optNamed");
-var optAnonymous = document.getElementById("optAnonymous");
-var nameFieldWrap = document.getElementById("nameFieldWrap");
+  // Name radio
+  var optNamed = document.getElementById("optNamed");
+  var optAnonymous = document.getElementById("optAnonymous");
+  var nameFieldWrap = document.getElementById("nameFieldWrap");
 
-function updateNameField() {
+  function updateNameField() {
     if (optNamed.checked) {
-        nameFieldWrap.classList.add("visible");
-        document.getElementById("senderName").focus();
+      nameFieldWrap.classList.add("visible");
+      document.getElementById("senderName").focus();
     } else {
-        nameFieldWrap.classList.remove("visible");
+      nameFieldWrap.classList.remove("visible");
     }
-}
+  }
 
-optNamed.addEventListener("change", updateNameField);
-optAnonymous.addEventListener("change", updateNameField);
+  optNamed.addEventListener("change", updateNameField);
+  optAnonymous.addEventListener("change", updateNameField);
 
-document.getElementById("writeAnother").addEventListener("click", function (e) {
+  document.getElementById("writeAnother").addEventListener("click", function (e) {
     e.preventDefault();
     document.getElementById("messageForm").reset();
     placeholderWrap.classList.remove("has-value");
@@ -466,41 +473,56 @@ document.getElementById("writeAnother").addEventListener("click", function (e) {
     optAnonymous.checked = true;
     document.getElementById("successWrap").classList.remove("visible");
     document.getElementById("formWrap").classList.remove("hidden");
-});
+  });
 
-document.getElementById("messageForm").addEventListener("submit", function (e) {
+  // Submit to Supabase
+  document.getElementById("messageForm").addEventListener("submit", async function (e) {
     e.preventDefault();
+
     var who = document.getElementById("thankWho").value.trim();
     var msg = document.getElementById("messageText").value.trim();
+
     if (!who) {
-        document.getElementById("thankWho").focus();
-        return;
+      document.getElementById("thankWho").focus();
+      return;
     }
     if (!msg) {
-        document.getElementById("messageText").focus();
-        return;
+      document.getElementById("messageText").focus();
+      return;
     }
+
     var fromName = null;
     if (optNamed.checked) {
-        fromName = document.getElementById("senderName").value.trim();
-        if (!fromName) {
-            document.getElementById("senderName").focus();
-            return;
-        }
+      fromName = document.getElementById("senderName").value.trim();
+      if (!fromName) {
+        document.getElementById("senderName").focus();
+        return;
+      }
     }
-    try {
-        var notes = JSON.parse(localStorage.getItem("jiwar_wall") || "[]");
-        notes.push({
-            to: who.slice(0, 32),
-            message: msg.slice(0, 200),
-            from: fromName ? fromName.slice(0, 40) : null,
-            at: Date.now()
-        });
-        localStorage.setItem("jiwar_wall", JSON.stringify(notes.slice(-30)));
-    } catch (err) {}
+
+    const btn = document.querySelector(".submit-btn");
+    btn.disabled = true;
+    btn.textContent = "Saving...";
+
+    const { error } = await supabase.from("wall_notes").insert([
+      {
+        to_name: who.slice(0, 32),
+        message: msg.slice(0, 200),
+        from_name: fromName ? fromName.slice(0, 40) : null
+      }
+    ]);
+
+    if (error) {
+      console.error(error);
+      alert("Something went wrong. Please try again.");
+      btn.disabled = false;
+      btn.innerHTML = 'Put it on the wall <span class="arrow">→</span>';
+      return;
+    }
+
     document.getElementById("formWrap").classList.add("hidden");
     document.getElementById("successWrap").classList.add("visible");
-});
+  });
 </script>
 </body>
 </html>
