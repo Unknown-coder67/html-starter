@@ -971,17 +971,16 @@ footer {
 <div class="banner-wrap">
     <div class="banner">
         <video
-            id="bannerVideo"
-            autoplay
-            muted
-            playsinline
-            preload="metadata"
-            poster="/banner-poster.webp"
-            aria-label="Company Banner"
-        >
-            <source src="/banner-mobile.mp4" type="video/mp4" media="(max-width: 700px)">
-            <source src="/banner-desktop.mp4" type="video/mp4">
-        </video>
+    id="bannerVideo"
+    muted
+    playsinline
+    webkit-playsinline
+    preload="metadata"
+    poster="/banner.webp"
+>
+    <source src="/banner-desktop.mp4" type="video/mp4" media="(min-width: 701px)">
+    <source src="/banner-mobile.mp4" type="video/mp4" media="(max-width: 700px)">
+</video>
     </div>
 </div>
 
@@ -1120,17 +1119,25 @@ Who made things a little better</p>
     const startTime = performance.now();
 
     function easeInOutCubic(t) {
-      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      return t < 0.5
+        ? 4 * t * t * t
+        : 1 - Math.pow(-2 * t + 2, 3) / 2;
     }
 
     function animate(currentTime) {
       if (userInterrupted) return;
+
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const eased = easeInOutCubic(progress);
+
       window.scrollTo(0, startY + distance * eased);
-      if (progress < 1) requestAnimationFrame(animate);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
     }
+
     requestAnimationFrame(animate);
   }
 
@@ -1139,116 +1146,156 @@ Who made things a little better</p>
     bannerWrap.style.height = "0";
     bannerWrap.style.opacity = "0";
     bannerWrap.style.overflow = "hidden";
-    setTimeout(() => { bannerWrap.style.display = "none"; }, 650);
+
+    setTimeout(() => {
+      bannerWrap.style.display = "none";
+    }, 650);
   }
 
   // Restore previous position
   if (!isHardReload) {
     const saved = sessionStorage.getItem(SCROLL_KEY);
+
     if (saved !== null) {
       const scrollY = parseInt(saved, 10) || 0;
+
       collapseBannerImmediately();
-      if (history.scrollRestoration) history.scrollRestoration = "manual";
+
+      if (history.scrollRestoration) {
+        history.scrollRestoration = "manual";
+      }
+
       window.scrollTo(0, scrollY);
       return;
     }
   }
 
-  if (isHardReload) sessionStorage.removeItem(SCROLL_KEY);
-  if (history.scrollRestoration) history.scrollRestoration = "manual";
+  if (isHardReload) {
+    sessionStorage.removeItem(SCROLL_KEY);
+  }
+
+  if (history.scrollRestoration) {
+    history.scrollRestoration = "manual";
+  }
+
   window.scrollTo(0, 0);
 
-  // ---- Explicit source selection (the important part) ----
+  // Mobile / desktop detection
   const isMobile = window.matchMedia("(max-width: 700px)").matches;
-  const mobileSrc = "/banner-mobile.mp4";
-  const desktopSrc = "/banner-desktop.mp4";
-  const desiredSrc = isMobile ? mobileSrc : desktopSrc;
 
-  // Clear any existing sources so the browser can't pick the wrong one
-  while (video.firstChild) video.removeChild(video.firstChild);
-
-  const source = document.createElement("source");
-  source.src = desiredSrc;
-  source.type = "video/mp4";
-  video.appendChild(source);
-
-  video.preload = "auto";          // force more aggressive buffering on mobile
+  // Video settings
+  // The actual <source> elements are now handled directly by HTML.
+  video.preload = "metadata";
   video.muted = true;
   video.playsInline = true;
   video.setAttribute("playsinline", "");
-  video.setAttribute("webkit-playsinline", ""); // older iOS
+  video.setAttribute("webkit-playsinline", "");
 
   let autoScrollDone = false;
   let userInterrupted = false;
 
   function startAutoScroll() {
     if (autoScrollDone || userInterrupted) return;
+
     autoScrollDone = true;
     collapseBanner();
+
     setTimeout(() => {
       if (userInterrupted) return;
+
       const firstSection = document.querySelector(".celebrating-section");
       if (!firstSection) return;
+
       const headerHeight = header ? header.offsetHeight : 74;
       const extra = isMobile ? 20 : 10;
-      const targetPosition = firstSection.offsetTop - headerHeight - extra;
+
+      const targetPosition =
+        firstSection.offsetTop - headerHeight - extra;
+
       slowScrollTo(Math.max(0, targetPosition), 1500);
     }, 650);
   }
 
   function tryPlay() {
     video.currentTime = 0;
+
     const p = video.play();
+
     if (p && typeof p.then === "function") {
       p.catch(() => {
-        // Autoplay blocked or not ready – try again when more data arrives
+        // Autoplay failed or video is not ready yet.
+        // Try again when Safari reports that enough data is available.
         video.addEventListener("canplay", tryPlay, { once: true });
       });
     }
   }
 
-  // Wait until we have enough data, then play
+  // Wait until the browser has video data before attempting playback
   video.addEventListener("loadeddata", tryPlay, { once: true });
   video.addEventListener("canplay", tryPlay, { once: true });
 
-  // Only start the 5-second timer *after* real playback has begun
+  // Only start the 5-second timer after real playback has begun
   video.addEventListener("timeupdate", () => {
-    if (!autoScrollDone && !userInterrupted && video.currentTime >= 5) {
+    if (
+      !autoScrollDone &&
+      !userInterrupted &&
+      video.currentTime >= 5
+    ) {
       startAutoScroll();
     }
   });
 
   video.addEventListener("ended", startAutoScroll);
 
-  // Fallback: if the video never starts after 8 s, still collapse
+  // Fallback: if the video never starts, don't leave the user stuck
   setTimeout(() => {
-    if (!autoScrollDone && !userInterrupted) startAutoScroll();
+    if (!autoScrollDone && !userInterrupted) {
+      startAutoScroll();
+    }
   }, 8000);
 
   function markUserInterrupted() {
     if (userInterrupted) return;
+
     userInterrupted = true;
+
     if (!autoScrollDone) {
       autoScrollDone = true;
       collapseBanner();
     }
   }
 
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 30) markUserInterrupted();
-  }, { passive: true });
-  window.addEventListener("wheel", markUserInterrupted, { passive: true });
-  window.addEventListener("touchmove", markUserInterrupted, { passive: true });
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (window.scrollY > 30) {
+        markUserInterrupted();
+      }
+    },
+    { passive: true }
+  );
+
+  window.addEventListener("wheel", markUserInterrupted, {
+    passive: true
+  });
+
+  window.addEventListener("touchmove", markUserInterrupted, {
+    passive: true
+  });
 
   function saveScrollPosition() {
     sessionStorage.setItem(SCROLL_KEY, window.scrollY);
   }
+
   window.addEventListener("beforeunload", saveScrollPosition);
+
   document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") saveScrollPosition();
+    if (document.visibilityState === "hidden") {
+      saveScrollPosition();
+    }
   });
 
-  // Kick off the load
+  // Start loading the selected HTML video source
   video.load();
 })();
     
