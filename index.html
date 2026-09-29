@@ -971,16 +971,17 @@ footer {
 <div class="banner-wrap">
     <div class="banner">
         <video
+            id="bannerVideo"
             autoplay
             muted
             playsinline
-            preload="auto"
-            id="bannerVideo"
+            loop
+            preload="metadata"
+            poster="/banner-poster.webp"
             aria-label="Company Banner"
         >
-            <source src="/banner.mp4" type="video/mp4" media="(max-width: 700px)">
-
-            <source src="/banner.mp4" type="video/mp4">
+            <source src="/banner-mobile.mp4" type="video/mp4" media="(max-width: 700px)">
+            <source src="/banner-desktop.mp4" type="video/mp4">
         </video>
     </div>
 </div>
