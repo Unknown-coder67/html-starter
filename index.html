@@ -1096,167 +1096,160 @@ Who made things a little better</p>
 </footer>
 <script>
     
-/* ===== Banner video control ===== */
 (function () {
-    const video = document.getElementById("bannerVideo");
-    const bannerWrap = document.querySelector(".banner-wrap");
-    const header = document.querySelector("header");
-    if (!video || !bannerWrap) return;
+  const video = document.getElementById("bannerVideo");
+  const bannerWrap = document.querySelector(".banner-wrap");
+  const header = document.querySelector("header");
+  if (!video || !bannerWrap) return;
 
-    const SCROLL_KEY = "jiwar_home_scroll";
+  const SCROLL_KEY = "jiwar_home_scroll";
+  const navEntry = performance.getEntriesByType("navigation")[0];
+  const isHardReload = navEntry && navEntry.type === "reload";
 
-    // Detect if this is a hard reload
-    const navEntry = performance.getEntriesByType("navigation")[0];
-    const isHardReload = navEntry && navEntry.type === "reload";
+  function collapseBannerImmediately() {
+    bannerWrap.style.transition = "none";
+    bannerWrap.style.height = "0";
+    bannerWrap.style.opacity = "0";
+    bannerWrap.style.overflow = "hidden";
+    bannerWrap.style.display = "none";
+  }
 
-    // ---------- Helper functions ----------
-    function collapseBannerImmediately() {
-        bannerWrap.style.transition = "none";
-        bannerWrap.style.height = "0";
-        bannerWrap.style.opacity = "0";
-        bannerWrap.style.overflow = "hidden";
-        bannerWrap.style.display = "none";
+  function slowScrollTo(targetY, duration = 1500) {
+    const startY = window.scrollY;
+    const distance = targetY - startY;
+    const startTime = performance.now();
+
+    function easeInOutCubic(t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     }
 
-    function slowScrollTo(targetY, duration = 1500) {
-        const startY = window.scrollY;
-        const distance = targetY - startY;
-        const startTime = performance.now();
-
-        function easeInOutCubic(t) {
-            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        }
-
-        function animate(currentTime) {
-            if (userInterrupted) return;
-
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = easeInOutCubic(progress);
-
-            window.scrollTo(0, startY + distance * eased);
-
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            }
-        }
-
-        requestAnimationFrame(animate);
+    function animate(currentTime) {
+      if (userInterrupted) return;
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeInOutCubic(progress);
+      window.scrollTo(0, startY + distance * eased);
+      if (progress < 1) requestAnimationFrame(animate);
     }
+    requestAnimationFrame(animate);
+  }
 
-    function collapseBanner() {
-        bannerWrap.style.transition = "height 0.6s ease, opacity 0.4s ease";
-        bannerWrap.style.height = "0";
-        bannerWrap.style.opacity = "0";
-        bannerWrap.style.overflow = "hidden";
+  function collapseBanner() {
+    bannerWrap.style.transition = "height 0.6s ease, opacity 0.4s ease";
+    bannerWrap.style.height = "0";
+    bannerWrap.style.opacity = "0";
+    bannerWrap.style.overflow = "hidden";
+    setTimeout(() => { bannerWrap.style.display = "none"; }, 650);
+  }
 
-        setTimeout(() => {
-            bannerWrap.style.display = "none";
-        }, 650);
+  // Restore previous position
+  if (!isHardReload) {
+    const saved = sessionStorage.getItem(SCROLL_KEY);
+    if (saved !== null) {
+      const scrollY = parseInt(saved, 10) || 0;
+      collapseBannerImmediately();
+      if (history.scrollRestoration) history.scrollRestoration = "manual";
+      window.scrollTo(0, scrollY);
+      return;
     }
+  }
 
-    // ---------- Restore previous position (coming back from another page) ----------
-    if (!isHardReload) {
-        const saved = sessionStorage.getItem(SCROLL_KEY);
+  if (isHardReload) sessionStorage.removeItem(SCROLL_KEY);
+  if (history.scrollRestoration) history.scrollRestoration = "manual";
+  window.scrollTo(0, 0);
 
-        if (saved !== null) {
-            // User is returning → restore position and skip everything
-            const scrollY = parseInt(saved, 10) || 0;
+  // ---- Explicit source selection (the important part) ----
+  const isMobile = window.matchMedia("(max-width: 700px)").matches;
+  const mobileSrc = "/banner-mobile.mp4";
+  const desktopSrc = "/banner-desktop.mp4";
+  const desiredSrc = isMobile ? mobileSrc : desktopSrc;
 
-            // Hide banner instantly (no animation, no video)
-            collapseBannerImmediately();
+  // Clear any existing sources so the browser can't pick the wrong one
+  while (video.firstChild) video.removeChild(video.firstChild);
 
-            // Prevent browser from jumping around
-            if (history.scrollRestoration) {
-                history.scrollRestoration = "manual";
-            }
+  const source = document.createElement("source");
+  source.src = desiredSrc;
+  source.type = "video/mp4";
+  video.appendChild(source);
 
-            // Restore the exact position the user left at
-            window.scrollTo(0, scrollY);
+  video.preload = "auto";          // force more aggressive buffering on mobile
+  video.muted = true;
+  video.playsInline = true;
+  video.setAttribute("playsinline", "");
+  video.setAttribute("webkit-playsinline", ""); // older iOS
 
-            // Make sure we never run the auto-scroll logic
-            return; // ← exit the whole banner script
-        }
-    }
+  let autoScrollDone = false;
+  let userInterrupted = false;
 
-    // ---------- Normal first-visit / hard-reload behavior ----------
-    // Clear any old saved position on hard reload
-    if (isHardReload) {
-        sessionStorage.removeItem(SCROLL_KEY);
-    }
+  function startAutoScroll() {
+    if (autoScrollDone || userInterrupted) return;
+    autoScrollDone = true;
+    collapseBanner();
+    setTimeout(() => {
+      if (userInterrupted) return;
+      const firstSection = document.querySelector(".celebrating-section");
+      if (!firstSection) return;
+      const headerHeight = header ? header.offsetHeight : 74;
+      const extra = isMobile ? 20 : 10;
+      const targetPosition = firstSection.offsetTop - headerHeight - extra;
+      slowScrollTo(Math.max(0, targetPosition), 1500);
+    }, 650);
+  }
 
-    if (history.scrollRestoration) {
-        history.scrollRestoration = "manual";
-    }
-    window.scrollTo(0, 0);
-
+  function tryPlay() {
     video.currentTime = 0;
-    video.play().catch(() => {});
-
-    let autoScrollDone = false;
-    let userInterrupted = false;
-
-    function startAutoScroll() {
-        if (autoScrollDone || userInterrupted) return;
-        autoScrollDone = true;
-
-        collapseBanner();
-
-        setTimeout(() => {
-            if (userInterrupted) return;
-
-            const firstSection = document.querySelector(".celebrating-section");
-            if (!firstSection) return;
-
-            const headerHeight = header ? header.offsetHeight : 74;
-            const isMobile = window.innerWidth <= 700;
-            const extra = isMobile ? 20 : 10;
-
-            const targetPosition = firstSection.offsetTop - headerHeight - extra;
-            slowScrollTo(Math.max(0, targetPosition), 1500);
-        }, 650);
+    const p = video.play();
+    if (p && typeof p.then === "function") {
+      p.catch(() => {
+        // Autoplay blocked or not ready – try again when more data arrives
+        video.addEventListener("canplay", tryPlay, { once: true });
+      });
     }
+  }
 
-    video.addEventListener("timeupdate", () => {
-        if (!autoScrollDone && !userInterrupted && video.currentTime >= 5) {
-            startAutoScroll();
-        }
-    });
+  // Wait until we have enough data, then play
+  video.addEventListener("loadeddata", tryPlay, { once: true });
+  video.addEventListener("canplay", tryPlay, { once: true });
 
-    video.addEventListener("ended", () => {
-        startAutoScroll();
-    });
-
-    function markUserInterrupted() {
-        if (userInterrupted) return;
-        userInterrupted = true;
-
-        if (!autoScrollDone) {
-            autoScrollDone = true;
-            collapseBanner();
-        }
+  // Only start the 5-second timer *after* real playback has begun
+  video.addEventListener("timeupdate", () => {
+    if (!autoScrollDone && !userInterrupted && video.currentTime >= 5) {
+      startAutoScroll();
     }
+  });
 
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 30) {
-            markUserInterrupted();
-        }
-    }, { passive: true });
+  video.addEventListener("ended", startAutoScroll);
 
-    window.addEventListener("wheel", markUserInterrupted, { passive: true });
-    window.addEventListener("touchmove", markUserInterrupted, { passive: true });
+  // Fallback: if the video never starts after 8 s, still collapse
+  setTimeout(() => {
+    if (!autoScrollDone && !userInterrupted) startAutoScroll();
+  }, 8000);
 
-    // ---------- Save scroll position when leaving the page ----------
-    function saveScrollPosition() {
-        sessionStorage.setItem(SCROLL_KEY, window.scrollY);
+  function markUserInterrupted() {
+    if (userInterrupted) return;
+    userInterrupted = true;
+    if (!autoScrollDone) {
+      autoScrollDone = true;
+      collapseBanner();
     }
+  }
 
-    window.addEventListener("beforeunload", saveScrollPosition);
-    document.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "hidden") {
-            saveScrollPosition();
-        }
-    });
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 30) markUserInterrupted();
+  }, { passive: true });
+  window.addEventListener("wheel", markUserInterrupted, { passive: true });
+  window.addEventListener("touchmove", markUserInterrupted, { passive: true });
+
+  function saveScrollPosition() {
+    sessionStorage.setItem(SCROLL_KEY, window.scrollY);
+  }
+  window.addEventListener("beforeunload", saveScrollPosition);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") saveScrollPosition();
+  });
+
+  // Kick off the load
+  video.load();
 })();
     
 const fadeElements = document.querySelectorAll(".fade-in:not(#bannerVideo)");
