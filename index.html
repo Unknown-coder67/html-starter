@@ -6,6 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Care Medical Jiwar</title>
 <link rel="icon" type="image/png" href="/favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap');
     
@@ -1357,51 +1358,70 @@ celebratingLinks.forEach((link) => {
     updateFocusItems();
 })();
 
-/* localStorage demo: wall notes */
+/* ===== Wall notes from Supabase ===== */
 (function () {
-    function escapeHtml(s) {
-        return String(s)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;");
+  const SUPABASE_URL = 'https://fthkfenbpetpzlcpxvoc.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0aGtmZW5icGV0cHpsY3B4dm9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MjI3MTEsImV4cCI6MjEwNjA5ODcxMX0.-gd99emQuWNRazrc1DenTJpAYxfa_rt2A_BA_Vmqkrk';
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  var wallCanvas = document.getElementById("wallCanvas");
+  if (!wallCanvas) return;
+
+  async function loadNotes() {
+    const { data: notes, error } = await supabase
+      .from("wall_notes")
+      .select("to_name, message, from_name")
+      .order("created_at", { ascending: false })
+      .limit(9);
+
+    if (error) {
+      console.error(error);
+      return;
     }
 
-    var wallCanvas = document.getElementById("wallCanvas");
-    if (wallCanvas) {
-        var notes = [];
-        try {
-            notes = JSON.parse(localStorage.getItem("jiwar_wall") || "[]");
-        } catch (e) { notes = []; }
-        var wallLayouts = [
-            { top: "8%", left: "4%", rotate: -4 },
-            { top: "12%", left: "38%", rotate: 3 },
-            { top: "10%", left: "68%", rotate: -2 },
-            { top: "42%", left: "12%", rotate: 5 },
-            { top: "48%", left: "48%", rotate: -6 },
-            { top: "40%", left: "72%", rotate: 2 },
-            { top: "72%", left: "6%", rotate: -3 },
-            { top: "70%", left: "36%", rotate: 4 },
-            { top: "68%", left: "66%", rotate: -5 }
-        ];
-        notes.slice(-9).forEach(function (note, i) {
-            var el = document.createElement("div");
-            el.className = "wall-note";
-            var layout = wallLayouts[i % wallLayouts.length];
-            el.style.top = layout.top;
-            el.style.left = layout.left;
-            el.style.transform = "rotate(" + layout.rotate + "deg)";
-            var html = '<div class="wall-to">To: ' + escapeHtml((note.to || "").slice(0, 32)) + "</div>";
-            html += '<div class="wall-body">' + escapeHtml((note.message || "").slice(0, 200)) + "</div>";
-            if (note.from) {
-                html += '<div class="wall-from">— ' + escapeHtml(String(note.from).slice(0, 40)) + "</div>";
-            } else {
-                html += '<div class="wall-from">— Anonymous</div>';
-            }
-            el.innerHTML = html;
-            wallCanvas.appendChild(el);
-        });
-    }
+    wallCanvas.innerHTML = "";
+
+    var wallLayouts = [
+      { top: "8%", left: "4%", rotate: -4 },
+      { top: "12%", left: "38%", rotate: 3 },
+      { top: "10%", left: "68%", rotate: -2 },
+      { top: "42%", left: "12%", rotate: 5 },
+      { top: "48%", left: "48%", rotate: -6 },
+      { top: "40%", left: "72%", rotate: 2 },
+      { top: "72%", left: "6%", rotate: -3 },
+      { top: "70%", left: "36%", rotate: 4 },
+      { top: "68%", left: "66%", rotate: -5 }
+    ];
+
+    (notes || []).forEach(function (note, i) {
+      var el = document.createElement("div");
+      el.className = "wall-note";
+      var layout = wallLayouts[i % wallLayouts.length];
+      el.style.top = layout.top;
+      el.style.left = layout.left;
+      el.style.transform = "rotate(" + layout.rotate + "deg)";
+
+      var html = '<div class="wall-to">To: ' + escapeHtml((note.to_name || "").slice(0, 32)) + "</div>";
+      html += '<div class="wall-body">' + escapeHtml((note.message || "").slice(0, 200)) + "</div>";
+      if (note.from_name) {
+        html += '<div class="wall-from">— ' + escapeHtml(String(note.from_name).slice(0, 40)) + "</div>";
+      } else {
+        html += '<div class="wall-from">— Anonymous</div>';
+      }
+      el.innerHTML = html;
+      wallCanvas.appendChild(el);
+    });
+  }
+
+  loadNotes();
 })();
 </script>
 </body>
