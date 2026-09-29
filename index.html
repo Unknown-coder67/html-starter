@@ -1110,7 +1110,8 @@ Who made things a little better</p>
     video.currentTime = 0;
     video.play().catch(() => {});
 
-    let hasScrolled = false;
+    let autoScrollDone = false;   // has the automatic sequence already run?
+    let userInterrupted = false;  // did the user scroll/touch/wheel manually?
 
     function slowScrollTo(targetY, duration = 1500) {
         const startY = window.scrollY;
@@ -1122,6 +1123,9 @@ Who made things a little better</p>
         }
 
         function animate(currentTime) {
+            // Stop the animation if the user starts scrolling mid-way
+            if (userInterrupted) return;
+
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
             const eased = easeInOutCubic(progress);
@@ -1148,28 +1152,31 @@ Who made things a little better</p>
     }
 
     function startAutoScroll() {
-        if (hasScrolled) return;
-        hasScrolled = true;
+        // Don't run if already done or if user already scrolled
+        if (autoScrollDone || userInterrupted) return;
+        autoScrollDone = true;
 
         collapseBanner();
 
         setTimeout(() => {
+            // Double-check the user didn't interrupt during the collapse
+            if (userInterrupted) return;
+
             const firstSection = document.querySelector(".celebrating-section");
             if (!firstSection) return;
 
             const headerHeight = header ? header.offsetHeight : 74;
-
             const isMobile = window.innerWidth <= 700;
             const extra = isMobile ? 20 : 10;
 
             const targetPosition = firstSection.offsetTop - headerHeight - extra;
-
             slowScrollTo(Math.max(0, targetPosition), 1500);
         }, 650);
     }
 
+    // Video triggers (only if user hasn't touched anything)
     video.addEventListener("timeupdate", () => {
-        if (!hasScrolled && video.currentTime >= 5) {
+        if (!autoScrollDone && !userInterrupted && video.currentTime >= 5) {
             startAutoScroll();
         }
     });
@@ -1178,11 +1185,29 @@ Who made things a little better</p>
         startAutoScroll();
     });
 
+    // Detect real user interaction
+    function markUserInterrupted() {
+        if (userInterrupted) return;
+        userInterrupted = true;
+
+        // Still collapse the banner so it doesn't stay covering the page,
+        // but do NOT force any scroll position.
+        if (!autoScrollDone) {
+            autoScrollDone = true;
+            collapseBanner();
+        }
+    }
+
+    // Listen for actual user scrolling / wheel / touch
     window.addEventListener("scroll", () => {
-        if (!hasScrolled && window.scrollY > 60) {
-            startAutoScroll();
+        // Only count it as user action if they actually moved a bit
+        if (window.scrollY > 30) {
+            markUserInterrupted();
         }
     }, { passive: true });
+
+    window.addEventListener("wheel", markUserInterrupted, { passive: true });
+    window.addEventListener("touchmove", markUserInterrupted, { passive: true });
 })();
     
 const fadeElements = document.querySelectorAll(".fade-in:not(#bannerVideo)");
