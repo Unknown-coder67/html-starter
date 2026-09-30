@@ -185,7 +185,7 @@ nav a:hover::after {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 28px 22px;
-    min-width: 0; /* critical: allows flex child to shrink */
+    min-width: 0;
 }
 
 .winner-card {
@@ -267,7 +267,7 @@ nav a:hover::after {
     display: flex;
     align-items: center;
     min-width: 0;
-    container-type: inline-size; /* 100cqw = track width */
+    container-type: inline-size;
 }
 
 .stay-tuned-text {
@@ -285,12 +285,6 @@ nav a:hover::after {
     -webkit-backface-visibility: hidden;
 }
 
-/*
-  Single copy, pure transform:
-  0%   → fully off left  (right edge of text at track left)
-  100% → fully off right (left edge of text at track right)
-  Jump is instant and invisible — no post-exit gap, no flash.
-*/
 @keyframes stayTunedRight {
     0% {
         transform: translateY(-50%) translateX(-100%);
@@ -300,7 +294,6 @@ nav a:hover::after {
     }
 }
 
-/* Dimmed effect – whole Q3 + Q4 as two units */
 .stay-tuned-block,
 .quarter-block {
     opacity: 0.22;
@@ -348,7 +341,6 @@ footer {
     background: #FFFFFF;
 }
 
-/* ========== Desktop-ish breakpoints ========== */
 
 @media (max-width: 1200px) {
     .winners-grid {
@@ -370,7 +362,6 @@ footer {
     }
 }
 
-/* ========== Mobile: keep horizontal layout like PC, 3 columns ========== */
 @media (max-width: 700px) {
     body {
         padding-top: 74px;
@@ -402,10 +393,9 @@ footer {
         margin-bottom: 24px;
     }
 
-    /* Keep side-by-side layout (label left + content right) */
     .quarter-block,
     .stay-tuned-block {
-        flex-direction: row;          /* override previous column stack */
+        flex-direction: row;
         align-items: flex-start;
         gap: 0;
         margin-bottom: 48px;
@@ -413,7 +403,7 @@ footer {
 
     .quarter-label,
     .stay-tuned-block .quarter-label {
-        width: 78px;                  /* compact but visible on left */
+        width: 78px;
         flex-shrink: 0;
         padding-right: 10px;
         padding-top: 4px;
@@ -425,7 +415,6 @@ footer {
         margin-bottom: 2px;
     }
 
-    /* Keep a thin timeline on mobile for visual continuity */
     .timeline-line {
         display: block;
         width: 2px;
@@ -469,7 +458,6 @@ footer {
         line-height: 1.45;
     }
 
-    /* Marquee track – critical fixes for Safari */
     .stay-tuned-track {
         height: 40px;
         width: auto;
@@ -477,7 +465,6 @@ footer {
         min-width: 0;
         overflow: hidden;
         position: relative;
-        /* force a proper containing block for absolute children */
         transform: translateZ(0);
         -webkit-transform: translateZ(0);
     }
@@ -488,7 +475,6 @@ footer {
     }
 }
 
-/* Extra small phones */
 @media (max-width: 380px) {
     .quarter-label,
     .stay-tuned-block .quarter-label {
@@ -741,8 +727,7 @@ footer {
 </footer>
 
 <script>
-/* Dimmed effect – Q4 and whole Q3 as two units.
-   The one closest to the viewport center is fully visible. */
+
 const dimBlocks = document.querySelectorAll(".stay-tuned-block, .quarter-block");
 
 function setActiveBlock(activeEl) {
@@ -781,7 +766,6 @@ window.addEventListener("scroll", updateDimFocus, { passive: true });
 window.addEventListener("resize", updateDimFocus);
 window.addEventListener("load", updateDimFocus);
 
-/* Ensure correct state after layout (important on iOS) */
 requestAnimationFrame(() => {
     requestAnimationFrame(updateDimFocus);
 });
