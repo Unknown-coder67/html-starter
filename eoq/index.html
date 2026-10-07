@@ -886,8 +886,8 @@ const departmentEmployees = {
     ],
 };
 
-let currentDepartment = "";   // the code, e.g. "RECQ4"
-let currentDeptName = "";     // e.g. "Reception"
+let currentDepartment = "";
+let currentDeptName = "";
 let selectedCandidate = "";
 let pendingVotingReveal = false;
 let isSubmitting = false;
@@ -946,13 +946,11 @@ async function verifyCode() {
         return;
     }
 
-    // Disable button while checking
     continueBtn.disabled = true;
     continueBtn.textContent = "CHECKING...";
     error.style.display = "none";
 
     try {
-        // Check if this department has already voted
         const { data, error: dbError } = await supabaseClient
             .from("department_votes")
             .select("id")
@@ -976,7 +974,6 @@ async function verifyCode() {
             return;
         }
 
-        // Code is valid and not used yet
         currentDepartment = code;
         currentDeptName = departmentCodes[code];
         document.getElementById("departmentBadge").textContent = currentDeptName + " Department";
@@ -1078,8 +1075,6 @@ async function confirmVote() {
     confirmBtn.textContent = "Submitting...";
 
     try {
-        // Insert the vote. The UNIQUE constraint on department_code
-        // will reject a second insert even if two people race.
         const { error: insertError } = await supabaseClient
             .from("department_votes")
             .insert({
@@ -1089,7 +1084,6 @@ async function confirmVote() {
             });
 
         if (insertError) {
-            // Unique violation = already voted
             if (insertError.code === "23505") {
                 alert("This department has already submitted its vote.");
             } else {
@@ -1102,7 +1096,17 @@ async function confirmVote() {
             return;
         }
 
-        // Success → show success screen
+        try {
+            await supabaseClient.functions.invoke("send-vote-email", {
+                body: {
+                    department_name: currentDeptName,
+                    winner_name: selectedCandidate
+                }
+            });
+        } catch (emailErr) {
+            console.error("Email failed (vote still saved):", emailErr);
+        }
+
         const votingSection = document.getElementById("votingSection");
         const successSection = document.getElementById("successSection");
         const codeSection = document.getElementById("codeSection");
