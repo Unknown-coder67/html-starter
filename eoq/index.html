@@ -868,8 +868,8 @@ nav a:hover {
 const SUPABASE_URL = "https://fthkfenbpetpzlcpxvoc.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0aGtmZW5icGV0cHpsY3B4dm9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MjI3MTEsImV4cCI6MjEwNjA5ODcxMX0.-gd99emQuWNRazrc1DenTJpAYxfa_rt2A_BA_Vmqkrk";
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
 // ============================================================
 // Department data (add more departments later here)
 // ============================================================
@@ -953,7 +953,7 @@ async function verifyCode() {
 
     try {
         // Check if this department has already voted
-        const { data, error: dbError } = await supabase
+        const { data, error: dbError } = await supabaseClient
             .from("department_votes")
             .select("id")
             .eq("department_code", code)
@@ -1080,7 +1080,7 @@ async function confirmVote() {
     try {
         // Insert the vote. The UNIQUE constraint on department_code
         // will reject a second insert even if two people race.
-        const { error: insertError } = await supabase
+        const { error: insertError } = await supabaseClient
             .from("department_votes")
             .insert({
                 department_code: currentDepartment,
