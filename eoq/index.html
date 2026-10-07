@@ -10,6 +10,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap" rel="stylesheet">
 
+<!-- Supabase JS client -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 * {
     margin: 0;
@@ -178,16 +181,13 @@ nav a:hover {
     width: 100%;
     height: 52px;
     color: #557083;
-
     border: 1px solid #cbdde5;
     border-radius: 10px;
     padding: 0 16px;
     text-align: center;
-
     font-family: inherit;
     font-size: 0.92rem;
     font-weight: inherit;
-
     outline: none;
 }
 
@@ -215,6 +215,11 @@ nav a:hover {
 .code-button:hover {
     color: #D79A1E;
     border-bottom-color: #D79A1E;
+}
+
+.code-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .code-error {
@@ -434,6 +439,11 @@ nav a:hover {
 
 .confirm-btn:hover {
     box-shadow: 0 0 20px rgba(215, 154, 30, 0.5);
+}
+
+.confirm-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .success-section {
@@ -722,7 +732,7 @@ nav a:hover {
             autocomplete="off"
         >
 
-        <button class="code-button" onclick="verifyCode()">
+        <button class="code-button" id="continueBtn" onclick="verifyCode()">
             CONTINUE
         </button>
 
@@ -764,7 +774,7 @@ nav a:hover {
         </div>
         <div class="confirmation-buttons">
             <button class="change-btn" onclick="changeSelection()">Change Selection</button>
-            <button class="confirm-btn" onclick="confirmVote()">Confirm Vote</button>
+            <button class="confirm-btn" id="confirmBtn" onclick="confirmVote()">Confirm Vote</button>
         </div>
     </div>
 </div>
@@ -852,6 +862,17 @@ nav a:hover {
 </div>
 
 <script>
+// ============================================================
+// 1. SUPABASE CONFIG – fill these two values from your project
+// ============================================================
+const SUPABASE_URL = "https://fthkfenbpetpzlcpxvoc.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0aGtmZW5icGV0cHpsY3B4dm9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MjI3MTEsImV4cCI6MjEwNjA5ODcxMX0.-gd99emQuWNRazrc1DenTJpAYxfa_rt2A_BA_Vmqkrk";
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ============================================================
+// Department data (add more departments later here)
+// ============================================================
 const departmentCodes = {
     "RECQ4": "Reception"
 };
@@ -865,9 +886,11 @@ const departmentEmployees = {
     ],
 };
 
-let currentDepartment = "";
+let currentDepartment = "";   // the code, e.g. "RECQ4"
+let currentDeptName = "";     // e.g. "Reception"
 let selectedCandidate = "";
 let pendingVotingReveal = false;
+let isSubmitting = false;
 
 const fadeElements = document.querySelectorAll(".fade-in");
 const fadeObserver = new IntersectionObserver((entries) => {
@@ -903,9 +926,10 @@ codeInput.addEventListener("blur", function () {
     }
 });
 
-function verifyCode() {
+async function verifyCode() {
     const input = document.getElementById("departmentCode");
     const error = document.getElementById("codeError");
+    const continueBtn = document.getElementById("continueBtn");
     const code = input.value.trim().toUpperCase();
     const codeSection = document.getElementById("codeSection");
     const candidatesContainer = document.querySelector(".candidates");
@@ -922,39 +946,71 @@ function verifyCode() {
         return;
     }
 
-    const usedCodes = JSON.parse(localStorage.getItem("eoqUsedCodes") || "[]");
-
-    if (usedCodes.includes(code)) {
-        error.textContent = "This department has already submitted its vote.";
-        error.style.display = "block";
-        return;
-    }
-
-    currentDepartment = code;
-    const deptName = departmentCodes[code];
-    document.getElementById("departmentBadge").textContent = deptName + " Department";
-
-    candidatesContainer.innerHTML = "";
-    const employees = departmentEmployees[deptName] || [];
-    employees.forEach(emp => {
-        const card = document.createElement("div");
-        card.className = "candidate";
-        card.dataset.name = emp.name;
-        card.innerHTML = `
-            <div class="candidate-image">
-                <img src="${emp.img}" alt="${emp.name}">
-            </div>
-            <h3>${emp.name}</h3>
-            <button class="vote-btn" onclick="selectCandidate(this)">Select</button>
-        `;
-        candidatesContainer.appendChild(card);
-    });
-
+    // Disable button while checking
+    continueBtn.disabled = true;
+    continueBtn.textContent = "CHECKING...";
     error.style.display = "none";
-    codeSection.classList.add("expanded");
 
-    pendingVotingReveal = true;
-    openCriteriaPopup();
+    try {
+        // Check if this department has already voted
+        const { data, error: dbError } = await supabase
+            .from("department_votes")
+            .select("id")
+            .eq("department_code", code)
+            .maybeSingle();
+
+        if (dbError) {
+            console.error(dbError);
+            error.textContent = "Something went wrong. Please try again.";
+            error.style.display = "block";
+            continueBtn.disabled = false;
+            continueBtn.textContent = "CONTINUE";
+            return;
+        }
+
+        if (data) {
+            error.textContent = "This department has already submitted its vote.";
+            error.style.display = "block";
+            continueBtn.disabled = false;
+            continueBtn.textContent = "CONTINUE";
+            return;
+        }
+
+        // Code is valid and not used yet
+        currentDepartment = code;
+        currentDeptName = departmentCodes[code];
+        document.getElementById("departmentBadge").textContent = currentDeptName + " Department";
+
+        candidatesContainer.innerHTML = "";
+        const employees = departmentEmployees[currentDeptName] || [];
+        employees.forEach(emp => {
+            const card = document.createElement("div");
+            card.className = "candidate";
+            card.dataset.name = emp.name;
+            card.innerHTML = `
+                <div class="candidate-image">
+                    <img src="${emp.img}" alt="${emp.name}">
+                </div>
+                <h3>${emp.name}</h3>
+                <button class="vote-btn" onclick="selectCandidate(this)">Select</button>
+            `;
+            candidatesContainer.appendChild(card);
+        });
+
+        error.style.display = "none";
+        codeSection.classList.add("expanded");
+
+        pendingVotingReveal = true;
+        openCriteriaPopup();
+
+    } catch (err) {
+        console.error(err);
+        error.textContent = "Something went wrong. Please try again.";
+        error.style.display = "block";
+    } finally {
+        continueBtn.disabled = false;
+        continueBtn.textContent = "CONTINUE";
+    }
 }
 
 function openCriteriaPopup() {
@@ -1013,40 +1069,66 @@ function changeSelection() {
     document.getElementById("confirmationBar").classList.remove("show");
 }
 
-function confirmVote() {
-    if (!selectedCandidate || !currentDepartment) return;
+async function confirmVote() {
+    if (!selectedCandidate || !currentDepartment || isSubmitting) return;
 
-    const votes = JSON.parse(localStorage.getItem("eoqVotes") || "{}");
-    const usedCodes = JSON.parse(localStorage.getItem("eoqUsedCodes") || "[]");
+    isSubmitting = true;
+    const confirmBtn = document.getElementById("confirmBtn");
+    confirmBtn.disabled = true;
+    confirmBtn.textContent = "Submitting...";
 
-    if (usedCodes.includes(currentDepartment)) return;
+    try {
+        // Insert the vote. The UNIQUE constraint on department_code
+        // will reject a second insert even if two people race.
+        const { error: insertError } = await supabase
+            .from("department_votes")
+            .insert({
+                department_code: currentDepartment,
+                department_name: currentDeptName,
+                winner_name: selectedCandidate
+            });
 
-    if (!votes[selectedCandidate]) {
-        votes[selectedCandidate] = 0;
+        if (insertError) {
+            // Unique violation = already voted
+            if (insertError.code === "23505") {
+                alert("This department has already submitted its vote.");
+            } else {
+                console.error(insertError);
+                alert("Could not submit the vote. Please try again.");
+            }
+            isSubmitting = false;
+            confirmBtn.disabled = false;
+            confirmBtn.textContent = "Confirm Vote";
+            return;
+        }
+
+        // Success → show success screen
+        const votingSection = document.getElementById("votingSection");
+        const successSection = document.getElementById("successSection");
+        const codeSection = document.getElementById("codeSection");
+
+        votingSection.classList.remove("visible");
+        document.getElementById("confirmationBar").classList.remove("show");
+        codeSection.classList.add("hidden");
+
+        setTimeout(() => {
+            votingSection.style.display = "none";
+            successSection.style.display = "block";
+            void successSection.offsetWidth;
+            successSection.classList.add("visible");
+            successSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 400);
+
+        // Email is sent automatically by the database trigger / Edge Function
+        // (see setup steps below). Nothing extra needed here.
+
+    } catch (err) {
+        console.error(err);
+        alert("Could not submit the vote. Please try again.");
+        isSubmitting = false;
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = "Confirm Vote";
     }
-
-    votes[selectedCandidate]++;
-    usedCodes.push(currentDepartment);
-
-    localStorage.setItem("eoqVotes", JSON.stringify(votes));
-    localStorage.setItem("eoqUsedCodes", JSON.stringify(usedCodes));
-
-    const votingSection = document.getElementById("votingSection");
-    const successSection = document.getElementById("successSection");
-    const codeSection = document.getElementById("codeSection");
-
-    votingSection.classList.remove("visible");
-    document.getElementById("confirmationBar").classList.remove("show");
-
-    codeSection.classList.add("hidden");
-
-    setTimeout(() => {
-        votingSection.style.display = "none";
-        successSection.style.display = "block";
-        void successSection.offsetWidth;
-        successSection.classList.add("visible");
-        successSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 400);
 }
 
 document.getElementById("departmentCode").addEventListener("keydown", function(event) {
