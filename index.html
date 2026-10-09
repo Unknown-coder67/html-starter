@@ -448,14 +448,12 @@ header {
     width: 100%;
 }
 
-/* ===== DESKTOP GLOW ===== */
 .deco-diamond {
     font-size: 18px;
     line-height: 1;
     color: #00B7E2;
     flex-shrink: 0;
 
-    /* glow */
     text-shadow:
         0 0 6px #00B7E2,
         0 0 12px rgba(0, 183, 226, 0.55),
@@ -495,7 +493,6 @@ header {
 }
 
 
-/* ===== MOBILE GLOW, VERY LOW ===== */
 @media (max-width: 700px) {
     .deco-diamond {
         text-shadow:
@@ -1131,7 +1128,6 @@ Who made things a little better</p>
     setTimeout(() => { bannerWrap.style.display = "none"; }, 650);
   }
 
-  // Restore previous position
   if (!isHardReload) {
     const saved = sessionStorage.getItem(SCROLL_KEY);
     if (saved !== null) {
@@ -1147,13 +1143,11 @@ Who made things a little better</p>
   if (history.scrollRestoration) history.scrollRestoration = "manual";
   window.scrollTo(0, 0);
 
-  // ---- Explicit source selection (the important part) ----
   const isMobile = window.matchMedia("(max-width: 700px)").matches;
   const mobileSrc = "/banner-mobile.mp4";
   const desktopSrc = "/banner-desktop.mp4";
   const desiredSrc = isMobile ? mobileSrc : desktopSrc;
 
-  // Clear any existing sources so the browser can't pick the wrong one
   while (video.firstChild) video.removeChild(video.firstChild);
 
   const source = document.createElement("source");
@@ -1161,11 +1155,11 @@ Who made things a little better</p>
   source.type = "video/mp4";
   video.appendChild(source);
 
-  video.preload = "auto";          // force more aggressive buffering on mobile
+  video.preload = "auto";
   video.muted = true;
   video.playsInline = true;
   video.setAttribute("playsinline", "");
-  video.setAttribute("webkit-playsinline", ""); // older iOS
+  video.setAttribute("webkit-playsinline", "");
 
   let autoScrollDone = false;
   let userInterrupted = false;
@@ -1190,17 +1184,14 @@ Who made things a little better</p>
     const p = video.play();
     if (p && typeof p.then === "function") {
       p.catch(() => {
-        // Autoplay blocked or not ready – try again when more data arrives
         video.addEventListener("canplay", tryPlay, { once: true });
       });
     }
   }
 
-  // Wait until we have enough data, then play
   video.addEventListener("loadeddata", tryPlay, { once: true });
   video.addEventListener("canplay", tryPlay, { once: true });
 
-  // Only start the 5-second timer *after* real playback has begun
   video.addEventListener("timeupdate", () => {
     if (!autoScrollDone && !userInterrupted && video.currentTime >= 5) {
       startAutoScroll();
@@ -1209,7 +1200,6 @@ Who made things a little better</p>
 
   video.addEventListener("ended", startAutoScroll);
 
-  // Fallback: if the video never starts after 8 s, still collapse
   setTimeout(() => {
     if (!autoScrollDone && !userInterrupted) startAutoScroll();
   }, 8000);
@@ -1237,7 +1227,6 @@ Who made things a little better</p>
     if (document.visibilityState === "hidden") saveScrollPosition();
   });
 
-  // Kick off the load
   video.load();
 })();
     
@@ -1340,7 +1329,6 @@ celebratingLinks.forEach((link) => {
     updateFocusItems();
 })();
 
-/* ===== Wall notes from Supabase ===== */
 (function () {
   const SUPABASE_URL = 'https://fthkfenbpetpzlcpxvoc.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0aGtmZW5icGV0cHpsY3B4dm9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MjI3MTEsImV4cCI6MjEwNjA5ODcxMX0.-gd99emQuWNRazrc1DenTJpAYxfa_rt2A_BA_Vmqkrk';
