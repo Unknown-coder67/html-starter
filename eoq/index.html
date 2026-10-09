@@ -601,6 +601,34 @@ nav a:hover {
 @media (max-width: 800px) {
     .candidates {
         grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .candidate {
+        padding: 8px;
+        border-radius: 12px;
+    }
+
+    .candidate-image {
+        height: 90px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+    }
+
+    .candidate-image img {
+        width: 55%;
+        height: 55%;
+    }
+
+    .candidate h3 {
+        font-size: 0.78rem;
+        margin-bottom: 6px;
+    }
+
+    .vote-btn {
+        height: 32px;
+        font-size: 0.75rem;
+        border-radius: 10px;
     }
 
     .confirmation-inner {
@@ -665,7 +693,7 @@ nav a:hover {
     }
 
     .candidate-image {
-        height: 130px;
+        height: 80px;
     }
 }
 
