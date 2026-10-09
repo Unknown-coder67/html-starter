@@ -1065,12 +1065,17 @@ function closeCriteriaAndContinue() {
         const votingSection = document.getElementById("votingSection");
         votingSection.classList.add("visible");
 
+// Wait for the layout to finish collapsing, then scroll to the very top of the voting section
         setTimeout(() => {
-            votingSection.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
+            const headerOffset = 74; // matches your body { padding-top: 74px }
+            const elementTop = votingSection.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementTop - headerOffset;
+
+            window.scrollTo({
+                top: Math.max(0, offsetPosition),
+                behavior: "smooth"
             });
-        }, 150);
+        }, 250); // slightly longer delay helps on mobile
     }
 }
 
