@@ -276,21 +276,72 @@ header {
         margin-bottom: 36px;
     }
     .card {
-        background: transparent;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-        padding: 8px 4px;
+        background: #FFFFFF;
+        border: 1px solid #dcebf1;
+        border-radius: 14px;
+        box-shadow: 0 6px 22px rgba(23, 50, 77, 0.09);
+        padding: 10px 6px;
     }
     .card-image {
-        width: 60%;
+        width: 55%;
         height: 36px;
         margin: 0 auto 6px;
-        border-radius: 0;
-        background: transparent;
+        border-radius: 8px;
+        background: #FFFFFF;
     }
     .card h3 {
         font-size: 0.75rem;
+    }
+}
+
+/* Mobile-only divider between About and Celebrating What Matters */
+.mobile-deco-divider {
+    display: none;
+}
+
+@media (max-width: 700px) {
+    .mobile-deco-divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        max-width: 430px;
+        margin: 0 auto 4px;
+        padding: 0 16px;
+        box-sizing: border-box;
+    }
+    .mobile-deco-divider .deco-line {
+        height: 1.5px;
+        flex: 1;
+        max-width: none;
+    }
+    .mobile-deco-divider .deco-line.left {
+        background: linear-gradient(
+            to left,
+            #00B7E2 0%,
+            rgba(0, 183, 226, 0.6) 40%,
+            rgba(0, 183, 226, 0.2) 75%,
+            transparent 100%
+        );
+    }
+    .mobile-deco-divider .deco-line.right {
+        background: linear-gradient(
+            to right,
+            #00B7E2 0%,
+            rgba(0, 183, 226, 0.6) 40%,
+            rgba(0, 183, 226, 0.2) 75%,
+            transparent 100%
+        );
+    }
+    .mobile-deco-divider .deco-diamond {
+        font-size: 16px;
+        line-height: 1;
+        color: #00B7E2;
+        flex-shrink: 0;
+        text-shadow:
+            0 0 1px #00B7E2,
+            0 0 2px rgba(0, 183, 226, 0.1);
     }
 }
 
@@ -861,7 +912,7 @@ footer {
 
     .jiwar-inner {
         flex-direction: column;
-        padding: 0 50px;
+        padding: 0 24px;
     }
     .jiwar-left {
         flex: none;
@@ -875,11 +926,27 @@ footer {
 }
 
 @media (max-width: 700px) {
+    /* Normalize all phones (430–440px+) to the same 430px content width as iPhone 14 Pro Max */
+    .navbar,
+    .celebrating-layout,
+    .bottom-line,
+    .cards-section,
+    .next-section,
+    .jiwar-inner,
+    .mobile-deco-divider {
+        max-width: 430px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
     header {
-        padding: 5px 5%;
+        padding: 5px 0;
     }
     .navbar {
         height: 58px;
+        padding: 0 16px;
     }
     .logo {
         width: 62px;
@@ -905,7 +972,10 @@ footer {
         width: calc(100% - 24px);
     }
     .bottom-line {
-        margin: 28px 0 12px;
+        margin: 28px auto 12px;
+    }
+    .bottom-line h3 {
+        font-size: 1.5rem; /* fixed, not vw — same on 430 and 440 */
     }
     .celebrating-section {
         padding: 90px 0 40px;
@@ -919,8 +989,15 @@ footer {
     .celebrating-block {
         scroll-margin-top: 140px;
     }
+    .celebrating-block p {
+        font-size: 1.05rem;
+    }
     .next-section {
         padding: 40px 16px 32px;
+    }
+    .giant-title {
+        font-size: 2.8rem; /* fixed, not vw — same on 430 and 440 */
+        max-width: 100%;
     }
     .focus-item {
         padding: 22px 0;
@@ -936,7 +1013,7 @@ footer {
         padding: 60px 0;
     }
     .jiwar-inner {
-        padding: 0 50px;
+        padding: 0 16px;
     }
     .jiwar-headline {
         font-size: 2rem;
@@ -1021,6 +1098,11 @@ footer {
         </div>
     </div>
 </section>
+<div class="mobile-deco-divider" aria-hidden="true">
+    <span class="deco-line left"></span>
+    <span class="deco-diamond">✦</span>
+    <span class="deco-line right"></span>
+</div>
     <div class="bottom-line fade-in">
     <h3>Celebrating What Matters</h3>
 </div>
