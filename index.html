@@ -474,7 +474,7 @@ header {
     gap: 0;
     width: 100%;
 
-    transform: translateY(25px);
+    transform: translateY(45px);
 }
 
 .giant-title .who-line {
@@ -508,6 +508,53 @@ header {
     margin: 0;
     padding: 0;
     letter-spacing: -0.02em;
+}
+
+.title-deco {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.deco-diamond {
+    font-size: 18px;
+    line-height: 1;
+    color: #00B7E2;
+    flex-shrink: 0;
+
+    text-shadow:
+        0 0 6px #00B7E2,
+        0 0 12px rgba(0, 183, 226, 0.55),
+        0 0 20px rgba(0, 183, 226, 0.3);
+}
+
+.deco-line {
+    height: 1.5px;
+    flex: 1;
+    max-width: 90px;
+}
+
+.deco-line.left {
+    background: linear-gradient(
+        to left,
+        #00B7E2 0%,
+        rgba(0, 183, 226, 0.6) 40%,
+        rgba(0, 183, 226, 0.2) 75%,
+        transparent 100%
+    );
+}
+
+.deco-line.right {
+    background: linear-gradient(
+        to right,
+        #00B7E2 0%,
+        rgba(0, 183, 226, 0.6) 40%,
+        rgba(0, 183, 226, 0.2) 75%,
+        transparent 100%
+    );
 }
 
 .next-right {
@@ -932,7 +979,7 @@ footer {
         margin: 28px auto 12px;
     }
     .bottom-line h3 {
-        font-size: 1rem;
+        font-size: 1.5rem;
     }
     .celebrating-section {
         padding: 90px 0 40px;
@@ -1011,8 +1058,8 @@ footer {
             <img src="/logo.jpg" alt="Company Logo" class="logo">
         </a>
         <nav class="header-nav">
-            <a href="/eoq/" class="nominate-btn">NOMINATE</a>
             <a href="winners/index.html" class="winners-btn-header">WINNERS</a>
+            <a href="/eoq/" class="nominate-btn">NOMINATE</a>
         </nav>
     </div>
 </header>
@@ -1095,6 +1142,11 @@ footer {
             <span class="who-line">WHO'S</span>
             <span class="next-line">
                 NEXT?
+                <span class="title-deco">
+                    <span class="deco-line left"></span>
+                    <span class="deco-diamond">✦</span>
+                    <span class="deco-line right"></span>
+                </span>
             </span>
         </span>
     </h2>
