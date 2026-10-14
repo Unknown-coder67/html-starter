@@ -35,7 +35,7 @@ body {
     color: #17171D;
     line-height: 1.6;
     min-height: 100vh;
-    background: #02102B;
+    background: #FFFFFF;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     padding-top: 74px;
@@ -47,7 +47,7 @@ header {
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: rgba(255, 255, 255, 1);
+    background: rgba(255, 255, 255, 0.94);
     border-bottom: 1px solid #dcebf1;
     padding: 8px 5%;
 }
@@ -496,8 +496,8 @@ nav a:hover {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s;
-    overflow-x: hidden;          /* ← add this */
-    overflow-y: auto;            /* ← add this (optional but recommended) */
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .criteria-overlay.show {
@@ -508,14 +508,14 @@ nav a:hover {
 .criteria-modal {
     background: #FFFFFF;
     border-radius: 18px;
-    width: min(640px, calc(100% - 40px));  /* ← change this line */
-    max-width: 640px;                      /* keep as safety */
+    width: min(640px, calc(100% - 40px));
+    max-width: 640px;
     max-height: 85vh;
     display: flex;
     flex-direction: column;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
     overflow: hidden;
-    box-sizing: border-box;                /* ← ensure this is present */
+    box-sizing: border-box;
 }
 
 .criteria-header {
@@ -728,7 +728,7 @@ nav a:hover {
 
 <body>
 
-<header class="fade-in">
+<header>
     <div class="navbar">
         <a href="/">
             <img src="/logo.jpg" alt="Care Medical Jiwar" class="logo">
@@ -776,17 +776,17 @@ nav a:hover {
     </section>
 
     <section class="voting-section" id="votingSection">
-   <div class="voting-header">
-    <div class="department-badge" id="departmentBadge"></div>
+        <div class="voting-header">
+            <div class="department-badge" id="departmentBadge"></div>
 
-    <h2>Choose Your Employee of the Quarter</h2>
+            <h2>Choose Your Employee of the Quarter</h2>
 
-    <p>Please review your selection before confirming your vote.</p>
+            <p>Please review your selection before confirming your vote.</p>
 
-    <button class="view-criteria-inline" onclick="openCriteriaPopup()">
-        View Evaluation Criteria
-    </button>
-</div>
+            <button class="view-criteria-inline" onclick="openCriteriaPopup()">
+                View Evaluation Criteria
+            </button>
+        </div>
 
         <div class="candidates">
         </div>
@@ -899,10 +899,10 @@ nav a:hover {
 // 1. SUPABASE CONFIG – fill these two values from your project
 // ============================================================
 const SUPABASE_URL = "https://fthkfenbpetpzlcpxvoc.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0aGtmZW5icGV0cHpsY3B4dm9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MjI3MTEsImV4cCI6MjEwNjA5ODcxMX0.-gd99emQuWNRazrc1DenTJpAYxfa_rt2A_BA_Vmqkrk";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGciOiJIUzI1NiIsInJlZiI6ImZ0aGtmZW5icGV0cHpsY3B4dm9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MjI3MTEsImV4cCI6MjEwNjA5ODcxMX0.-gd99emQuWNRazrc1DenTJpAYxfa_rt2A_BA_Vmqkrk";
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    
+
 // ============================================================
 // Department data (add more departments later here)
 // ============================================================
@@ -1065,7 +1065,7 @@ function closeCriteriaAndContinue() {
         const votingSection = document.getElementById("votingSection");
         votingSection.classList.add("visible");
 
-// Wait for the layout to finish collapsing, then scroll to the very top of the voting section
+        // Wait for the layout to finish collapsing, then scroll to the very top of the voting section
         setTimeout(() => {
             const headerOffset = 74; // matches your body { padding-top: 74px }
             const elementTop = votingSection.getBoundingClientRect().top + window.pageYOffset;
