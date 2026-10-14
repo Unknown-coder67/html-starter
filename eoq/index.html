@@ -149,8 +149,8 @@ nav a:hover::after {
 }
 
 .main-content {
-    width: 90%;
-    max-width: 1200px;
+    width: 94%;
+    max-width: 1400px;
     margin: 0 auto;
     padding-top: 55px;
     padding-bottom: 40px;
@@ -196,7 +196,7 @@ nav a:hover::after {
 }
 
 .code-intro .subtitle {
-    color: #20BBD0;
+    color: #00B7E2;
     font-size: 0.92rem;
     font-weight: 500;
     line-height: 1.45;
@@ -218,7 +218,7 @@ nav a:hover::after {
     padding: 0 16px;
     text-align: center;
     font-family: inherit;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: inherit;
     outline: none;
     text-transform: uppercase;
@@ -263,9 +263,10 @@ nav a:hover::after {
     margin-top: 12px;
 }
 
+/* ========== VOTING SECTION ========== */
 .voting-section {
     display: none;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .voting-section.visible {
@@ -279,55 +280,110 @@ nav a:hover::after {
 }
 
 .voting-header {
-    text-align: center;
-    margin-bottom: 30px;
+    text-align: left;
+    margin-bottom: 24px;
     background: #FFFFFF;
-    padding: 25px;
+    padding: 28px 32px;
     border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(23, 50, 77, 0.08);
 }
 
 .voting-header h2 {
     color: #17324d;
-    font-size: 2rem;
-    margin-bottom: 5px;
+    font-size: 1.85rem;
+    margin-bottom: 6px;
+    text-align: left;
 }
 
 .voting-header p {
     color: #557083;
+    text-align: left;
+    font-size: 0.95rem;
 }
 
 .department-badge {
-    display: block;
+    display: inline-block;
     width: fit-content;
-    margin: 0 auto 12px;
+    margin: 0 0 14px 0;
     padding: 6px 14px;
     border-radius: 20px;
     background: #e8f6f8;
     color: #087c98;
     font-size: 0.85rem;
     font-weight: 700;
+    text-align: left;
 }
 
 .view-criteria-inline {
-    display: block;
+    display: inline-block;
     width: fit-content;
-    margin: 10px auto 0;
-    padding: 6px 14px;
-    border-radius: 20px;
+    margin: 14px 0 0 0;
+    padding: 6px 0;
+    border-radius: 0;
     background: none;
     border: none;
     color: #087c98;
     font-size: 0.85rem;
     font-weight: 700;
     cursor: pointer;
-    transition: box-shadow 0.25s ease, color 0.25s ease;
+    transition: color 0.25s ease;
+    text-align: left;
 }
 
 .view-criteria-inline:hover {
     color: #D79A1E;
-    box-shadow: 0 0 18px rgba(215, 154, 30, 0.4);
 }
 
+/* Search bar */
+.search-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.search-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+}
+
+.search-wrapper svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: #8aa0b0;
+    pointer-events: none;
+}
+
+.search-input {
+    width: 100%;
+    height: 46px;
+    padding: 0 16px 0 44px;
+    border: 1px solid #d0e0e8;
+    border-radius: 12px;
+    background: #FFFFFF;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #17324d;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input::placeholder {
+    color: #8aa0b0;
+    font-weight: 500;
+}
+
+.search-input:focus {
+    border-color: #00B7E2;
+    box-shadow: 0 0 0 3px rgba(0, 183, 226, 0.12);
+}
+
+/* Cards grid */
 .candidates {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -335,69 +391,74 @@ nav a:hover::after {
 }
 
 .candidate {
-    background: #FFFFFF;
-    border: 2px solid #dcebf1;
+    background-image: url("/employee-card-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1px solid rgba(220, 235, 241, 0.6);
     border-radius: 16px;
-    padding: 14px;
-    text-align: center;
-    box-shadow: 0 6px 18px rgba(23, 50, 77, 0.10);
-    transition: transform 0.25s ease;
+    padding: 22px 20px;
+    text-align: left;
+    box-shadow: 0 6px 18px rgba(23, 50, 77, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 140px;
 }
 
 .candidate:hover {
-    transform: translateY(-4px);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(23, 50, 77, 0.14);
     border-color: #9ddfea;
 }
 
 .candidate.selected {
     border-color: #D79A1E;
-    box-shadow: 0 8px 22px rgba(215, 154, 30, 0.15);
-}
-
-.candidate-image {
-    width: 100%;
-    height: 150px;
-    margin-bottom: 12px;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.candidate-image img {
-    width: 50%;
-    height: 50%;
-    object-fit: contain;
+    box-shadow: 0 8px 24px rgba(215, 154, 30, 0.22);
 }
 
 .candidate h3 {
     color: #17324d;
     font-size: 1.05rem;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
     line-height: 1.3;
+    text-align: left;
+    font-weight: 750;
+}
+
+.candidate-id {
+    color: #557083;
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+    text-align: left;
 }
 
 .vote-btn {
-    width: 100%;
-    height: 40px;
-    border: 2px solid #17171D;
-    border-radius: 14px;
-    background: transparent;
-    color: #17171D;
-    font-weight: 700;
-    font-size: 0.9rem;
+    margin-top: auto;
+    width: auto;
+    height: auto;
+    border: none;
+    background: none;
+    padding: 0;
+    color: #08245B;
+    font-weight: 800;
+    font-size: 0.95rem;
     cursor: pointer;
+    text-align: left;
+    transition: color 0.2s ease;
+    font-family: inherit;
+}
+
+.vote-btn:hover {
+    color: #D79A1E;
 }
 
 .candidate.selected .vote-btn {
-    border-color: #D79A1E;
-    background: #FFFFFF;
-    box-shadow: 0 8px 20px rgba(215, 154, 30, 0.15);
-    color: #17171D;
+    color: #D79A1E;
 }
 
+/* Confirmation bar */
 .confirmation-bar {
     position: fixed;
     left: 0;
@@ -424,7 +485,7 @@ nav a:hover::after {
 }
 
 .confirmation-inner {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -642,6 +703,7 @@ footer {
     width: 100%;
 }
 
+/* Responsive */
 @media (max-width: 1100px) {
     .candidates {
         grid-template-columns: repeat(3, 1fr);
@@ -651,34 +713,38 @@ footer {
 @media (max-width: 800px) {
     .candidates {
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        gap: 12px;
     }
 
     .candidate {
-        padding: 8px;
-        border-radius: 12px;
-    }
-
-    .candidate-image {
-        height: 90px;
-        margin-bottom: 8px;
-        border-radius: 8px;
-    }
-
-    .candidate-image img {
-        width: 55%;
-        height: 55%;
+        padding: 16px 14px;
+        border-radius: 14px;
+        min-height: 120px;
     }
 
     .candidate h3 {
-        font-size: 0.78rem;
-        margin-bottom: 6px;
+        font-size: 0.95rem;
+    }
+
+    .candidate-id {
+        font-size: 0.82rem;
+        margin-bottom: 12px;
     }
 
     .vote-btn {
-        height: 32px;
-        font-size: 0.75rem;
-        border-radius: 10px;
+        font-size: 0.9rem;
+    }
+
+    .voting-header {
+        padding: 22px 20px;
+    }
+
+    .voting-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .search-wrapper {
+        max-width: 100%;
     }
 
     .confirmation-inner {
@@ -759,15 +825,10 @@ footer {
         font-size: 1.7rem;
     }
 
-    .candidate-image {
-        height: 80px;
-    }
-
     .code-input {
         font-size: 12px;
     }
 }
-
 
 @media (max-width: 480px) {
     nav a {
@@ -866,7 +927,16 @@ footer {
             </button>
         </div>
 
-        <div class="candidates">
+        <div class="search-row">
+            <div class="search-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by name" autocomplete="off">
+            </div>
+        </div>
+
+        <div class="candidates" id="candidatesContainer">
         </div>
     </section>
 
@@ -982,16 +1052,247 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const departmentCodes = {
-    "RECQ4": "Reception"
+    "RECQ4": "Reception",
+    "DUYT4": "Duty Manager",
+    "ENCODER4": "Encoder",
+    "QUALITY4": "Quality",
+    "SUPQ4": "Facilities & Support Services",
+    "RCMQ4": "Revenue Cycle & Claims",
+    "RESPIRATORY4": "Respiratory",
+    "RADIOLOGY4": "Radiology",
+    "LABORATORY4": "Laboratory",
+    "ICU4": "ICU",
+    "CATH4": "Cath Lab Nurse",
+    "SECURITY4": "Security Guard",
+    "ITQ4": "Information Technology",
+    "SCQ4": "Supply Chain",
+    "HRQ4": "Human Resources",
+    "ERQ4": "Emergency Department",
+    "FINQ4": "Finance",
+    "GPQ4": "General Practice",
+    "PHARMQ4": "Pharmacy",
+    "ANESQ4": "Anesthesia",
+    "CARDQ4": "Cardiology",
+    "NUTRQ4": "Clinical Nutrition",
+    "PTQ4": "Physiotherapy",
+    "NLEQ4": "Nursing Leadership & Education",
+    "SOCQ4": "Social Services"
 };
 
 const departmentEmployees = {
     "Reception": [
-        { name: "MOAYAD FELEMBAN", img: "/employee2.jpg" },
-        { name: "ROTANA KOSHAK", img: "/employee2.jpg" },
-        { name: "JOOD ALBESHRY", img: "/employee2.jpg" },
-        { name: "AHMED ALDAJANI", img: "/employee2.jpg" },
+        { name: "MOAYAD FELEMBAN", id: "1" },
+        { name: "ROTANA KOSHAK", id: "1" },
+        { name: "JOOD ALBESHRY", id: "1" },
+        { name: "AHMED ALDAJANI", id: "1" }
     ],
+    "Duty Manager": [
+        { name: "Ahmad Mohammad Mufti", id: "17733" },
+        { name: "Hossam Ali Banabilah", id: "17634" },
+        { name: "Sohaib Hossain Andargiry", id: "17753" },
+        { name: "Turki Tursom Ahmad", id: "17635" },
+        { name: "Abdulaziz Kamal Alandijani", id: "17626" }
+    ],
+    "Encoder": [
+        { name: "Tala Assad Shawly", id: "1" },
+        { name: "Fadhl Ali Almkwas", id: "1" },
+        { name: "Emma Dhaifallah Alghraibi", id: "1" },
+        { name: "Reem Ali Alqurashi", id: "1" }
+    ],
+    "Quality": [
+        { name: "Mohamed Rizk Ibrahim", id: "1" }
+    ],
+    "Facilities & Support Services": [
+        { name: "Meshal Nawaf Alsharif", id: "1" },
+        { name: "Waseem Mohammed Alkhuzaee", id: "1" },
+        { name: "Rayan Muslih Alhuzali", id: "1" },
+        { name: "Nawaf Abdullah Albasarai", id: "1" },
+        { name: "Bandar Hammad Aldadi", id: "1" },
+        { name: "Yousef Abbas Badawi Atiah", id: "1" },
+        { name: "Mohd Kamil Kayyum", id: "1" },
+        { name: "Afsal Mullappally", id: "1" },
+        { name: "Rayan Siddiq Alsindi", id: "1" }
+    ],
+    "Revenue Cycle & Claims": [
+        { name: "Sohaib Khaled abdulrheem", id: "1" },
+        { name: "Nouf Sultan Almaqati", id: "1" },
+        { name: "Razan Turki Alhakami", id: "1" }
+    ],
+    "Respiratory": [
+        { name: "Abdulilah Hashem alzhrani", id: "1" },
+        { name: "Mohammed Hassan Alghamdi", id: "1" },
+        { name: "Asr Mohammed Mofareh", id: "1" },
+        { name: "Rawan Jaylan Alkhayri", id: "1" }
+    ],
+    "Radiology": [
+        { name: "Fahad Abdulrahman Alnufaiai", id: "1" },
+        { name: "Ahmed Abdelrehim Abdelkarim", id: "1" },
+        { name: "Nawaf Turki Alotaibi", id: "1" },
+        { name: "Faisal Ridha Alkuhayli", id: "1" },
+        { name: "Nadeera Hamsiraji Saga", id: "1" }
+    ],
+    "Laboratory": [
+        { name: "Abdullah faisal Alhazmi", id: "1" },
+        { name: "Hassan Khaled Sendi", id: "1" },
+        { name: "Hamed Awadh Alsharif", id: "1" },
+        { name: "Dana Mohammed Alqurashi", id: "1" },
+        { name: "Mohdi Thaiban Aldajani", id: "1" },
+        { name: "Ahmed Abdelmoez Saad", id: "1" }
+    ],
+    "ICU": [
+        { name: "Jaseela Ongaloramma", id: "1" },
+        { name: "Ahmed Mostafa", id: "1" },
+        { name: "Abdelrehem Fahmy", id: "1" },
+        { name: "Abdelrahman Abdelnaby Ibrahim", id: "1" },
+        { name: "Shireentaj Mansoor Kiresur", id: "1" },
+        { name: "Soad Mohammed Ali", id: "1" },
+        { name: "Hameed Unnisa Begum", id: "1" },
+        { name: "Bushra Mohamed", id: "1" },
+        { name: "Fatma Ali", id: "1" },
+        { name: "Nafeesa Ahmed Elhassan", id: "1" },
+        { name: "Afrah Fathima", id: "1" },
+        { name: "Marwa Abdelaty Mahmoud", id: "1" },
+        { name: "Amina A Sulaiman", id: "1" },
+        { name: "Sara Hamed", id: "1" },
+        { name: "Memunat Onozer", id: "1" },
+        { name: "Shahid Aafreedi", id: "1" },
+        { name: "Ayman Abdullah", id: "1" },
+        { name: "Mahmoud Tawfik Mohamed", id: "1" },
+        { name: "Mahmoud Khairy Attia", id: "1" },
+        { name: "Ali Mohamed Ali", id: "1" },
+        { name: "Ahmed Mohamed Elhamshary", id: "1" },
+        { name: "Ahmed Khairy", id: "1" },
+        { name: "Abdulhameed Abdullah", id: "1" },
+        { name: "Mansour Ali", id: "1" },
+        { name: "Mustafa Ahmed Hussein", id: "1" },
+        { name: "Omar Hamada", id: "1" },
+        { name: "Mahmoud Mohamed", id: "1" },
+        { name: "Mossad Mofreh", id: "1" },
+        { name: "Abdelsadek Elsayed Turkey", id: "1" },
+        { name: "Ashwag Mustafa", id: "1" },
+        { name: "Hasna Abid", id: "1" },
+        { name: "Hesham Mohamed Hamdy", id: "1" },
+        { name: "Yasmeen Aslam", id: "1" },
+        { name: "Shafi Ullah Zada", id: "1" },
+        { name: "Islam Hegazy", id: "1" },
+        { name: "Nasser Gamal", id: "1" },
+        { name: "Gehad Ramadan Hamoud", id: "1" },
+        { name: "Rohina Momtaz", id: "1" },
+        { name: "Abdelghany Mahrous", id: "1" },
+        { name: "Samar Fouad", id: "1" },
+        { name: "Mohamed Ali Ghonim", id: "1" },
+        { name: "Ramy Jamal Hafez Mohammed", id: "1" },
+        { name: "Mohamed Mushhot Attya Nada", id: "1" },
+        { name: "Bahaa Mohamed Ali Ezz", id: "1" },
+        { name: "Mohamed Hassan Ali", id: "1" }
+    ],
+    "Cath Lab Nurse": [
+        { name: "Mahmood Shaban Mansour", id: "1" },
+        { name: "Saman Hashmi Aslam", id: "1" },
+        { name: "Ali Abdullah Atifah", id: "1" },
+        { name: "Aly Mohamed Alahjari", id: "1" },
+        { name: "Mohammed Atallah Alosaimi", id: "1" },
+        { name: "Abdulaziz Mohammed Aldahiri", id: "1" }
+    ],
+    "Security Guard": [
+        { name: "Saud Hamed Almuqati", id: "1" },
+        { name: "Abdullah Ahmed Baoazair", id: "1" },
+        { name: "Meshari Mohammed Almuwalad", id: "1" },
+        { name: "Gazi Alhabashi Alhabashi", id: "1" }
+    ],
+    "Information Technology": [
+        { name: "Hemat Sadek Selim", id: "1" }
+    ],
+    "Supply Chain": [
+        { name: "Shrooq Hassan Alobaidi", id: "1" }
+    ],
+    "Human Resources": [
+        { name: "Mohammed Ahmed Alsharif", id: "1" }
+    ],
+    "Emergency Department": [
+        { name: "Abdeen Kunna", id: "1" },
+        { name: "Yasein Omer Osmen Omer", id: "1" },
+        { name: "Mahmoud Mohamed Ellamey", id: "1" },
+        { name: "Atheer Faisal Alsulami", id: "1" },
+        { name: "Negm Eid", id: "1" },
+        { name: "Ahmed Rawhy Younes", id: "1" },
+        { name: "Eslam Abu Bakr", id: "1" },
+        { name: "Fatima Othman Washa", id: "1" },
+        { name: "Asmaa ElSayed Mahmoud", id: "1" },
+        { name: "Samar Elsayed Mohamed", id: "1" },
+        { name: "Neama Gamal Shahata Asy", id: "1" },
+        { name: "Dina Abdelaziz Elzoghby", id: "1" },
+        { name: "Tahmina Nissar", id: "1" },
+        { name: "Lariba Ashraf", id: "1" },
+        { name: "Masbah Brwen Aslam", id: "1" },
+        { name: "Maha Snoussi", id: "1" },
+        { name: "Omima Taha Mahmoud", id: "1" },
+        { name: "Abdelrahman Taha Abdelgawwad", id: "1" },
+        { name: "Kawsar Mehmood Aqil", id: "1" },
+        { name: "Abdulmalik Yahya Macaraya", id: "1" },
+        { name: "Mohamed Mohamed Alhawari", id: "1" },
+        { name: "Mohamed Ramadan Khattab", id: "1" },
+        { name: "Irshad Bashir", id: "1" },
+        { name: "Waleed Abdulmoati Alshafeai", id: "1" },
+        { name: "Mohammad Zohaib Ihsanullah", id: "1" },
+        { name: "Mohamed Sheta", id: "1" },
+        { name: "Amr Said Rashed", id: "1" },
+        { name: "Abdelghany Adel Abdelghany", id: "1" },
+        { name: "Omar Abdeltawab Abdelhameed", id: "1" },
+        { name: "Ahmed Mohamed Elsamahy", id: "1" },
+        { name: "Mohamed Essam", id: "1" },
+        { name: "Ahmed Madian", id: "1" },
+        { name: "Kamal Zaib", id: "1" },
+        { name: "Mahmoud Ali Elsebaey Gafar", id: "1" },
+        { name: "Ali Faiek", id: "1" },
+        { name: "Muhammad Farhan Meling", id: "1" },
+        { name: "Ahmed Elsayed Kamal", id: "1" },
+        { name: "Amal Kmid Saripada", id: "1" },
+        { name: "Taibah Mahfouz Alhamzah", id: "1" }
+    ],
+    "Finance": [
+        { name: "Khalid Ahmed Rawas", id: "1" },
+        { name: "Mohamed Amjd Kalib", id: "1" }
+    ],
+    "General Practice": [
+        { name: "Abdullah Sulaiman Babaalghayth", id: "1" },
+        { name: "Kamel Hisham Darwish", id: "1" },
+        { name: "Nada Abdelhafeez Mohamed", id: "1" },
+        { name: "Hana Abdirahman Abdi", id: "1" },
+        { name: "Muna Hajabdullah", id: "1" }
+    ],
+    "Pharmacy": [
+        { name: "Wed Alaa Hassan", id: "1" },
+        { name: "Abdullah Yousef Abdullah", id: "1" },
+        { name: "Maad Ibrahim Makkawi", id: "1" },
+        { name: "Adi Abdulrahman Alqurashi", id: "1" },
+        { name: "Ahmed Abdulmutakabbir Almaghrabi", id: "1" },
+        { name: "Abdulrahman Abdullah Alghamdi", id: "1" },
+        { name: "Abdulrahman Faisal Baomar", id: "1" }
+    ],
+    "Anesthesia": [
+        { name: "Abdelrahman Tarek Osman", id: "1" },
+        { name: "Samia Rageb El Azab", id: "1" }
+    ],
+    "Cardiology": [
+        { name: "Mostafa Said Haggag", id: "1" },
+        { name: "Abdulkabir Osman Abdishakur", id: "1" },
+        { name: "Mujeeb Ulla Tareen", id: "1" },
+        { name: "Ahmed Nourelbagi Abdullateef", id: "1" }
+    ],
+    "Clinical Nutrition": [
+        { name: "Safia Shaker Abdulrahman Bajoudah", id: "1" }
+    ],
+    "Physiotherapy": [
+        { name: "Azzam Naif Alqathama", id: "1" }
+    ],
+    "Nursing Leadership & Education": [
+        { name: "Mustafa Faleh Abumusleh", id: "1" },
+        { name: "Rehab Hamed", id: "1" }
+    ],
+    "Social Services": [
+        { name: "Dina Abdulaziz Alrashdi", id: "1" }
+    ]
 };
 
 let currentDepartment = "";
@@ -999,6 +1300,7 @@ let currentDeptName = "";
 let selectedCandidate = "";
 let pendingVotingReveal = false;
 let isSubmitting = false;
+let currentEmployees = [];
 
 const fadeElements = document.querySelectorAll(".fade-in");
 const fadeObserver = new IntersectionObserver((entries) => {
@@ -1038,13 +1340,29 @@ function clearCodePageBackground() {
     document.body.classList.remove("code-page-bg");
 }
 
+function renderCandidates(employees) {
+    const container = document.getElementById("candidatesContainer");
+    container.innerHTML = "";
+
+    employees.forEach(emp => {
+        const card = document.createElement("div");
+        card.className = "candidate";
+        card.dataset.name = emp.name.toLowerCase();
+        card.innerHTML = `
+            <h3>${emp.name}</h3>
+            <div class="candidate-id">ID: ${emp.id}</div>
+            <button class="vote-btn" onclick="selectCandidate(this)">Vote →</button>
+        `;
+        container.appendChild(card);
+    });
+}
+
 async function verifyCode() {
     const input = document.getElementById("departmentCode");
     const error = document.getElementById("codeError");
     const continueBtn = document.getElementById("continueBtn");
     const code = input.value.trim().toUpperCase();
     const codeSection = document.getElementById("codeSection");
-    const candidatesContainer = document.querySelector(".candidates");
 
     if (!code) {
         error.textContent = "You must enter your department code.";
@@ -1092,21 +1410,11 @@ async function verifyCode() {
         currentDeptName = departmentCodes[code];
         document.getElementById("departmentBadge").textContent = currentDeptName + " Department";
 
-        candidatesContainer.innerHTML = "";
-        const employees = departmentEmployees[currentDeptName] || [];
-        employees.forEach(emp => {
-            const card = document.createElement("div");
-            card.className = "candidate";
-            card.dataset.name = emp.name;
-            card.innerHTML = `
-                <div class="candidate-image">
-                    <img src="${emp.img}" alt="${emp.name}">
-                </div>
-                <h3>${emp.name}</h3>
-                <button class="vote-btn" onclick="selectCandidate(this)">Select</button>
-            `;
-            candidatesContainer.appendChild(card);
-        });
+        currentEmployees = departmentEmployees[currentDeptName] || [];
+        renderCandidates(currentEmployees);
+
+        // Reset search
+        document.getElementById("searchInput").value = "";
 
         error.style.display = "none";
         codeSection.classList.add("expanded");
@@ -1172,13 +1480,13 @@ function closeCriteriaAndContinue() {
 function selectCandidate(button) {
     document.querySelectorAll(".candidate").forEach(candidate => {
         candidate.classList.remove("selected");
-        candidate.querySelector(".vote-btn").textContent = "Select";
+        candidate.querySelector(".vote-btn").textContent = "Vote →";
     });
 
     const candidate = button.closest(".candidate");
     candidate.classList.add("selected");
     button.textContent = "✓ Selected";
-    selectedCandidate = candidate.dataset.name;
+    selectedCandidate = candidate.querySelector("h3").textContent;
 
     document.getElementById("selectedName").textContent = selectedCandidate;
     document.getElementById("confirmationBar").classList.add("show");
@@ -1187,7 +1495,7 @@ function selectCandidate(button) {
 function changeSelection() {
     document.querySelectorAll(".candidate").forEach(candidate => {
         candidate.classList.remove("selected");
-        candidate.querySelector(".vote-btn").textContent = "Select";
+        candidate.querySelector(".vote-btn").textContent = "Vote →";
     });
 
     selectedCandidate = "";
@@ -1260,6 +1568,25 @@ async function confirmVote() {
         confirmBtn.textContent = "Confirm Vote";
     }
 }
+
+// Live search
+document.getElementById("searchInput").addEventListener("input", function () {
+    const query = this.value.trim().toLowerCase();
+    const filtered = currentEmployees.filter(emp =>
+        emp.name.toLowerCase().includes(query)
+    );
+    renderCandidates(filtered);
+
+    // Restore selection state if still visible
+    if (selectedCandidate) {
+        document.querySelectorAll(".candidate").forEach(card => {
+            if (card.querySelector("h3").textContent === selectedCandidate) {
+                card.classList.add("selected");
+                card.querySelector(".vote-btn").textContent = "✓ Selected";
+            }
+        });
+    }
+});
 
 document.getElementById("departmentCode").addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
