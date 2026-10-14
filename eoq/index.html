@@ -1364,13 +1364,13 @@ function renderCandidates(employees) {
             <h3>${emp.name}</h3>
             <div class="candidate-id">ID: ${emp.id}</div>
             <div class="candidate-divider"></div>
-            <button class="vote-btn" onclick="selectCandidate(this)">Vote →</button>
+            <button class="vote-btn" onclick="selectCandidate(this)">Vote <span class="arrow">→</span> </button>
         `;
         container.appendChild(card);
     });
 }
 
-async function verifyCode() {
+    async function verifyCode() {
     const input = document.getElementById("departmentCode");
     const error = document.getElementById("codeError");
     const continueBtn = document.getElementById("continueBtn");
