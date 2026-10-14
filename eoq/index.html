@@ -149,11 +149,10 @@ nav a:hover::after {
 }
 
 .main-content {
-    width: 94%;
-    max-width: 1400px;
+    width: 100%;
+    max-width: 1600px;
     margin: 0 auto;
-    padding-top: 55px;
-    padding-bottom: 40px;
+    padding: 55px 28px 40px;
     flex: 1 0 auto;
 }
 
@@ -266,7 +265,7 @@ nav a:hover::after {
 /* ========== VOTING SECTION ========== */
 .voting-section {
     display: none;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .voting-section.visible {
@@ -281,15 +280,15 @@ nav a:hover::after {
 
 .voting-header {
     text-align: left;
-    margin-bottom: 24px;
-    background: #FFFFFF;
-    padding: 28px 32px;
-    border-radius: 18px;
-    box-shadow: 0 6px 20px rgba(23, 50, 77, 0.08);
+    margin-bottom: 22px;
+    background: none;
+    padding: 0 4px;
+    border-radius: 0;
+    box-shadow: none;
 }
 
 .voting-header h2 {
-    color: #17324d;
+    color: #05255E;
     font-size: 1.85rem;
     margin-bottom: 6px;
     text-align: left;
@@ -304,12 +303,12 @@ nav a:hover::after {
 .department-badge {
     display: inline-block;
     width: fit-content;
-    margin: 0 0 14px 0;
-    padding: 6px 14px;
-    border-radius: 20px;
-    background: #e8f6f8;
+    margin: 0 0 12px 0;
+    padding: 0;
+    border-radius: 0;
+    background: none;
     color: #087c98;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 700;
     text-align: left;
 }
@@ -317,8 +316,8 @@ nav a:hover::after {
 .view-criteria-inline {
     display: inline-block;
     width: fit-content;
-    margin: 14px 0 0 0;
-    padding: 6px 0;
+    margin: 12px 0 0 0;
+    padding: 0;
     border-radius: 0;
     background: none;
     border: none;
@@ -339,31 +338,32 @@ nav a:hover::after {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 20px;
+    padding: 0 4px;
 }
 
 .search-wrapper {
     position: relative;
     width: 100%;
-    max-width: 320px;
+    max-width: 340px;
 }
 
 .search-wrapper svg {
     position: absolute;
-    left: 14px;
+    left: 16px;
     top: 50%;
     transform: translateY(-50%);
     width: 18px;
     height: 18px;
-    color: #8aa0b0;
+    color: #05255E;
     pointer-events: none;
 }
 
 .search-input {
     width: 100%;
-    height: 46px;
-    padding: 0 16px 0 44px;
+    height: 48px;
+    padding: 0 18px 0 46px;
     border: 1px solid #d0e0e8;
-    border-radius: 12px;
+    border-radius: 20px;
     background: #FFFFFF;
     font-family: inherit;
     font-size: 0.95rem;
@@ -383,43 +383,44 @@ nav a:hover::after {
     box-shadow: 0 0 0 3px rgba(0, 183, 226, 0.12);
 }
 
-/* Cards grid */
+/* Cards grid – almost full width */
 .candidates {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
+    gap: 16px;
 }
 
 .candidate {
     background-image: url("/employee-card-bg.jpg");
-    background-size: 100% 100%;
-    background-position: top right;
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-    border: 1px solid rgba(220, 235, 241, 0.6);
+    border: 1px solid rgba(220, 235, 241, 0.55);
     border-radius: 16px;
-    padding: 22px 20px;
+    padding: 20px 18px 18px;
     text-align: left;
-    box-shadow: 0 6px 18px rgba(23, 50, 77, 0.08);
+    box-shadow: 0 4px 14px rgba(23, 50, 77, 0.07);
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     display: flex;
     flex-direction: column;
-    min-height: 140px;
+    aspect-ratio: 1 / 1.05; /* close to cube / square */
+    min-height: 0;
 }
 
 .candidate:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 28px rgba(23, 50, 77, 0.14);
+    box-shadow: 0 8px 22px rgba(23, 50, 77, 0.12);
     border-color: #9ddfea;
 }
 
 .candidate.selected {
     border-color: #D79A1E;
-    box-shadow: 0 8px 24px rgba(215, 154, 30, 0.22);
+    box-shadow: 0 6px 20px rgba(215, 154, 30, 0.2);
 }
 
 .candidate h3 {
-    color: #17324d;
-    font-size: 1.05rem;
+    color: #05255E;
+    font-size: 1.02rem;
     margin-bottom: 6px;
     line-height: 1.3;
     text-align: left;
@@ -428,10 +429,17 @@ nav a:hover::after {
 
 .candidate-id {
     color: #557083;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     font-weight: 500;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     text-align: left;
+}
+
+.candidate-divider {
+    height: 1px;
+    background: #d0dce4;
+    margin: 0 0 14px 0;
+    width: 100%;
 }
 
 .vote-btn {
@@ -485,7 +493,7 @@ nav a:hover::after {
 }
 
 .confirmation-inner {
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -711,15 +719,19 @@ footer {
 }
 
 @media (max-width: 800px) {
+    .main-content {
+        padding: 40px 18px 40px;
+    }
+
     .candidates {
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
     }
 
     .candidate {
-        padding: 16px 14px;
+        padding: 16px 14px 14px;
         border-radius: 14px;
-        min-height: 120px;
+        aspect-ratio: 1 / 1.08;
     }
 
     .candidate h3 {
@@ -728,15 +740,15 @@ footer {
 
     .candidate-id {
         font-size: 0.82rem;
+        margin-bottom: 10px;
+    }
+
+    .candidate-divider {
         margin-bottom: 12px;
     }
 
     .vote-btn {
         font-size: 0.9rem;
-    }
-
-    .voting-header {
-        padding: 22px 20px;
     }
 
     .voting-header h2 {
@@ -817,8 +829,7 @@ footer {
     }
 
     .main-content {
-        width: 94%;
-        padding-top: 40px;
+        padding: 40px 16px 40px;
     }
 
     .code-intro h1 {
@@ -932,7 +943,7 @@ footer {
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
-                <input type="text" id="searchInput" class="search-input" placeholder="Search by name" autocomplete="off">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by name or ID" autocomplete="off">
             </div>
         </div>
 
@@ -1348,9 +1359,11 @@ function renderCandidates(employees) {
         const card = document.createElement("div");
         card.className = "candidate";
         card.dataset.name = emp.name.toLowerCase();
+        card.dataset.id = emp.id;
         card.innerHTML = `
             <h3>${emp.name}</h3>
             <div class="candidate-id">ID: ${emp.id}</div>
+            <div class="candidate-divider"></div>
             <button class="vote-btn" onclick="selectCandidate(this)">Vote →</button>
         `;
         container.appendChild(card);
@@ -1569,11 +1582,12 @@ async function confirmVote() {
     }
 }
 
-// Live search
+// Live search – by name OR ID
 document.getElementById("searchInput").addEventListener("input", function () {
     const query = this.value.trim().toLowerCase();
     const filtered = currentEmployees.filter(emp =>
-        emp.name.toLowerCase().includes(query)
+        emp.name.toLowerCase().includes(query) ||
+        emp.id.toLowerCase().includes(query)
     );
     renderCandidates(filtered);
 
