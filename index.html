@@ -123,9 +123,12 @@ header {
     border-radius: 999px;
     padding: 12px 17px;
 
-    font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback";
+    font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback", Arial, Helvetica, sans-serif;
     font-size: 15.04px;
-    font-weight: 700;
+    font-weight: 750;
+    font-feature-settings: normal;
+    font-variation-settings: "opsz" 14, "wght" 750;
+    font-optical-sizing: none;
     line-height: 22.56px;
 
     height: 46.5625px;
@@ -265,12 +268,29 @@ header {
 
 @media (max-width: 700px) {
     .cards {
-        grid-template-columns: 1fr;
-        gap: 12px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
     }
     .cards-section {
         padding: 0 16px;
         margin-bottom: 36px;
+    }
+    .card {
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 8px 4px;
+    }
+    .card-image {
+        width: 60%;
+        height: 36px;
+        margin: 0 auto 6px;
+        border-radius: 0;
+        background: transparent;
+    }
+    .card h3 {
+        font-size: 0.75rem;
     }
 }
 
@@ -809,11 +829,12 @@ footer {
         font-size: 1rem;
         text-align: center;
         min-width: 72px;
+        color: #00B7E2;
     }
     .celebrating-nav a.active {
         border-left-color: transparent;
-        border-bottom-color: #02102B;
-        color: #02102B;
+        border-bottom-color: #00B7E2;
+        color: #00B7E2;
     }
     .celebrating-main {
         max-width: 100%;
@@ -869,7 +890,12 @@ footer {
     }
     .header-nav a.nominate-btn,
     .header-nav a.winners-btn-header {
+        font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback", Arial, Helvetica, sans-serif;
         font-size: 12.5px;
+        font-weight: 750;
+        font-feature-settings: normal;
+        font-variation-settings: "opsz" 14, "wght" 750;
+        font-optical-sizing: none;
         padding: 9px 12px;
         height: 40px;
     }
@@ -902,6 +928,10 @@ footer {
     .focus-title {
         font-size: 1.25rem;
     }
+    /* Mobile: cyan color when undimmed (is-near) instead of hover */
+    .focus-item.is-near .focus-title {
+        color: #00B7E2;
+    }
     .jiwar-section {
         padding: 60px 0;
     }
@@ -919,7 +949,12 @@ footer {
     }
     .header-nav a.nominate-btn,
     .header-nav a.winners-btn-header {
+        font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback", Arial, Helvetica, sans-serif;
         font-size: 11.5px;
+        font-weight: 750;
+        font-feature-settings: normal;
+        font-variation-settings: "opsz" 14, "wght" 750;
+        font-optical-sizing: none;
         padding: 8px 10px;
         height: 36px;
     }
