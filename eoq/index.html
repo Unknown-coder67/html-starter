@@ -482,6 +482,89 @@ nav a:hover {
 .success-section p {
     color: #557083;
     margin-bottom: 0;
+}.selection-text {
+    color: #557083;
+}
+
+.selection-text strong {
+    color: #17324d;
+}
+
+.confirmation-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.confirm-btn,
+.change-btn {
+    height: 44px;
+    padding: 0 24px;
+    border-radius: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.change-btn {
+    background: #ffffff;
+    border: 2px solid #17171D;
+    color: #17171D;
+}
+
+.change-btn:hover {
+    border-color: #0DC8EA;
+    color: #0DC8EA;
+}
+
+.confirm-btn {
+    background: #D79A1E;
+    border: 2px solid #D79A1E;
+    color: #17171D;
+    margin-left: 8px;
+}
+
+.confirm-btn:hover {
+    box-shadow: 0 0 20px rgba(215, 154, 30, 0.5);
+}
+
+.confirm-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.success-section {
+    display: none;
+    max-width: 600px;
+    margin: 50px auto 0;
+    text-align: center;
+    background: #FFFFFF;
+    border: 1px solid #dcebf1;
+    border-radius: 18px;
+    padding: 45px 30px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.success-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: #e8f6f8;
+    color: #0DC8EA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    font-weight: bold;
+}
+
+.success-section h2 {
+    color: #17324d;
+    margin-bottom: 10px;
+}
+
+.success-section p {
+    color: #557083;
+    margin-bottom: 0;
 }
 
 .criteria-overlay {
@@ -595,6 +678,14 @@ nav a:hover {
 .fade-in.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+footer {
+    text-align: center;
+    padding: 18px 20px;
+    color: #02102B;
+    font-size: 0.7rem;
+    background: #FFFFFF;
 }
 
 @media (max-width: 1100px) {
@@ -800,6 +891,10 @@ nav a:hover {
 
 </main>
 
+<footer>
+    © 2026 Care Medical Jiwar
+</footer>
+
 <div class="confirmation-bar" id="confirmationBar">
     <div class="confirmation-inner">
         <div class="selection-text">
@@ -892,14 +987,12 @@ nav a:hover {
             </div>
         </div>
     </div>
-</div>
-
-<script>
+</div><script>
 // ============================================================
 // 1. SUPABASE CONFIG – fill these two values from your project
 // ============================================================
 const SUPABASE_URL = "https://fthkfenbpetpzlcpxvoc.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGciOiJIUzI1NiIsInJlZiI6ImZ0aGtmZW5icGV0cHpsY3B4dm9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MjI3MTEsImV4cCI6MjEwNjA5ODcxMX0.-gd99emQuWNRazrc1DenTJpAYxfa_rt2A_BA_Vmqkrk";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGciOiJIUzI1NiIsInJlZiI6ImZ0aGtmZW5icGV0cHpsY3B4dm9jIiwiaWF0IjoxNzkwNTIyNzExLCJleHAiOjIxMDYwOTg3MTF9.-gd99emQuWNRazrc1DenTJpAYxfa_rt2A_BA_Vmqkrk";
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
