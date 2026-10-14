@@ -319,7 +319,7 @@ header {
     .mobile-deco-divider .deco-line.left {
         background: linear-gradient(
             to left,
-            #00B7E2 0%,
+            #666666 0%,
             rgba(0, 183, 226, 0.6) 40%,
             rgba(0, 183, 226, 0.2) 75%,
             transparent 100%
@@ -328,7 +328,7 @@ header {
     .mobile-deco-divider .deco-line.right {
         background: linear-gradient(
             to right,
-            #00B7E2 0%,
+            #666666 0%,
             rgba(0, 183, 226, 0.6) 40%,
             rgba(0, 183, 226, 0.2) 75%,
             transparent 100%
@@ -337,7 +337,7 @@ header {
     .mobile-deco-divider .deco-diamond {
         font-size: 16px;
         line-height: 1;
-        color: #00B7E2;
+        color: #666666;
         flex-shrink: 0;
         text-shadow:
             0 0 1px #00B7E2,
@@ -518,19 +518,13 @@ header {
 
 
 @media (max-width: 700px) {
-    .deco-diamond {
-        text-shadow:
-            0 0 1px #00B7E2,
-            0 0 2px rgba(0, 183, 226, 0.1);
+        .focus-item {
+        border-top: 2px solid #b0b8c0;
+        border-bottom: 2px solid #b0b8c0;
+        padding: 28px 0;
+        opacity: 0.32;
+        transition: opacity 0.35s ease;
     }
-}
-
-.focus-item {
-    border-top: 2px solid #b0b8c0;
-    border-bottom: 2px solid #b0b8c0;
-    padding: 28px 0;
-    opacity: 0.32;
-    transition: opacity 0.35s ease;
 }
 
 .focus-item + .focus-item {
