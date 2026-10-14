@@ -440,27 +440,35 @@ nav a:hover::after {
 }
 
 .vote-btn {
+    margin-top: auto;
+    width: auto;
+    height: auto;
+    border: none;
+    background: none;
+    padding: 0;
+    color: #08245B;
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-align: left;
+    transition: color 0.2s ease;
+    font-family: inherit;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    margin-top: auto;
-    background: #08245B;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 999px;
-    padding: 10px 18px;
-    font-family: inherit;
-    font-size: 0.9rem;
-    font-weight: 750;
-    cursor: pointer;
-    text-decoration: none;
-    transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+    gap: 6px;
 }
 
 .vote-btn:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-    color: #FFFFFF;
+    color: #D79A1E;
+}
+
+.candidate.selected .vote-btn {
+    color: #D79A1E;
+}
+
+.vote-btn .arrow {
+    font-weight: 900;
+    -webkit-text-stroke: 1px currentColor;
 }
 
 .candidate.selected .vote-btn {
@@ -1364,7 +1372,7 @@ function renderCandidates(employees) {
             <h3>${emp.name}</h3>
             <div class="candidate-id">ID: ${emp.id}</div>
             <div class="candidate-divider"></div>
-            <button class="vote-btn" onclick="selectCandidate(this)">Vote <span style="font-weight:900;-webkit-text-stroke:1px currentColor">→</span></button> 
+            <button class="vote-btn" onclick="selectCandidate(this)">Vote <span class="arrow">→</span></button>
         `;
         container.appendChild(card);
     });
