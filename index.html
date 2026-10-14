@@ -319,29 +319,27 @@ header {
     .mobile-deco-divider .deco-line.left {
         background: linear-gradient(
             to left,
-            #00B7E2 0%,
-            rgba(0, 183, 226, 0.6) 40%,
-            rgba(0, 183, 226, 0.2) 75%,
+            #b0b8c0 0%,
+            rgba(176, 184, 192, 0.6) 40%,
+            rgba(176, 184, 192, 0.2) 75%,
             transparent 100%
         );
     }
     .mobile-deco-divider .deco-line.right {
         background: linear-gradient(
             to right,
-            #00B7E2 0%,
-            rgba(0, 183, 226, 0.6) 40%,
-            rgba(0, 183, 226, 0.2) 75%,
+            #b0b8c0 0%,
+            rgba(176, 184, 192, 0.6) 40%,
+            rgba(176, 184, 192, 0.2) 75%,
             transparent 100%
         );
     }
     .mobile-deco-divider .deco-diamond {
         font-size: 16px;
         line-height: 1;
-        color: #00B7E2;
+        color: #b0b8c0;
         flex-shrink: 0;
-        text-shadow:
-            0 0 1px #00B7E2,
-            0 0 2px rgba(0, 183, 226, 0.1);
+        text-shadow: none;
     }
 }
 
@@ -510,66 +508,10 @@ header {
     letter-spacing: -0.02em;
 }
 
-.title-deco {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
-    width: 100%;
-}
-
-.deco-diamond {
-    font-size: 18px;
-    line-height: 1;
-    color: #00B7E2;
-    flex-shrink: 0;
-
-    text-shadow:
-        0 0 6px #00B7E2,
-        0 0 12px rgba(0, 183, 226, 0.55),
-        0 0 20px rgba(0, 183, 226, 0.3);
-}
-
-.deco-line {
-    height: 1.5px;
-    flex: 1;
-    max-width: 90px;
-}
-
-.deco-line.left {
-    background: linear-gradient(
-        to left,
-        #00B7E2 0%,
-        rgba(0, 183, 226, 0.6) 40%,
-        rgba(0, 183, 226, 0.2) 75%,
-        transparent 100%
-    );
-}
-
-.deco-line.right {
-    background: linear-gradient(
-        to right,
-        #00B7E2 0%,
-        rgba(0, 183, 226, 0.6) 40%,
-        rgba(0, 183, 226, 0.2) 75%,
-        transparent 100%
-    );
-}
-
 .next-right {
     padding-right: 40px;
     display: flex;
     flex-direction: column;
-}
-
-
-@media (max-width: 700px) {
-    .deco-diamond {
-        text-shadow:
-            0 0 1px #00B7E2,
-            0 0 2px rgba(0, 183, 226, 0.1);
-    }
 }
 
 .focus-item {
@@ -940,7 +882,6 @@ footer {
         box-sizing: border-box;
     }
 
-    /* Header identical to winners: padding 8px 5%, full-width navbar, logo 62x62 */
     header {
         padding: 8px 5%;
     }
@@ -952,8 +893,8 @@ footer {
         width: 100%;
     }
     .logo {
-        width: 62px;
-        height: 62px;
+        width: 100px;
+        height: 100px;
         transform: none;
     }
     .header-nav {
@@ -979,7 +920,7 @@ footer {
         margin: 28px auto 12px;
     }
     .bottom-line h3 {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
     .celebrating-section {
         padding: 90px 0 40px;
@@ -1058,8 +999,8 @@ footer {
             <img src="/logo.jpg" alt="Company Logo" class="logo">
         </a>
         <nav class="header-nav">
-            <a href="winners/index.html" class="winners-btn-header">WINNERS</a>
             <a href="/eoq/" class="nominate-btn">NOMINATE</a>
+            <a href="winners/index.html" class="winners-btn-header">WINNERS</a>
         </nav>
     </div>
 </header>
@@ -1142,11 +1083,6 @@ footer {
             <span class="who-line">WHO'S</span>
             <span class="next-line">
                 NEXT?
-                <span class="title-deco">
-                    <span class="deco-line left"></span>
-                    <span class="deco-diamond">✦</span>
-                    <span class="deco-line right"></span>
-                </span>
             </span>
         </span>
     </h2>
