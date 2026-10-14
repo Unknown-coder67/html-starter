@@ -319,7 +319,7 @@ header {
     .mobile-deco-divider .deco-line.left {
         background: linear-gradient(
             to left,
-            #666666 0%,
+            #00B7E2 0%,
             rgba(0, 183, 226, 0.6) 40%,
             rgba(0, 183, 226, 0.2) 75%,
             transparent 100%
@@ -328,7 +328,7 @@ header {
     .mobile-deco-divider .deco-line.right {
         background: linear-gradient(
             to right,
-            #666666 0%,
+            #00B7E2 0%,
             rgba(0, 183, 226, 0.6) 40%,
             rgba(0, 183, 226, 0.2) 75%,
             transparent 100%
@@ -337,7 +337,7 @@ header {
     .mobile-deco-divider .deco-diamond {
         font-size: 16px;
         line-height: 1;
-        color: #666666;
+        color: #00B7E2;
         flex-shrink: 0;
         text-shadow:
             0 0 1px #00B7E2,
@@ -510,6 +510,53 @@ header {
     letter-spacing: -0.02em;
 }
 
+.title-deco {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.deco-diamond {
+    font-size: 18px;
+    line-height: 1;
+    color: #00B7E2;
+    flex-shrink: 0;
+
+    text-shadow:
+        0 0 6px #00B7E2,
+        0 0 12px rgba(0, 183, 226, 0.55),
+        0 0 20px rgba(0, 183, 226, 0.3);
+}
+
+.deco-line {
+    height: 1.5px;
+    flex: 1;
+    max-width: 90px;
+}
+
+.deco-line.left {
+    background: linear-gradient(
+        to left,
+        #00B7E2 0%,
+        rgba(0, 183, 226, 0.6) 40%,
+        rgba(0, 183, 226, 0.2) 75%,
+        transparent 100%
+    );
+}
+
+.deco-line.right {
+    background: linear-gradient(
+        to right,
+        #00B7E2 0%,
+        rgba(0, 183, 226, 0.6) 40%,
+        rgba(0, 183, 226, 0.2) 75%,
+        transparent 100%
+    );
+}
+
 .next-right {
     padding-right: 40px;
     display: flex;
@@ -518,13 +565,19 @@ header {
 
 
 @media (max-width: 700px) {
-        .focus-item {
-        border-top: 2px solid #b0b8c0;
-        border-bottom: 2px solid #b0b8c0;
-        padding: 28px 0;
-        opacity: 0.32;
-        transition: opacity 0.35s ease;
+    .deco-diamond {
+        text-shadow:
+            0 0 1px #00B7E2,
+            0 0 2px rgba(0, 183, 226, 0.1);
     }
+}
+
+.focus-item {
+    border-top: 2px solid #b0b8c0;
+    border-bottom: 2px solid #b0b8c0;
+    padding: 28px 0;
+    opacity: 0.32;
+    transition: opacity 0.35s ease;
 }
 
 .focus-item + .focus-item {
@@ -899,8 +952,8 @@ footer {
         width: 100%;
     }
     .logo {
-        width: 100px;
-        height: 100px;
+        width: 62px;
+        height: 62px;
         transform: none;
     }
     .header-nav {
@@ -1005,8 +1058,8 @@ footer {
             <img src="/logo.jpg" alt="Company Logo" class="logo">
         </a>
         <nav class="header-nav">
-            <a href="/eoq/" class="nominate-btn">NOMINATE</a>
             <a href="winners/index.html" class="winners-btn-header">WINNERS</a>
+            <a href="/eoq/" class="nominate-btn">NOMINATE</a>
         </nav>
     </div>
 </header>
