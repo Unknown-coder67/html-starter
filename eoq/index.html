@@ -52,6 +52,14 @@ header {
     padding: 8px 5%;
 }
 
+footer {
+    text-align: center;
+    padding: 18px 20px;
+    color: #02102B;
+    font-size: 0.7rem;
+    background: #FFFFFF;
+}
+
 .navbar {
     max-width: 1920px;
     height: 58px;
@@ -793,12 +801,16 @@ nav a:hover {
     </section>
 
     <section class="success-section fade-in" id="successSection">
-        <div class="success-icon">â</div>
+        <div class="success-icon">✓</div>
         <h2>Vote Submitted Successfully</h2>
         <p>Thank you for participating in the Employee of the Quarter voting.</p>
     </section>
 
 </main>
+
+<footer>
+    © 2026 Care Medical Jiwar
+</footer>
 
 <div class="confirmation-bar" id="confirmationBar">
     <div class="confirmation-inner">
@@ -840,7 +852,7 @@ nav a:hover {
                 <li>Courteous reception and positive communication.</li>
                 <li>Commitment to patient service and satisfaction.</li>
                 <li>Professional and tactful handling of complaints and difficult situations.</li>
-                <li>Demonstrating empathy and consideration for patientsâ human needs.</li>
+                <li>Demonstrating empathy and consideration for patients’ human needs.</li>
                 <li>Maintaining patient dignity and privacy.</li>
             </ol>
 
@@ -888,7 +900,7 @@ nav a:hover {
             </ol>
 
             <div class="got-it-wrapper">
-                <button class="got-it-btn" onclick="closeCriteriaAndContinue()">GOT IT â LETâS BEGIN</button>
+                <button class="got-it-btn" onclick="closeCriteriaAndContinue()">GOT IT – LET’S BEGIN</button>
             </div>
         </div>
     </div>
@@ -1064,9 +1076,8 @@ function closeCriteriaAndContinue() {
         const votingSection = document.getElementById("votingSection");
         votingSection.classList.add("visible");
 
-        // Wait for the layout to finish collapsing, then scroll to the very top of the voting section
         setTimeout(() => {
-            const headerOffset = 74; // matches your body { padding-top: 74px }
+            const headerOffset = 74;
             const elementTop = votingSection.getBoundingClientRect().top + window.pageYOffset;
             const offsetPosition = elementTop - headerOffset;
 
@@ -1074,7 +1085,7 @@ function closeCriteriaAndContinue() {
                 top: Math.max(0, offsetPosition),
                 behavior: "smooth"
             });
-        }, 250); // slightly longer delay helps on mobile
+        }, 250);
     }
 }
 
@@ -1086,7 +1097,7 @@ function selectCandidate(button) {
 
     const candidate = button.closest(".candidate");
     candidate.classList.add("selected");
-    button.textContent = "â Selected";
+    button.textContent = "✓ Selected";
     selectedCandidate = candidate.dataset.name;
 
     document.getElementById("selectedName").textContent = selectedCandidate;
@@ -1160,8 +1171,6 @@ async function confirmVote() {
             successSection.scrollIntoView({ behavior: "smooth", block: "start" });
         }, 400);
 
-        // Email is sent automatically by the database trigger / Edge Function
-        // (see setup steps below). Nothing extra needed here.
 
     } catch (err) {
         console.error(err);
