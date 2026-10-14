@@ -41,14 +41,15 @@ body {
     padding-top: 74px;
 }
 
+/* Header identical to winners/index.html */
 header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: rgba(255, 255, 255, 1);
-    border-bottom: 1px solid #dcebf1;
+    background: #FFFFFF;
+    border-bottom: none;
     padding: 8px 5%;
 }
 
@@ -78,7 +79,7 @@ nav {
 nav a {
     position: relative;
     text-decoration: none;
-    color: #17171D;
+    color: #08245B;
     font-weight: 750;
     padding: 8px 2px;
 }
@@ -90,16 +91,16 @@ nav a::after {
     bottom: 5px;
     width: 0;
     height: 2px;
-    background: #24516b;
+    background: #00B7E2;
     transition: width 200ms ease;
+}
+
+nav a:hover {
+    color: #00B7E2;
 }
 
 nav a:hover::after {
     width: 100%;
-}
-
-nav a:hover {
-    color: #08245B;
 }
 
 .main-content {
@@ -663,7 +664,7 @@ nav a:hover {
     }
 }
 
-    @media (max-width: 700px) {
+@media (max-width: 700px) {
     body {
         background-image: url("/mobile-background.jpg") !important;
         background-size: cover !important;
@@ -671,16 +672,18 @@ nav a:hover {
         background-repeat: no-repeat !important;
         background-attachment: scroll !important;
     }
-}
-}
-    
-    {
+
+    /* Header identical to winners */
     header {
-        padding: 5px 5%;
+        padding: 8px 5%;
     }
 
     .navbar {
+        max-width: 1920px;
         height: 58px;
+        margin: 0 auto;
+        padding: 0;
+        width: 100%;
         gap: 8px;
     }
 
@@ -906,16 +909,10 @@ nav a:hover {
 </div>
 
 <script>
-// ============================================================
-// 1. SUPABASE CONFIG â fill these two values from your project
-// ============================================================
 const SUPABASE_URL = "https://fthkfenbpetpzlcpxvoc.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0aGtmZW5icGV0cHpsY3B4dm9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MjI3MTEsImV4cCI6MjEwNjA5ODcxMX0.-gd99emQuWNRazrc1DenTJpAYxfa_rt2A_BA_Vmqkrk";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ============================================================
-// Department data (add more departments later here)
-// ============================================================
 const departmentCodes = {
     "RECQ4": "Reception"
 };
@@ -1169,7 +1166,6 @@ async function confirmVote() {
             successSection.classList.add("visible");
             successSection.scrollIntoView({ behavior: "smooth", block: "start" });
         }, 400);
-
 
     } catch (err) {
         console.error(err);
