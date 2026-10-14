@@ -474,7 +474,7 @@ header {
     gap: 0;
     width: 100%;
 
-    transform: translateY(25px);
+    transform: translateY(45px);
 }
 
 .giant-title .who-line {
@@ -508,6 +508,53 @@ header {
     margin: 0;
     padding: 0;
     letter-spacing: -0.02em;
+}
+
+.title-deco {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.deco-diamond {
+    font-size: 18px;
+    line-height: 1;
+    color: #00B7E2;
+    flex-shrink: 0;
+
+    text-shadow:
+        0 0 6px #00B7E2,
+        0 0 12px rgba(0, 183, 226, 0.55),
+        0 0 20px rgba(0, 183, 226, 0.3);
+}
+
+.deco-line {
+    height: 1.5px;
+    flex: 1;
+    max-width: 90px;
+}
+
+.deco-line.left {
+    background: linear-gradient(
+        to left,
+        #00B7E2 0%,
+        rgba(0, 183, 226, 0.6) 40%,
+        rgba(0, 183, 226, 0.2) 75%,
+        transparent 100%
+    );
+}
+
+.deco-line.right {
+    background: linear-gradient(
+        to right,
+        #00B7E2 0%,
+        rgba(0, 183, 226, 0.6) 40%,
+        rgba(0, 183, 226, 0.2) 75%,
+        transparent 100%
+    );
 }
 
 .next-right {
@@ -879,8 +926,7 @@ footer {
 }
 
 @media (max-width: 700px) {
-    /* Normalize all phones (430–440px+) to the same 430px content width as iPhone 14 Pro Max */
-    .navbar,
+    /* Content width normalized to 430px; header matches winners/index.html exactly */
     .celebrating-layout,
     .bottom-line,
     .cards-section,
@@ -894,12 +940,16 @@ footer {
         box-sizing: border-box;
     }
 
+    /* Header identical to winners: padding 8px 5%, full-width navbar, logo 62x62 */
     header {
-        padding: 5px 0;
+        padding: 8px 5%;
     }
     .navbar {
+        max-width: 1920px;
         height: 58px;
-        padding: 0 16px;
+        margin: 0 auto;
+        padding: 0;
+        width: 100%;
     }
     .logo {
         width: 62px;
@@ -929,7 +979,7 @@ footer {
         margin: 28px auto 12px;
     }
     .bottom-line h3 {
-        font-size: 1.5rem; /* fixed, not vw — same on 430 and 440 */
+        font-size: 1.5rem;
     }
     .celebrating-section {
         padding: 90px 0 40px;
@@ -950,7 +1000,7 @@ footer {
         padding: 40px 16px 32px;
     }
     .giant-title {
-        font-size: 2.8rem; /* fixed, not vw — same on 430 and 440 */
+        font-size: 2.8rem;
         max-width: 100%;
     }
     .focus-item {
@@ -959,7 +1009,6 @@ footer {
     .focus-title {
         font-size: 1.25rem;
     }
-    /* Mobile: cyan color when undimmed (is-near) instead of hover */
     .focus-item.is-near .focus-title {
         color: #00B7E2;
     }
@@ -975,9 +1024,6 @@ footer {
 }
 
 @media (max-width: 480px) {
-    .jiwar-inner {
-        padding: 0 50px;
-    }
     .header-nav a.nominate-btn,
     .header-nav a.winners-btn-header {
         font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback", Arial, Helvetica, sans-serif;
@@ -1096,6 +1142,11 @@ footer {
             <span class="who-line">WHO'S</span>
             <span class="next-line">
                 NEXT?
+                <span class="title-deco">
+                    <span class="deco-line left"></span>
+                    <span class="deco-diamond">✦</span>
+                    <span class="deco-line right"></span>
+                </span>
             </span>
         </span>
     </h2>
