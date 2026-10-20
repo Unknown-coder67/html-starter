@@ -45,7 +45,6 @@ body {
     padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
-/* ===== Header (same as the nomination site) ===== */
 header {
     position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
     background: #fff;
@@ -82,7 +81,6 @@ header {
     .header-nav a.nav-btn::after { left: 12px; width: calc(100% - 24px); }
 }
 
-/* ===== Page ===== */
 .page { max-width: 1400px; margin: 0 auto; padding: 32px 5% 60px; }
 
 .top-row {
@@ -116,7 +114,6 @@ header {
 .export-btn:active { transform: translateY(1px); }
 .export-btn:disabled { opacity: .5; cursor: not-allowed; }
 
-/* ===== Cards ===== */
 .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 28px; }
 @media (max-width: 1000px) { .cards { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 520px)  { .cards { grid-template-columns: 1fr; } }
@@ -130,7 +127,6 @@ header {
 .card .amount { font-size: 2.4rem; font-weight: 800; line-height: 1.1; }
 .card .pct { font-size: 1.1rem; font-weight: 750; }
 
-/* ===== Table section ===== */
 .panel {
     background: #fff; border: 1px solid var(--line); border-radius: 18px;
     box-shadow: 0 2px 10px rgba(8, 36, 91, .04); overflow: hidden;
@@ -266,12 +262,10 @@ td.muted { color: var(--muted); }
 </main>
 
 <script>
-/* ================= CONFIG ================= */
 const SUPABASE_URL = "https://fthkfenbpetpzlcpxvoc.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0aGtmZW5icGV0cHpsY3B4dm9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MjI3MTEsImV4cCI6MjEwNjA5ODcxMX0.-gd99emQuWNRazrc1DenTJpAYxfa_rt2A_BA_Vmqkrk";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Active departments (keep in sync with departmentCodes in /eoq/index.html)
 const DEPARTMENTS = [
     { code: "RECEPTION4",   name: "Reception" },
     { code: "DUTY4",        name: "Duty Manager" },
@@ -295,19 +289,17 @@ const NO_SELECTION_NAME = "No Employee Selected This Quarter";
 
 // Download template settings. If TEMPLATE_URL can't be loaded, a built-in test design is drawn instead.
 const TEMPLATE = {
-    url: "/eoq/template.png",     // your real template (PNG recommended)
-    width: 1080, height: 1350,    // size of your template in pixels
+    url: "/eoq/template.png",     // my real template (PNG recommended)
+    width: 1080, height: 1350,    // size of my template in pixels
     avatar: { x: 540, y: 470, radius: 170 },                                   // circle centre + radius
     name:   { x: 540, y: 760,  size: 64, color: "#08245B", maxWidth: 900 },
     dept:   { x: 540, y: 835,  size: 38, color: "#0E7490", maxWidth: 900 },
     story:  { x: 540, y: 940,  size: 34, color: "#33495f", maxWidth: 820, lineHeight: 48, maxLines: 6 }
 };
 
-/* ================= STATE ================= */
-let rows = [];          // one merged row per department
+let rows = [];
 let activeFilter = "all";
 
-/* ================= HELPERS ================= */
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
 const slug = s => String(s).toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 
@@ -327,7 +319,6 @@ function statusColor(pct) {
 
 const pctOf = (n, total) => total ? Math.round((n / total) * 100) : 0;
 
-/* ================= DATA ================= */
 async function loadData() {
     const msg = document.getElementById("stateMsg");
     msg.style.display = "block"; msg.textContent = "Loading…";
@@ -361,18 +352,16 @@ async function loadData() {
     renderAll();
 }
 
-/* ================= RENDER ================= */
 function renderAll() {
     const total = rows.length;
     const completed = rows.filter(r => r.status === "completed").length;
     const pending   = rows.filter(r => r.status === "pending").length;
     const none      = rows.filter(r => r.status === "none").length;
 
-    // Cards
     document.getElementById("totalAmt").textContent = total;
 
     const cPct = pctOf(completed, total), pPct = pctOf(pending, total), nPct = pctOf(none, total);
-    const progressColor = statusColor(cPct);   // Completed + Pending share the colour of overall progress
+    const progressColor = statusColor(cPct);
 
     setCard("cardCompleted", "completedAmt", "completedPct", completed, cPct, progressColor);
     setCard("cardPending",   "pendingAmt",   "pendingPct",   pending,   pPct, progressColor);
@@ -429,7 +418,6 @@ document.getElementById("tabs").addEventListener("click", e => {
     renderTable();
 });
 
-/* ================= EXPORT TO EXCEL ================= */
 document.getElementById("exportBtn").addEventListener("click", () => {
     if (!window.XLSX) { alert("Excel export could not load. Please check your connection and try again."); return; }
     if (!rows.length) return;
@@ -465,7 +453,6 @@ document.getElementById("exportBtn").addEventListener("click", () => {
     XLSX.writeFile(wb, `Employee-of-the-Quarter-${quarter.replace(/\s+/g, "-")}.xlsx`);
 });
 
-/* ================= DOWNLOAD FILLED CARD ================= */
 document.getElementById("tbody").addEventListener("click", async e => {
     const btn = e.target.closest(".dl-btn");
     if (!btn || btn.disabled) return;
@@ -519,12 +506,11 @@ async function downloadCard(row) {
     canvas.width = T.width; canvas.height = T.height;
     const ctx = canvas.getContext("2d");
 
-    // 1) Background: your template if it exists, otherwise the built-in test design
     const tpl = await tryImage(T.url);
     if (tpl) ctx.drawImage(tpl, 0, 0, T.width, T.height);
     else drawTestBackground(ctx, T);
 
-    // 2) Avatar: photo if available (avatar_url column or /eoq/avatars/<name>.jpg), otherwise initials
+    // Avatar: photo if available (avatar_url column or /eoq/avatars/<name>.jpg), otherwise initials
     const photo = await tryImage(row.avatar || `/eoq/avatars/${slug(row.nominee)}.jpg`);
     const { x, y, radius } = T.avatar;
     ctx.save();
@@ -543,7 +529,7 @@ async function downloadCard(row) {
     ctx.lineWidth = 8; ctx.strokeStyle = "#fff";
     ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2); ctx.stroke();
 
-    // 3) Text
+    // Text
     ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
 
     ctx.fillStyle = T.name.color; fitText(ctx, row.nominee, T.name, 800);
@@ -559,7 +545,7 @@ async function downloadCard(row) {
             .forEach((ln, i) => ctx.fillText(ln, T.story.x, T.story.y + i * T.story.lineHeight));
     }
 
-    // 4) Save to the user's device
+    // Save to the user's device
     const blob = await new Promise(res => canvas.toBlob(res, "image/png"));
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
@@ -568,7 +554,7 @@ async function downloadCard(row) {
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
 }
 
-// TEST design – shown only until you add a real template at TEMPLATE.url
+// TEST design – shown only until I add a real template at TEMPLATE.url
 function drawTestBackground(ctx, T) {
     const g = ctx.createLinearGradient(0, 0, 0, T.height);
     g.addColorStop(0, "#e8f4f8"); g.addColorStop(1, "#ffffff");
@@ -592,7 +578,6 @@ function drawTestBackground(ctx, T) {
     ctx.fillText("Care Medical Jiwar", T.width / 2, T.height - 45);
 }
 
-/* ================= INIT ================= */
 loadData();
 </script>
 </body>
