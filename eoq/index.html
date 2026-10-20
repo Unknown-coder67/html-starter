@@ -157,7 +157,7 @@ nav a:hover { color: #00B7E2; }
     top: 12px;
     left: 10%;
     height: 2.5px;
-    background: #00B7E2;
+    background: #c4ccd2;
     z-index: 1;
     border-radius: 2px;
     transition: width 0.4s ease;
@@ -212,7 +212,7 @@ nav a:hover { color: #00B7E2; }
 }
 
 .step.clickable:hover .step-circle {
-    border-color: #00B7E2;
+    border-color: #c4ccd2;
     transform: scale(1.08);
 }
 
@@ -294,13 +294,13 @@ nav a:hover { color: #00B7E2; }
     box-shadow: 0 0 0 3px rgba(8,124,152,0.12);
 }
 
-/* ========== STEP 1: Departments – wide cards ========== */
+/* ========== STEP 1: Departments ========== */
 .dept-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 22px;
-    /* Break out of .main-content: full viewport width minus 50px each side */
-    width: calc(100vw - 100px);
+    grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+    gap: 16px;
+    /* Break out of .main-content: full viewport width minus 100px each side */
+    width: calc(100vw - 200px);
     position: relative;
     left: 50%;
     transform: translateX(-50%);
@@ -308,8 +308,8 @@ nav a:hover { color: #00B7E2; }
 
 .dept-card {
     background: #fff;
-    border-radius: 20px;
-    padding: 28px 18px 24px;
+    border-radius: 16px;
+    padding: 18px 12px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -318,26 +318,26 @@ nav a:hover { color: #00B7E2; }
     border: 1px solid rgba(220,235,241,0.7);
     transition: transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
-    aspect-ratio: 1 / 1.05;
+    aspect-ratio: 1 / 1.08;
     min-height: 0;
 }
 
 .dept-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 26px rgba(23,50,77,0.14);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(23,50,77,0.13);
     border-color: #9ddfea;
 }
 
 .dept-img {
-    width: clamp(80px, 7vw, 120px);
-    height: clamp(80px, 7vw, 120px);
+    width: 64px;
+    height: 64px;
     object-fit: contain;
-    border-radius: 16px;
-    margin-bottom: 18px;
+    border-radius: 12px;
+    margin-bottom: 12px;
 }
 
 .dept-name {
-    font-size: clamp(1rem, 1.3vw, 1.35rem);
+    font-size: 0.88rem;
     font-weight: 700;
     color: #05255E;
     line-height: 1.3;
@@ -491,36 +491,36 @@ nav a:hover { color: #00B7E2; }
 
 /* ========== STEP 4: Nominate ========== */
 .nominate-outer {
-    max-width: 1100px;
+    max-width: 1168px;
     margin: 0 auto;
 }
 
-/* Two separate white boxes side by side. The group is centered, so when the
-   reason box grows in, the employee box slides left together with its background. */
+/* No background boxes. The group is centered, so when the reason section
+   grows in on the right, the employee section slides left with it. */
 .nominate-split {
     display: flex;
     justify-content: center;
-    align-items: stretch;
-}
-
-.nominate-box {
-    background: #fff;
-    border-radius: 18px;
-    box-shadow: 0 8px 28px rgba(23,50,77,0.09);
-    box-sizing: border-box;
+    align-items: flex-start;
 }
 
 .employee-list-pane {
-    flex: 0 1 640px;
+    flex: 0 1 920px;
     min-width: 0;
-    padding: 18px 22px 16px;
+}
+
+/* Search bar is the same width as the employee cards section */
+.employee-list-pane .top-search-wrap {
+    max-width: none;
+    margin: 0 0 20px;
+    padding: 0;
 }
 
 .reason-pane {
-    flex: 0 1 auto;
+    flex: 0 0 auto;
     width: 0;
     margin-left: 0;
-    padding: 18px 0;
+    padding: 4px 0;
+    box-sizing: border-box;
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
@@ -535,7 +535,7 @@ nav a:hover { color: #00B7E2; }
 }
 
 .reason-inner {
-    min-width: 336px;
+    min-width: 372px;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -543,22 +543,23 @@ nav a:hover { color: #00B7E2; }
 
 .nominate-split.has-selection .reason-pane {
     width: 380px;
-    margin-left: 18px;
-    padding: 18px 22px 16px;
+    margin-left: 24px;
+    padding: 4px;
     opacity: 1;
     visibility: visible;
     transition-delay: 0s, 0s, 0s, 0.15s, 0s;
 }
 
-/* Employee cards: 2 per row, 4 rows visible, then scroll */
+/* Employee cards: 4 per row, 2 rows visible, then scroll */
 .emp-list {
+    --emp-row: 72px;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: 66px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: var(--emp-row);
     gap: 10px;
-    max-height: calc(66px * 4 + 10px * 3);
+    max-height: calc(var(--emp-row) * 2 + 10px);
     overflow-y: auto;
-    padding-right: 6px;
+    padding-right: 0;
 }
 
 /* Horizontal employee card: avatar | name | circle */
@@ -566,10 +567,10 @@ nav a:hover { color: #00B7E2; }
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 14px;
-    padding: 0 14px;
+    gap: 8px;
+    padding: 0 10px;
     box-sizing: border-box;
-    background: #f8fbfd;
+    background: #FFFFFF;
     border: 1px solid #e0edf3;
     border-radius: 12px;
     cursor: pointer;
@@ -579,24 +580,24 @@ nav a:hover { color: #00B7E2; }
 
 .emp-card:hover {
     border-color: #9ddfea;
-    background: #f0f9fc;
+    background: #FFFFFF;
 }
 
 .emp-card.selected {
     border-color: #D79A1E;
-    background: #fffaf0;
+    background: #FFFFFF;
     box-shadow: 0 2px 10px rgba(215,154,30,0.15);
 }
 
 .emp-avatar {
-    width: 42px;
-    height: 42px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background: #f8fbfd;
     border: 1.5px solid #d0e0e8;
     color: #08245B;
     font-weight: 800;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -609,17 +610,17 @@ nav a:hover { color: #00B7E2; }
 }
 
 .emp-name {
-    font-size: 0.92rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: #05255E;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    line-height: 1.2;
+    white-space: normal;
+    overflow-wrap: anywhere;
 }
 
 .emp-circle {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     border: 2px solid #cbdde5;
     border-radius: 50%;
     display: flex;
@@ -657,7 +658,7 @@ nav a:hover { color: #00B7E2; }
     border: 1px dashed #c5d8e2;
     border-radius: 12px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 36px;
     transition: border-color 0.2s, background 0.2s;
     text-align: left;
 }
@@ -1075,18 +1076,7 @@ footer {
 }
 
 /* Responsive */
-@media (max-width: 1200px) {
-    .dept-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-@media (max-width: 800px) {
-    .dept-grid {
-        grid-template-columns: repeat(3, 1fr);
-        width: calc(100vw - 60px);
-        gap: 14px;
-    }
+@media (max-width: 1000px) {
     .nominate-split {
         flex-direction: column;
         align-items: stretch;
@@ -1100,22 +1090,31 @@ footer {
         display: flex;
         width: 100%;
         margin-left: 0;
-        margin-top: 14px;
+        margin-top: 18px;
     }
     .reason-inner { min-width: 0; }
+}
+
+@media (max-width: 640px) {
+    .emp-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-height: calc(var(--emp-row) * 4 + 10px * 3);
+    }
+}
+
+@media (max-width: 800px) {
+    .dept-grid {
+        width: calc(100vw - 80px);
+        gap: 14px;
+    }
 }
 
 @media (max-width: 560px) {
     .dept-grid {
         grid-template-columns: repeat(2, 1fr);
-        width: calc(100vw - 32px);
+        width: calc(100vw - 40px);
         gap: 12px;
     }
-    .dept-card { padding: 20px 12px 18px; }
-    .emp-list { padding-right: 2px; }
-    .emp-card { padding: 0 10px; gap: 8px; }
-    .emp-avatar { width: 34px; height: 34px; font-size: 0.78rem; }
-    .emp-name { white-space: normal; font-size: 0.82rem; line-height: 1.2; }
     .logo { width: 110px; }
     .page-header-texts .line2 { font-size: 1.45rem; }
 }
@@ -1284,7 +1283,9 @@ footer {
 
     <!-- ========== STEP 4: Nominate ========== -->
     <section class="step-panel" id="step4">
-        <!-- Search outside the content box, same style as Department -->
+        <div class="nominate-outer">
+                <div class="nominate-split" id="nominateSplit">
+                    <div class="employee-list-pane">
         <div class="top-search-wrap">
             <div class="search-wrapper">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -1294,9 +1295,6 @@ footer {
             </div>
         </div>
 
-        <div class="nominate-outer">
-                <div class="nominate-split" id="nominateSplit">
-                    <div class="employee-list-pane nominate-box">
                         <div class="emp-list" id="empList"></div>
 
                         <!-- No Selection option -->
@@ -1323,7 +1321,7 @@ footer {
                         </div>
                     </div>
 
-                    <div class="reason-pane nominate-box" id="reasonPane">
+                    <div class="reason-pane" id="reasonPane">
                       <div class="reason-inner">
                         <div class="reason-title">What made them stand out</div>
                         <p class="reason-hint">Share what made this employee special this quarter. A short sentence or a few lines is enough.</p>
