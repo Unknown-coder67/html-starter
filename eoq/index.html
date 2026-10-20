@@ -1519,14 +1519,12 @@ input::placeholder, textarea::placeholder {
 
 <main class="main-content">
 
-    <!-- Three lines of text -->
     <div class="page-header-texts" id="pageHeaderTexts">
         <div class="line1" id="headerLine1">Employee of the Quarter</div>
         <div class="line2" id="headerLine2">Select Your Department</div>
         <div class="line3" id="headerLine3">Select your department to meet your team and choose your star.</div>
     </div>
 
-    <!-- Progress Indicator -->
     <div class="progress-wrap" id="progressWrap">
         <div class="progress-steps">
             <div class="progress-bar-fill" id="progressFill"></div>
@@ -1553,13 +1551,11 @@ input::placeholder, textarea::placeholder {
         </div>
     </div>
 
-    <!-- ========== STEP 1: Department Selection ========== -->
     <section class="step-panel active" id="step1">
 
         <div class="dept-grid" id="deptGrid"></div>
     </section>
 
-    <!-- ========== STEP 2: Access Code ========== -->
     <section class="step-panel" id="step2">
         <div class="access-box">
             <img src="lock.jpg" alt="Access" class="access-dept-img" id="accessDeptImg" onerror="this.style.display='none'">
@@ -1580,7 +1576,6 @@ input::placeholder, textarea::placeholder {
         </div>
     </section>
 
-    <!-- ========== STEP 3: Evaluation Criteria ========== -->
     <section class="step-panel" id="step3">
         <div class="criteria-panel">
             <div class="criteria-body">
@@ -1663,7 +1658,6 @@ input::placeholder, textarea::placeholder {
         </div>
     </section>
 
-    <!-- ========== STEP 4: Nominate ========== -->
     <section class="step-panel" id="step4">
         <div class="nominate-outer">
                 <div class="nominate-split" id="nominateSplit">
@@ -1679,7 +1673,6 @@ input::placeholder, textarea::placeholder {
 
                         <div class="emp-list" id="empList"></div>
 
-                        <!-- No Selection option -->
                         <div class="no-select-card" id="noSelectCard" onclick="selectNoEmployee()">
                             <div class="no-select-circle">
                                 <div class="no-select-circle-inner"></div>
@@ -1694,7 +1687,6 @@ input::placeholder, textarea::placeholder {
                             </div>
                         </div>
 
-                        <!-- Continue button for No Selection -->
                         <div class="no-select-continue-wrap" id="noSelectContinueWrap">
                             <button class="no-select-continue-btn" onclick="goToStep(5)">
                                 Continue
@@ -1722,7 +1714,6 @@ input::placeholder, textarea::placeholder {
         </div>
     </section>
 
-    <!-- ========== STEP 5: Review & Submit ========== -->
     <section class="step-panel" id="step5">
         <div class="review-box">
             <h2>Review Your Nomination</h2>
@@ -1757,7 +1748,6 @@ input::placeholder, textarea::placeholder {
         </div>
     </section>
 
-    <!-- ========== STEP 6: Success ========== -->
     <section class="step-panel" id="step6">
         <div class="success-panel">
             <div class="success-icon-wrap">
@@ -1781,7 +1771,6 @@ input::placeholder, textarea::placeholder {
     </section>
 
 
-    <!-- ========== EXECUTIVE: Access ========== -->
     <section class="step-panel" id="execAccess">
         <div class="exec-access-box">
             <h2>Please enter your code to proceed</h2>
@@ -1799,7 +1788,6 @@ input::placeholder, textarea::placeholder {
         </div>
     </section>
 
-    <!-- ========== EXECUTIVE: Selection choice ========== -->
     <section class="step-panel" id="execChoice">
         <div class="exec-choice-wrap">
             <div class="exec-choice-headline">
@@ -1832,7 +1820,6 @@ input::placeholder, textarea::placeholder {
         </div>
     </section>
 
-    <!-- ========== EXECUTIVE: Category (Admin / Medical) ========== -->
     <section class="step-panel" id="execCategory">
         <div class="exec-choice-wrap">
             <div class="exec-choice-headline">
@@ -1865,7 +1852,6 @@ input::placeholder, textarea::placeholder {
         </div>
     </section>
 
-    <!-- ========== EXECUTIVE: Department Head Nominate ========== -->
     <section class="step-panel" id="execDHNominate">
         <div class="nominate-outer">
             <div class="nominate-split" id="execDHSplit">
@@ -1908,7 +1894,6 @@ input::placeholder, textarea::placeholder {
         </div>
     </section>
 
-    <!-- ========== EXECUTIVE: Staff Nominate (Admin / Medical) ========== -->
     <section class="step-panel" id="execStaffNominate">
         <div class="nominate-outer">
             <div class="nominate-split" id="execStaffSplit">
@@ -1951,7 +1936,6 @@ input::placeholder, textarea::placeholder {
         </div>
     </section>
 
-    <!-- ========== EXECUTIVE: Review ========== -->
     <section class="step-panel" id="execReview">
         <div class="review-box">
             <h2>Review Your Nomination</h2>
@@ -2429,8 +2413,7 @@ function goToStep(step) {
 function updateProgress(step) {
     const steps = document.querySelectorAll(".step");
     const fill = document.getElementById("progressFill");
-    // Fill reaches the center of the current step (0% at step1, 100% at step5)
-    const total = 4; // gaps between 5 steps
+    const total = 4;
     const pct = ((step - 1) / total) * 100;
     fill.style.width = Math.min(pct, 100) + "%";
 
@@ -2479,7 +2462,6 @@ function renderEmployees(list) {
 }
 
 function selectEmployee(emp) {
-    // Clicking the already-selected employee deselects it
     if (!isNoSelection && selectedEmpRef === emp) {
         selectedCandidate = "";
         selectedCandidateId = "";
@@ -2501,7 +2483,6 @@ function selectEmployee(emp) {
 }
 
 function selectNoEmployee() {
-    // Clicking "No Selection" again deselects it
     if (isNoSelection) {
         isNoSelection = false;
         selectedCandidate = "";
@@ -2719,7 +2700,7 @@ async function confirmVote() {
                 department_name: currentDeptName,
                 winner_name: winnerName,
                 recognition_story: isNoSelection ? null : recognitionStory,
-                job_title: null          // no job titles in the current employee lists yet
+                job_title: null
             });
 
         if (insertError) {
@@ -2763,7 +2744,6 @@ document.getElementById("departmentCode").addEventListener("keydown", function (
 });
 
 
-/* ========== EXECUTIVE FLOW ========== */
 let execMode = null;
 let execSelected = null;
 let execSelectedDept = "";
@@ -2899,7 +2879,7 @@ function verifyExecCode() {
     document.getElementById("pageHeaderTexts").style.display = "none";
     document.getElementById("progressWrap").style.display = "none";
     setExecHeaderMode(true);
-    document.getElementById("dashboardBtn").style.display = "flex"; // revealed only after a valid executive code
+    document.getElementById("dashboardBtn").style.display = "flex";
     showPanel("execChoice");
 }
 
@@ -2932,7 +2912,6 @@ function goExecIndividual() {
 }
 
 function exitExecutive() {
-    // Same destination as the header "Nominate" button: back to the Department page
     window.location.href = document.getElementById("nominateBtn").getAttribute("href");
 }
 
@@ -2995,7 +2974,6 @@ function renderExecDH(list) {
 }
 
 function selectExecDH(item) {
-    // Clicking the already-selected department head deselects it
     if (!execIsNoSelection && execSelected && execSelected.id === item.id) {
         execSelected = null;
         execSelectedDept = "";
@@ -3015,7 +2993,6 @@ function selectExecDH(item) {
 }
 
 function selectExecDHNo() {
-    // Clicking "No Selection" again deselects it
     if (execIsNoSelection) {
         execIsNoSelection = false;
         document.getElementById("execDHNoSelect").classList.remove("selected");
@@ -3069,7 +3046,6 @@ function renderExecStaff(list) {
 }
 
 function selectExecStaff(emp) {
-    // Clicking the already-selected employee deselects it
     if (!execIsNoSelection && execSelected && execSelected.id === emp.id) {
         execSelected = null;
         renderExecStaff(execCurrentList);
@@ -3087,7 +3063,6 @@ function selectExecStaff(emp) {
 }
 
 function selectExecStaffNo() {
-    // Clicking "No Selection" again deselects it
     if (execIsNoSelection) {
         execIsNoSelection = false;
         document.getElementById("execStaffNoSelect").classList.remove("selected");
@@ -3241,7 +3216,6 @@ async function confirmExecVote() {
 }
 
 
-// Init
 renderDepartments();
 updateProgress(1);
 updateHeaderTexts(1);
