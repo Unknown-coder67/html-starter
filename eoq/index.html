@@ -1306,15 +1306,7 @@ body.exec-bg {
 .exec-cat-card {
     flex: 1 1 0;
     min-width: 0;
-}
-
-@media (max-width: 700px) {
-    .exec-category-cards {
-        flex-direction: column;
-    }
-}
-
-.exec-cat-card {
+    height: 120px;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -1327,6 +1319,12 @@ body.exec-bg {
     transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 
+@media (max-width: 700px) {
+    .exec-category-cards {
+        flex-direction: column;
+    }
+}
+    
 .exec-cat-card:hover {
     border-color: #9ddfea;
     box-shadow: 0 8px 24px rgba(23,50,77,0.1);
