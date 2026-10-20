@@ -1533,6 +1533,7 @@ input::placeholder, textarea::placeholder {
         </a>
         <nav class="header-nav">
             <a href="/" class="nav-btn" id="homeBtn">Home</a>
+            <a href="https://jiwar.care/dashboard" target="_blank" rel="noopener" class="nav-btn" id="dashboardBtn" style="display:none;">Dashboard</a>
             <span class="nav-swap">
                 <a href="#" class="nav-btn" id="executiveBtn" onclick="startExecutive(event)">Executive</a>
                 <a href="/eoq/" class="nav-btn nav-hidden" id="nominateBtn">Nominate</a>
@@ -2921,6 +2922,7 @@ function verifyExecCode() {
     document.getElementById("pageHeaderTexts").style.display = "none";
     document.getElementById("progressWrap").style.display = "none";
     setExecHeaderMode(true);
+    document.getElementById("dashboardBtn").style.display = "flex"; // revealed only after a valid executive code
     showPanel("execChoice");
 }
 
