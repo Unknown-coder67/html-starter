@@ -1385,19 +1385,22 @@ body.exec-bg {
 }
 
 .exec-category-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 900px;
     margin: 28px auto 0;
 }
 
 .exec-cat-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
     background: #fff;
     border: 1px solid #e0edf3;
-    border-radius: 18px;
-    padding: 28px 22px 24px;
-    text-align: center;
+    border-radius: 16px;
+    padding: 22px 24px;
+    text-align: left;
     cursor: pointer;
     transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
@@ -1409,39 +1412,75 @@ body.exec-bg {
 }
 
 .exec-cat-img {
-    width: 72px;
-    height: 72px;
+    width: 64px;
+    height: 64px;
     object-fit: contain;
-    border-radius: 14px;
-    margin: 0 auto 16px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    margin: 0;
     display: block;
+}
+
+.exec-cat-texts {
+    flex: 1;
+    min-width: 0;
 }
 
 .exec-cat-card h3 {
     font-size: 1.15rem;
     font-weight: 750;
     color: #05255E;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .exec-cat-card p {
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     color: #557083;
     font-weight: 500;
-    margin-bottom: 18px;
+    margin: 0;
+    line-height: 1.45;
 }
 
 .exec-cat-arrow {
-    display: inline-flex;
+    flex-shrink: 0;
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background: #08245B;
     color: #fff;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 800;
+}
+
+.exec-back-wrap {
+    max-width: 900px;
+    margin: 28px auto 0;
+    padding: 0 16px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.exec-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 2px solid #17171D;
+    color: #17171D;
+    border-radius: 12px;
+    padding: 11px 22px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+}
+.exec-back-btn:hover {
+    border-color: #00B7E2;
+    color: #00B7E2;
 }
 
 .dh-list {
@@ -1537,14 +1576,11 @@ body.exec-bg {
 .dh-card.selected .dh-circle-inner { opacity: 1; }
 
 @media (max-width: 700px) {
-    .exec-category-cards {
-        grid-template-columns: 1fr;
-    }
-    .exec-box {
+    .exec-box, .exec-cat-card {
         padding: 18px 16px;
         gap: 14px;
     }
-    .exec-box-img {
+    .exec-box-img, .exec-cat-img {
         width: 52px;
         height: 52px;
     }
@@ -1567,8 +1603,9 @@ body.exec-bg {
             <img src="/logo.jpg" alt="Care Medical Jiwar" class="logo">
         </a>
         <nav class="header-nav">
+            <a href="/" class="nav-btn" id="homeBtn">Home</a>
             <a href="#" class="nav-btn" id="executiveBtn" onclick="startExecutive(event)">Executive</a>
-            <a href="/" class="nav-btn">Home</a>
+            <a href="/eoq/" class="nav-btn" id="nominateBtn" style="display: none;">Nominate</a>
         </nav>
     </div>
 </header>
@@ -1577,7 +1614,8 @@ body.exec-bg {
 
     <!-- Three lines of text -->
     <div class="page-header-texts" id="pageHeaderTexts">
-        <div class="line2" id="headerLine2">Employee of the Quarter</div>
+        <div class="line1" id="headerLine1">Employee of the Quarter</div>
+        <div class="line2" id="headerLine2">Select Your Department</div>
         <div class="line3" id="headerLine3">Select your department to meet your team and choose your star.</div>
     </div>
 
@@ -1869,6 +1907,12 @@ body.exec-bg {
                     <div class="exec-box-arrow">→</div>
                 </div>
             </div>
+            <div class="exec-back-wrap">
+                <button type="button" class="exec-back-btn" onclick="execBackToAccess()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back
+                </button>
+            </div>
         </div>
     </section>
 
@@ -1884,16 +1928,26 @@ body.exec-bg {
             <div class="exec-category-cards">
                 <div class="exec-cat-card" onclick="goExecStaff('admin')">
                     <img src="admin-staff.jpg" alt="" class="exec-cat-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
-                    <h3>Administrative Staff</h3>
-                    <p>Selected by the Administrative Director</p>
+                    <div class="exec-cat-texts">
+                        <h3>Administrative Staff</h3>
+                        <p>Selected by the Administrative Director</p>
+                    </div>
                     <div class="exec-cat-arrow">→</div>
                 </div>
                 <div class="exec-cat-card" onclick="goExecStaff('medical')">
                     <img src="medical-staff.jpg" alt="" class="exec-cat-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
-                    <h3>Medical Staff</h3>
-                    <p>Selected by the Medical Services Director</p>
+                    <div class="exec-cat-texts">
+                        <h3>Medical Staff</h3>
+                        <p>Selected by the Medical Services Director</p>
+                    </div>
                     <div class="exec-cat-arrow">→</div>
                 </div>
+            </div>
+            <div class="exec-back-wrap">
+                <button type="button" class="exec-back-btn" onclick="execBackToChoice()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back
+                </button>
             </div>
         </div>
     </section>
@@ -1901,6 +1955,12 @@ body.exec-bg {
     <!-- ========== EXECUTIVE: Department Head Nominate ========== -->
     <section class="step-panel" id="execDHNominate">
         <div class="nominate-outer">
+            <div class="exec-back-wrap" style="margin-bottom: 16px; padding: 0;">
+                <button type="button" class="exec-back-btn" onclick="execBackToChoice()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back
+                </button>
+            </div>
             <div class="nominate-split" id="execDHSplit">
                 <div class="employee-list-pane">
                     <div class="top-search-wrap" id="execDHSearchWrap">
@@ -1949,6 +2009,12 @@ body.exec-bg {
     <!-- ========== EXECUTIVE: Staff Nominate (Admin / Medical) ========== -->
     <section class="step-panel" id="execStaffNominate">
         <div class="nominate-outer">
+            <div class="exec-back-wrap" style="margin-bottom: 16px; padding: 0;">
+                <button type="button" class="exec-back-btn" onclick="execBackToCategory()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back
+                </button>
+            </div>
             <div class="nominate-split" id="execStaffSplit">
                 <div class="employee-list-pane">
                     <div class="top-search-wrap" id="execStaffSearchWrap">
@@ -2824,46 +2890,42 @@ function showPanel(id) {
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+function setExecHeaderMode(inExec) {
+    const execBtn = document.getElementById("executiveBtn");
+    const nominateBtn = document.getElementById("nominateBtn");
+    if (execBtn) execBtn.style.display = inExec ? "none" : "";
+    if (nominateBtn) nominateBtn.style.display = inExec ? "" : "none";
+}
+
 function setExecProgress(mode, step) {
     const progressWrap = document.getElementById("progressWrap");
     const pageHeader = document.getElementById("pageHeaderTexts");
     if (!progressWrap) return;
 
-    if (mode === "dh") {
-        progressWrap.classList.add("short");
-        progressWrap.style.display = "block";
-        progressWrap.innerHTML = `
-            <div class="progress-steps">
-                <div class="progress-bar-fill" id="progressFill" style="width: ${step === 1 ? "0%" : "100%"}; max-width: 50%; left: 25%;"></div>
-                <div class="step ${step === 1 ? "active" : "completed"}" data-step="1">
-                    <div class="step-circle">${step > 1 ? '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' : "1"}</div>
-                    <div class="step-label">Select</div>
-                </div>
-                <div class="step ${step === 2 ? "active" : ""}" data-step="2">
-                    <div class="step-circle">2</div>
-                    <div class="step-label">Confirm</div>
-                </div>
-            </div>`;
-        if (pageHeader) {
+    progressWrap.classList.add("short");
+    progressWrap.style.display = "block";
+    progressWrap.innerHTML = `
+        <div class="progress-steps">
+            <div class="progress-bar-fill" id="progressFill" style="width: ${step === 1 ? "0%" : "100%"}; max-width: 50%; left: 25%;"></div>
+            <div class="step ${step === 1 ? "active" : "completed"}" data-step="1">
+                <div class="step-circle">${step > 1 ? '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' : "1"}</div>
+                <div class="step-label">Select</div>
+            </div>
+            <div class="step ${step === 2 ? "active" : ""}" data-step="2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Confirm</div>
+            </div>
+        </div>`;
+
+    if (pageHeader) {
+        pageHeader.style.display = "block";
+        if (mode === "dh") {
             document.getElementById("headerLine1").textContent = step === 1 ? "Executive Selection" : "Almost Done";
             document.getElementById("headerLine2").textContent = step === 1 ? "Outstanding Department Head" : "Review Your Nomination";
             document.getElementById("headerLine3").textContent = step === 1
                 ? "Review the shortlisted department heads and select the winner together as the executive team."
                 : "Confirm the details before submitting your final choice.";
-        }
-    } else if (mode === "staff") {
-        progressWrap.classList.remove("short");
-        progressWrap.style.display = "block";
-        progressWrap.innerHTML = `
-            <div class="progress-steps">
-                <div class="progress-bar-fill" id="progressFill" style="width: ${step === 1 ? "75%" : "100%"};"></div>
-                <div class="step completed" data-step="1"><div class="step-circle"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><div class="step-label">Department</div></div>
-                <div class="step completed" data-step="2"><div class="step-circle"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><div class="step-label">Access</div></div>
-                <div class="step completed" data-step="3"><div class="step-circle"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><div class="step-label">Criteria</div></div>
-                <div class="step ${step === 1 ? "active" : "completed"}" data-step="4"><div class="step-circle">${step > 1 ? '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' : "4"}</div><div class="step-label">Nominate</div></div>
-                <div class="step ${step === 2 ? "active" : ""}" data-step="5"><div class="step-circle">5</div><div class="step-label">Review & Submit</div></div>
-            </div>`;
-        if (pageHeader) {
+        } else if (mode === "staff") {
             const cat = execMode === "admin" ? "Administrative Staff" : "Medical Staff";
             document.getElementById("headerLine1").textContent = step === 1 ? "Executive Selection" : "Almost Done";
             document.getElementById("headerLine2").textContent = step === 1 ? cat : "Review Your Nomination";
@@ -2883,6 +2945,7 @@ function startExecutive(e) {
     document.getElementById("pageHeaderTexts").style.display = "none";
     document.getElementById("execCode").value = "";
     document.getElementById("execCodeError").style.display = "none";
+    setExecHeaderMode(true);
     showPanel("execAccess");
 }
 
@@ -2901,11 +2964,9 @@ function verifyExecCode() {
         return;
     }
     error.style.display = "none";
-    document.getElementById("pageHeaderTexts").style.display = "block";
-    document.getElementById("headerLine1").textContent = "Executive";
-    document.getElementById("headerLine2").textContent = "EXECUTIVE SELECTION";
-    document.getElementById("headerLine3").textContent = "Recognizing Excellence Across Our Teams";
+    document.getElementById("pageHeaderTexts").style.display = "none";
     document.getElementById("progressWrap").style.display = "none";
+    setExecHeaderMode(true);
     showPanel("execChoice");
 }
 
@@ -2934,9 +2995,27 @@ function goExecDeptHead() {
 
 function goExecIndividual() {
     document.getElementById("progressWrap").style.display = "none";
-    document.getElementById("headerLine1").textContent = "Executive Selection";
-    document.getElementById("headerLine2").textContent = "Outstanding Individual Contributor";
-    document.getElementById("headerLine3").textContent = "Select the outstanding individual from your assigned category.";
+    document.getElementById("pageHeaderTexts").style.display = "none";
+    showPanel("execCategory");
+}
+
+function execBackToAccess() {
+    document.getElementById("progressWrap").style.display = "none";
+    document.getElementById("pageHeaderTexts").style.display = "none";
+    document.getElementById("execCode").value = "";
+    document.getElementById("execCodeError").style.display = "none";
+    showPanel("execAccess");
+}
+
+function execBackToChoice() {
+    document.getElementById("progressWrap").style.display = "none";
+    document.getElementById("pageHeaderTexts").style.display = "none";
+    showPanel("execChoice");
+}
+
+function execBackToCategory() {
+    document.getElementById("progressWrap").style.display = "none";
+    document.getElementById("pageHeaderTexts").style.display = "none";
     showPanel("execCategory");
 }
 
