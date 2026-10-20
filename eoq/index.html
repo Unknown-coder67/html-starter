@@ -378,7 +378,7 @@ header {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 8px 16px 40px;
+    padding: 0 16px 40px;
     flex: 1 0 auto;
 }
 
@@ -1510,6 +1510,17 @@ body.exec-bg {
         animation: none !important;
     }
 }
+
+/* ===== Global font: DM Sans, 750 (Extra Bold), normal style – applied to everything ===== */
+*, *::before, *::after,
+input, textarea, button, select,
+input::placeholder, textarea::placeholder {
+    font-family: "DM Sans", Arial, Helvetica, sans-serif !important;
+    font-weight: 750 !important;
+    font-style: normal !important;
+    font-variation-settings: "opsz" 14, "wght" 750 !important;
+    font-optical-sizing: none !important;
+}
 </style>
 </head>
 
@@ -2272,7 +2283,7 @@ const headerTexts = {
         line3: "Enter the unique code provided to your team to continue."
     },
     3: {
-        line1: "Before You Nominate",
+        line1: "",
         line2: "Review the Evaluation Criteria",
         line3: "These standards help ensure fair and meaningful recognition."
     },
@@ -2863,14 +2874,14 @@ function setExecProgress(mode, step) {
     if (pageHeader) {
         pageHeader.style.display = "block";
         if (mode === "dh") {
-            setHeaderLine("headerLine1", step === 1 ? "Executive Selection" : "Almost Done");
+            setHeaderLine("headerLine1", "");
             setHeaderLine("headerLine2", step === 1 ? "Outstanding Department Head" : "Review Your Nomination");
             setHeaderLine("headerLine3", step === 1
                 ? "Review the shortlisted department heads and select the winner together as the executive team."
                 : "Confirm the details before submitting your final choice.");
         } else if (mode === "staff") {
             const cat = execMode === "admin" ? "Administrative Staff" : "Medical Staff";
-            setHeaderLine("headerLine1", step === 1 ? "" : "Almost Done");
+            setHeaderLine("headerLine1", "");
             setHeaderLine("headerLine2", step === 1 ? cat : "Review Your Nomination");
             setHeaderLine("headerLine3", step === 1
                 ? "Pick the colleague who made a real difference this quarter."
