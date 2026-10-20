@@ -1281,6 +1281,20 @@ body.exec-bg {
     margin: 0;
 }
 
+.exec-box-arrow {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: transparent;
+    color: #08245B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
 .exec-category-cards {
     display: flex;
     flex-direction: row;
@@ -1345,6 +1359,20 @@ body.exec-bg {
     font-weight: 500;
     margin: 0;
     line-height: 1.45;
+}
+
+.exec-cat-arrow {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: transparent;
+    color: #08245B;
+    font-size: 1.1rem;
+    font-weight: 800;
 }
 
 .dh-list,
@@ -1783,11 +1811,17 @@ input::placeholder, textarea::placeholder {
                     <div class="exec-box-texts">
                         <h3>Outstanding Department Head</h3>
                         <p>Select the leading department head<br>(together as executive team).</p>
+                    </div>
+                    <div class="exec-box-arrow">→</div>
+                </div>
                 <div class="exec-box" onclick="goExecIndividual()">
                     <img src="individual-contributor.jpg" alt="" class="exec-box-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
                     <div class="exec-box-texts">
                         <h3>Outstanding Individual Contributor</h3>
                         <p>Select the outstanding individual in your assigned category.</p>
+                    </div>
+                    <div class="exec-box-arrow">→</div>
+                </div>
             </div>
         </div>
         <div class="page-back-wrap">
@@ -1809,11 +1843,17 @@ input::placeholder, textarea::placeholder {
                     <div class="exec-cat-texts">
                         <h3>Administrative Staff</h3>
                         <p>Selected by the Administrative Director</p>
+                    </div>
+                    <div class="exec-cat-arrow">→</div>
+                </div>
                 <div class="exec-cat-card" onclick="goExecStaff('medical')">
                     <img src="medical-staff.jpg" alt="" class="exec-cat-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
                     <div class="exec-cat-texts">
                         <h3>Medical Staff</h3>
                         <p>Selected by the Medical Services Director</p>
+                    </div>
+                    <div class="exec-cat-arrow">→</div>
+                </div>
             </div>
         </div>
         <div class="page-back-wrap">
