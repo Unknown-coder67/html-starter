@@ -23,235 +23,372 @@
 html {
     min-height: 100%;
     min-height: 100dvh;
-    background: transparent;
 }
 
 body {
-    font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback", Arial, Helvetica, sans-serif;
-    font-feature-settings: normal;
-    font-variation-settings: "opsz" 14, "wght" 750;
-    font-optical-sizing: none;
-    font-weight: 750;
-    font-style: normal;
+    font-family: "DM Sans", Arial, Helvetica, sans-serif;
+    font-weight: 500;
     color: #17171D;
-    line-height: 1.6;
+    line-height: 1.5;
     min-height: 100%;
     min-height: 100dvh;
-    background: transparent;
+    background: url("/mobile-background.jpg") center top / cover no-repeat fixed;
+    background-color: #e8f4f8;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     padding-top: 74px;
     padding-bottom: env(safe-area-inset-bottom, 0);
     display: flex;
     flex-direction: column;
 }
 
-body.code-page-bg {
-    background-color: transparent;
-}
-
-@media (max-width: 700px) {
-    body.code-page-bg {
-        background-image: url("/mobile-background.jpg");
-        background-size: cover;
-        background-position: center top;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-color: transparent;
-    }
-
-    body:not(.code-page-bg) {
-        background-image: none !important;
-        background-color: #ffffff;
-    }
-}
-
+/* Header */
 header {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: transparent;
-    border-bottom: none;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(8,36,91,0.08);
     padding: 8px 5%;
     padding-top: max(8px, env(safe-area-inset-top, 8px));
 }
 
 .navbar {
-    max-width: 1920px;
+    max-width: 1200px;
     height: 58px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 30px;
 }
 
 .logo {
-    width: 200px;
-    height: 50px;
+    width: 160px;
+    height: 46px;
     object-fit: contain;
-    transform: translate(-8px, 3px);
-}
-
-nav {
-    display: flex;
-    align-items: center;
-    gap: 14px;
 }
 
 nav a {
-    position: relative;
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
-    margin: 0;
-    background: transparent;
     color: #08245B;
-    border: none;
-    border-radius: 999px;
-    padding: 12px 17px;
-    font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback", Arial, Helvetica, sans-serif;
-    font-size: 15.04px;
-    font-weight: 750;
-    font-feature-settings: normal;
-    font-variation-settings: "opsz" 14, "wght" 750;
-    font-optical-sizing: none;
-    line-height: 22.56px;
-    height: 46.5625px;
-    cursor: pointer;
     text-decoration: none;
-    white-space: nowrap;
-    transition: color 200ms ease;
-    -webkit-tap-highlight-color: transparent;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    transition: color 0.2s;
+}
+nav a:hover { color: #00B7E2; }
+
+/* Progress Indicator */
+.progress-wrap {
+    max-width: 900px;
+    margin: 0 auto 28px;
+    padding: 0 16px;
 }
 
-nav a::after {
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    gap: 4px;
+}
+
+.progress-steps::before {
     content: "";
     position: absolute;
-    left: 17px;
-    width: calc(100% - 34px);
-    height: 2px;
-    bottom: 10px;
+    top: 16px;
+    left: 8%;
+    right: 8%;
+    height: 3px;
+    background: #d0e0e8;
+    z-index: 0;
+    border-radius: 2px;
+}
+
+.progress-bar-fill {
+    position: absolute;
+    top: 16px;
+    left: 8%;
+    height: 3px;
     background: #00B7E2;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 200ms ease;
+    z-index: 1;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+    width: 0%;
 }
 
-nav a:hover {
-    color: #00B7E2;
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+    flex: 1;
+    min-width: 0;
 }
 
-nav a:hover::after {
-    transform: scaleX(1);
+.step-circle {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #d0e0e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: #8aa0b0;
+    transition: all 0.3s ease;
 }
 
+.step.active .step-circle {
+    border-color: #00B7E2;
+    background: #00B7E2;
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba(0,183,226,0.2);
+}
+
+.step.completed .step-circle {
+    border-color: #00B7E2;
+    background: #00B7E2;
+    color: #fff;
+}
+
+.step-label {
+    margin-top: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #8aa0b0;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.step.active .step-label,
+.step.completed .step-label {
+    color: #08245B;
+}
+
+/* Main */
 .main-content {
     width: 100%;
-    max-width: 1600px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 55px 28px 40px;
+    padding: 20px 20px 60px;
     flex: 1 0 auto;
 }
 
-.code-section {
-    max-width: 670px;
-    margin: 0 auto;
-    background: #FFFFFF;
-    border-radius: 18px;
-    padding: 40px;
-    text-align: center;
-    box-shadow: 0 12px 35px rgba(23, 50, 77, 0.12);
-    transition: opacity 0.6s ease, transform 0.6s ease, margin 0.6s ease, padding 0.6s ease, height 0.6s ease;
+.step-panel {
+    display: none;
+    animation: fadeUp 0.45s ease;
 }
 
-.code-section.expanded {
-    box-shadow: none;
+.step-panel.active {
+    display: block;
 }
 
-.code-section.hidden {
-    opacity: 0;
-    transform: translateY(-30px);
-    pointer-events: none;
-    height: 0;
-    margin: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    overflow: hidden;
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.code-intro {
-    margin-bottom: 28px;
+/* ========== STEP 1: Departments ========== */
+.dept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
 }
 
-.code-intro h1 {
+.dept-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 4px 16px rgba(23,50,77,0.08);
+    border: 1px solid rgba(220,235,241,0.7);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.dept-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(23,50,77,0.12);
+    border-color: #9ddfea;
+}
+
+.dept-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #e8f6f8, #d0f0f6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #087c98;
+}
+
+.dept-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.dept-name {
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #05255E;
+    text-align: left;
+}
+
+.dept-arrow {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #f0f7fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #08245B;
-    font-size: clamp(1.8rem, 4vw, 2.4rem);
-    font-weight: 750;
-    line-height: 1.25;
-    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 900;
+    transition: background 0.2s, color 0.2s;
 }
 
-.code-intro .subtitle {
-    color: #20BBD0;
-    font-size: 0.92rem;
-    font-weight: 500;
-    line-height: 1.45;
+.dept-card:hover .dept-arrow {
+    background: #00B7E2;
+    color: #fff;
+}
+
+/* ========== STEP 2: Access / Code ========== */
+.access-box {
+    max-width: 480px;
+    width: 90%;
+    margin: 30px auto 0;
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px 36px;
+    box-shadow: 0 12px 40px rgba(23,50,77,0.12);
     text-align: center;
 }
 
-.code-section > p {
-    color: #557083;
-    font-size: 0.92rem;
-    margin-bottom: 25px;
-}
-
-.code-input {
-    width: 100%;
-    height: 52px;
-    color: #557083;
-    border: 1px solid #cbdde5;
-    border-radius: 10px;
-    padding: 0 16px;
-    text-align: center;
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: inherit;
-    outline: none;
-    text-transform: uppercase;
-    -webkit-text-size-adjust: 100%;
-}
-
-.code-input:focus {
-    border: none;
-    box-shadow: 0 0 0 3px rgba(215, 154, 30, 0.12);
-}
-
-.code-button {
-    display: inline-block;
-    width: auto;
-    height: auto;
-    margin-top: 20px;
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #087c98;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 20px;
     background: none;
     border: none;
-    border-bottom: 2px solid #08245B;
-    padding: 22px 0 5px;
-    font-size: 0.80rem;
-    font-weight: 800;
+    font-family: inherit;
+    padding: 0;
+}
+.back-link:hover { color: #D79A1E; }
+
+.people-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e8f6f8, #cceef5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00B7E2;
+}
+
+.people-icon svg { width: 32px; height: 32px; }
+
+.access-box h2 {
+    color: #05255E;
+    font-size: 1.55rem;
+    font-weight: 750;
+    margin-bottom: 6px;
+}
+
+.access-box .enter-label {
     color: #08245B;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.access-box .hint {
+    color: #8aa0b0;
+    font-size: 0.88rem;
+    margin-bottom: 24px;
+}
+
+.code-field {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.code-field .lock-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8aa0b0;
+    pointer-events: none;
+}
+
+.code-field input {
+    width: 100%;
+    height: 52px;
+    border: 1px solid #cbdde5;
+    border-radius: 12px;
+    padding: 0 16px 0 46px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    color: #17324d;
+    text-align: center;
+    text-transform: uppercase;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.code-field input:focus {
+    border-color: #00B7E2;
+    box-shadow: 0 0 0 3px rgba(0,183,226,0.15);
+}
+
+.code-field input::placeholder {
+    color: #a0b4c0;
+    text-transform: none;
+    font-weight: 500;
+}
+
+.continue-btn {
+    width: 100%;
+    height: 52px;
+    background: #08245B;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 800;
     cursor: pointer;
-    transition: color 0.25s ease, border-color 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s, box-shadow 0.2s;
 }
-
-.code-button:hover {
-    color: #D79A1E;
-    border-bottom-color: #D79A1E;
+.continue-btn:hover {
+    background: #0a2f75;
+    box-shadow: 0 6px 20px rgba(8,36,91,0.25);
 }
-
-.code-button:disabled {
-    opacity: 0.5;
+.continue-btn:disabled {
+    opacity: 0.55;
     cursor: not-allowed;
 }
 
@@ -262,375 +399,22 @@ nav a:hover::after {
     margin-top: 12px;
 }
 
-.voting-section {
-    display: none;
-    margin-top: 20px;
-}
-
-.voting-section.visible {
-    display: block;
-    animation: votingReveal 2s ease both;
-}
-
-@keyframes votingReveal {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
-.voting-header {
-    text-align: left;
-    margin-bottom: 22px;
-    background: none;
-    padding: 0 4px;
-    border-radius: 0;
-    box-shadow: none;
-}
-
-.voting-header h2 {
-    color: #05255E;
-    font-size: 1.6rem;
-    margin-bottom: 6px;
-    text-align: left;
-}
-
-.voting-header p {
-    color: #557083;
-    text-align: left;
-    font-size: 0.95rem;
-}
-
-.department-badge {
-    display: inline-block;
-    width: fit-content;
-    margin: 0 0 12px 0;
-    padding: 0;
-    border-radius: 0;
-    background: none;
-    color: #20BBD0;
-    font-size: 1.5rem;
-    font-weight: 700;
-    text-align: left;
-}
-
-.view-criteria-inline {
-    display: inline-block;
-    width: fit-content;
-    margin: 12px 0 0 0;
-    padding: 0;
-    border-radius: 0;
-    background: none;
-    border: none;
-    color: #087c98;
-    font-size: 0.70rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: color 0.25s ease;
-    text-align: left;
-}
-
-.view-criteria-inline:hover {
-    color: #D79A1E;
-}
-
-.search-row {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-    padding: 0 4px;
-}
-
-.search-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 340px;
-}
-
-.search-wrapper svg {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
-    color: #05255E;
-    pointer-events: none;
-}
-
-.search-input {
-    width: 100%;
-    height: 48px;
-    padding: 0 18px 0 46px;
-    border: 1px solid #d0e0e8;
-    border-radius: 20px;
-    background: #FFFFFF;
-    font-family: inherit;
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: #17324d;
-    outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.search-input::placeholder {
-    color: #8aa0b0;
-    font-weight: 500;
-}
-
-.search-input:focus {
-    border-color: #087c98;
-    box-shadow: 0 0 0 3px rgba(8, 124, 152, 0.12);
-}
-
-.candidates {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-}
-
-.candidate {
-    background-image: url("/employee-card-bg.jpg");
-    background-size: 100% 100%;
-    background-position: top right;
-    background-repeat: no-repeat;
-    border: 1px solid rgba(220, 235, 241, 0.55);
-    border-radius: 16px;
-    padding: 20px 18px 18px;
-    text-align: left;
-    box-shadow: 0 4px 14px rgba(23, 50, 77, 0.07);
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-    display: flex;
-    flex-direction: column;
-    aspect-ratio: 1 / 0.5;
-    min-height: 0;
-}
-
-.candidate:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 22px rgba(23, 50, 77, 0.12);
-    border-color: #9ddfea;
-}
-
-.candidate.selected {
-    border-color: #D79A1E;
-    box-shadow: 0 6px 20px rgba(215, 154, 30, 0.2);
-}
-
-.candidate h3 {
-    color: #05255E;
-    font-size: 1.02rem;
-    margin-bottom: 6px;
-    line-height: 1.3;
-    text-align: left;
-    font-weight: 750;
-}
-
-.candidate-id {
-    color: #557083;
-    font-size: 0.86rem;
-    font-weight: 500;
-    margin-bottom: 12px;
-    text-align: left;
-}
-
-.candidate-divider {
-    height: 1px;
-    background: #d0dce4;
-    margin: 0 0 14px 0;
-    width: 100%;
-}
-
-.vote-btn {
-    margin-top: auto;
-    width: auto;
-    height: auto;
-    border: none;
-    background: none;
-    padding: 0;
-    color: #08245B;
-    font-weight: 800;
-    font-size: 0.95rem;
-    cursor: pointer;
-    text-align: left;
-    transition: color 0.2s ease;
-    font-family: inherit;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.vote-btn:hover {
-    color: #D79A1E;
-}
-
-.candidate.selected .vote-btn {
-    color: #D79A1E;
-}
-
-.vote-btn .arrow {
-    font-weight: 900;
-    -webkit-text-stroke: 1px currentColor;
-}
-
-.confirmation-bar {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.97);
-    border-top: 1px solid #dcebf1;
-    box-shadow: 0 -8px 25px rgba(23, 50, 77, 0.08);
-    padding: 15px 5%;
-    padding-bottom: max(15px, env(safe-area-inset-bottom, 15px));
-    z-index: 100;
-    transform: translateY(100%);
-    opacity: 0;
-    visibility: hidden;
-    transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
-                opacity 0.25s ease,
-                visibility 0.38s;
-}
-
-.confirmation-bar.show {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-}
-
-.confirmation-inner {
-    max-width: 1600px;
+/* ========== STEP 3: Criteria ========== */
+.criteria-panel {
+    max-width: 720px;
     margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-.selection-text {
-    color: #557083;
-}
-
-.selection-text strong {
-    color: #17324d;
-}
-
-.confirmation-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.confirm-btn,
-.change-btn {
-    height: 44px;
-    padding: 0 24px;
+    background: #fff;
     border-radius: 18px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.change-btn {
-    background: #ffffff;
-    border: 2px solid #17171D;
-    color: #17171D;
-}
-
-.change-btn:hover {
-    border-color: #0DC8EA;
-    color: #0DC8EA;
-}
-
-.confirm-btn {
-    background: #D79A1E;
-    border: 2px solid #D79A1E;
-    color: #17171D;
-    margin-left: 8px;
-}
-
-.confirm-btn:hover {
-    box-shadow: 0 0 20px rgba(215, 154, 30, 0.5);
-}
-
-.confirm-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.success-section {
-    display: none;
-    max-width: 600px;
-    margin: 50px auto 0;
-    text-align: center;
-    background: #FFFFFF;
-    border: 1px solid #dcebf1;
-    border-radius: 18px;
-    padding: 45px 30px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-}
-
-.success-icon {
-    width: 70px;
-    height: 70px;
-    margin: 0 auto 20px;
-    border-radius: 50%;
-    background: #e8f6f8;
-    color: #0DC8EA;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 34px;
-    font-weight: bold;
-}
-
-.success-section h2 {
-    color: #17324d;
-    margin-bottom: 10px;
-}
-
-.success-section p {
-    color: #557083;
-    margin-bottom: 0;
-}
-
-.criteria-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(23, 50, 77, 0.55);
-    z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-.criteria-overlay.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-.criteria-modal {
-    background: #FFFFFF;
-    border-radius: 18px;
-    width: min(640px, calc(100% - 40px));
-    max-width: 640px;
-    max-height: 85vh;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 12px 40px rgba(23,50,77,0.1);
     overflow: hidden;
-    box-sizing: border-box;
 }
 
-.criteria-header {
+.criteria-header-bar {
     padding: 22px 28px 16px;
     border-bottom: 1px solid #e8f0f4;
-    flex-shrink: 0;
 }
 
-.criteria-header h2 {
+.criteria-header-bar h2 {
     color: #17324d;
     font-size: 1.45rem;
     font-weight: 750;
@@ -638,12 +422,12 @@ nav a:hover::after {
 }
 
 .criteria-body {
-    padding: 20px 28px 32px;
-    overflow-y: auto;
-    flex: 1;
+    padding: 20px 28px 28px;
     color: #17324d;
     font-size: 0.95rem;
     line-height: 1.55;
+    max-height: 60vh;
+    overflow-y: auto;
 }
 
 .criteria-body h3 {
@@ -652,10 +436,7 @@ nav a:hover::after {
     font-weight: 750;
     margin: 22px 0 8px;
 }
-
-.criteria-body h3:first-child {
-    margin-top: 0;
-}
+.criteria-body h3:first-child { margin-top: 0; }
 
 .criteria-body ol {
     padding-left: 22px;
@@ -668,9 +449,9 @@ nav a:hover::after {
     font-weight: 500;
 }
 
-.criteria-body .got-it-wrapper {
-    margin-top: 36px;
-    padding-top: 24px;
+.got-it-wrapper {
+    margin-top: 28px;
+    padding-top: 20px;
     border-top: 1px solid #e8f0f4;
     text-align: center;
 }
@@ -685,24 +466,505 @@ nav a:hover::after {
     font-size: 1rem;
     font-weight: 800;
     cursor: pointer;
-    transition: box-shadow 0.25s ease;
+    transition: box-shadow 0.25s;
 }
-
 .got-it-btn:hover {
-    box-shadow: 0 0 22px rgba(215, 154, 30, 0.5);
+    box-shadow: 0 0 22px rgba(215,154,30,0.5);
 }
 
-.fade-in {
+/* ========== STEP 4: Nominate ========== */
+.nominate-box {
+    background: #fff;
+    border-radius: 18px;
+    padding: 28px 28px 24px;
+    box-shadow: 0 10px 32px rgba(23,50,77,0.1);
+    overflow: hidden;
+}
+
+.nominate-box h2 {
+    color: #05255E;
+    font-size: 1.5rem;
+    font-weight: 750;
+    text-align: left;
+    margin-bottom: 6px;
+}
+
+.nominate-sub {
+    color: #8aa0b0;
+    font-size: 0.92rem;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.search-row {
+    margin-bottom: 18px;
+}
+
+.search-wrapper {
+    position: relative;
+    max-width: 360px;
+}
+
+.search-wrapper svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: #05255E;
+    pointer-events: none;
+}
+
+.search-input {
+    width: 100%;
+    height: 46px;
+    padding: 0 16px 0 42px;
+    border: 1px solid #d0e0e8;
+    border-radius: 12px;
+    background: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #17324d;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.search-input::placeholder { color: #8aa0b0; }
+.search-input:focus {
+    border-color: #087c98;
+    box-shadow: 0 0 0 3px rgba(8,124,152,0.12);
+}
+
+/* Split layout for list + reason */
+.nominate-split {
+    display: flex;
+    gap: 0;
+    transition: all 0.45s cubic-bezier(0.22,1,0.36,1);
+    min-height: 320px;
+}
+
+.employee-list-pane {
+    width: 100%;
+    transition: width 0.45s cubic-bezier(0.22,1,0.36,1), transform 0.45s;
+    flex-shrink: 0;
+}
+
+.nominate-split.has-selection .employee-list-pane {
+    width: 48%;
+}
+
+.reason-pane {
+    width: 0;
     opacity: 0;
-    transform: translateY(35px);
-    transition: opacity 1.3s ease, transform 1.3s ease;
+    overflow: hidden;
+    transition: width 0.45s cubic-bezier(0.22,1,0.36,1), opacity 0.35s ease 0.1s, padding 0.45s;
+    padding: 0;
+    flex-shrink: 0;
 }
 
-.fade-in.visible {
+.nominate-split.has-selection .reason-pane {
+    width: 52%;
     opacity: 1;
-    transform: translateY(0);
+    padding-left: 24px;
+    border-left: 1px solid #e8f0f4;
 }
 
+.emp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+.emp-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: #f8fbfd;
+    border: 1px solid #e0edf3;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    text-align: left;
+}
+
+.emp-card:hover {
+    border-color: #9ddfea;
+    background: #f0f9fc;
+}
+
+.emp-card.selected {
+    border-color: #D79A1E;
+    background: #fffaf0;
+    box-shadow: 0 2px 10px rgba(215,154,30,0.15);
+}
+
+.emp-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00B7E2, #087c98);
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.emp-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.emp-name {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: #05255E;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.emp-id {
+    font-size: 0.82rem;
+    color: #8aa0b0;
+    margin-top: 2px;
+}
+
+.emp-check {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #cbdde5;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    background: #fff;
+}
+
+.emp-card.selected .emp-check {
+    background: #D79A1E;
+    border-color: #D79A1E;
+    color: #fff;
+}
+
+.emp-check svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+}
+.emp-card.selected .emp-check svg { opacity: 1; }
+
+.reason-title {
+    font-size: 1.05rem;
+    font-weight: 750;
+    color: #05255E;
+    margin-bottom: 6px;
+    text-align: left;
+}
+
+.reason-hint {
+    font-size: 0.85rem;
+    color: #8aa0b0;
+    margin-bottom: 14px;
+    text-align: left;
+}
+
+.reason-textarea {
+    width: 100%;
+    min-height: 150px;
+    border: 1px solid #d0e0e8;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #17324d;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.reason-textarea:focus {
+    border-color: #087c98;
+    box-shadow: 0 0 0 3px rgba(8,124,152,0.12);
+}
+.reason-textarea::placeholder { color: #a0b4c0; }
+
+.char-count {
+    text-align: right;
+    font-size: 0.8rem;
+    color: #8aa0b0;
+    margin-top: 6px;
+    margin-bottom: 16px;
+}
+
+.next-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #08245B;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 28px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    float: right;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.next-btn:hover {
+    background: #0a2f75;
+    box-shadow: 0 4px 16px rgba(8,36,91,0.25);
+}
+.next-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ========== STEP 5: Review ========== */
+.review-box {
+    max-width: 560px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 18px;
+    padding: 36px 32px;
+    box-shadow: 0 12px 40px rgba(23,50,77,0.1);
+    text-align: center;
+}
+
+.review-box h2 {
+    color: #05255E;
+    font-size: 1.5rem;
+    font-weight: 750;
+    margin-bottom: 28px;
+    text-align: left;
+}
+
+.review-person {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 28px;
+    text-align: left;
+}
+
+.review-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00B7E2, #087c98);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.review-name {
+    font-size: 1.35rem;
+    font-weight: 750;
+    color: #05255E;
+}
+
+.review-dept {
+    font-size: 0.95rem;
+    color: #8aa0b0;
+    margin-top: 4px;
+}
+
+.story-box {
+    background: #f8fbfd;
+    border: 1px solid #e0edf3;
+    border-radius: 14px;
+    padding: 20px;
+    text-align: left;
+    margin-bottom: 28px;
+    position: relative;
+}
+
+.story-box h3 {
+    font-size: 0.95rem;
+    font-weight: 750;
+    color: #05255E;
+    margin-bottom: 10px;
+}
+
+.story-text {
+    font-size: 0.95rem;
+    color: #3a4f63;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    min-height: 40px;
+}
+
+.story-text[contenteditable="true"] {
+    outline: 2px solid #00B7E2;
+    border-radius: 8px;
+    padding: 8px;
+    background: #fff;
+}
+
+.edit-story-btn {
+    position: absolute;
+    bottom: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #087c98;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: inherit;
+}
+.edit-story-btn:hover { color: #D79A1E; }
+
+.review-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.btn-back {
+    background: transparent;
+    border: 2px solid #17171D;
+    color: #17171D;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: border-color 0.2s, color 0.2s;
+}
+.btn-back:hover {
+    border-color: #00B7E2;
+    color: #00B7E2;
+}
+
+.btn-submit {
+    background: #08245B;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 32px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.btn-submit:hover {
+    background: #0a2f75;
+    box-shadow: 0 4px 16px rgba(8,36,91,0.25);
+}
+.btn-submit:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* ========== STEP 6: Success ========== */
+.success-panel {
+    max-width: 480px;
+    margin: 40px auto 0;
+    background: #fff;
+    border-radius: 20px;
+    padding: 48px 36px;
+    box-shadow: 0 12px 40px rgba(23,50,77,0.12);
+    text-align: center;
+}
+
+.success-icon-wrap {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 24px;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #e8f6f8;
+    color: #00B7E2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.star {
+    position: absolute;
+    color: #D79A1E;
+    font-size: 16px;
+    animation: twinkle 2s ease-in-out infinite;
+}
+.star:nth-child(1) { top: 0; left: 8px; animation-delay: 0s; }
+.star:nth-child(2) { top: 10px; right: 0; animation-delay: 0.4s; }
+.star:nth-child(3) { bottom: 6px; left: 0; animation-delay: 0.8s; }
+.star:nth-child(4) { bottom: 0; right: 12px; animation-delay: 1.2s; }
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.4; transform: scale(0.85); }
+    50% { opacity: 1; transform: scale(1.15); }
+}
+
+.success-panel h2 {
+    color: #05255E;
+    font-size: 1.6rem;
+    font-weight: 750;
+    margin-bottom: 12px;
+}
+
+.success-panel p {
+    color: #557083;
+    font-size: 0.98rem;
+    margin-bottom: 8px;
+}
+
+.home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 28px;
+    background: #08245B;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 28px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.home-btn:hover {
+    background: #0a2f75;
+    box-shadow: 0 4px 16px rgba(8,36,91,0.25);
+}
+
+/* Footer */
 footer {
     text-align: center;
     padding: 18px 20px;
@@ -711,177 +973,44 @@ footer {
     font-size: 0.7rem;
     background: transparent;
     margin-top: auto;
-    flex-shrink: 0;
-    width: 100%;
 }
 
-    @media (max-width: 1100px) {
-    .candidates {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (max-width: 800px) {
-    .main-content {
-        padding: 40px 18px 40px;
-    }
-
-    .candidates {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
-
-    .candidate {
-        padding: 16px 14px 14px;
-        border-radius: 14px;
-        aspect-ratio: 1 / 1.08;
-    }
-
-    .candidate h3 {
-        font-size: 0.95rem;
-    }
-
-    .candidate-id {
-        font-size: 0.82rem;
-        margin-bottom: 10px;
-    }
-
-    .candidate-divider {
-        margin-bottom: 12px;
-    }
-
-    .vote-btn {
-        font-size: 0.9rem;
-    }
-
-    .voting-header h2 {
-        font-size: 1.5rem;
-    }
-
-    .search-wrapper {
-        max-width: 100%;
-    }
-
-    .confirmation-inner {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .confirmation-buttons {
-        width: 100%;
-    }
-
-    .change-btn,
-    .confirm-btn {
-        flex: 1;
-    }
-
-    .code-section {
-        padding: 30px 22px;
-    }
-
-    .criteria-modal {
-        width: min(90%, calc(100% - 40px));
-    }
-
-    .criteria-body {
-        padding: 16px 20px 28px;
-    }
-}
-
+/* Responsive */
 @media (max-width: 700px) {
-    header {
-        padding: 8px 5%;
-        padding-top: max(8px, env(safe-area-inset-top, 8px));
-    }
-
-    .navbar {
-        max-width: 1920px;
-        height: 58px;
-        margin: 0 auto;
-        padding: 0;
+    .progress-steps::before,
+    .progress-bar-fill { left: 6%; right: 6%; }
+    .step-label { font-size: 9px; }
+    .step-circle { width: 28px; height: 28px; font-size: 11px; }
+    .access-box { padding: 28px 22px; }
+    .nominate-box { padding: 20px 16px; }
+    .nominate-split.has-selection .employee-list-pane,
+    .nominate-split.has-selection .reason-pane {
         width: 100%;
-        gap: 8px;
     }
-
-    .logo {
-        width: 100px;
-        height: 100px;
-        transform: none;
+    .nominate-split.has-selection {
+        flex-direction: column;
     }
-
-    nav {
-        gap: 14px;
+    .nominate-split.has-selection .reason-pane {
+        padding-left: 0;
+        padding-top: 20px;
+        border-left: none;
+        border-top: 1px solid #e8f0f4;
+        margin-top: 12px;
     }
-
-    nav a {
-        font-size: 12.5px;
-        font-weight: 750;
-        font-feature-settings: normal;
-        font-variation-settings: "opsz" 14, "wght" 750;
-        font-optical-sizing: none;
-        padding: 9px 12px;
-        height: 40px;
-        line-height: 22.56px;
-    }
-
-    nav a::after {
-        left: 12px;
-        width: calc(100% - 24px);
-        bottom: 10px;
-    }
-
-    .main-content {
-        padding: 40px 16px 40px;
-    }
-
-    .code-intro h1 {
-        font-size: 1.7rem;
-    }
-
-    .code-input {
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 480px) {
-    nav a {
-        font-size: 11.5px;
-        padding: 8px 10px;
-        height: 36px;
-    }
-
-    nav a::after {
-        left: 10px;
-        width: calc(100% - 20px);
-    }
+    .review-box { padding: 28px 20px; }
+    .logo { width: 110px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .fade-in {
-        opacity: 1;
-        transform: none;
-        transition: none;
-    }
-
-    .voting-section.visible {
-        animation: none;
-        opacity: 1;
-        transform: none;
-    }
-
-    .code-section.hidden {
-        transition: none;
-    }
-
-    nav a::after {
-        transition: none;
+    .step-panel, .nominate-split, .employee-list-pane, .reason-pane {
+        transition: none !important;
+        animation: none !important;
     }
 }
 </style>
 </head>
 
-<body class="code-page-bg">
+<body>
 
 <header>
     <div class="navbar">
@@ -896,68 +1025,253 @@ footer {
 
 <main class="main-content">
 
-    <section class="code-section fade-in" id="codeSection">
-
-        <div class="code-intro">
-            <h1>Employee of the Quarter</h1>
-            <p class="subtitle">You see the effort. You see the impact</p>
-            <p class="subtitle">Give it the recognition it deserves</p>
-        </div>
-
-        <p>
-            Please enter your department code to continue
-        </p>
-
-        <input
-            type="text"
-            id="departmentCode"
-            class="code-input"
-            placeholder="Department Code"
-            autocomplete="off"
-            inputmode="text"
-            enterkeyhint="go"
-        >
-
-        <button class="code-button" id="continueBtn" onclick="verifyCode()">
-            CONTINUE
-        </button>
-
-        <div class="code-error" id="codeError">
-            Invalid department code. Please try again.
-        </div>
-
-    </section>
-
-    <section class="voting-section" id="votingSection">
-        <div class="voting-header">
-            <div class="department-badge" id="departmentBadge"></div>
-
-            <h2>Choose Your Employee of the Quarter</h2>
-
-            <p>Who brings their best and makes our team better?</p>
-
-            <button class="view-criteria-inline" onclick="openCriteriaPopup()">
-                 View Evaluation Criteria
-            </button>
-        </div>
-
-        <div class="search-row">
-            <div class="search-wrapper">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <input type="text" id="searchInput" class="search-input" placeholder="Search by name or ID" autocomplete="off">
+    <!-- Progress Indicator -->
+    <div class="progress-wrap" id="progressWrap">
+        <div class="progress-steps">
+            <div class="progress-bar-fill" id="progressFill"></div>
+            <div class="step active" data-step="1">
+                <div class="step-circle">1</div>
+                <div class="step-label">Department</div>
+            </div>
+            <div class="step" data-step="2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Access</div>
+            </div>
+            <div class="step" data-step="3">
+                <div class="step-circle">3</div>
+                <div class="step-label">Criteria</div>
+            </div>
+            <div class="step" data-step="4">
+                <div class="step-circle">4</div>
+                <div class="step-label">Nominate</div>
+            </div>
+            <div class="step" data-step="5">
+                <div class="step-circle">5</div>
+                <div class="step-label">Review & Submit</div>
             </div>
         </div>
+    </div>
 
-        <div class="candidates" id="candidatesContainer">
+    <!-- ========== STEP 1: Department Selection ========== -->
+    <section class="step-panel active" id="step1">
+        <div class="dept-grid" id="deptGrid">
+            <!-- Filled by JS -->
         </div>
     </section>
 
-    <section class="success-section fade-in" id="successSection">
-        <div class="success-icon">✓</div>
-        <h2>Vote Submitted Successfully</h2>
-        <p>Thank you for participating in the Employee of the Quarter voting.</p>
+    <!-- ========== STEP 2: Access Code ========== -->
+    <section class="step-panel" id="step2">
+        <button class="back-link" onclick="goToStep(1)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back to Departments
+        </button>
+
+        <div class="access-box">
+            <div class="people-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+            </div>
+            <h2 id="accessDeptName">Administration</h2>
+            <div class="enter-label">Enter Department Code</div>
+            <p class="hint">Please enter the department code to access the voting section</p>
+
+            <div class="code-field">
+                <span class="lock-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                </span>
+                <input type="text" id="departmentCode" placeholder="Enter department code" autocomplete="off" inputmode="text" enterkeyhint="go">
+            </div>
+
+            <button class="continue-btn" id="continueBtn" onclick="verifyCode()">
+                Continue
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+
+            <div class="code-error" id="codeError">Invalid department code. Please try again.</div>
+        </div>
+    </section>
+
+    <!-- ========== STEP 3: Evaluation Criteria ========== -->
+    <section class="step-panel" id="step3">
+        <div class="criteria-panel">
+            <div class="criteria-header-bar">
+                <h2>Evaluation Criteria</h2>
+            </div>
+            <div class="criteria-body">
+                <h3>First: Professional and Behavioral Commitment</h3>
+                <ol>
+                    <li>Adherence to working hours, attendance, and departure times.</li>
+                    <li>Compliance with hospital rules and policies.</li>
+                    <li>Adherence to professional ethics and medical confidentiality.</li>
+                    <li>Professional appearance and adherence to the official uniform/dress code.</li>
+                    <li>Respect for supervisors, colleagues, patients, and visitors.</li>
+                </ol>
+
+                <h3>Second: Quality of Job Performance</h3>
+                <ol>
+                    <li>Proficiency in performing assigned job duties.</li>
+                    <li>Accuracy in carrying out tasks and minimizing errors.</li>
+                    <li>Timely completion of transactions and tasks without compromising quality.</li>
+                    <li>Ability to work effectively under pressure.</li>
+                </ol>
+
+                <h3>Third: Patient and Visitor Relations</h3>
+                <ol>
+                    <li>Courteous reception and positive communication.</li>
+                    <li>Commitment to patient service and satisfaction.</li>
+                    <li>Professional and tactful handling of complaints and difficult situations.</li>
+                    <li>Demonstrating empathy and consideration for patients’ human needs.</li>
+                    <li>Maintaining patient dignity and privacy.</li>
+                </ol>
+
+                <h3>Fourth: Teamwork and Cooperation</h3>
+                <ol>
+                    <li>Cooperation with team members.</li>
+                    <li>Contributing to a positive work environment.</li>
+                    <li>Sharing knowledge and experience with colleagues.</li>
+                    <li>Supporting other departments when needed.</li>
+                </ol>
+
+                <h3>Fifth: Discipline and Safety</h3>
+                <ol>
+                    <li>Compliance with occupational health and safety procedures.</li>
+                    <li>Compliance with infection prevention and control policies (for clinical staff).</li>
+                    <li>Reporting hazards or professional errors.</li>
+                    <li>Proper use of equipment and tools.</li>
+                    <li>Proper care and protection of hospital property.</li>
+                </ol>
+
+                <h3>Sixth: Professional Development and Learning</h3>
+                <ol>
+                    <li>Commitment to professional self-development.</li>
+                    <li>Participation in training courses and workshops.</li>
+                    <li>Applying acquired knowledge and skills in the workplace.</li>
+                    <li>Keeping up to date with new instructions, policies, and guidelines.</li>
+                    <li>Demonstrating a willingness to improve performance.</li>
+                </ol>
+
+                <h3>Seventh: Initiative and Innovation</h3>
+                <ol>
+                    <li>Suggesting ideas to improve work processes.</li>
+                    <li>Effectively identifying and solving problems.</li>
+                    <li>Taking initiative without waiting for direction.</li>
+                    <li>Participating in quality improvement projects.</li>
+                    <li>Demonstrating flexibility and adaptability to change.</li>
+                </ol>
+
+                <h3>Eighth: Responsibility and Reliability</h3>
+                <ol>
+                    <li>Taking responsibility for assigned duties.</li>
+                    <li>Meeting deadlines.</li>
+                    <li>Demonstrating professional honesty and integrity.</li>
+                    <li>Maintaining the confidentiality and security of patient and hospital information.</li>
+                </ol>
+
+                <div class="got-it-wrapper">
+                    <button class="got-it-btn" onclick="goToStep(4)">GOT IT – LET’S BEGIN</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== STEP 4: Nominate ========== -->
+    <section class="step-panel" id="step4">
+        <div class="nominate-box">
+            <h2>Choose Your Star</h2>
+            <p class="nominate-sub" id="nominateSub">Select the employee you would like to nominate from Administration.</p>
+
+            <div class="search-row">
+                <div class="search-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search for an employee..." autocomplete="off">
+                </div>
+            </div>
+
+            <div class="nominate-split" id="nominateSplit">
+                <div class="employee-list-pane">
+                    <div class="emp-list" id="empList">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <div class="reason-pane">
+                    <div class="reason-title">What made them stand out</div>
+                    <p class="reason-hint">Share what made this employee special this quarter. A short sentence or a few lines is enough.</p>
+                    <textarea id="reasonText" class="reason-textarea" maxlength="500" placeholder="Their dedication, teamwork, and positive attitude..."></textarea>
+                    <div class="char-count"><span id="charCount">0</span>/500</div>
+                    <button class="next-btn" id="nextToReviewBtn" onclick="goToStep(5)" disabled>
+                        Next
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== STEP 5: Review & Submit ========== -->
+    <section class="step-panel" id="step5">
+        <div class="review-box">
+            <h2>Review Your Nomination</h2>
+
+            <div class="review-person">
+                <div class="review-avatar" id="reviewAvatar">AB</div>
+                <div>
+                    <div class="review-name" id="reviewName">Employee Name</div>
+                    <div class="review-dept" id="reviewDept">Department</div>
+                </div>
+            </div>
+
+            <div class="story-box">
+                <h3>Recognition Story</h3>
+                <div class="story-text" id="storyText"></div>
+                <button class="edit-story-btn" id="editStoryBtn" onclick="toggleEditStory()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                    Edit
+                </button>
+            </div>
+
+            <div class="review-actions">
+                <button class="btn-back" onclick="goToStep(4)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back
+                </button>
+                <button class="btn-submit" id="submitBtn" onclick="confirmVote()">Submit</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== STEP 6: Success (no progress) ========== -->
+    <section class="step-panel" id="step6">
+        <div class="success-panel">
+            <div class="success-icon-wrap">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <div class="success-icon">✓</div>
+            </div>
+            <h2>Thank you</h2>
+            <p>Your nomination has been submitted successfully.</p>
+            <p>Your support helps us celebrate the people who make a difference.</p>
+            <a href="/" class="home-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+                Back to Home
+            </a>
+        </div>
     </section>
 
 </main>
@@ -965,100 +1279,6 @@ footer {
 <footer>
     © 2026 Care Medical Jiwar
 </footer>
-
-<div class="confirmation-bar" id="confirmationBar">
-    <div class="confirmation-inner">
-        <div class="selection-text">
-            Selected: <strong id="selectedName"></strong>
-        </div>
-        <div class="confirmation-buttons">
-            <button class="change-btn" onclick="changeSelection()">Change Selection</button>
-            <button class="confirm-btn" id="confirmBtn" onclick="confirmVote()">Confirm Vote</button>
-        </div>
-    </div>
-</div>
-
-<div class="criteria-overlay" id="criteriaOverlay">
-    <div class="criteria-modal">
-        <div class="criteria-header">
-            <h2>Evaluation Criteria</h2>
-        </div>
-        <div class="criteria-body">
-            <h3>First: Professional and Behavioral Commitment</h3>
-            <ol>
-                <li>Adherence to working hours, attendance, and departure times.</li>
-                <li>Compliance with hospital rules and policies.</li>
-                <li>Adherence to professional ethics and medical confidentiality.</li>
-                <li>Professional appearance and adherence to the official uniform/dress code.</li>
-                <li>Respect for supervisors, colleagues, patients, and visitors.</li>
-            </ol>
-
-            <h3>Second: Quality of Job Performance</h3>
-            <ol>
-                <li>Proficiency in performing assigned job duties.</li>
-                <li>Accuracy in carrying out tasks and minimizing errors.</li>
-                <li>Timely completion of transactions and tasks without compromising quality.</li>
-                <li>Ability to work effectively under pressure.</li>
-            </ol>
-
-            <h3>Third: Patient and Visitor Relations</h3>
-            <ol>
-                <li>Courteous reception and positive communication.</li>
-                <li>Commitment to patient service and satisfaction.</li>
-                <li>Professional and tactful handling of complaints and difficult situations.</li>
-                <li>Demonstrating empathy and consideration for patients’ human needs.</li>
-                <li>Maintaining patient dignity and privacy.</li>
-            </ol>
-
-            <h3>Fourth: Teamwork and Cooperation</h3>
-            <ol>
-                <li>Cooperation with team members.</li>
-                <li>Contributing to a positive work environment.</li>
-                <li>Sharing knowledge and experience with colleagues.</li>
-                <li>Supporting other departments when needed.</li>
-            </ol>
-
-            <h3>Fifth: Discipline and Safety</h3>
-            <ol>
-                <li>Compliance with occupational health and safety procedures.</li>
-                <li>Compliance with infection prevention and control policies (for clinical staff).</li>
-                <li>Reporting hazards or professional errors.</li>
-                <li>Proper use of equipment and tools.</li>
-                <li>Proper care and protection of hospital property.</li>
-            </ol>
-
-            <h3>Sixth: Professional Development and Learning</h3>
-            <ol>
-                <li>Commitment to professional self-development.</li>
-                <li>Participation in training courses and workshops.</li>
-                <li>Applying acquired knowledge and skills in the workplace.</li>
-                <li>Keeping up to date with new instructions, policies, and guidelines.</li>
-                <li>Demonstrating a willingness to improve performance.</li>
-            </ol>
-
-            <h3>Seventh: Initiative and Innovation</h3>
-            <ol>
-                <li>Suggesting ideas to improve work processes.</li>
-                <li>Effectively identifying and solving problems.</li>
-                <li>Taking initiative without waiting for direction.</li>
-                <li>Participating in quality improvement projects.</li>
-                <li>Demonstrating flexibility and adaptability to change.</li>
-            </ol>
-
-            <h3>Eighth: Responsibility and Reliability</h3>
-            <ol>
-                <li>Taking responsibility for assigned duties.</li>
-                <li>Meeting deadlines.</li>
-                <li>Demonstrating professional honesty and integrity.</li>
-                <li>Maintaining the confidentiality and security of patient and hospital information.</li>
-            </ol>
-
-            <div class="got-it-wrapper">
-                <button class="got-it-btn" onclick="closeCriteriaAndContinue()">GOT IT – LET’S BEGIN</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
 const SUPABASE_URL = "https://fthkfenbpetpzlcpxvoc.supabase.co";
@@ -1309,76 +1529,218 @@ const departmentEmployees = {
     ]
 };
 
+// Simple icon SVGs by category
+const deptIcons = {
+    "Reception": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 4v4M16 4v4"/></svg>`,
+    "Duty Manager": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>`,
+    "Encoder": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M6 12h12"/></svg>`,
+    "Quality": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
+    "Facilities & Support Services": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+    "Revenue Cycle & Claims": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M12 15h.01"/></svg>`,
+    "Respiratory": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a4 4 0 0 1 4 4v2H8V6a4 4 0 0 1 4-4z"/><path d="M8 8v10a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V8"/><path d="M9 14h6"/></svg>`,
+    "Radiology": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>`,
+    "Laboratory": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9V3z"/><path d="M9 3h6"/></svg>`,
+    "ICU": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
+    "Cath Lab Nurse": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
+    "Security Guard": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    "Information Technology": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
+    "Supply Chain": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>`,
+    "Human Resources": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    "Emergency Department": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
+    "Finance": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+    "General Practice": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
+    "Pharmacy": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9V3z"/><circle cx="12" cy="14" r="1.5"/></svg>`,
+    "Anesthesia": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>`,
+    "Cardiology": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
+    "Clinical Nutrition": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`,
+    "Physiotherapy": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="5" r="3"/><path d="M12 8v4l-3 6M12 12l3 6M9 18h6"/></svg>`,
+    "Nursing Leadership & Education": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+    "Social Services": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>`
+};
+
+const defaultIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>`;
+
+let currentStep = 1;
 let currentDepartment = "";
 let currentDeptName = "";
 let selectedCandidate = "";
-let pendingVotingReveal = false;
+let selectedCandidateId = "";
+let recognitionStory = "";
 let isSubmitting = false;
 let currentEmployees = [];
+let isEditingStory = false;
 
-const fadeElements = document.querySelectorAll(".fade-in");
-const fadeObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-        } else {
-            entry.target.classList.remove("visible");
+// Build department list (unique names)
+function getUniqueDepartments() {
+    const seen = new Set();
+    const list = [];
+    for (const [code, name] of Object.entries(departmentCodes)) {
+        if (!seen.has(name)) {
+            seen.add(name);
+            list.push({ code, name });
         }
-    });
-}, { threshold: 0.12 });
-
-fadeElements.forEach((el) => fadeObserver.observe(el));
-
-window.addEventListener("load", () => {
-    document.querySelectorAll(".fade-in").forEach((el, index) => {
-        setTimeout(() => {
-            el.classList.add("visible");
-        }, 80 + index * 120);
-    });
-});
-
-const codeInput = document.getElementById("departmentCode");
-const placeholderText = "Department Code";
-
-codeInput.addEventListener("focus", function () {
-    this.placeholder = "";
-});
-
-codeInput.addEventListener("blur", function () {
-    if (this.value.trim() === "") {
-        this.placeholder = placeholderText;
     }
-});
-
-function clearCodePageBackground() {
-    document.body.classList.remove("code-page-bg");
+    return list.sort((a, b) => a.name.localeCompare(b.name));
 }
 
-function renderCandidates(employees) {
-    const container = document.getElementById("candidatesContainer");
-    container.innerHTML = "";
-
-    employees.forEach(emp => {
+function renderDepartments() {
+    const grid = document.getElementById("deptGrid");
+    grid.innerHTML = "";
+    getUniqueDepartments().forEach(dept => {
         const card = document.createElement("div");
-        card.className = "candidate";
-        card.dataset.name = emp.name.toLowerCase();
-        card.dataset.id = emp.id;
+        card.className = "dept-card";
+        card.onclick = () => selectDepartment(dept.code, dept.name);
         card.innerHTML = `
-            <h3>${emp.name}</h3>
-            <div class="candidate-id">ID: ${emp.id}</div>
-            <div class="candidate-divider"></div>
-            <button class="vote-btn" onclick="selectCandidate(this)">Vote <span class="arrow">→</span></button>
+            <div class="dept-icon">${deptIcons[dept.name] || defaultIcon}</div>
+            <div class="dept-name">${dept.name}</div>
+            <div class="dept-arrow">→</div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+function selectDepartment(code, name) {
+    currentDepartment = code;
+    currentDeptName = name;
+    document.getElementById("accessDeptName").textContent = name;
+    document.getElementById("departmentCode").value = "";
+    document.getElementById("codeError").style.display = "none";
+    goToStep(2);
+}
+
+function goToStep(step) {
+    // Hide all panels
+    document.querySelectorAll(".step-panel").forEach(p => p.classList.remove("active"));
+    document.getElementById("step" + step).classList.add("active");
+
+    // Progress visibility
+    const progressWrap = document.getElementById("progressWrap");
+    if (step === 6) {
+        progressWrap.style.display = "none";
+    } else {
+        progressWrap.style.display = "block";
+        updateProgress(step);
+    }
+
+    currentStep = step;
+
+    // Prepare step 4 content
+    if (step === 4) {
+        document.getElementById("nominateSub").textContent =
+            `Select the employee you would like to nominate from ${currentDeptName}.`;
+        currentEmployees = departmentEmployees[currentDeptName] || [];
+        document.getElementById("searchInput").value = "";
+        renderEmployees(currentEmployees);
+        // Reset selection UI if needed
+        if (selectedCandidate) {
+            document.getElementById("nominateSplit").classList.add("has-selection");
+            document.getElementById("reasonText").value = recognitionStory;
+            updateCharCount();
+            document.getElementById("nextToReviewBtn").disabled = !recognitionStory.trim();
+        } else {
+            document.getElementById("nominateSplit").classList.remove("has-selection");
+            document.getElementById("reasonText").value = "";
+            updateCharCount();
+            document.getElementById("nextToReviewBtn").disabled = true;
+        }
+    }
+
+    if (step === 5) {
+        const initials = getInitials(selectedCandidate);
+        document.getElementById("reviewAvatar").textContent = initials;
+        document.getElementById("reviewName").textContent = selectedCandidate;
+        document.getElementById("reviewDept").textContent = currentDeptName + " Department";
+        document.getElementById("storyText").textContent = recognitionStory;
+        document.getElementById("storyText").contentEditable = "false";
+        isEditingStory = false;
+        document.getElementById("editStoryBtn").innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg> Edit`;
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function updateProgress(step) {
+    const steps = document.querySelectorAll(".step");
+    const fill = document.getElementById("progressFill");
+    const total = 5;
+    const pct = ((step - 1) / (total - 1)) * 100;
+    fill.style.width = pct + "%";
+
+    steps.forEach(s => {
+        const n = parseInt(s.dataset.step, 10);
+        s.classList.remove("active", "completed");
+        if (n < step) s.classList.add("completed");
+        else if (n === step) s.classList.add("active");
+    });
+}
+
+function getInitials(name) {
+    if (!name) return "?";
+    const parts = name.trim().split(/\s+/);
+    if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function renderEmployees(list) {
+    const container = document.getElementById("empList");
+    container.innerHTML = "";
+    list.forEach(emp => {
+        const isSelected = emp.name === selectedCandidate;
+        const card = document.createElement("div");
+        card.className = "emp-card" + (isSelected ? " selected" : "");
+        card.dataset.name = emp.name;
+        card.onclick = () => selectEmployee(emp);
+        card.innerHTML = `
+            <div class="emp-avatar">${getInitials(emp.name)}</div>
+            <div class="emp-info">
+                <div class="emp-name">${emp.name}</div>
+                <div class="emp-id">ID: ${emp.id}</div>
+            </div>
+            <div class="emp-check">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
         `;
         container.appendChild(card);
     });
 }
 
-    async function verifyCode() {
+function selectEmployee(emp) {
+    selectedCandidate = emp.name;
+    selectedCandidateId = emp.id;
+    document.querySelectorAll(".emp-card").forEach(c => {
+        c.classList.toggle("selected", c.dataset.name === emp.name);
+    });
+    document.getElementById("nominateSplit").classList.add("has-selection");
+    document.getElementById("nextToReviewBtn").disabled = !document.getElementById("reasonText").value.trim();
+}
+
+function updateCharCount() {
+    const ta = document.getElementById("reasonText");
+    const count = ta.value.length;
+    document.getElementById("charCount").textContent = count;
+    recognitionStory = ta.value;
+    document.getElementById("nextToReviewBtn").disabled = !ta.value.trim() || !selectedCandidate;
+}
+
+document.getElementById("reasonText").addEventListener("input", updateCharCount);
+
+document.getElementById("searchInput").addEventListener("input", function () {
+    const q = this.value.trim().toLowerCase();
+    const filtered = currentEmployees.filter(e =>
+        e.name.toLowerCase().includes(q) || e.id.toLowerCase().includes(q)
+    );
+    renderEmployees(filtered);
+});
+
+async function verifyCode() {
     const input = document.getElementById("departmentCode");
     const error = document.getElementById("codeError");
     const continueBtn = document.getElementById("continueBtn");
     const code = input.value.trim().toUpperCase();
-    const codeSection = document.getElementById("codeSection");
 
     if (!code) {
         error.textContent = "You must enter your department code.";
@@ -1386,16 +1748,16 @@ function renderCandidates(employees) {
         return;
     }
 
-    if (!departmentCodes[code]) {
-        error.textContent = "Invalid department code. Please try again.";
+    // Verify it matches the selected department
+    if (!departmentCodes[code] || departmentCodes[code] !== currentDeptName) {
+        error.textContent = "Invalid department code for this department. Please try again.";
         error.style.display = "block";
         return;
     }
 
     continueBtn.disabled = true;
-    continueBtn.textContent = "CHECKING...";
+    continueBtn.innerHTML = "Checking...";
     error.style.display = "none";
-
     input.blur();
 
     try {
@@ -1410,7 +1772,7 @@ function renderCandidates(employees) {
             error.textContent = "Something went wrong. Please try again.";
             error.style.display = "block";
             continueBtn.disabled = false;
-            continueBtn.textContent = "CONTINUE";
+            continueBtn.innerHTML = `Continue <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
             return;
         }
 
@@ -1418,24 +1780,12 @@ function renderCandidates(employees) {
             error.textContent = "This department has already submitted its vote.";
             error.style.display = "block";
             continueBtn.disabled = false;
-            continueBtn.textContent = "CONTINUE";
+            continueBtn.innerHTML = `Continue <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
             return;
         }
 
         currentDepartment = code;
-        currentDeptName = departmentCodes[code];
-        document.getElementById("departmentBadge").textContent = currentDeptName + " Department";
-
-        currentEmployees = departmentEmployees[currentDeptName] || [];
-        renderCandidates(currentEmployees);
-
-        document.getElementById("searchInput").value = "";
-
-        error.style.display = "none";
-        codeSection.classList.add("expanded");
-
-        pendingVotingReveal = true;
-        openCriteriaPopup();
+        goToStep(3);
 
     } catch (err) {
         console.error(err);
@@ -1443,87 +1793,46 @@ function renderCandidates(employees) {
         error.style.display = "block";
     } finally {
         continueBtn.disabled = false;
-        continueBtn.textContent = "CONTINUE";
+        continueBtn.innerHTML = `Continue <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
     }
 }
 
-function openCriteriaPopup() {
-    document.getElementById("criteriaOverlay").classList.add("show");
-    document.body.style.overflow = "hidden";
-}
-
-function closeCriteriaPopup() {
-    document.getElementById("criteriaOverlay").classList.remove("show");
-    document.body.style.overflow = "";
-}
-
-function closeCriteriaAndContinue() {
-    closeCriteriaPopup();
-
-    if (pendingVotingReveal) {
-        pendingVotingReveal = false;
-
-        clearCodePageBackground();
-
-        const codeSection = document.getElementById("codeSection");
-        codeSection.classList.add("hidden");
-
-        const votingSection = document.getElementById("votingSection");
-        votingSection.classList.add("visible");
-
-        const viewport = document.querySelector('meta[name="viewport"]');
-        if (viewport) {
-            viewport.setAttribute(
-                "content",
-                "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
-            );
-        }
-
-        setTimeout(() => {
-            const headerOffset = 74;
-            const elementTop = votingSection.getBoundingClientRect().top + window.pageYOffset;
-            const offsetPosition = elementTop - headerOffset;
-
-            window.scrollTo({
-                top: Math.max(0, offsetPosition),
-                behavior: "smooth"
-            });
-        }, 250);
+function toggleEditStory() {
+    const el = document.getElementById("storyText");
+    const btn = document.getElementById("editStoryBtn");
+    if (!isEditingStory) {
+        el.contentEditable = "true";
+        el.focus();
+        isEditingStory = true;
+        btn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+            </svg> Save`;
+    } else {
+        el.contentEditable = "false";
+        recognitionStory = el.textContent.trim();
+        isEditingStory = false;
+        btn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg> Edit`;
     }
-}
-
-function selectCandidate(button) {
-    document.querySelectorAll(".candidate").forEach(candidate => {
-        candidate.classList.remove("selected");
-        candidate.querySelector(".vote-btn").textContent = "Vote →";
-    });
-
-    const candidate = button.closest(".candidate");
-    candidate.classList.add("selected");
-    button.textContent = "✓ Selected";
-    selectedCandidate = candidate.querySelector("h3").textContent;
-
-    document.getElementById("selectedName").textContent = selectedCandidate;
-    document.getElementById("confirmationBar").classList.add("show");
-}
-
-function changeSelection() {
-    document.querySelectorAll(".candidate").forEach(candidate => {
-        candidate.classList.remove("selected");
-        candidate.querySelector(".vote-btn").textContent = "Vote →";
-    });
-
-    selectedCandidate = "";
-    document.getElementById("confirmationBar").classList.remove("show");
 }
 
 async function confirmVote() {
     if (!selectedCandidate || !currentDepartment || isSubmitting) return;
 
+    // Capture any final edit
+    if (isEditingStory) {
+        recognitionStory = document.getElementById("storyText").textContent.trim();
+        isEditingStory = false;
+    }
+
     isSubmitting = true;
-    const confirmBtn = document.getElementById("confirmBtn");
-    confirmBtn.disabled = true;
-    confirmBtn.textContent = "Submitting...";
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting...";
 
     try {
         const { error: insertError } = await supabaseClient
@@ -1542,8 +1851,8 @@ async function confirmVote() {
                 alert("Could not submit the vote. Please try again.");
             }
             isSubmitting = false;
-            confirmBtn.disabled = false;
-            confirmBtn.textContent = "Confirm Vote";
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Submit";
             return;
         }
 
@@ -1551,68 +1860,33 @@ async function confirmVote() {
             await supabaseClient.functions.invoke("send-vote-email", {
                 body: {
                     department_name: currentDeptName,
-                    winner_name: selectedCandidate
+                    winner_name: selectedCandidate,
+                    recognition_story: recognitionStory
                 }
             });
         } catch (emailErr) {
             console.error("Email failed (vote still saved):", emailErr);
         }
 
-        const votingSection = document.getElementById("votingSection");
-        const successSection = document.getElementById("successSection");
-        const codeSection = document.getElementById("codeSection");
-
-        votingSection.classList.remove("visible");
-        document.getElementById("confirmationBar").classList.remove("show");
-        codeSection.classList.add("hidden");
-        clearCodePageBackground();
-
-        setTimeout(() => {
-            votingSection.style.display = "none";
-            successSection.style.display = "block";
-            void successSection.offsetWidth;
-            successSection.classList.add("visible");
-            successSection.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 400);
+        goToStep(6);
 
     } catch (err) {
         console.error(err);
         alert("Could not submit the vote. Please try again.");
         isSubmitting = false;
-        confirmBtn.disabled = false;
-        confirmBtn.textContent = "Confirm Vote";
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit";
     }
 }
 
-document.getElementById("searchInput").addEventListener("input", function () {
-    const query = this.value.trim().toLowerCase();
-    const filtered = currentEmployees.filter(emp =>
-        emp.name.toLowerCase().includes(query) ||
-        emp.id.toLowerCase().includes(query)
-    );
-    renderCandidates(filtered);
-
-    if (selectedCandidate) {
-        document.querySelectorAll(".candidate").forEach(card => {
-            if (card.querySelector("h3").textContent === selectedCandidate) {
-                card.classList.add("selected");
-                card.querySelector(".vote-btn").textContent = "✓ Selected";
-            }
-        });
-    }
+// Enter key on code input
+document.getElementById("departmentCode").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") verifyCode();
 });
 
-document.getElementById("departmentCode").addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
-        verifyCode();
-    }
-});
-
-document.getElementById("criteriaOverlay").addEventListener("click", function(e) {
-    if (e.target === this && !pendingVotingReveal) {
-        closeCriteriaPopup();
-    }
-});
+// Init
+renderDepartments();
+updateProgress(1);
 </script>
 
 </body>
