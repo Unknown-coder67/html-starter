@@ -23,14 +23,18 @@ html {
 
 body {
     font-family: "DM Sans", Arial, Helvetica, sans-serif;
+    font-feature-settings: normal;
+    font-variation-settings: "opsz" 14, "wght" 750;
+    font-optical-sizing: none;
     font-weight: 500;
-    color: #17171D;
-    line-height: 1.5;
+    color: #08245B;
+    line-height: 1.6;
     min-height: 100%;
     min-height: 100dvh;
     background-color: #e8f4f8;
     -webkit-font-smoothing: antialiased;
-    padding-top: 70px;
+    -moz-osx-font-smoothing: grayscale;
+    padding-top: 74px;
     padding-bottom: env(safe-area-inset-bottom, 0);
     display: flex;
     flex-direction: column;
@@ -57,46 +61,167 @@ body.no-bg {
     background-color: #f0f6f9;
 }
 
-/* Header */
+/* Header – matched to main index.html */
 header {
     position: fixed;
-    top: 0; left: 0; width: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
     z-index: 1000;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(8,36,91,0.08);
-    padding: 6px 5%;
-    padding-top: max(6px, env(safe-area-inset-top, 6px));
+    background: #FFFFFF;
+    border-bottom: none;
+    padding: 8px 5%;
+    padding-top: max(8px, env(safe-area-inset-top, 8px));
 }
 
 .navbar {
-    max-width: 1200px;
-    height: 52px;
+    max-width: 1920px;
+    height: 58px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 30px;
 }
 
 .logo {
-    width: 140px;
-    height: 40px;
+    width: 200px;
+    height: 50px;
     object-fit: contain;
     display: block;
+    transform: translate(-8px, 3px);
 }
 
-nav a {
-    color: #08245B;
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.header-nav a {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 9px 0;
+    border: none;
+    background: none;
+    color: rgb(23, 23, 29);
+    cursor: pointer;
+    font-family: "DM Sans", Arial, Helvetica, sans-serif;
+    font-size: 14.4px;
+    font-style: normal;
+    font-weight: 750;
+    font-feature-settings: normal;
+    font-variation-settings: "opsz" 14, "wght" 750;
+    font-optical-sizing: none;
+    line-height: 21.6px;
+    letter-spacing: normal;
     text-decoration: none;
-    font-weight: 700;
-    font-size: 14px;
-    padding: 8px 14px;
-    border-radius: 999px;
-    transition: color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
 }
-nav a:hover { color: #00B7E2; }
 
-/* Page Header Texts – 25% bigger + more spacing */
+.header-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 10px;
+    width: 0;
+    height: 2px;
+    background: #00B7E2;
+    transition: width 200ms ease;
+}
+
+.header-nav a:hover {
+    color: #171717;
+}
+
+.header-nav a:hover::after {
+    width: 100%;
+}
+
+.header-nav a.nav-btn {
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: transparent !important;
+    color: #08245B !important;
+    border: none;
+    border-radius: 999px;
+    padding: 12px 17px;
+    font-family: "DM Sans", Arial, Helvetica, sans-serif;
+    font-size: 15.04px;
+    font-weight: 750;
+    font-feature-settings: normal;
+    font-variation-settings: "opsz" 14, "wght" 750;
+    font-optical-sizing: none;
+    line-height: 22.56px;
+    height: 46.5625px;
+    cursor: pointer;
+    text-decoration: none !important;
+    white-space: nowrap;
+    box-sizing: border-box;
+    transition: color 200ms ease;
+    -webkit-tap-highlight-color: transparent;
+    column-gap: 8px;
+}
+
+.header-nav a.nav-btn::after {
+    left: 17px;
+    width: calc(100% - 34px);
+    height: 2px;
+    bottom: 10px;
+    background: #00B7E2;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease;
+}
+
+.header-nav a.nav-btn:hover {
+    background: transparent !important;
+    color: #00B7E2 !important;
+    opacity: 1;
+    transform: none;
+}
+
+.header-nav a.nav-btn:hover::after {
+    transform: scaleX(1);
+}
+
+@media (max-width: 700px) {
+    .logo {
+        width: 100px;
+        height: 50px;
+        transform: none;
+    }
+    .header-nav {
+        gap: 10px;
+    }
+    .header-nav a.nav-btn {
+        font-size: 12.5px;
+        padding: 9px 12px;
+        height: 40px;
+    }
+    .header-nav a.nav-btn::after {
+        left: 12px;
+        width: calc(100% - 24px);
+    }
+}
+
+@media (max-width: 480px) {
+    .header-nav a.nav-btn {
+        font-size: 11.5px;
+        padding: 8px 10px;
+        height: 36px;
+    }
+    .header-nav a.nav-btn::after {
+        left: 10px;
+        width: calc(100% - 20px);
+    }
+}
+
+/* Page Header Texts – aligned with main site typography */
 .page-header-texts {
     text-align: center;
     margin-top: 28px;
@@ -105,8 +230,8 @@ nav a:hover { color: #00B7E2; }
 }
 
 .page-header-texts .line1 {
-    font-size: 1.15rem;
-    font-weight: 500;
+    font-size: 1.05rem;
+    font-weight: 750;
     color: #557083;
     margin-bottom: 16px;
 }
@@ -120,16 +245,16 @@ nav a:hover { color: #00B7E2; }
 }
 
 .page-header-texts .line3 {
-    font-size: 1.12rem;
+    font-size: 1.05rem;
     font-weight: 500;
-    color: #8aa0b0;
+    color: #557083;
     max-width: 560px;
     margin: 0 auto;
 }
 
-/* Progress Indicator – 25% smaller, line stops at last step */
+/* Progress Indicator – ~15% bigger */
 .progress-wrap {
-    max-width: 720px;
+    max-width: 780px;
     margin: 0 auto 44px;
     padding: 0 16px;
 }
@@ -144,10 +269,10 @@ nav a:hover { color: #00B7E2; }
 .progress-steps::before {
     content: "";
     position: absolute;
-    top: 12px;
+    top: 14px;
     left: 10%;
     right: 10%;
-    height: 2.5px;
+    height: 2.8px;
     background: #d0e0e8;
     z-index: 0;
     border-radius: 2px;
@@ -155,9 +280,9 @@ nav a:hover { color: #00B7E2; }
 
 .progress-bar-fill {
     position: absolute;
-    top: 12px;
+    top: 14px;
     left: 10%;
-    height: 2.5px;
+    height: 2.8px;
     background: #c4ccd2;
     z-index: 1;
     border-radius: 2px;
@@ -179,15 +304,15 @@ nav a:hover { color: #00B7E2; }
 .step.clickable { cursor: pointer; }
 
 .step-circle {
-    width: 26px;
-    height: 26px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: #fff;
     border: 2.5px solid #d0e0e8;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 800;
     color: #8aa0b0;
     transition: all 0.3s ease;
@@ -207,8 +332,8 @@ nav a:hover { color: #00B7E2; }
 }
 
 .step-circle svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     display: block;
 }
 
@@ -218,9 +343,9 @@ nav a:hover { color: #00B7E2; }
 }
 
 .step-label {
-    margin-top: 5px;
-    font-size: 9px;
-    font-weight: 700;
+    margin-top: 6px;
+    font-size: 10.5px;
+    font-weight: 750;
     color: #8aa0b0;
     text-align: center;
     white-space: nowrap;
@@ -229,6 +354,14 @@ nav a:hover { color: #00B7E2; }
 .step.active .step-label,
 .step.completed .step-label {
     color: #08245B;
+}
+
+/* Short progress (2 steps) for Executive Department Head */
+.progress-wrap.short .progress-steps::before,
+.progress-wrap.short .progress-bar-fill {
+    left: 25%;
+    right: 25%;
+    max-width: 50%;
 }
 
 /* Main */
@@ -298,10 +431,11 @@ nav a:hover { color: #00B7E2; }
 /* ========== STEP 1: Departments ========== */
 .dept-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(182px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 18px;
     /* Break out of .main-content: full viewport width minus 100px each side */
     width: calc(100vw - 200px);
+    max-width: 1320px;
     position: relative;
     left: 50%;
     transform: translateX(-50%);
@@ -310,7 +444,7 @@ nav a:hover { color: #00B7E2; }
 .dept-card {
     background: #fff;
     border-radius: 16px;
-    padding: 18px 12px 16px;
+    padding: 20px 14px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -319,10 +453,10 @@ nav a:hover { color: #00B7E2; }
     border: 1px solid rgba(220,235,241,0.7);
     transition: transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
-    aspect-ratio: 182 / 143;
+    aspect-ratio: 200 / 155;
     min-height: 0;
-    padding-top: 14px;
-    padding-bottom: 12px;
+    padding-top: 16px;
+    padding-bottom: 14px;
 }
 
 .dept-card:hover {
@@ -332,16 +466,16 @@ nav a:hover { color: #00B7E2; }
 }
 
 .dept-img {
-    width: 52px;
-    height: 52px;
+    width: 62px;
+    height: 62px;
     object-fit: contain;
     border-radius: 12px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .dept-name {
-    font-size: 0.88rem;
-    font-weight: 700;
+    font-size: 0.92rem;
+    font-weight: 750;
     color: #05255E;
     line-height: 1.3;
     flex: 1;
@@ -1070,10 +1204,10 @@ nav a:hover { color: #00B7E2; }
 
 footer {
     text-align: center;
-    padding: 14px 20px;
-    padding-bottom: max(14px, env(safe-area-inset-bottom, 14px));
+    padding: 18px 20px;
+    padding-bottom: max(18px, env(safe-area-inset-bottom, 18px));
     color: #02102B;
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     background: transparent;
     margin-top: auto;
 }
@@ -1115,6 +1249,7 @@ footer {
     .dept-grid {
         width: calc(100vw - 80px);
         gap: 14px;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     }
 }
 
@@ -1124,8 +1259,295 @@ footer {
         width: calc(100vw - 40px);
         gap: 12px;
     }
-    .logo { width: 110px; }
     .page-header-texts .line2 { font-size: 1.45rem; }
+}
+
+
+/* ========== EXECUTIVE FLOW ========== */
+body.exec-bg {
+    background-image: url("/executive-background.jpg") !important;
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.exec-access-box {
+    max-width: 440px;
+    width: 92%;
+    margin: 40px auto 0;
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px 32px;
+    box-shadow: 0 12px 40px rgba(23,50,77,0.12);
+    text-align: center;
+}
+
+.exec-access-box h2 {
+    color: #05255E;
+    font-size: 1.25rem;
+    font-weight: 750;
+    margin-bottom: 22px;
+}
+
+.exec-choice-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+.exec-choice-headline {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.exec-choice-headline h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: 750;
+    color: #05255E;
+    letter-spacing: 0.02em;
+}
+
+.exec-choice-sub {
+    text-align: center;
+    color: #557083;
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 36px;
+}
+
+.exec-boxes {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.exec-box {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #fff;
+    border: 1px solid #e0edf3;
+    border-radius: 16px;
+    padding: 22px 24px;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    text-align: left;
+}
+
+.exec-box:hover {
+    border-color: #9ddfea;
+    box-shadow: 0 8px 24px rgba(23,50,77,0.1);
+    transform: translateY(-2px);
+}
+
+.exec-box-img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.exec-box-texts {
+    flex: 1;
+    min-width: 0;
+}
+
+.exec-box-texts h3 {
+    font-size: 1.15rem;
+    font-weight: 750;
+    color: #05255E;
+    margin-bottom: 6px;
+}
+
+.exec-box-texts p {
+    font-size: 0.92rem;
+    color: #557083;
+    font-weight: 500;
+    line-height: 1.45;
+    margin: 0;
+}
+
+.exec-box-arrow {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #08245B;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.exec-category-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 720px;
+    margin: 28px auto 0;
+}
+
+.exec-cat-card {
+    background: #fff;
+    border: 1px solid #e0edf3;
+    border-radius: 18px;
+    padding: 28px 22px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.exec-cat-card:hover {
+    border-color: #9ddfea;
+    box-shadow: 0 8px 24px rgba(23,50,77,0.1);
+    transform: translateY(-2px);
+}
+
+.exec-cat-img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    border-radius: 14px;
+    margin: 0 auto 16px;
+    display: block;
+}
+
+.exec-cat-card h3 {
+    font-size: 1.15rem;
+    font-weight: 750;
+    color: #05255E;
+    margin-bottom: 8px;
+}
+
+.exec-cat-card p {
+    font-size: 0.9rem;
+    color: #557083;
+    font-weight: 500;
+    margin-bottom: 18px;
+}
+
+.exec-cat-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #08245B;
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+
+.dh-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 380px;
+    overflow-y: auto;
+}
+
+.dh-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: #FFFFFF;
+    border: 1px solid #e0edf3;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    text-align: left;
+}
+
+.dh-card:hover {
+    border-color: #9ddfea;
+}
+
+.dh-card.selected {
+    border-color: #D79A1E;
+    box-shadow: 0 2px 10px rgba(215,154,30,0.15);
+}
+
+.dh-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #f8fbfd;
+    border: 1.5px solid #d0e0e8;
+    color: #08245B;
+    font-weight: 800;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.dh-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.dh-name {
+    font-size: 0.95rem;
+    font-weight: 750;
+    color: #05255E;
+    line-height: 1.25;
+}
+
+.dh-dept {
+    font-size: 0.8rem;
+    color: #8aa0b0;
+    margin-top: 2px;
+}
+
+.dh-circle {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #cbdde5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: #fff;
+    margin-left: auto;
+}
+
+.dh-card.selected .dh-circle {
+    background: #D79A1E;
+    border-color: #D79A1E;
+}
+
+.dh-circle-inner {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #fff;
+    opacity: 0;
+}
+
+.dh-card.selected .dh-circle-inner { opacity: 1; }
+
+@media (max-width: 700px) {
+    .exec-category-cards {
+        grid-template-columns: 1fr;
+    }
+    .exec-box {
+        padding: 18px 16px;
+        gap: 14px;
+    }
+    .exec-box-img {
+        width: 52px;
+        height: 52px;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1144,8 +1566,9 @@ footer {
         <a href="/">
             <img src="/logo.jpg" alt="Care Medical Jiwar" class="logo">
         </a>
-        <nav>
-            <a href="/">Home</a>
+        <nav class="header-nav">
+            <a href="#" class="nav-btn" id="executiveBtn" onclick="startExecutive(event)">Executive</a>
+            <a href="/" class="nav-btn">Home</a>
         </nav>
     </div>
 </header>
@@ -1295,7 +1718,7 @@ footer {
         <div class="nominate-outer">
                 <div class="nominate-split" id="nominateSplit">
                     <div class="employee-list-pane">
-        <div class="top-search-wrap">
+        <div class="top-search-wrap" id="nominateSearchWrap" style="display: none;">
             <div class="search-wrapper">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -1403,6 +1826,207 @@ footer {
             </a>
         </div>
     </section>
+
+
+    <!-- ========== EXECUTIVE: Access ========== -->
+    <section class="step-panel" id="execAccess">
+        <div class="exec-access-box">
+            <h2>Please enter your code to proceed</h2>
+            <div class="code-field">
+                <input type="text" id="execCode" placeholder="Department code..." autocomplete="off" inputmode="text" enterkeyhint="go">
+            </div>
+            <button class="continue-btn" id="execContinueBtn" onclick="verifyExecCode()">
+                Continue
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <div class="code-error" id="execCodeError">Invalid code. Please try again.</div>
+        </div>
+    </section>
+
+    <!-- ========== EXECUTIVE: Selection choice ========== -->
+    <section class="step-panel" id="execChoice">
+        <div class="exec-choice-wrap">
+            <div class="exec-choice-headline">
+                <h1>EXECUTIVE SELECTION</h1>
+            </div>
+            <div class="exec-choice-sub">
+                Recognizing Excellence<br>Across Our Teams
+            </div>
+            <div class="exec-boxes">
+                <div class="exec-box" onclick="goExecDeptHead()">
+                    <img src="dept-head.jpg" alt="" class="exec-box-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
+                    <div class="exec-box-texts">
+                        <h3>Outstanding Department Head</h3>
+                        <p>Select the leading department head<br>(together as executive team).</p>
+                    </div>
+                    <div class="exec-box-arrow">→</div>
+                </div>
+                <div class="exec-box" onclick="goExecIndividual()">
+                    <img src="individual-contributor.jpg" alt="" class="exec-box-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
+                    <div class="exec-box-texts">
+                        <h3>Outstanding Individual Contributor</h3>
+                        <p>Select the outstanding individual in your assigned category.</p>
+                    </div>
+                    <div class="exec-box-arrow">→</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== EXECUTIVE: Category (Admin / Medical) ========== -->
+    <section class="step-panel" id="execCategory">
+        <div class="exec-choice-wrap">
+            <div class="exec-choice-headline">
+                <h1 style="font-size: clamp(1.5rem, 3.5vw, 2rem);">Outstanding Individual Contributor</h1>
+            </div>
+            <div class="exec-choice-sub" style="margin-bottom: 28px;">
+                Select the outstanding individual from your assigned category.
+            </div>
+            <div class="exec-category-cards">
+                <div class="exec-cat-card" onclick="goExecStaff('admin')">
+                    <img src="admin-staff.jpg" alt="" class="exec-cat-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
+                    <h3>Administrative Staff</h3>
+                    <p>Selected by the Administrative Director</p>
+                    <div class="exec-cat-arrow">→</div>
+                </div>
+                <div class="exec-cat-card" onclick="goExecStaff('medical')">
+                    <img src="medical-staff.jpg" alt="" class="exec-cat-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
+                    <h3>Medical Staff</h3>
+                    <p>Selected by the Medical Services Director</p>
+                    <div class="exec-cat-arrow">→</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== EXECUTIVE: Department Head Nominate ========== -->
+    <section class="step-panel" id="execDHNominate">
+        <div class="nominate-outer">
+            <div class="nominate-split" id="execDHSplit">
+                <div class="employee-list-pane">
+                    <div class="top-search-wrap" id="execDHSearchWrap">
+                        <div class="search-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            <input type="text" id="execDHSearch" class="top-search-input" placeholder="Search for a department head..." autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="dh-list" id="execDHList"></div>
+                    <div class="no-select-card" id="execDHNoSelect" onclick="selectExecDHNo()">
+                        <div class="no-select-circle"><div class="no-select-circle-inner"></div></div>
+                        <img src="no-selection.jpg" alt="" class="no-select-img" onerror="this.style.display='none'">
+                        <div class="no-select-texts">
+                            <div class="no-select-title">No Selection This Quarter</div>
+                            <div class="no-select-desc">
+                                <span class="tiny-circle"></span>
+                                <span>If no one stands out this quarter, you may choose not to select a department head.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="no-select-continue-wrap" id="execDHNoContinue">
+                        <button class="no-select-continue-btn" onclick="goExecDHReview()">
+                            Continue
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="reason-pane" id="execDHReasonPane">
+                    <div class="reason-inner">
+                        <div class="reason-title">What made them stand out</div>
+                        <p class="reason-hint">Share what made this department head special this quarter. A short sentence or a few lines is enough.</p>
+                        <textarea id="execDHReason" class="reason-textarea" maxlength="500" placeholder="Their dedication, leadership, and positive impact..."></textarea>
+                        <div class="char-count"><span id="execDHCharCount">0</span>/500</div>
+                        <button class="next-btn" id="execDHNextBtn" onclick="goExecDHReview()" disabled>
+                            Next
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== EXECUTIVE: Staff Nominate (Admin / Medical) ========== -->
+    <section class="step-panel" id="execStaffNominate">
+        <div class="nominate-outer">
+            <div class="nominate-split" id="execStaffSplit">
+                <div class="employee-list-pane">
+                    <div class="top-search-wrap" id="execStaffSearchWrap">
+                        <div class="search-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            <input type="text" id="execStaffSearch" class="top-search-input" placeholder="Search by name..." autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="emp-list" id="execStaffList"></div>
+                    <div class="no-select-card" id="execStaffNoSelect" onclick="selectExecStaffNo()">
+                        <div class="no-select-circle"><div class="no-select-circle-inner"></div></div>
+                        <img src="no-selection.jpg" alt="" class="no-select-img" onerror="this.style.display='none'">
+                        <div class="no-select-texts">
+                            <div class="no-select-title">No Selection This Quarter</div>
+                            <div class="no-select-desc">
+                                <span class="tiny-circle"></span>
+                                <span>If no one stands out this quarter, you may choose not to select an employee.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="no-select-continue-wrap" id="execStaffNoContinue">
+                        <button class="no-select-continue-btn" onclick="goExecStaffReview()">
+                            Continue
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="reason-pane" id="execStaffReasonPane">
+                    <div class="reason-inner">
+                        <div class="reason-title">What made them stand out</div>
+                        <p class="reason-hint">Share what made this employee special this quarter. A short sentence or a few lines is enough.</p>
+                        <textarea id="execStaffReason" class="reason-textarea" maxlength="500" placeholder="Their dedication, teamwork, and positive attitude..."></textarea>
+                        <div class="char-count"><span id="execStaffCharCount">0</span>/500</div>
+                        <button class="next-btn" id="execStaffNextBtn" onclick="goExecStaffReview()" disabled>
+                            Next
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== EXECUTIVE: Review ========== -->
+    <section class="step-panel" id="execReview">
+        <div class="review-box">
+            <h2>Review Your Nomination</h2>
+            <div class="review-person">
+                <div class="review-avatar" id="execReviewAvatar">AB</div>
+                <div>
+                    <div class="review-name" id="execReviewName">Name</div>
+                    <div class="review-dept" id="execReviewDept">Department</div>
+                </div>
+            </div>
+            <div class="story-box" id="execStoryBox">
+                <h3>Recognition Story</h3>
+                <div class="story-text" id="execStoryText"></div>
+                <button class="edit-story-btn" id="execEditStoryBtn" onclick="toggleExecEditStory()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                    Edit
+                </button>
+            </div>
+            <div class="review-actions">
+                <button class="btn-back" id="execReviewBackBtn" onclick="execReviewBack()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back
+                </button>
+                <button class="btn-submit" id="execSubmitBtn" onclick="confirmExecVote()">Submit</button>
+            </div>
+        </div>
+    </section>
+
 
 </main>
 
@@ -1818,6 +2442,10 @@ function goToStep(step) {
     if (step === 4) {
         currentEmployees = departmentEmployees[currentDeptName] || [];
         document.getElementById("searchInput").value = "";
+        const searchWrap = document.getElementById("nominateSearchWrap");
+        if (searchWrap) {
+            searchWrap.style.display = currentEmployees.length > 8 ? "block" : "none";
+        }
         renderEmployees(currentEmployees);
         updateNominateUI();
         startPlaceholderRotation();
@@ -2136,6 +2764,461 @@ async function confirmVote() {
 document.getElementById("departmentCode").addEventListener("keydown", function (e) {
     if (e.key === "Enter") verifyCode();
 });
+
+
+/* ========== EXECUTIVE FLOW ========== */
+let execMode = null;
+let execSelected = null;
+let execSelectedDept = "";
+let execIsNoSelection = false;
+let execStory = "";
+let execIsEditingStory = false;
+let execCurrentList = [];
+let execIsSubmitting = false;
+
+const departmentHeads = [
+    { name: "Khalid Alotaibi", dept: "Emergency Department", id: "DH01" },
+    { name: "Sara Alharbi", dept: "Intensive Care Unit", id: "DH02" },
+    { name: "Mohammed Alghamdi", dept: "Radiology", id: "DH03" },
+    { name: "Noura Alqahtani", dept: "Laboratory", id: "DH04" },
+    { name: "Fahad Alzahrani", dept: "Pharmacy", id: "DH05" },
+    { name: "Lina Alshehri", dept: "Cardiology", id: "DH06" },
+    { name: "Yousef Almutairi", dept: "Information Technology", id: "DH07" },
+    { name: "Amal Aljohani", dept: "Revenue Cycle Management", id: "DH08" },
+    { name: "Omar Albalawi", dept: "General Practice", id: "DH09" },
+    { name: "Huda Alshammari", dept: "Respiratory Therapy", id: "DH10" }
+];
+
+const adminStaff = [
+    { name: "Reem Alqurashi", id: "AS01" },
+    { name: "Abdullah Alotaibi", id: "AS02" },
+    { name: "Maha Alzahrani", id: "AS03" },
+    { name: "Saud Alharbi", id: "AS04" },
+    { name: "Nouf Alghamdi", id: "AS05" },
+    { name: "Turki Alqahtani", id: "AS06" },
+    { name: "Dana Alshehri", id: "AS07" },
+    { name: "Faisal Almutairi", id: "AS08" },
+    { name: "Razan Aljohani", id: "AS09" }
+];
+
+const medicalStaff = [
+    { name: "Dr. Ahmed Mostafa", id: "MS01" },
+    { name: "Dr. Fatima Ali", id: "MS02" },
+    { name: "Dr. Yasein Omer", id: "MS03" },
+    { name: "Dr. Amina Sulaiman", id: "MS04" },
+    { name: "Dr. Mahmoud Ellamey", id: "MS05" },
+    { name: "Dr. Hana Abdi", id: "MS06" },
+    { name: "Dr. Mohamed Nada", id: "MS07" },
+    { name: "Dr. Sara Hamed", id: "MS08" },
+    { name: "Dr. Abdelrahman Ibrahim", id: "MS09" },
+    { name: "Dr. Bushra Mohamed", id: "MS10" }
+];
+
+function hideAllPanels() {
+    document.querySelectorAll(".step-panel").forEach(p => p.classList.remove("active"));
+}
+
+function showPanel(id) {
+    hideAllPanels();
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function setExecProgress(mode, step) {
+    const progressWrap = document.getElementById("progressWrap");
+    const pageHeader = document.getElementById("pageHeaderTexts");
+    if (!progressWrap) return;
+
+    if (mode === "dh") {
+        progressWrap.classList.add("short");
+        progressWrap.style.display = "block";
+        progressWrap.innerHTML = `
+            <div class="progress-steps">
+                <div class="progress-bar-fill" id="progressFill" style="width: ${step === 1 ? "0%" : "100%"}; max-width: 50%; left: 25%;"></div>
+                <div class="step ${step === 1 ? "active" : "completed"}" data-step="1">
+                    <div class="step-circle">${step > 1 ? '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' : "1"}</div>
+                    <div class="step-label">Select</div>
+                </div>
+                <div class="step ${step === 2 ? "active" : ""}" data-step="2">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Confirm</div>
+                </div>
+            </div>`;
+        if (pageHeader) {
+            document.getElementById("headerLine1").textContent = step === 1 ? "Executive Selection" : "Almost Done";
+            document.getElementById("headerLine2").textContent = step === 1 ? "Outstanding Department Head" : "Review Your Nomination";
+            document.getElementById("headerLine3").textContent = step === 1
+                ? "Review the shortlisted department heads and select the winner together as the executive team."
+                : "Confirm the details before submitting your final choice.";
+        }
+    } else if (mode === "staff") {
+        progressWrap.classList.remove("short");
+        progressWrap.style.display = "block";
+        progressWrap.innerHTML = `
+            <div class="progress-steps">
+                <div class="progress-bar-fill" id="progressFill" style="width: ${step === 1 ? "75%" : "100%"};"></div>
+                <div class="step completed" data-step="1"><div class="step-circle"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><div class="step-label">Department</div></div>
+                <div class="step completed" data-step="2"><div class="step-circle"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><div class="step-label">Access</div></div>
+                <div class="step completed" data-step="3"><div class="step-circle"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><div class="step-label">Criteria</div></div>
+                <div class="step ${step === 1 ? "active" : "completed"}" data-step="4"><div class="step-circle">${step > 1 ? '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' : "4"}</div><div class="step-label">Nominate</div></div>
+                <div class="step ${step === 2 ? "active" : ""}" data-step="5"><div class="step-circle">5</div><div class="step-label">Review & Submit</div></div>
+            </div>`;
+        if (pageHeader) {
+            const cat = execMode === "admin" ? "Administrative Staff" : "Medical Staff";
+            document.getElementById("headerLine1").textContent = step === 1 ? "Executive Selection" : "Almost Done";
+            document.getElementById("headerLine2").textContent = step === 1 ? cat : "Review Your Nomination";
+            document.getElementById("headerLine3").textContent = step === 1
+                ? "Pick the colleague who made a real difference this quarter."
+                : "Confirm the details before submitting your final choice.";
+        }
+    }
+}
+
+function startExecutive(e) {
+    if (e) e.preventDefault();
+    execMode = null;
+    document.body.classList.add("exec-bg");
+    document.body.classList.remove("has-bg", "no-bg");
+    document.getElementById("progressWrap").style.display = "none";
+    document.getElementById("pageHeaderTexts").style.display = "none";
+    document.getElementById("execCode").value = "";
+    document.getElementById("execCodeError").style.display = "none";
+    showPanel("execAccess");
+}
+
+function verifyExecCode() {
+    const input = document.getElementById("execCode");
+    const error = document.getElementById("execCodeError");
+    const code = (input.value || "").trim();
+    if (!code) {
+        error.textContent = "You must enter your code.";
+        error.style.display = "block";
+        return;
+    }
+    if (code.toUpperCase() !== "EXECUTIVE") {
+        error.textContent = "Invalid code. Please try again.";
+        error.style.display = "block";
+        return;
+    }
+    error.style.display = "none";
+    document.getElementById("pageHeaderTexts").style.display = "block";
+    document.getElementById("headerLine1").textContent = "Executive";
+    document.getElementById("headerLine2").textContent = "EXECUTIVE SELECTION";
+    document.getElementById("headerLine3").textContent = "Recognizing Excellence Across Our Teams";
+    document.getElementById("progressWrap").style.display = "none";
+    showPanel("execChoice");
+}
+
+document.getElementById("execCode").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") verifyExecCode();
+});
+
+function goExecDeptHead() {
+    execMode = "dh";
+    execSelected = null;
+    execSelectedDept = "";
+    execIsNoSelection = false;
+    execStory = "";
+    document.getElementById("execDHReason").value = "";
+    document.getElementById("execDHCharCount").textContent = "0";
+    document.getElementById("execDHNoSelect").classList.remove("selected");
+    document.getElementById("execDHNoContinue").classList.remove("visible");
+    document.getElementById("execDHSplit").classList.remove("has-selection");
+    document.getElementById("execDHNextBtn").disabled = true;
+    document.getElementById("execDHSearch").value = "";
+    execCurrentList = departmentHeads.slice();
+    renderExecDH(execCurrentList);
+    setExecProgress("dh", 1);
+    showPanel("execDHNominate");
+}
+
+function goExecIndividual() {
+    document.getElementById("progressWrap").style.display = "none";
+    document.getElementById("headerLine1").textContent = "Executive Selection";
+    document.getElementById("headerLine2").textContent = "Outstanding Individual Contributor";
+    document.getElementById("headerLine3").textContent = "Select the outstanding individual from your assigned category.";
+    showPanel("execCategory");
+}
+
+function goExecStaff(type) {
+    execMode = type;
+    execSelected = null;
+    execSelectedDept = type === "admin" ? "Administrative Staff" : "Medical Staff";
+    execIsNoSelection = false;
+    execStory = "";
+    document.getElementById("execStaffReason").value = "";
+    document.getElementById("execStaffCharCount").textContent = "0";
+    document.getElementById("execStaffNoSelect").classList.remove("selected");
+    document.getElementById("execStaffNoContinue").classList.remove("visible");
+    document.getElementById("execStaffSplit").classList.remove("has-selection");
+    document.getElementById("execStaffNextBtn").disabled = true;
+    document.getElementById("execStaffSearch").value = "";
+    execCurrentList = type === "admin" ? adminStaff.slice() : medicalStaff.slice();
+    const searchWrap = document.getElementById("execStaffSearchWrap");
+    if (searchWrap) searchWrap.style.display = execCurrentList.length > 8 ? "block" : "none";
+    renderExecStaff(execCurrentList);
+    setExecProgress("staff", 1);
+    showPanel("execStaffNominate");
+}
+
+function renderExecDH(list) {
+    const container = document.getElementById("execDHList");
+    container.innerHTML = "";
+    list.forEach(item => {
+        const isSelected = !execIsNoSelection && execSelected && execSelected.id === item.id;
+        const card = document.createElement("div");
+        card.className = "dh-card" + (isSelected ? " selected" : "");
+        card.onclick = () => selectExecDH(item);
+        card.innerHTML = `
+            <div class="dh-avatar">${getInitials(item.name)}</div>
+            <div class="dh-info">
+                <div class="dh-name">${item.name}</div>
+                <div class="dh-dept">${item.dept}</div>
+            </div>
+            <div class="dh-circle"><div class="dh-circle-inner"></div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function selectExecDH(item) {
+    execIsNoSelection = false;
+    execSelected = item;
+    execSelectedDept = item.dept;
+    document.getElementById("execDHNoSelect").classList.remove("selected");
+    document.getElementById("execDHNoContinue").classList.remove("visible");
+    const q = document.getElementById("execDHSearch").value.trim().toLowerCase();
+    const filtered = departmentHeads.filter(e =>
+        !q || e.name.toLowerCase().includes(q) || e.dept.toLowerCase().includes(q)
+    );
+    renderExecDH(filtered);
+    document.getElementById("execDHSplit").classList.add("has-selection");
+    document.getElementById("execDHNextBtn").disabled = !document.getElementById("execDHReason").value.trim();
+}
+
+function selectExecDHNo() {
+    execIsNoSelection = true;
+    execSelected = null;
+    execSelectedDept = "";
+    execStory = "";
+    document.getElementById("execDHReason").value = "";
+    document.getElementById("execDHCharCount").textContent = "0";
+    document.querySelectorAll("#execDHList .dh-card").forEach(c => c.classList.remove("selected"));
+    document.getElementById("execDHNoSelect").classList.add("selected");
+    document.getElementById("execDHNoContinue").classList.add("visible");
+    document.getElementById("execDHSplit").classList.remove("has-selection");
+    document.getElementById("execDHNextBtn").disabled = true;
+}
+
+document.getElementById("execDHSearch").addEventListener("input", function () {
+    const q = this.value.trim().toLowerCase();
+    const filtered = departmentHeads.filter(e =>
+        e.name.toLowerCase().includes(q) || e.dept.toLowerCase().includes(q)
+    );
+    renderExecDH(filtered);
+});
+
+document.getElementById("execDHReason").addEventListener("input", function () {
+    document.getElementById("execDHCharCount").textContent = this.value.length;
+    execStory = this.value;
+    if (!execIsNoSelection) {
+        document.getElementById("execDHNextBtn").disabled = !this.value.trim() || !execSelected;
+    }
+});
+
+function goExecDHReview() {
+    if (!execIsNoSelection && (!execSelected || !document.getElementById("execDHReason").value.trim())) return;
+    execStory = document.getElementById("execDHReason").value.trim();
+    prepareExecReview();
+    setExecProgress("dh", 2);
+    showPanel("execReview");
+}
+
+function renderExecStaff(list) {
+    const container = document.getElementById("execStaffList");
+    container.innerHTML = "";
+    list.forEach(emp => {
+        const isSelected = !execIsNoSelection && execSelected && execSelected.id === emp.id;
+        const card = document.createElement("div");
+        card.className = "emp-card" + (isSelected ? " selected" : "");
+        card.onclick = () => selectExecStaff(emp);
+        card.innerHTML = `
+            <div class="emp-avatar">${getInitials(emp.name)}</div>
+            <div class="emp-info"><div class="emp-name">${emp.name}</div></div>
+            <div class="emp-circle"><div class="emp-circle-inner"></div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function selectExecStaff(emp) {
+    execIsNoSelection = false;
+    execSelected = emp;
+    document.getElementById("execStaffNoSelect").classList.remove("selected");
+    document.getElementById("execStaffNoContinue").classList.remove("visible");
+    renderExecStaff(execCurrentList.filter(e => {
+        const q = document.getElementById("execStaffSearch").value.trim().toLowerCase();
+        return !q || e.name.toLowerCase().includes(q);
+    }));
+    document.getElementById("execStaffSplit").classList.add("has-selection");
+    document.getElementById("execStaffNextBtn").disabled = !document.getElementById("execStaffReason").value.trim();
+}
+
+function selectExecStaffNo() {
+    execIsNoSelection = true;
+    execSelected = null;
+    execStory = "";
+    document.getElementById("execStaffReason").value = "";
+    document.getElementById("execStaffCharCount").textContent = "0";
+    document.querySelectorAll("#execStaffList .emp-card").forEach(c => c.classList.remove("selected"));
+    document.getElementById("execStaffNoSelect").classList.add("selected");
+    document.getElementById("execStaffNoContinue").classList.add("visible");
+    document.getElementById("execStaffSplit").classList.remove("has-selection");
+    document.getElementById("execStaffNextBtn").disabled = true;
+}
+
+document.getElementById("execStaffSearch").addEventListener("input", function () {
+    const q = this.value.trim().toLowerCase();
+    const source = execMode === "admin" ? adminStaff : medicalStaff;
+    const filtered = source.filter(e => e.name.toLowerCase().includes(q));
+    renderExecStaff(filtered);
+});
+
+document.getElementById("execStaffReason").addEventListener("input", function () {
+    document.getElementById("execStaffCharCount").textContent = this.value.length;
+    execStory = this.value;
+    if (!execIsNoSelection) {
+        document.getElementById("execStaffNextBtn").disabled = !this.value.trim() || !execSelected;
+    }
+});
+
+function goExecStaffReview() {
+    if (!execIsNoSelection && (!execSelected || !document.getElementById("execStaffReason").value.trim())) return;
+    execStory = document.getElementById("execStaffReason").value.trim();
+    prepareExecReview();
+    setExecProgress("staff", 2);
+    showPanel("execReview");
+}
+
+function prepareExecReview() {
+    if (execIsNoSelection) {
+        document.getElementById("execReviewAvatar").textContent = "—";
+        document.getElementById("execReviewName").textContent = "No Selection This Quarter";
+        document.getElementById("execReviewDept").textContent = execMode === "dh"
+            ? "Outstanding Department Head"
+            : (execMode === "admin" ? "Administrative Staff" : "Medical Staff");
+        document.getElementById("execStoryBox").style.display = "none";
+    } else {
+        document.getElementById("execReviewAvatar").textContent = getInitials(execSelected.name);
+        document.getElementById("execReviewName").textContent = execSelected.name;
+        if (execMode === "dh") {
+            document.getElementById("execReviewDept").textContent = execSelected.dept;
+        } else {
+            document.getElementById("execReviewDept").textContent =
+                execMode === "admin" ? "Administrative Staff" : "Medical Staff";
+        }
+        document.getElementById("execStoryBox").style.display = "block";
+        document.getElementById("execStoryText").textContent = execStory;
+        document.getElementById("execStoryText").contentEditable = "false";
+        execIsEditingStory = false;
+        document.getElementById("execEditStoryBtn").innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg> Edit`;
+    }
+}
+
+function toggleExecEditStory() {
+    const el = document.getElementById("execStoryText");
+    const btn = document.getElementById("execEditStoryBtn");
+    if (!execIsEditingStory) {
+        el.contentEditable = "true";
+        el.focus();
+        execIsEditingStory = true;
+        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Save`;
+    } else {
+        el.contentEditable = "false";
+        execStory = el.textContent.trim();
+        execIsEditingStory = false;
+        btn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg> Edit`;
+    }
+}
+
+function execReviewBack() {
+    if (execMode === "dh") {
+        setExecProgress("dh", 1);
+        showPanel("execDHNominate");
+    } else {
+        setExecProgress("staff", 1);
+        showPanel("execStaffNominate");
+    }
+}
+
+async function confirmExecVote() {
+    if (execIsSubmitting) return;
+    if (execIsEditingStory) {
+        execStory = document.getElementById("execStoryText").textContent.trim();
+        execIsEditingStory = false;
+    }
+    execIsSubmitting = true;
+    const btn = document.getElementById("execSubmitBtn");
+    btn.disabled = true;
+    btn.textContent = "Submitting...";
+
+    const winnerName = execIsNoSelection ? "No Selection This Quarter" : (execSelected ? execSelected.name : "");
+    let category = "Executive";
+    if (execMode === "dh") category = "Outstanding Department Head";
+    else if (execMode === "admin") category = "Administrative Staff";
+    else if (execMode === "medical") category = "Medical Staff";
+
+    try {
+        const { error: insertError } = await supabaseClient
+            .from("department_votes")
+            .insert({
+                department_code: "EXECUTIVE",
+                department_name: category,
+                winner_name: winnerName
+            });
+
+        if (insertError) {
+            console.error(insertError);
+        }
+
+        try {
+            await supabaseClient.functions.invoke("send-vote-email", {
+                body: {
+                    department_name: category,
+                    winner_name: winnerName,
+                    recognition_story: execIsNoSelection ? "" : execStory
+                }
+            });
+        } catch (emailErr) {
+            console.error("Email failed (vote still saved):", emailErr);
+        }
+
+        document.getElementById("progressWrap").style.display = "none";
+        document.body.classList.remove("exec-bg", "has-bg");
+        document.body.classList.add("no-bg");
+        document.getElementById("headerLine1").textContent = "All Set";
+        document.getElementById("headerLine2").textContent = "Thank You";
+        document.getElementById("headerLine3").textContent = "Your nomination has been recorded successfully.";
+        showPanel("step6");
+    } catch (err) {
+        console.error(err);
+        alert("Could not submit. Please try again.");
+        btn.disabled = false;
+        btn.textContent = "Submit";
+    } finally {
+        execIsSubmitting = false;
+    }
+}
+
 
 // Init
 renderDepartments();
