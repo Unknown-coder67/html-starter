@@ -1405,247 +1405,247 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const departmentCodes = {
-    "RECEPTION4": "Reception",
-    "DUTY4": "Duty Manager",
-    "ENCODER4": "Encoder",
-    "QUALITY4": "Quality",
-    "DRIVERS4": "Facilities & Support Services",
-    "RCM4": "Revenue Cycle & Claims",
-    "RESPIRATORY4": "Respiratory",
-    "RADIOLOGY4": "Radiology",
-    "LABORATORY4": "Laboratory",
-    "ICU4": "ICU",
-    "CATH4": "Cath Lab Nurse",
-    "SECURITY4": "Security Guard",
-    "IT4": "Information Technology",
-    "SUPPLY4": "Supply Chain",
-    "HR4": "Human Resources",
-    "ER4": "Emergency Department",
-    "FINANCE4": "Finance",
-    "GPQ4": "General Practice",
-    "PHARMQ4": "Pharmacy",
-    "ANESQ4": "Anesthesia",
-    "CARDQ4": "Cardiology",
-    "NUTRQ4": "Clinical Nutrition",
-    "PTQ4": "Physiotherapy",
-    "NLEQ4": "Nursing Leadership & Education",
-    "SOCIAL4": "Social Services"
+     "RECEPTION4": "Reception",
+   "DUTY4": "Duty Manager",
+   "ENCODER4": "Encoder",
+   /*"QUALITY4": "Quality",*/
+   "DRIVERS4": "Drivers",
+   "RCM4": "Revenue Cycle Management",
+   "RESPIRATORY4": "Respiratory Therapy",
+   "RADIOLOGY4": "Radiology",
+   "LABORATORY4": "Laboratory",
+   "ICU4": "Intensive Care Unit",
+   "CATH4": "Cath Lab",
+   "SECURITY4": "Security",
+   "IT4": "Information Technology",
+   /*"SUPPLY4": "Supply Chain",
+   "HR4": "Human Resources",*/
+   "ER4": "Emergency Department",
+  /* "FINANCE4": "Finance",*/
+   "GPQ4": "General Practice",
+   "PHARMQ4": "Pharmacy",
+   /*"ANESQ4": "Anesthesia",*/
+   "CARDQ4": "Cardiology",
+   /*"NUTRQ4": "Clinical Nutrition",
+   "PTQ4": "Physiotherapy",
+   "NLEQ4": "Nursing Leadership & Education",
+   "SOCIAL4": "Social Services"*/
 };
 
 const departmentEmployees = {
-    "Reception": [
-        { name: "MOAYAD FELEMBAN", id: "17760" },
-        { name: "ROTANA KOSHAK", id: "17762" },
-        { name: "JOOD ALBESHRY", id: "17764" },
-        { name: "AHMED ALDAJANI", id: "17759" }
-    ],
-    "Duty Manager": [
-        { name: "Ahmad Mohammad Mufti", id: "17733" },
-        { name: "Hossam Ali Banabilah", id: "17634" },
-        { name: "Sohaib Hossain Andargiry", id: "17753" },
-        { name: "Turki Tursom Ahmad", id: "17635" },
-        { name: "Abdulaziz Kamal Alandijani", id: "17626" }
-    ],
-    "Encoder": [
-        { name: "Tala Assad Shawly", id: "21716" },
-        { name: "Fadhl Ali Almkwas", id: "22731" },
-        { name: "Emma Dhaifallah Alghraibi", id: "22730" },
-        { name: "Reem Ali Alqurashi", id: "21428" }
-    ],
-    "Quality": [
-        { name: "Mohamed Rizk Ibrahim", id: "1" }
-    ],
-    "Facilities & Support Services": [
-        { name: "Meshal Nawaf Alsharif", id: "1" },
-        { name: "Waseem Mohammed Alkhuzaee", id: "1" },
-        { name: "Rayan Muslih Alhuzali", id: "1" },
-        { name: "Nawaf Abdullah Albasarai", id: "1" },
-        { name: "Bandar Hammad Aldadi", id: "1" },
-        { name: "Yousef Abbas Badawi Atiah", id: "1" },
-        { name: "Mohd Kamil Kayyum", id: "1" },
-        { name: "Afsal Mullappally", id: "1" },
-        { name: "Rayan Siddiq Alsindi", id: "1" }
-    ],
-    "Revenue Cycle & Claims": [
-        { name: "Sohaib Khaled abdulrheem", id: "19810" },
-        { name: "Nouf Sultan Almaqati", id: "21419" },
-        { name: "Razan Turki Alhakami", id: "22402" }
-    ],
-    "Respiratory": [
-        { name: "Abdulilah Hashem alzhrani", id: "1" },
-        { name: "Mohammed Hassan Alghamdi", id: "1" },
-        { name: "Asr Mohammed Mofareh", id: "1" },
-        { name: "Rawan Jaylan Alkhayri", id: "1" }
-    ],
-    "Radiology": [
-        { name: "Fahad Abdulrahman Alnufaiai", id: "1" },
-        { name: "Ahmed Abdelrehim Abdelkarim", id: "1" },
-        { name: "Nawaf Turki Alotaibi", id: "1" },
-        { name: "Faisal Ridha Alkuhayli", id: "1" },
-        { name: "Nadeera Hamsiraji Saga", id: "1" }
-    ],
-    "Laboratory": [
-        { name: "Abdullah faisal Alhazmi", id: "1" },
-        { name: "Hassan Khaled Sendi", id: "1" },
-        { name: "Hamed Awadh Alsharif", id: "1" },
-        { name: "Dana Mohammed Alqurashi", id: "1" },
-        { name: "Mohdi Thaiban Aldajani", id: "1" },
-        { name: "Ahmed Abdelmoez Saad", id: "1" }
-    ],
-    "ICU": [
-        { name: "Jaseela Ongaloramma", id: "1" },
-        { name: "Ahmed Mostafa", id: "1" },
-        { name: "Abdelrehem Fahmy", id: "1" },
-        { name: "Abdelrahman Abdelnaby Ibrahim", id: "1" },
-        { name: "Shireentaj Mansoor Kiresur", id: "1" },
-        { name: "Soad Mohammed Ali", id: "1" },
-        { name: "Hameed Unnisa Begum", id: "1" },
-        { name: "Bushra Mohamed", id: "1" },
-        { name: "Fatma Ali", id: "1" },
-        { name: "Nafeesa Ahmed Elhassan", id: "1" },
-        { name: "Afrah Fathima", id: "1" },
-        { name: "Marwa Abdelaty Mahmoud", id: "1" },
-        { name: "Amina A Sulaiman", id: "1" },
-        { name: "Sara Hamed", id: "1" },
-        { name: "Memunat Onozer", id: "1" },
-        { name: "Shahid Aafreedi", id: "1" },
-        { name: "Ayman Abdullah", id: "1" },
-        { name: "Mahmoud Tawfik Mohamed", id: "1" },
-        { name: "Mahmoud Khairy Attia", id: "1" },
-        { name: "Ali Mohamed Ali", id: "1" },
-        { name: "Ahmed Mohamed Elhamshary", id: "1" },
-        { name: "Ahmed Khairy", id: "1" },
-        { name: "Abdulhameed Abdullah", id: "1" },
-        { name: "Mansour Ali", id: "1" },
-        { name: "Mustafa Ahmed Hussein", id: "1" },
-        { name: "Omar Hamada", id: "1" },
-        { name: "Mahmoud Mohamed", id: "1" },
-        { name: "Mossad Mofreh", id: "1" },
-        { name: "Abdelsadek Elsayed Turkey", id: "1" },
-        { name: "Ashwag Mustafa", id: "1" },
-        { name: "Hasna Abid", id: "1" },
-        { name: "Hesham Mohamed Hamdy", id: "1" },
-        { name: "Yasmeen Aslam", id: "1" },
-        { name: "Shafi Ullah Zada", id: "1" },
-        { name: "Islam Hegazy", id: "1" },
-        { name: "Nasser Gamal", id: "1" },
-        { name: "Gehad Ramadan Hamoud", id: "1" },
-        { name: "Rohina Momtaz", id: "1" },
-        { name: "Abdelghany Mahrous", id: "1" },
-        { name: "Samar Fouad", id: "1" },
-        { name: "Mohamed Ali Ghonim", id: "1" },
-        { name: "Ramy Jamal Hafez Mohammed", id: "1" },
-        { name: "Mohamed Mushhot Attya Nada", id: "1" },
-        { name: "Bahaa Mohamed Ali Ezz", id: "1" },
-        { name: "Mohamed Hassan Ali", id: "1" }
-    ],
-    "Cath Lab Nurse": [
-        { name: "Mahmood Shaban Mansour", id: "1" },
-        { name: "Saman Hashmi Aslam", id: "1" },
-        { name: "Ali Abdullah Atifah", id: "1" },
-        { name: "Aly Mohamed Alahjari", id: "1" },
-        { name: "Mohammed Atallah Alosaimi", id: "1" },
-        { name: "Abdulaziz Mohammed Aldahiri", id: "1" }
-    ],
-    "Security Guard": [
-        { name: "Saud Hamed Almuqati", id: "1" },
-        { name: "Abdullah Ahmed Baoazair", id: "1" },
-        { name: "Meshari Mohammed Almuwalad", id: "1" },
-        { name: "Gazi Alhabashi Alhabashi", id: "1" }
-    ],
-    "Information Technology": [
-        { name: "Hemat Sadek Selim", id: "1" }
-    ],
-    "Supply Chain": [
-        { name: "Shrooq Hassan Alobaidi", id: "1" }
-    ],
-    "Human Resources": [
-        { name: "Mohammed Ahmed Alsharif", id: "1" }
-    ],
-    "Emergency Department": [
-        { name: "Abdeen Kunna", id: "1" },
-        { name: "Yasein Omer Osmen Omer", id: "1" },
-        { name: "Mahmoud Mohamed Ellamey", id: "1" },
-        { name: "Atheer Faisal Alsulami", id: "1" },
-        { name: "Negm Eid", id: "1" },
-        { name: "Ahmed Rawhy Younes", id: "1" },
-        { name: "Eslam Abu Bakr", id: "1" },
-        { name: "Fatima Othman Washa", id: "1" },
-        { name: "Asmaa ElSayed Mahmoud", id: "1" },
-        { name: "Samar Elsayed Mohamed", id: "1" },
-        { name: "Neama Gamal Shahata Asy", id: "1" },
-        { name: "Dina Abdelaziz Elzoghby", id: "1" },
-        { name: "Tahmina Nissar", id: "1" },
-        { name: "Lariba Ashraf", id: "1" },
-        { name: "Masbah Brwen Aslam", id: "1" },
-        { name: "Maha Snoussi", id: "1" },
-        { name: "Omima Taha Mahmoud", id: "1" },
-        { name: "Abdelrahman Taha Abdelgawwad", id: "1" },
-        { name: "Kawsar Mehmood Aqil", id: "1" },
-        { name: "Abdulmalik Yahya Macaraya", id: "1" },
-        { name: "Mohamed Mohamed Alhawari", id: "1" },
-        { name: "Mohamed Ramadan Khattab", id: "1" },
-        { name: "Irshad Bashir", id: "1" },
-        { name: "Waleed Abdulmoati Alshafeai", id: "1" },
-        { name: "Mohammad Zohaib Ihsanullah", id: "1" },
-        { name: "Mohamed Sheta", id: "1" },
-        { name: "Amr Said Rashed", id: "1" },
-        { name: "Abdelghany Adel Abdelghany", id: "1" },
-        { name: "Omar Abdeltawab Abdelhameed", id: "1" },
-        { name: "Ahmed Mohamed Elsamahy", id: "1" },
-        { name: "Mohamed Essam", id: "1" },
-        { name: "Ahmed Madian", id: "1" },
-        { name: "Kamal Zaib", id: "1" },
-        { name: "Mahmoud Ali Elsebaey Gafar", id: "1" },
-        { name: "Ali Faiek", id: "1" },
-        { name: "Muhammad Farhan Meling", id: "1" },
-        { name: "Ahmed Elsayed Kamal", id: "1" },
-        { name: "Amal Kmid Saripada", id: "1" },
-        { name: "Taibah Mahfouz Alhamzah", id: "1" }
-    ],
-    "Finance": [
-        { name: "Khalid Ahmed Rawas", id: "1" },
-        { name: "Mohamed Amjd Kalib", id: "1" }
-    ],
-    "General Practice": [
-        { name: "Abdullah Sulaiman Babaalghayth", id: "1" },
-        { name: "Kamel Hisham Darwish", id: "1" },
-        { name: "Nada Abdelhafeez Mohamed", id: "1" },
-        { name: "Hana Abdirahman Abdi", id: "1" },
-        { name: "Muna Hajabdullah", id: "1" }
-    ],
-    "Pharmacy": [
-        { name: "Wed Alaa Hassan", id: "1" },
-        { name: "Abdullah Yousef Abdullah", id: "1" },
-        { name: "Maad Ibrahim Makkawi", id: "1" },
-        { name: "Adi Abdulrahman Alqurashi", id: "1" },
-        { name: "Ahmed Abdulmutakabbir Almaghrabi", id: "1" },
-        { name: "Abdulrahman Abdullah Alghamdi", id: "1" },
-        { name: "Abdulrahman Faisal Baomar", id: "1" }
-    ],
-    "Anesthesia": [
-        { name: "Abdelrahman Tarek Osman", id: "1" },
-        { name: "Samia Rageb El Azab", id: "1" }
-    ],
-    "Cardiology": [
-        { name: "Mostafa Said Haggag", id: "1" },
-        { name: "Abdulkabir Osman Abdishakur", id: "1" },
-        { name: "Mujeeb Ulla Tareen", id: "1" },
-        { name: "Ahmed Nourelbagi Abdullateef", id: "1" }
-    ],
-    "Clinical Nutrition": [
-        { name: "Safia Shaker Abdulrahman Bajoudah", id: "1" }
-    ],
-    "Physiotherapy": [
-        { name: "Azzam Naif Alqathama", id: "1" }
-    ],
-    "Nursing Leadership & Education": [
-        { name: "Mustafa Faleh Abumusleh", id: "1" },
-        { name: "Rehab Hamed", id: "1" }
-    ],
-    "Social Services": [
-        { name: "Dina Abdulaziz Alrashdi", id: "1" }
-    ]
+  "Reception": [
+       { name: "MOAYAD FELEMBAN", id: "17760" },
+       { name: "ROTANA KOSHAK", id: "17762" },
+       { name: "JOOD ALBESHRY", id: "17764" },
+       { name: "AHMED ALDAJANI", id: "17759" }
+   ],
+   "Duty Manager": [
+       { name: "Ahmad Mohammad Mufti", id: "17733" },
+       { name: "Hossam Ali Banabilah", id: "17634" },
+       { name: "Sohaib Hossain Andargiry", id: "17753" },
+       { name: "Turki Tursom Ahmad", id: "17635" },
+       { name: "Abdulaziz Kamal Alandijani", id: "17626" }
+   ],
+   "Encoder": [
+       { name: "Tala Assad Shawly", id: "21716" },
+       { name: "Fadhl Ali Almkwas", id: "22731" },
+       { name: "Emma Dhaifallah Alghraibi", id: "22730" },
+       { name: "Reem Ali Alqurashi", id: "21428" }
+   ],
+   /*"Quality": [
+       { name: "Mohamed Rizk Ibrahim", id: "1" }
+   ],*/
+   "Drivers": [
+       { name: "Meshal Nawaf Alsharif", id: "1" },
+       { name: "Waseem Mohammed Alkhuzaee", id: "1" },
+       { name: "Rayan Muslih Alhuzali", id: "1" },
+       { name: "Nawaf Abdullah Albasarai", id: "1" },
+       { name: "Bandar Hammad Aldadi", id: "1" },
+       { name: "Yousef Abbas Badawi Atiah", id: "1" },
+       { name: "Mohd Kamil Kayyum", id: "1" },
+       { name: "Afsal Mullappally", id: "1" },
+       { name: "Rayan Siddiq Alsindi", id: "1" }
+   ],
+   "RCM": [
+       { name: "Sohaib Khaled abdulrheem", id: "19810" },
+       { name: "Nouf Sultan Almaqati", id: "21419" },
+       { name: "Razan Turki Alhakami", id: "22402" }
+   ],
+   "Respiratory Therapy": [
+       { name: "Abdulilah Hashem alzhrani", id: "1" },
+       { name: "Mohammed Hassan Alghamdi", id: "1" },
+       { name: "Asr Mohammed Mofareh", id: "1" },
+       { name: "Rawan Jaylan Alkhayri", id: "1" }
+   ],
+   "Radiology": [
+       { name: "Fahad Abdulrahman Alnufaiai", id: "1" },
+       { name: "Ahmed Abdelrehim Abdelkarim", id: "1" },
+       { name: "Nawaf Turki Alotaibi", id: "1" },
+       { name: "Faisal Ridha Alkuhayli", id: "1" },
+       { name: "Nadeera Hamsiraji Saga", id: "1" }
+   ],
+   "Laboratory": [
+       { name: "Abdullah faisal Alhazmi", id: "1" },
+       { name: "Hassan Khaled Sendi", id: "1" },
+       { name: "Hamed Awadh Alsharif", id: "1" },
+       { name: "Dana Mohammed Alqurashi", id: "1" },
+       { name: "Mohdi Thaiban Aldajani", id: "1" },
+       { name: "Ahmed Abdelmoez Saad", id: "1" }
+   ],
+   "ICU": [
+       { name: "Jaseela Ongaloramma", id: "1" },
+       { name: "Ahmed Mostafa", id: "1" },
+       { name: "Abdelrehem Fahmy", id: "1" },
+       { name: "Abdelrahman Abdelnaby Ibrahim", id: "1" },
+       { name: "Shireentaj Mansoor Kiresur", id: "1" },
+       { name: "Soad Mohammed Ali", id: "1" },
+       { name: "Hameed Unnisa Begum", id: "1" },
+       { name: "Bushra Mohamed", id: "1" },
+       { name: "Fatma Ali", id: "1" },
+       { name: "Nafeesa Ahmed Elhassan", id: "1" },
+       { name: "Afrah Fathima", id: "1" },
+       { name: "Marwa Abdelaty Mahmoud", id: "1" },
+       { name: "Amina A Sulaiman", id: "1" },
+       { name: "Sara Hamed", id: "1" },
+       { name: "Memunat Onozer", id: "1" },
+       { name: "Shahid Aafreedi", id: "1" },
+       { name: "Ayman Abdullah", id: "1" },
+       { name: "Mahmoud Tawfik Mohamed", id: "1" },
+       { name: "Mahmoud Khairy Attia", id: "1" },
+       { name: "Ali Mohamed Ali", id: "1" },
+       { name: "Ahmed Mohamed Elhamshary", id: "1" },
+       { name: "Ahmed Khairy", id: "1" },
+       { name: "Abdulhameed Abdullah", id: "1" },
+       { name: "Mansour Ali", id: "1" },
+       { name: "Mustafa Ahmed Hussein", id: "1" },
+       { name: "Omar Hamada", id: "1" },
+       { name: "Mahmoud Mohamed", id: "1" },
+       { name: "Mossad Mofreh", id: "1" },
+       { name: "Abdelsadek Elsayed Turkey", id: "1" },
+       { name: "Ashwag Mustafa", id: "1" },
+       { name: "Hasna Abid", id: "1" },
+       { name: "Hesham Mohamed Hamdy", id: "1" },
+       { name: "Yasmeen Aslam", id: "1" },
+       { name: "Shafi Ullah Zada", id: "1" },
+       { name: "Islam Hegazy", id: "1" },
+       { name: "Nasser Gamal", id: "1" },
+       { name: "Gehad Ramadan Hamoud", id: "1" },
+       { name: "Rohina Momtaz", id: "1" },
+       { name: "Abdelghany Mahrous", id: "1" },
+       { name: "Samar Fouad", id: "1" },
+       { name: "Mohamed Ali Ghonim", id: "1" },
+       { name: "Ramy Jamal Hafez Mohammed", id: "1" },
+       { name: "Mohamed Mushhot Attya Nada", id: "1" },
+       { name: "Bahaa Mohamed Ali Ezz", id: "1" },
+       { name: "Mohamed Hassan Ali", id: "1" }
+   ],
+   "Cath Lab": [
+       { name: "Mahmood Shaban Mansour", id: "1" },
+       { name: "Saman Hashmi Aslam", id: "1" },
+       { name: "Ali Abdullah Atifah", id: "1" },
+       { name: "Aly Mohamed Alahjari", id: "1" },
+       { name: "Mohammed Atallah Alosaimi", id: "1" },
+       { name: "Abdulaziz Mohammed Aldahiri", id: "1" }
+   ],
+   "Security": [
+       { name: "Saud Hamed Almuqati", id: "1" },
+       { name: "Abdullah Ahmed Baoazair", id: "1" },
+       { name: "Meshari Mohammed Almuwalad", id: "1" },
+       { name: "Gazi Alhabashi Alhabashi", id: "1" }
+   ],
+   "Information Technology": [
+       { name: "Hemat Sadek Selim", id: "1" }
+   ],
+   /*"Supply Chain": [
+       { name: "Shrooq Hassan Alobaidi", id: "1" }
+   ],
+   "Human Resources": [
+       { name: "Mohammed Ahmed Alsharif", id: "1" }
+   ],*/
+   "Emergency Department": [
+       { name: "Abdeen Kunna", id: "1" },
+       { name: "Yasein Omer Osmen Omer", id: "1" },
+       { name: "Mahmoud Mohamed Ellamey", id: "1" },
+       { name: "Atheer Faisal Alsulami", id: "1" },
+       { name: "Negm Eid", id: "1" },
+       { name: "Ahmed Rawhy Younes", id: "1" },
+       { name: "Eslam Abu Bakr", id: "1" },
+       { name: "Fatima Othman Washa", id: "1" },
+       { name: "Asmaa ElSayed Mahmoud", id: "1" },
+       { name: "Samar Elsayed Mohamed", id: "1" },
+       { name: "Neama Gamal Shahata Asy", id: "1" },
+       { name: "Dina Abdelaziz Elzoghby", id: "1" },
+       { name: "Tahmina Nissar", id: "1" },
+       { name: "Lariba Ashraf", id: "1" },
+       { name: "Masbah Brwen Aslam", id: "1" },
+       { name: "Maha Snoussi", id: "1" },
+       { name: "Omima Taha Mahmoud", id: "1" },
+       { name: "Abdelrahman Taha Abdelgawwad", id: "1" },
+       { name: "Kawsar Mehmood Aqil", id: "1" },
+       { name: "Abdulmalik Yahya Macaraya", id: "1" },
+       { name: "Mohamed Mohamed Alhawari", id: "1" },
+       { name: "Mohamed Ramadan Khattab", id: "1" },
+       { name: "Irshad Bashir", id: "1" },
+       { name: "Waleed Abdulmoati Alshafeai", id: "1" },
+       { name: "Mohammad Zohaib Ihsanullah", id: "1" },
+       { name: "Mohamed Sheta", id: "1" },
+       { name: "Amr Said Rashed", id: "1" },
+       { name: "Abdelghany Adel Abdelghany", id: "1" },
+       { name: "Omar Abdeltawab Abdelhameed", id: "1" },
+       { name: "Ahmed Mohamed Elsamahy", id: "1" },
+       { name: "Mohamed Essam", id: "1" },
+       { name: "Ahmed Madian", id: "1" },
+       { name: "Kamal Zaib", id: "1" },
+       { name: "Mahmoud Ali Elsebaey Gafar", id: "1" },
+       { name: "Ali Faiek", id: "1" },
+       { name: "Muhammad Farhan Meling", id: "1" },
+       { name: "Ahmed Elsayed Kamal", id: "1" },
+       { name: "Amal Kmid Saripada", id: "1" },
+       { name: "Taibah Mahfouz Alhamzah", id: "1" }
+   ],
+   /*"Finance": [
+       { name: "Khalid Ahmed Rawas", id: "1" },
+       { name: "Mohamed Amjd Kalib", id: "1" }
+   ],*/
+   "General Practice": [
+       { name: "Abdullah Sulaiman Babaalghayth", id: "1" },
+       { name: "Kamel Hisham Darwish", id: "1" },
+       { name: "Nada Abdelhafeez Mohamed", id: "1" },
+       { name: "Hana Abdirahman Abdi", id: "1" },
+       { name: "Muna Hajabdullah", id: "1" }
+   ],
+   "Pharmacy": [
+       { name: "Wed Alaa Hassan", id: "1" },
+       { name: "Abdullah Yousef Abdullah", id: "1" },
+       { name: "Maad Ibrahim Makkawi", id: "1" },
+       { name: "Adi Abdulrahman Alqurashi", id: "1" },
+       { name: "Ahmed Abdulmutakabbir Almaghrabi", id: "1" },
+       { name: "Abdulrahman Abdullah Alghamdi", id: "1" },
+       { name: "Abdulrahman Faisal Baomar", id: "1" }
+   ],
+   /*"Anesthesia": [
+       { name: "Abdelrahman Tarek Osman", id: "1" },
+       { name: "Samia Rageb El Azab", id: "1" }
+   ],*/
+   "Cardiology": [
+       { name: "Mostafa Said Haggag", id: "1" },
+       { name: "Abdulkabir Osman Abdishakur", id: "1" },
+       { name: "Mujeeb Ulla Tareen", id: "1" },
+       { name: "Ahmed Nourelbagi Abdullateef", id: "1" }
+   ],
+   /*"Clinical Nutrition": [
+       { name: "Safia Shaker Abdulrahman Bajoudah", id: "1" }
+   ],
+   "Physiotherapy": [
+       { name: "Azzam Naif Alqathama", id: "1" }
+   ],
+   "Nursing Leadership & Education": [
+       { name: "Mustafa Faleh Abumusleh", id: "1" },
+       { name: "Rehab Hamed", id: "1" }
+   ],
+   "Social Services": [
+       { name: "Dina Abdulaziz Alrashdi", id: "1" }
+   ]*/
 };
 
 function getDeptImage(name) {
