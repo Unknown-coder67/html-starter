@@ -19,6 +19,7 @@
 html {
     min-height: 100%;
     min-height: 100dvh;
+    overflow-y: scroll; /* constant scrollbar gutter => header never shifts between pages */
 }
 
 body {
@@ -121,6 +122,14 @@ header {
     -webkit-tap-highlight-color: transparent;
     -webkit-font-smoothing: antialiased;
 }
+
+.nav-swap {
+    display: inline-grid;
+    justify-items: center;
+    align-items: center;
+}
+.nav-swap > a { grid-area: 1 / 1; }
+.nav-swap > a.nav-hidden { visibility: hidden; pointer-events: none; }
 
 .header-nav a::after {
     content: "";
@@ -254,7 +263,7 @@ header {
 
 /* Progress Indicator – ~15% bigger */
 .progress-wrap {
-    max-width: 780px;
+    max-width: 897px;
     margin: 0 auto 44px;
     padding: 0 16px;
 }
@@ -269,10 +278,10 @@ header {
 .progress-steps::before {
     content: "";
     position: absolute;
-    top: 14px;
+    top: 16px;
     left: 10%;
     right: 10%;
-    height: 2.8px;
+    height: 3.2px;
     background: #d0e0e8;
     z-index: 0;
     border-radius: 2px;
@@ -280,9 +289,9 @@ header {
 
 .progress-bar-fill {
     position: absolute;
-    top: 14px;
+    top: 16px;
     left: 10%;
-    height: 2.8px;
+    height: 3.2px;
     background: #c4ccd2;
     z-index: 1;
     border-radius: 2px;
@@ -304,15 +313,15 @@ header {
 .step.clickable { cursor: pointer; }
 
 .step-circle {
-    width: 30px;
-    height: 30px;
+    width: 34.5px;
+    height: 34.5px;
     border-radius: 50%;
     background: #fff;
-    border: 2.5px solid #d0e0e8;
+    border: 2.9px solid #d0e0e8;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12.5px;
+    font-size: 14.4px;
     font-weight: 800;
     color: #8aa0b0;
     transition: all 0.3s ease;
@@ -322,7 +331,7 @@ header {
     border-color: #00B7E2;
     background: #00B7E2;
     color: #fff;
-    box-shadow: 0 0 0 3px rgba(0,183,226,0.2);
+    box-shadow: 0 0 0 3.5px rgba(0,183,226,0.2);
 }
 
 .step.completed .step-circle {
@@ -332,8 +341,8 @@ header {
 }
 
 .step-circle svg {
-    width: 16px;
-    height: 16px;
+    width: 18.4px;
+    height: 18.4px;
     display: block;
 }
 
@@ -343,8 +352,8 @@ header {
 }
 
 .step-label {
-    margin-top: 6px;
-    font-size: 10.5px;
+    margin-top: 7px;
+    font-size: 12px;
     font-weight: 750;
     color: #8aa0b0;
     text-align: center;
@@ -466,8 +475,8 @@ header {
 }
 
 .dept-img {
-    width: 62px;
-    height: 62px;
+    width: 50px;
+    height: 50px;
     object-fit: contain;
     border-radius: 12px;
     margin-bottom: 10px;
@@ -497,8 +506,8 @@ header {
 }
 
 .access-dept-img {
-    width: 72px;
-    height: 72px;
+    width: 58px;
+    height: 58px;
     object-fit: contain;
     border-radius: 14px;
     margin: 0 auto 22px;
@@ -688,102 +697,7 @@ header {
     transition-delay: 0s, 0s, 0s, 0.15s, 0s;
 }
 
-/* Employee cards: 4 per row, 2 rows visible, then scroll */
-.emp-list {
-    --emp-row: 72px;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-auto-rows: var(--emp-row);
-    gap: 10px;
-    max-height: calc(var(--emp-row) * 2 + 10px);
-    overflow-y: auto;
-    padding-right: 0;
-}
-
-/* Horizontal employee card: avatar | name | circle */
-.emp-card {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    padding: 0 10px;
-    box-sizing: border-box;
-    background: #FFFFFF;
-    border: 1px solid #e0edf3;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
-    text-align: left;
-}
-
-.emp-card:hover {
-    border-color: #9ddfea;
-    background: #FFFFFF;
-}
-
-.emp-card.selected {
-    border-color: #D79A1E;
-    background: #FFFFFF;
-    box-shadow: 0 2px 10px rgba(215,154,30,0.15);
-}
-
-.emp-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: #f8fbfd;
-    border: 1.5px solid #d0e0e8;
-    color: #08245B;
-    font-weight: 800;
-    font-size: 0.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.emp-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.emp-name {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #05255E;
-    line-height: 1.2;
-    white-space: nowrap;
-}
-
-.emp-circle {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #cbdde5;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: all 0.2s;
-    background: #fff;
-    margin-left: auto;
-}
-
-.emp-card.selected .emp-circle {
-    background: #D79A1E;
-    border-color: #D79A1E;
-}
-
-.emp-circle-inner {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #fff;
-    opacity: 0;
-    transition: opacity 0.15s;
-}
-
-.emp-card.selected .emp-circle-inner { opacity: 1; }
+/* Employee cards share the exact styling of the Department Head cards (see .dh-* below) */
 
 /* No Selection card */
 .no-select-card {
@@ -791,7 +705,7 @@ header {
     align-items: center;
     gap: 14px;
     padding: 14px 16px;
-    background: #f8fbfd;
+    background: #FFFFFF;
     border: 1px dashed #c5d8e2;
     border-radius: 12px;
     cursor: pointer;
@@ -802,13 +716,13 @@ header {
 
 .no-select-card:hover {
     border-color: #9ddfea;
-    background: #f0f9fc;
+    background: #FFFFFF;
 }
 
 .no-select-card.selected {
     border-style: solid;
     border-color: #D79A1E;
-    background: #fffaf0;
+    background: #FFFFFF;
 }
 
 .no-select-circle {
@@ -1051,11 +965,16 @@ header {
 }
 
 .story-text[contenteditable="true"] {
-    outline: 2px solid #00B7E2;
+    outline: none;
+    border: 1px solid #e0edf3;
     border-radius: 8px;
     padding: 8px;
     background: #fff;
     min-height: 60px;
+    transition: border-color 0.2s;
+}
+.story-text[contenteditable="true"]:focus {
+    border-color: #9ddfea;
 }
 
 .edit-story-btn {
@@ -1212,6 +1131,29 @@ footer {
     margin-top: auto;
 }
 
+/* Bottom-center Back button (all pages except Review & Submit) */
+.page-back-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 36px auto 0;
+    padding: 0 16px;
+}
+
+.page-back-btn {
+    background: none;
+    border: none;
+    padding: 6px 10px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #17171D;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.page-back-btn:hover { color: #00B7E2; }
+
 /* Responsive */
 @media (max-width: 1000px) {
     .nominate-split {
@@ -1235,14 +1177,6 @@ footer {
 @media (max-width: 1560px) {
     .nominate-split .employee-list-pane { width: 100%; }
     .nominate-split.has-selection .employee-list-pane { width: auto; flex: 1 1 0; min-width: 0; }
-    .emp-card .emp-name { white-space: normal; }
-}
-
-@media (max-width: 640px) {
-    .emp-list {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        max-height: calc(var(--emp-row) * 4 + 10px * 3);
-    }
 }
 
 @media (max-width: 800px) {
@@ -1254,6 +1188,7 @@ footer {
 }
 
 @media (max-width: 560px) {
+    .step-label { font-size: 10.5px; }
     .dept-grid {
         grid-template-columns: repeat(2, 1fr);
         width: calc(100vw - 40px);
@@ -1455,35 +1390,8 @@ body.exec-bg {
     font-weight: 800;
 }
 
-.exec-back-wrap {
-    max-width: 900px;
-    margin: 28px auto 0;
-    padding: 0 16px;
-    display: flex;
-    justify-content: flex-start;
-}
-
-.exec-back-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: transparent;
-    border: 2px solid #17171D;
-    color: #17171D;
-    border-radius: 12px;
-    padding: 11px 22px;
-    font-family: inherit;
-    font-size: 0.92rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: border-color 0.2s, color 0.2s;
-}
-.exec-back-btn:hover {
-    border-color: #00B7E2;
-    color: #00B7E2;
-}
-
-.dh-list {
+.dh-list,
+.emp-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -1491,7 +1399,8 @@ body.exec-bg {
     overflow-y: auto;
 }
 
-.dh-card {
+.dh-card,
+.emp-card {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1505,16 +1414,19 @@ body.exec-bg {
     text-align: left;
 }
 
-.dh-card:hover {
+.dh-card:hover,
+.emp-card:hover {
     border-color: #9ddfea;
 }
 
-.dh-card.selected {
+.dh-card.selected,
+.emp-card.selected {
     border-color: #D79A1E;
     box-shadow: 0 2px 10px rgba(215,154,30,0.15);
 }
 
-.dh-avatar {
+.dh-avatar,
+.emp-avatar {
     width: 42px;
     height: 42px;
     border-radius: 50%;
@@ -1529,12 +1441,14 @@ body.exec-bg {
     flex-shrink: 0;
 }
 
-.dh-info {
+.dh-info,
+.emp-info {
     flex: 1;
     min-width: 0;
 }
 
-.dh-name {
+.dh-name,
+.emp-name {
     font-size: 0.95rem;
     font-weight: 750;
     color: #05255E;
@@ -1547,7 +1461,8 @@ body.exec-bg {
     margin-top: 2px;
 }
 
-.dh-circle {
+.dh-circle,
+.emp-circle {
     width: 22px;
     height: 22px;
     border: 2px solid #cbdde5;
@@ -1560,12 +1475,14 @@ body.exec-bg {
     margin-left: auto;
 }
 
-.dh-card.selected .dh-circle {
+.dh-card.selected .dh-circle,
+.emp-card.selected .emp-circle {
     background: #D79A1E;
     border-color: #D79A1E;
 }
 
-.dh-circle-inner {
+.dh-circle-inner,
+.emp-circle-inner {
     width: 10px;
     height: 10px;
     border-radius: 50%;
@@ -1573,7 +1490,8 @@ body.exec-bg {
     opacity: 0;
 }
 
-.dh-card.selected .dh-circle-inner { opacity: 1; }
+.dh-card.selected .dh-circle-inner,
+.emp-card.selected .emp-circle-inner { opacity: 1; }
 
 @media (max-width: 700px) {
     .exec-box, .exec-cat-card {
@@ -1604,8 +1522,10 @@ body.exec-bg {
         </a>
         <nav class="header-nav">
             <a href="/" class="nav-btn" id="homeBtn">Home</a>
-            <a href="#" class="nav-btn" id="executiveBtn" onclick="startExecutive(event)">Executive</a>
-            <a href="/eoq/" class="nav-btn" id="nominateBtn" style="display: none;">Nominate</a>
+            <span class="nav-swap">
+                <a href="#" class="nav-btn" id="executiveBtn" onclick="startExecutive(event)">Executive</a>
+                <a href="/eoq/" class="nav-btn nav-hidden" id="nominateBtn">Nominate</a>
+            </span>
         </nav>
     </div>
 </header>
@@ -1667,6 +1587,9 @@ body.exec-bg {
             </button>
 
             <div class="code-error" id="codeError">Invalid department code. Please try again.</div>
+        </div>
+        <div class="page-back-wrap">
+            <button type="button" class="page-back-btn" onclick="goToStep(1)">Back</button>
         </div>
     </section>
 
@@ -1748,6 +1671,9 @@ body.exec-bg {
                 </div>
             </div>
         </div>
+        <div class="page-back-wrap">
+            <button type="button" class="page-back-btn" onclick="goToStep(2)">Back</button>
+        </div>
     </section>
 
     <!-- ========== STEP 4: Nominate ========== -->
@@ -1804,6 +1730,9 @@ body.exec-bg {
                     </div>
                 </div>
             </div>
+        <div class="page-back-wrap">
+            <button type="button" class="page-back-btn" onclick="goToStep(3)">Back</button>
+        </div>
     </section>
 
     <!-- ========== STEP 5: Review & Submit ========== -->
@@ -1878,6 +1807,9 @@ body.exec-bg {
             </button>
             <div class="code-error" id="execCodeError">Invalid code. Please try again.</div>
         </div>
+        <div class="page-back-wrap">
+            <button type="button" class="page-back-btn" onclick="exitExecutive()">Back</button>
+        </div>
     </section>
 
     <!-- ========== EXECUTIVE: Selection choice ========== -->
@@ -1907,12 +1839,9 @@ body.exec-bg {
                     <div class="exec-box-arrow">→</div>
                 </div>
             </div>
-            <div class="exec-back-wrap">
-                <button type="button" class="exec-back-btn" onclick="execBackToAccess()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                    Back
-                </button>
-            </div>
+        </div>
+        <div class="page-back-wrap">
+            <button type="button" class="page-back-btn" onclick="execBackToAccess()">Back</button>
         </div>
     </section>
 
@@ -1943,34 +1872,17 @@ body.exec-bg {
                     <div class="exec-cat-arrow">→</div>
                 </div>
             </div>
-            <div class="exec-back-wrap">
-                <button type="button" class="exec-back-btn" onclick="execBackToChoice()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                    Back
-                </button>
-            </div>
+        </div>
+        <div class="page-back-wrap">
+            <button type="button" class="page-back-btn" onclick="execBackToChoice()">Back</button>
         </div>
     </section>
 
     <!-- ========== EXECUTIVE: Department Head Nominate ========== -->
     <section class="step-panel" id="execDHNominate">
         <div class="nominate-outer">
-            <div class="exec-back-wrap" style="margin-bottom: 16px; padding: 0;">
-                <button type="button" class="exec-back-btn" onclick="execBackToChoice()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                    Back
-                </button>
-            </div>
             <div class="nominate-split" id="execDHSplit">
                 <div class="employee-list-pane">
-                    <div class="top-search-wrap" id="execDHSearchWrap">
-                        <div class="search-wrapper">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                            <input type="text" id="execDHSearch" class="top-search-input" placeholder="Search for a department head..." autocomplete="off">
-                        </div>
-                    </div>
                     <div class="dh-list" id="execDHList"></div>
                     <div class="no-select-card" id="execDHNoSelect" onclick="selectExecDHNo()">
                         <div class="no-select-circle"><div class="no-select-circle-inner"></div></div>
@@ -2004,27 +1916,16 @@ body.exec-bg {
                 </div>
             </div>
         </div>
+        <div class="page-back-wrap">
+            <button type="button" class="page-back-btn" onclick="execBackToChoice()">Back</button>
+        </div>
     </section>
 
     <!-- ========== EXECUTIVE: Staff Nominate (Admin / Medical) ========== -->
     <section class="step-panel" id="execStaffNominate">
         <div class="nominate-outer">
-            <div class="exec-back-wrap" style="margin-bottom: 16px; padding: 0;">
-                <button type="button" class="exec-back-btn" onclick="execBackToCategory()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                    Back
-                </button>
-            </div>
             <div class="nominate-split" id="execStaffSplit">
                 <div class="employee-list-pane">
-                    <div class="top-search-wrap" id="execStaffSearchWrap">
-                        <div class="search-wrapper">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                            <input type="text" id="execStaffSearch" class="top-search-input" placeholder="Search by name..." autocomplete="off">
-                        </div>
-                    </div>
                     <div class="emp-list" id="execStaffList"></div>
                     <div class="no-select-card" id="execStaffNoSelect" onclick="selectExecStaffNo()">
                         <div class="no-select-circle"><div class="no-select-circle-inner"></div></div>
@@ -2057,6 +1958,9 @@ body.exec-bg {
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="page-back-wrap">
+            <button type="button" class="page-back-btn" onclick="execBackToCategory()">Back</button>
         </div>
     </section>
 
@@ -2358,12 +2262,12 @@ function getDeptImage(name) {
 
 const headerTexts = {
     1: {
-        line1: "Employee of the Quarter",
-        line2: "Select Your Department",
+        line1: "",
+        line2: "Employee of the Quarter",
         line3: "Select your department to meet your team and choose your star."
     },
     2: {
-        line1: "Secure Access",
+        line1: "",
         line2: "Verify Your Department",
         line3: "Enter the unique code provided to your team to continue."
     },
@@ -2373,19 +2277,19 @@ const headerTexts = {
         line3: "These standards help ensure fair and meaningful recognition."
     },
     4: {
-        line1: "Time to Celebrate",
+        line1: "",
         line2: "Choose Your Star",
         line3: "Pick the colleague who made a real difference this quarter."
     },
     5: {
-        line1: "Almost Done",
+        line1: "",
         line2: "Review Your Nomination",
         line3: "Confirm the details before submitting your final choice."
     },
     6: {
-        line1: "All Set",
-        line2: "Thank You",
-        line3: "Your nomination has been recorded successfully."
+        line1: "",
+        line2: "",
+        line3: ""
     }
 };
 
@@ -2457,19 +2361,29 @@ function selectDepartment(code, name) {
     goToStep(2);
 }
 
+function setHeaderLine(id, text) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = text || "";
+    el.style.display = text ? "" : "none";
+}
+
 function updateHeaderTexts(step) {
     const t = headerTexts[step] || headerTexts[1];
-    document.getElementById("headerLine1").textContent = t.line1;
-    document.getElementById("headerLine2").textContent = t.line2;
-    document.getElementById("headerLine3").textContent = t.line3;
+    setHeaderLine("headerLine1", t.line1);
+    setHeaderLine("headerLine2", t.line2);
+    setHeaderLine("headerLine3", t.line3);
     if (step === 2 && currentDeptName) {
-        document.getElementById("headerLine2").textContent = currentDeptName;
+        setHeaderLine("headerLine2", currentDeptName);
     }
+    const wrap = document.getElementById("pageHeaderTexts");
+    if (wrap) wrap.style.display = step === 6 ? "none" : "block";
 }
 
 function onStepClick(step) {
     if (step > maxReachedStep) return;
     if (step === currentStep) return;
+    if (step >= 5 && !selectedCandidate) return;
     goToStep(step);
 }
 
@@ -2578,6 +2492,15 @@ function renderEmployees(list) {
 }
 
 function selectEmployee(emp) {
+    // Clicking the already-selected employee deselects it
+    if (!isNoSelection && selectedEmpRef === emp) {
+        selectedCandidate = "";
+        selectedCandidateId = "";
+        selectedEmpRef = null;
+        document.querySelectorAll(".emp-card").forEach(c => c.classList.remove("selected"));
+        updateNominateUI();
+        return;
+    }
     isNoSelection = false;
     selectedCandidate = emp.name;
     selectedCandidateId = emp.id;
@@ -2591,6 +2514,16 @@ function selectEmployee(emp) {
 }
 
 function selectNoEmployee() {
+    // Clicking "No Selection" again deselects it
+    if (isNoSelection) {
+        isNoSelection = false;
+        selectedCandidate = "";
+        selectedCandidateId = "";
+        selectedEmpRef = null;
+        document.getElementById("noSelectCard").classList.remove("selected");
+        updateNominateUI();
+        return;
+    }
     isNoSelection = true;
     selectedCandidate = "No Employee Selected This Quarter";
     selectedCandidateId = "";
@@ -2683,12 +2616,22 @@ function prepareReview() {
     }
 }
 
+function placeCaretAtEnd(el) {
+    el.focus();
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    range.collapse(false);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+}
+
 function toggleEditStory() {
     const el = document.getElementById("storyText");
     const btn = document.getElementById("editStoryBtn");
     if (!isEditingStory) {
         el.contentEditable = "true";
-        el.focus();
+        placeCaretAtEnd(el);
         isEditingStory = true;
         btn.innerHTML = `
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2893,8 +2836,8 @@ function showPanel(id) {
 function setExecHeaderMode(inExec) {
     const execBtn = document.getElementById("executiveBtn");
     const nominateBtn = document.getElementById("nominateBtn");
-    if (execBtn) execBtn.style.display = inExec ? "none" : "";
-    if (nominateBtn) nominateBtn.style.display = inExec ? "" : "none";
+    if (execBtn) execBtn.classList.toggle("nav-hidden", inExec);
+    if (nominateBtn) nominateBtn.classList.toggle("nav-hidden", !inExec);
 }
 
 function setExecProgress(mode, step) {
@@ -2920,18 +2863,18 @@ function setExecProgress(mode, step) {
     if (pageHeader) {
         pageHeader.style.display = "block";
         if (mode === "dh") {
-            document.getElementById("headerLine1").textContent = step === 1 ? "Executive Selection" : "Almost Done";
-            document.getElementById("headerLine2").textContent = step === 1 ? "Outstanding Department Head" : "Review Your Nomination";
-            document.getElementById("headerLine3").textContent = step === 1
+            setHeaderLine("headerLine1", step === 1 ? "Executive Selection" : "Almost Done");
+            setHeaderLine("headerLine2", step === 1 ? "Outstanding Department Head" : "Review Your Nomination");
+            setHeaderLine("headerLine3", step === 1
                 ? "Review the shortlisted department heads and select the winner together as the executive team."
-                : "Confirm the details before submitting your final choice.";
+                : "Confirm the details before submitting your final choice.");
         } else if (mode === "staff") {
             const cat = execMode === "admin" ? "Administrative Staff" : "Medical Staff";
-            document.getElementById("headerLine1").textContent = step === 1 ? "Executive Selection" : "Almost Done";
-            document.getElementById("headerLine2").textContent = step === 1 ? cat : "Review Your Nomination";
-            document.getElementById("headerLine3").textContent = step === 1
+            setHeaderLine("headerLine1", step === 1 ? "" : "Almost Done");
+            setHeaderLine("headerLine2", step === 1 ? cat : "Review Your Nomination");
+            setHeaderLine("headerLine3", step === 1
                 ? "Pick the colleague who made a real difference this quarter."
-                : "Confirm the details before submitting your final choice.";
+                : "Confirm the details before submitting your final choice.");
         }
     }
 }
@@ -2986,7 +2929,6 @@ function goExecDeptHead() {
     document.getElementById("execDHNoContinue").classList.remove("visible");
     document.getElementById("execDHSplit").classList.remove("has-selection");
     document.getElementById("execDHNextBtn").disabled = true;
-    document.getElementById("execDHSearch").value = "";
     execCurrentList = departmentHeads.slice();
     renderExecDH(execCurrentList);
     setExecProgress("dh", 1);
@@ -2997,6 +2939,11 @@ function goExecIndividual() {
     document.getElementById("progressWrap").style.display = "none";
     document.getElementById("pageHeaderTexts").style.display = "none";
     showPanel("execCategory");
+}
+
+function exitExecutive() {
+    // Same destination as the header "Nominate" button: back to the Department page
+    window.location.href = document.getElementById("nominateBtn").getAttribute("href");
 }
 
 function execBackToAccess() {
@@ -3031,10 +2978,7 @@ function goExecStaff(type) {
     document.getElementById("execStaffNoContinue").classList.remove("visible");
     document.getElementById("execStaffSplit").classList.remove("has-selection");
     document.getElementById("execStaffNextBtn").disabled = true;
-    document.getElementById("execStaffSearch").value = "";
     execCurrentList = type === "admin" ? adminStaff.slice() : medicalStaff.slice();
-    const searchWrap = document.getElementById("execStaffSearchWrap");
-    if (searchWrap) searchWrap.style.display = execCurrentList.length > 8 ? "block" : "none";
     renderExecStaff(execCurrentList);
     setExecProgress("staff", 1);
     showPanel("execStaffNominate");
@@ -3054,28 +2998,40 @@ function renderExecDH(list) {
                 <div class="dh-name">${item.name}</div>
                 <div class="dh-dept">${item.dept}</div>
             </div>
-            <div class="dh-circle"><div class="dh-circle-inner"></div>
+            <div class="dh-circle"><div class="dh-circle-inner"></div></div>
         `;
         container.appendChild(card);
     });
 }
 
 function selectExecDH(item) {
+    // Clicking the already-selected department head deselects it
+    if (!execIsNoSelection && execSelected && execSelected.id === item.id) {
+        execSelected = null;
+        execSelectedDept = "";
+        renderExecDH(departmentHeads);
+        document.getElementById("execDHSplit").classList.remove("has-selection");
+        document.getElementById("execDHNextBtn").disabled = true;
+        return;
+    }
     execIsNoSelection = false;
     execSelected = item;
     execSelectedDept = item.dept;
     document.getElementById("execDHNoSelect").classList.remove("selected");
     document.getElementById("execDHNoContinue").classList.remove("visible");
-    const q = document.getElementById("execDHSearch").value.trim().toLowerCase();
-    const filtered = departmentHeads.filter(e =>
-        !q || e.name.toLowerCase().includes(q) || e.dept.toLowerCase().includes(q)
-    );
-    renderExecDH(filtered);
+    renderExecDH(departmentHeads);
     document.getElementById("execDHSplit").classList.add("has-selection");
     document.getElementById("execDHNextBtn").disabled = !document.getElementById("execDHReason").value.trim();
 }
 
 function selectExecDHNo() {
+    // Clicking "No Selection" again deselects it
+    if (execIsNoSelection) {
+        execIsNoSelection = false;
+        document.getElementById("execDHNoSelect").classList.remove("selected");
+        document.getElementById("execDHNoContinue").classList.remove("visible");
+        return;
+    }
     execIsNoSelection = true;
     execSelected = null;
     execSelectedDept = "";
@@ -3088,14 +3044,6 @@ function selectExecDHNo() {
     document.getElementById("execDHSplit").classList.remove("has-selection");
     document.getElementById("execDHNextBtn").disabled = true;
 }
-
-document.getElementById("execDHSearch").addEventListener("input", function () {
-    const q = this.value.trim().toLowerCase();
-    const filtered = departmentHeads.filter(e =>
-        e.name.toLowerCase().includes(q) || e.dept.toLowerCase().includes(q)
-    );
-    renderExecDH(filtered);
-});
 
 document.getElementById("execDHReason").addEventListener("input", function () {
     document.getElementById("execDHCharCount").textContent = this.value.length;
@@ -3124,26 +3072,38 @@ function renderExecStaff(list) {
         card.innerHTML = `
             <div class="emp-avatar">${getInitials(emp.name)}</div>
             <div class="emp-info"><div class="emp-name">${emp.name}</div></div>
-            <div class="emp-circle"><div class="emp-circle-inner"></div>
+            <div class="emp-circle"><div class="emp-circle-inner"></div></div>
         `;
         container.appendChild(card);
     });
 }
 
 function selectExecStaff(emp) {
+    // Clicking the already-selected employee deselects it
+    if (!execIsNoSelection && execSelected && execSelected.id === emp.id) {
+        execSelected = null;
+        renderExecStaff(execCurrentList);
+        document.getElementById("execStaffSplit").classList.remove("has-selection");
+        document.getElementById("execStaffNextBtn").disabled = true;
+        return;
+    }
     execIsNoSelection = false;
     execSelected = emp;
     document.getElementById("execStaffNoSelect").classList.remove("selected");
     document.getElementById("execStaffNoContinue").classList.remove("visible");
-    renderExecStaff(execCurrentList.filter(e => {
-        const q = document.getElementById("execStaffSearch").value.trim().toLowerCase();
-        return !q || e.name.toLowerCase().includes(q);
-    }));
+    renderExecStaff(execCurrentList);
     document.getElementById("execStaffSplit").classList.add("has-selection");
     document.getElementById("execStaffNextBtn").disabled = !document.getElementById("execStaffReason").value.trim();
 }
 
 function selectExecStaffNo() {
+    // Clicking "No Selection" again deselects it
+    if (execIsNoSelection) {
+        execIsNoSelection = false;
+        document.getElementById("execStaffNoSelect").classList.remove("selected");
+        document.getElementById("execStaffNoContinue").classList.remove("visible");
+        return;
+    }
     execIsNoSelection = true;
     execSelected = null;
     execStory = "";
@@ -3155,13 +3115,6 @@ function selectExecStaffNo() {
     document.getElementById("execStaffSplit").classList.remove("has-selection");
     document.getElementById("execStaffNextBtn").disabled = true;
 }
-
-document.getElementById("execStaffSearch").addEventListener("input", function () {
-    const q = this.value.trim().toLowerCase();
-    const source = execMode === "admin" ? adminStaff : medicalStaff;
-    const filtered = source.filter(e => e.name.toLowerCase().includes(q));
-    renderExecStaff(filtered);
-});
 
 document.getElementById("execStaffReason").addEventListener("input", function () {
     document.getElementById("execStaffCharCount").textContent = this.value.length;
@@ -3213,7 +3166,7 @@ function toggleExecEditStory() {
     const btn = document.getElementById("execEditStoryBtn");
     if (!execIsEditingStory) {
         el.contentEditable = "true";
-        el.focus();
+        placeCaretAtEnd(el);
         execIsEditingStory = true;
         btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Save`;
     } else {
@@ -3283,9 +3236,7 @@ async function confirmExecVote() {
         document.getElementById("progressWrap").style.display = "none";
         document.body.classList.remove("exec-bg", "has-bg");
         document.body.classList.add("no-bg");
-        document.getElementById("headerLine1").textContent = "All Set";
-        document.getElementById("headerLine2").textContent = "Thank You";
-        document.getElementById("headerLine3").textContent = "Your nomination has been recorded successfully.";
+        document.getElementById("pageHeaderTexts").style.display = "none";
         showPanel("step6");
     } catch (err) {
         console.error(err);
