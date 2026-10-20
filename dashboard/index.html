@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="/favicon.png">
+<title>Dashboard | Care Medical Jiwar</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --navy: #08245B;
+    --cyan: #00B7E2;
+    --dark-cyan: #0E7490;
+    --muted: #557083;
+    --line: #dbe7ee;
+    --red: #dc2626;
+    --orange: #ea580c;
+    --dark-green: #15803d;
+    --green: #16a34a;
+}
+
+html { min-height: 100%; overflow-y: scroll; }
+
+body {
+    font-family: "DM Sans", Arial, Helvetica, sans-serif;
+    font-variation-settings: "opsz" 14, "wght" 750;
+    font-optical-sizing: none;
+    font-weight: 500;
+    color: var(--navy);
+    line-height: 1.5;
+    min-height: 100dvh;
+    background-color: #f0f6f9;
+    -webkit-font-smoothing: antialiased;
+    padding-top: 74px;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* ===== Header (same as the nomination site) ===== */
+header {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+    background: #fff;
+    padding: 8px 5%;
+    padding-top: max(8px, env(safe-area-inset-top, 8px));
+}
+.navbar {
+    max-width: 1920px; height: 58px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 30px;
+}
+.logo { width: 200px; height: 50px; object-fit: contain; display: block; transform: translate(-8px, 3px); }
+.header-nav { display: flex; align-items: center; gap: 14px; }
+.header-nav a.nav-btn {
+    position: relative; display: flex; align-items: center;
+    color: var(--navy); text-decoration: none; white-space: nowrap;
+    font-size: 15.04px; font-weight: 750; line-height: 22.56px;
+    font-variation-settings: "opsz" 14, "wght" 750;
+    padding: 12px 17px; height: 46.5625px; border-radius: 999px;
+    transition: color 200ms ease; -webkit-tap-highlight-color: transparent;
+}
+.header-nav a.nav-btn::after {
+    content: ""; position: absolute; left: 17px; width: calc(100% - 34px); height: 2px; bottom: 10px;
+    background: var(--cyan); transform: scaleX(0); transform-origin: left; transition: transform 200ms ease;
+}
+.header-nav a.nav-btn:hover { color: var(--cyan); }
+.header-nav a.nav-btn:hover::after,
+.header-nav a.nav-btn.active::after { transform: scaleX(1); }
+.header-nav a.nav-btn.active { color: var(--cyan); }
+
+@media (max-width: 700px) {
+    .logo { width: 100px; transform: none; }
+    .header-nav { gap: 10px; }
+    .header-nav a.nav-btn { font-size: 12.5px; padding: 9px 12px; height: 40px; }
+    .header-nav a.nav-btn::after { left: 12px; width: calc(100% - 24px); }
+}
+
+/* ===== Page ===== */
+.page { max-width: 1400px; margin: 0 auto; padding: 32px 5% 60px; }
+
+.top-row {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 20px; flex-wrap: wrap; margin-bottom: 28px;
+}
+.top-left .eyebrow { font-size: 1.05rem; font-weight: 750; color: var(--muted); }
+.top-left h1 { font-size: clamp(1.7rem, 3.6vw, 2.15rem); font-weight: 750; color: #05255E; line-height: 1.25; }
+
+.top-right { display: flex; align-items: center; gap: 12px; }
+
+.quarter-select {
+    appearance: none; -webkit-appearance: none;
+    font-family: inherit; font-size: 0.95rem; font-weight: 750; font-variation-settings: "opsz" 14, "wght" 750;
+    color: var(--navy); background: #fff;
+    border: 1.5px solid var(--line); border-radius: 12px;
+    padding: 12px 40px 12px 16px; height: 46px; cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2308245B' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+}
+.quarter-select:focus { outline: none; border-color: var(--cyan); }
+
+.export-btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: inherit; font-size: 0.95rem; font-weight: 750; font-variation-settings: "opsz" 14, "wght" 750;
+    color: #fff; background: var(--navy);
+    border: none; border-radius: 12px; height: 46px; padding: 0 20px; cursor: pointer;
+    transition: background 150ms ease, transform 150ms ease;
+}
+.export-btn:hover { background: #0b3175; }
+.export-btn:active { transform: translateY(1px); }
+.export-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ===== Cards ===== */
+.cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 28px; }
+@media (max-width: 1000px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px)  { .cards { grid-template-columns: 1fr; } }
+
+.card {
+    background: #fff; border: 1px solid var(--line); border-radius: 18px;
+    padding: 22px 24px; box-shadow: 0 2px 10px rgba(8, 36, 91, .04);
+}
+.card .label { font-size: 0.95rem; font-weight: 750; color: var(--c, var(--dark-cyan)); }
+.card .value { display: flex; align-items: baseline; gap: 12px; margin-top: 6px; color: var(--c, var(--dark-cyan)); }
+.card .amount { font-size: 2.4rem; font-weight: 800; line-height: 1.1; }
+.card .pct { font-size: 1.1rem; font-weight: 750; }
+
+/* ===== Table section ===== */
+.panel {
+    background: #fff; border: 1px solid var(--line); border-radius: 18px;
+    box-shadow: 0 2px 10px rgba(8, 36, 91, .04); overflow: hidden;
+}
+
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; padding: 18px 20px; border-bottom: 1px solid var(--line); }
+.tab {
+    font-family: inherit; font-size: 0.9rem; font-weight: 750; font-variation-settings: "opsz" 14, "wght" 750;
+    color: var(--navy); background: #fff; border: 1.5px solid var(--line); border-radius: 999px;
+    padding: 9px 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+    transition: all 150ms ease;
+}
+.tab:hover { border-color: var(--cyan); }
+.tab .count {
+    background: #eaf3f8; color: var(--navy); border-radius: 999px; padding: 1px 9px; font-size: 0.8rem;
+}
+.tab.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+.tab.active .count { background: rgba(255,255,255,.2); color: #fff; }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 1050px; }
+thead th {
+    background: #dbeef5; color: var(--navy);
+    text-align: left; font-size: 0.82rem; font-weight: 800; letter-spacing: .02em;
+    padding: 14px 16px; white-space: nowrap;
+}
+tbody td { padding: 16px; font-size: 0.92rem; border-top: 1px solid var(--line); vertical-align: middle; }
+tbody tr:hover { background: #f8fbfd; }
+td.num { color: var(--muted); width: 48px; }
+td.dept { font-weight: 800; }
+td.story { max-width: 320px; color: var(--muted); font-weight: 500; }
+td.story span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+td.muted { color: var(--muted); }
+
+.badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 12px; border-radius: 999px; font-size: 0.85rem; font-weight: 750; white-space: nowrap;
+}
+.badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.badge.completed { background: #dcfce7; color: #15803d; }
+.badge.pending   { background: #ffedd5; color: #ea580c; }
+.badge.none      { background: #eef0f2; color: #6b7280; }
+
+.dl-btn {
+    width: 38px; height: 38px; border-radius: 10px; border: 1.5px solid var(--line); background: #fff;
+    display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--navy);
+    transition: all 150ms ease;
+}
+.dl-btn:hover:not(:disabled) { border-color: var(--cyan); color: var(--cyan); }
+.dl-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+.state-msg { padding: 48px 20px; text-align: center; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="navbar">
+        <a href="/"><img src="/logo.jpg" alt="Care Medical Jiwar" class="logo"></a>
+        <nav class="header-nav">
+            <a href="/" class="nav-btn">Home</a>
+            <a href="/eoq/" class="nav-btn">Nominate</a>
+            <a href="/dashboard" class="nav-btn active">Dashboard</a>
+        </nav>
+    </div>
+</header>
+
+<main class="page">
+
+    <div class="top-row">
+        <div class="top-left">
+            <div class="eyebrow">Employee of the Quarter</div>
+            <h1 id="quarterTitle">Q4 2026</h1>
+        </div>
+        <div class="top-right">
+            <select class="quarter-select" id="quarterSelect" aria-label="Quarter">
+                <option value="Q4 2026">Q4 2026</option>
+            </select>
+            <button class="export-btn" id="exportBtn" type="button">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+                Export to Excel
+            </button>
+        </div>
+    </div>
+
+    <section class="cards">
+        <div class="card" id="cardTotal">
+            <div class="label">Total Departments</div>
+            <div class="value"><span class="amount" id="totalAmt">–</span></div>
+        </div>
+        <div class="card" id="cardCompleted">
+            <div class="label">Completed</div>
+            <div class="value"><span class="amount" id="completedAmt">–</span><span class="pct" id="completedPct"></span></div>
+        </div>
+        <div class="card" id="cardPending">
+            <div class="label">Pending</div>
+            <div class="value"><span class="amount" id="pendingAmt">–</span><span class="pct" id="pendingPct"></span></div>
+        </div>
+        <div class="card" id="cardNone">
+            <div class="label">No Selection</div>
+            <div class="value"><span class="amount" id="noneAmt">–</span><span class="pct" id="nonePct"></span></div>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="tabs" id="tabs">
+            <button class="tab active" data-filter="all">All Departments <span class="count" id="tabAll">0</span></button>
+            <button class="tab" data-filter="completed">Completed <span class="count" id="tabCompleted">0</span></button>
+            <button class="tab" data-filter="pending">Pending <span class="count" id="tabPending">0</span></button>
+            <button class="tab" data-filter="none">No Selection <span class="count" id="tabNone">0</span></button>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Department</th>
+                        <th>Nominate</th>
+                        <th>Job Title</th>
+                        <th>Recognition Story</th>
+                        <th>Status</th>
+                        <th>Submitted On</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+        <div class="state-msg" id="stateMsg" style="display:none;"></div>
+    </section>
+
+</main>
+
+<script>
+/* ================= CONFIG ================= */
+const SUPABASE_URL = "https://fthkfenbpetpzlcpxvoc.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0aGtmZW5icGV0cHpsY3B4dm9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MjI3MTEsImV4cCI6MjEwNjA5ODcxMX0.-gd99emQuWNRazrc1DenTJpAYxfa_rt2A_BA_Vmqkrk";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Active departments (keep in sync with departmentCodes in /eoq/index.html)
+const DEPARTMENTS = [
+    { code: "RECEPTION4",   name: "Reception" },
+    { code: "DUTY4",        name: "Duty Manager" },
+    { code: "ENCODER4",     name: "Encoder" },
+    { code: "DRIVERS4",     name: "Drivers" },
+    { code: "RCM4",         name: "Revenue Cycle Management" },
+    { code: "RESPIRATORY4", name: "Respiratory Therapy" },
+    { code: "RADIOLOGY4",   name: "Radiology" },
+    { code: "LABORATORY4",  name: "Laboratory" },
+    { code: "ICU4",         name: "Intensive Care Unit" },
+    { code: "CATH4",        name: "Cath Lab" },
+    { code: "SECURITY4",    name: "Security" },
+    { code: "IT4",          name: "Information Technology" },
+    { code: "ER4",          name: "Emergency Department" },
+    { code: "GPQ4",         name: "General Practice" },
+    { code: "PHARMQ4",      name: "Pharmacy" },
+    { code: "CARDQ4",       name: "Cardiology" }
+];
+
+const NO_SELECTION_NAME = "No Employee Selected This Quarter";
+
+// Download template settings. If TEMPLATE_URL can't be loaded, a built-in test design is drawn instead.
+const TEMPLATE = {
+    url: "/eoq/template.png",     // your real template (PNG recommended)
+    width: 1080, height: 1350,    // size of your template in pixels
+    avatar: { x: 540, y: 470, radius: 170 },                                   // circle centre + radius
+    name:   { x: 540, y: 760,  size: 64, color: "#08245B", maxWidth: 900 },
+    dept:   { x: 540, y: 835,  size: 38, color: "#0E7490", maxWidth: 900 },
+    story:  { x: 540, y: 940,  size: 34, color: "#33495f", maxWidth: 820, lineHeight: 48, maxLines: 6 }
+};
+
+/* ================= STATE ================= */
+let rows = [];          // one merged row per department
+let activeFilter = "all";
+
+/* ================= HELPERS ================= */
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const slug = s => String(s).toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+
+function formatDate(v) {
+    if (!v) return "—";
+    const d = new Date(v);
+    if (isNaN(d)) return "—";
+    return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+}
+
+function statusColor(pct) {
+    if (pct < 25) return "var(--red)";
+    if (pct < 50) return "var(--orange)";
+    if (pct < 75) return "var(--dark-green)";
+    return "var(--green)";
+}
+
+const pctOf = (n, total) => total ? Math.round((n / total) * 100) : 0;
+
+/* ================= DATA ================= */
+async function loadData() {
+    const msg = document.getElementById("stateMsg");
+    msg.style.display = "block"; msg.textContent = "Loading…";
+
+    const { data, error } = await supabaseClient.from("department_votes").select("*");
+    if (error) {
+        console.error(error);
+        msg.textContent = "Could not load the data. Please refresh and try again.";
+        return;
+    }
+
+    const byCode = {};
+    (data || []).forEach(r => { byCode[r.department_code] = r; });
+
+    rows = DEPARTMENTS.map(d => {
+        const v = byCode[d.code];
+        if (!v) return { dept: d.name, code: d.code, status: "pending", nominee: "", title: "", story: "", date: "" };
+        const isNone = v.winner_name === NO_SELECTION_NAME;
+        return {
+            dept: d.name, code: d.code,
+            status: isNone ? "none" : "completed",
+            nominee: isNone ? "" : (v.winner_name || ""),
+            title: v.job_title || "",
+            story: v.recognition_story || "",
+            date: v.created_at || "",
+            avatar: v.avatar_url || ""
+        };
+    }).sort((a, b) => a.dept.localeCompare(b.dept));
+
+    msg.style.display = "none";
+    renderAll();
+}
+
+/* ================= RENDER ================= */
+function renderAll() {
+    const total = rows.length;
+    const completed = rows.filter(r => r.status === "completed").length;
+    const pending   = rows.filter(r => r.status === "pending").length;
+    const none      = rows.filter(r => r.status === "none").length;
+
+    // Cards
+    document.getElementById("totalAmt").textContent = total;
+
+    const cPct = pctOf(completed, total), pPct = pctOf(pending, total), nPct = pctOf(none, total);
+    const progressColor = statusColor(cPct);   // Completed + Pending share the colour of overall progress
+
+    setCard("cardCompleted", "completedAmt", "completedPct", completed, cPct, progressColor);
+    setCard("cardPending",   "pendingAmt",   "pendingPct",   pending,   pPct, progressColor);
+    setCard("cardNone",      "noneAmt",      "nonePct",      none,      nPct, null);
+
+    // Tabs
+    document.getElementById("tabAll").textContent = total;
+    document.getElementById("tabCompleted").textContent = completed;
+    document.getElementById("tabPending").textContent = pending;
+    document.getElementById("tabNone").textContent = none;
+
+    renderTable();
+}
+
+function setCard(cardId, amtId, pctId, amount, pct, color) {
+    document.getElementById(amtId).textContent = amount;
+    document.getElementById(pctId).textContent = pct + "%";
+    document.getElementById(cardId).style.setProperty("--c", color || "var(--dark-cyan)");
+}
+
+const STATUS_LABEL = { completed: "Completed", pending: "Pending", none: "No Selection" };
+const DL_ICON = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>';
+
+function visibleRows() {
+    return activeFilter === "all" ? rows : rows.filter(r => r.status === activeFilter);
+}
+
+function renderTable() {
+    const list = visibleRows();
+    const tbody = document.getElementById("tbody");
+    const msg = document.getElementById("stateMsg");
+
+    tbody.innerHTML = list.map((r, i) => `
+        <tr>
+            <td class="num">${i + 1}</td>
+            <td class="dept">${esc(r.dept)}</td>
+            <td>${r.nominee ? esc(r.nominee) : '<span class="muted">—</span>'}</td>
+            <td class="muted">${r.title ? esc(r.title) : "—"}</td>
+            <td class="story">${r.story ? `<span title="${esc(r.story)}">${esc(r.story)}</span>` : "—"}</td>
+            <td><span class="badge ${r.status}">${STATUS_LABEL[r.status]}</span></td>
+            <td class="muted">${formatDate(r.date)}</td>
+            <td><button class="dl-btn" type="button" data-code="${esc(r.code)}" ${r.status === "completed" ? "" : "disabled"} aria-label="Download card">${DL_ICON}</button></td>
+        </tr>`).join("");
+
+    msg.style.display = list.length ? "none" : "block";
+    if (!list.length) msg.textContent = "Nothing to show here yet.";
+}
+
+document.getElementById("tabs").addEventListener("click", e => {
+    const btn = e.target.closest(".tab");
+    if (!btn) return;
+    activeFilter = btn.dataset.filter;
+    document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t === btn));
+    renderTable();
+});
+
+/* ================= EXPORT TO EXCEL ================= */
+document.getElementById("exportBtn").addEventListener("click", () => {
+    if (!window.XLSX) { alert("Excel export could not load. Please check your connection and try again."); return; }
+    if (!rows.length) return;
+
+    const quarter = document.getElementById("quarterSelect").value;
+    const total = rows.length;
+    const count = s => rows.filter(r => r.status === s).length;
+
+    const detail = rows.map((r, i) => ({
+        "#": i + 1,
+        "Department": r.dept,
+        "Nominee": r.nominee || "",
+        "Job Title": r.title || "",
+        "Recognition Story": r.story || "",
+        "Status": STATUS_LABEL[r.status],
+        "Submitted On": r.date ? formatDate(r.date) : ""
+    }));
+
+    const summary = [
+        { "Metric": "Total Departments", "Count": total, "Percentage": "" },
+        { "Metric": "Completed",    "Count": count("completed"), "Percentage": pctOf(count("completed"), total) + "%" },
+        { "Metric": "Pending",      "Count": count("pending"),   "Percentage": pctOf(count("pending"), total) + "%" },
+        { "Metric": "No Selection", "Count": count("none"),      "Percentage": pctOf(count("none"), total) + "%" }
+    ];
+
+    const wb = XLSX.utils.book_new();
+    const ws1 = XLSX.utils.json_to_sheet(detail);
+    ws1["!cols"] = [{ wch: 5 }, { wch: 28 }, { wch: 26 }, { wch: 26 }, { wch: 60 }, { wch: 14 }, { wch: 14 }];
+    const ws2 = XLSX.utils.json_to_sheet(summary);
+    ws2["!cols"] = [{ wch: 20 }, { wch: 10 }, { wch: 12 }];
+    XLSX.utils.book_append_sheet(wb, ws1, "Departments");
+    XLSX.utils.book_append_sheet(wb, ws2, "Summary");
+    XLSX.writeFile(wb, `Employee-of-the-Quarter-${quarter.replace(/\s+/g, "-")}.xlsx`);
+});
+
+/* ================= DOWNLOAD FILLED CARD ================= */
+document.getElementById("tbody").addEventListener("click", async e => {
+    const btn = e.target.closest(".dl-btn");
+    if (!btn || btn.disabled) return;
+    const row = rows.find(r => r.code === btn.dataset.code);
+    if (!row) return;
+    btn.disabled = true;
+    try { await downloadCard(row); }
+    catch (err) { console.error(err); alert("Could not create the card. Please try again."); }
+    finally { btn.disabled = false; }
+});
+
+function loadImage(src) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+    });
+}
+const tryImage = src => (src ? loadImage(src).catch(() => null) : Promise.resolve(null));
+
+function wrapLines(ctx, text, maxWidth, maxLines) {
+    const words = String(text).split(/\s+/).filter(Boolean);
+    const lines = []; let line = "";
+    for (const w of words) {
+        const test = line ? line + " " + w : w;
+        if (ctx.measureText(test).width > maxWidth && line) { lines.push(line); line = w; }
+        else line = test;
+    }
+    if (line) lines.push(line);
+    if (lines.length > maxLines) {
+        lines.length = maxLines;
+        let last = lines[maxLines - 1];
+        while (ctx.measureText(last + "…").width > maxWidth && last.length) last = last.slice(0, -1);
+        lines[maxLines - 1] = last.trimEnd() + "…";
+    }
+    return lines;
+}
+
+function fitText(ctx, text, cfg, weight) {
+    let size = cfg.size;
+    do { ctx.font = `${weight} ${size}px "DM Sans", Arial, sans-serif`; size -= 2; }
+    while (ctx.measureText(text).width > cfg.maxWidth && size > 18);
+}
+
+async function downloadCard(row) {
+    await document.fonts.load('800 40px "DM Sans"');
+    const T = TEMPLATE;
+    const canvas = document.createElement("canvas");
+    canvas.width = T.width; canvas.height = T.height;
+    const ctx = canvas.getContext("2d");
+
+    // 1) Background: your template if it exists, otherwise the built-in test design
+    const tpl = await tryImage(T.url);
+    if (tpl) ctx.drawImage(tpl, 0, 0, T.width, T.height);
+    else drawTestBackground(ctx, T);
+
+    // 2) Avatar: photo if available (avatar_url column or /eoq/avatars/<name>.jpg), otherwise initials
+    const photo = await tryImage(row.avatar || `/eoq/avatars/${slug(row.nominee)}.jpg`);
+    const { x, y, radius } = T.avatar;
+    ctx.save();
+    ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2); ctx.closePath(); ctx.clip();
+    if (photo) {
+        const s = Math.max(radius * 2 / photo.width, radius * 2 / photo.height);
+        ctx.drawImage(photo, x - photo.width * s / 2, y - photo.height * s / 2, photo.width * s, photo.height * s);
+    } else {
+        ctx.fillStyle = "#00B7E2"; ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+        ctx.fillStyle = "#fff"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+        ctx.font = `800 ${radius * 0.9}px "DM Sans", Arial, sans-serif`;
+        const p = row.nominee.trim().split(/\s+/);
+        ctx.fillText(((p[0]?.[0] || "") + (p.length > 1 ? p[p.length - 1][0] : "")).toUpperCase(), x, y + 6);
+    }
+    ctx.restore();
+    ctx.lineWidth = 8; ctx.strokeStyle = "#fff";
+    ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2); ctx.stroke();
+
+    // 3) Text
+    ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
+
+    ctx.fillStyle = T.name.color; fitText(ctx, row.nominee, T.name, 800);
+    ctx.fillText(row.nominee, T.name.x, T.name.y);
+
+    ctx.fillStyle = T.dept.color; fitText(ctx, row.dept, T.dept, 750);
+    ctx.fillText(row.dept, T.dept.x, T.dept.y);
+
+    if (row.story) {
+        ctx.fillStyle = T.story.color;
+        ctx.font = `500 ${T.story.size}px "DM Sans", Arial, sans-serif`;
+        wrapLines(ctx, row.story, T.story.maxWidth, T.story.maxLines)
+            .forEach((ln, i) => ctx.fillText(ln, T.story.x, T.story.y + i * T.story.lineHeight));
+    }
+
+    // 4) Save to the user's device
+    const blob = await new Promise(res => canvas.toBlob(res, "image/png"));
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `EOQ-${slug(row.dept)}-${slug(row.nominee)}.png`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+
+// TEST design – shown only until you add a real template at TEMPLATE.url
+function drawTestBackground(ctx, T) {
+    const g = ctx.createLinearGradient(0, 0, 0, T.height);
+    g.addColorStop(0, "#e8f4f8"); g.addColorStop(1, "#ffffff");
+    ctx.fillStyle = g; ctx.fillRect(0, 0, T.width, T.height);
+
+    ctx.fillStyle = "#08245B"; ctx.fillRect(0, 0, T.width, 190);
+    ctx.fillStyle = "#00B7E2"; ctx.fillRect(0, 190, T.width, 10);
+
+    ctx.fillStyle = "#fff"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.font = '800 54px "DM Sans", Arial, sans-serif';
+    ctx.fillText("Employee of the Quarter", T.width / 2, 85);
+    ctx.font = '750 30px "DM Sans", Arial, sans-serif';
+    ctx.fillText("Q4 2026", T.width / 2, 140);
+
+    ctx.fillStyle = "rgba(0,183,226,.12)";
+    ctx.beginPath(); ctx.arc(T.width, T.height, 330, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(0, 330, 150, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = "#08245B"; ctx.fillRect(0, T.height - 90, T.width, 90);
+    ctx.fillStyle = "#fff"; ctx.font = '750 28px "DM Sans", Arial, sans-serif';
+    ctx.fillText("Care Medical Jiwar", T.width / 2, T.height - 45);
+}
+
+/* ================= INIT ================= */
+loadData();
+</script>
+</body>
+</html>
