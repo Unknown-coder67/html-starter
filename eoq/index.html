@@ -99,7 +99,8 @@ nav a:hover { color: #00B7E2; }
 /* Page Header Texts – 25% bigger + more spacing */
 .page-header-texts {
     text-align: center;
-    margin-bottom: 22px;
+    margin-top: 28px;
+    margin-bottom: 40px;
     padding: 0 16px;
 }
 
@@ -107,14 +108,14 @@ nav a:hover { color: #00B7E2; }
     font-size: 1.15rem;
     font-weight: 500;
     color: #557083;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
 }
 
 .page-header-texts .line2 {
     font-size: clamp(1.7rem, 3.6vw, 2.15rem);
     font-weight: 750;
     color: #05255E;
-    margin-bottom: 10px;
+    margin-bottom: 18px;
     line-height: 1.25;
 }
 
@@ -129,7 +130,7 @@ nav a:hover { color: #00B7E2; }
 /* Progress Indicator – 25% smaller, line stops at last step */
 .progress-wrap {
     max-width: 720px;
-    margin: 0 auto 26px;
+    margin: 0 auto 44px;
     padding: 0 16px;
 }
 
@@ -254,7 +255,7 @@ nav a:hover { color: #00B7E2; }
 /* Shared search bar style */
 .top-search-wrap {
     max-width: 820px;
-    margin: 0 auto 20px;
+    margin: 0 auto 28px;
     padding: 0 8px;
 }
 
@@ -297,7 +298,7 @@ nav a:hover { color: #00B7E2; }
 /* ========== STEP 1: Departments ========== */
 .dept-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(182px, 1fr));
     gap: 16px;
     /* Break out of .main-content: full viewport width minus 100px each side */
     width: calc(100vw - 200px);
@@ -318,8 +319,10 @@ nav a:hover { color: #00B7E2; }
     border: 1px solid rgba(220,235,241,0.7);
     transition: transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
-    aspect-ratio: 1 / 1.08;
+    aspect-ratio: 182 / 143;
     min-height: 0;
+    padding-top: 14px;
+    padding-bottom: 12px;
 }
 
 .dept-card:hover {
@@ -329,11 +332,11 @@ nav a:hover { color: #00B7E2; }
 }
 
 .dept-img {
-    width: 64px;
-    height: 64px;
+    width: 52px;
+    height: 52px;
     object-fit: contain;
     border-radius: 12px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .dept-name {
@@ -491,7 +494,7 @@ nav a:hover { color: #00B7E2; }
 
 /* ========== STEP 4: Nominate ========== */
 .nominate-outer {
-    max-width: 1168px;
+    width: 100%;
     margin: 0 auto;
 }
 
@@ -504,14 +507,15 @@ nav a:hover { color: #00B7E2; }
 }
 
 .employee-list-pane {
-    flex: 0 1 920px;
+    flex: 0 0 auto;
+    width: 1100px;
     min-width: 0;
 }
 
 /* Search bar is the same width as the employee cards section */
 .employee-list-pane .top-search-wrap {
-    max-width: none;
-    margin: 0 0 20px;
+    max-width: 1020px;
+    margin: 0 auto 28px;
     padding: 0;
 }
 
@@ -614,8 +618,7 @@ nav a:hover { color: #00B7E2; }
     font-weight: 700;
     color: #05255E;
     line-height: 1.2;
-    white-space: normal;
-    overflow-wrap: anywhere;
+    white-space: nowrap;
 }
 
 .emp-circle {
@@ -1081,7 +1084,7 @@ footer {
         flex-direction: column;
         align-items: stretch;
     }
-    .employee-list-pane { flex: 0 0 auto; }
+    .employee-list-pane { flex: 0 0 auto; width: 100%; }
     .reason-pane {
         display: none;
         width: 100%;
@@ -1093,6 +1096,12 @@ footer {
         margin-top: 18px;
     }
     .reason-inner { min-width: 0; }
+}
+
+@media (max-width: 1560px) {
+    .nominate-split .employee-list-pane { width: 100%; }
+    .nominate-split.has-selection .employee-list-pane { width: auto; flex: 1 1 0; min-width: 0; }
+    .emp-card .emp-name { white-space: normal; }
 }
 
 @media (max-width: 640px) {
@@ -1186,7 +1195,7 @@ footer {
     <!-- ========== STEP 2: Access Code ========== -->
     <section class="step-panel" id="step2">
         <div class="access-box">
-            <img src="" alt="" class="access-dept-img" id="accessDeptImg">
+            <img src="lock.jpg" alt="Access" class="access-dept-img" id="accessDeptImg" onerror="this.style.display='none'">
 
             <div class="code-field">
                 <input type="text" id="departmentCode" placeholder="Enter department code" autocomplete="off" inputmode="text" enterkeyhint="go">
@@ -1442,211 +1451,211 @@ const departmentEmployees = {
        { name: "AHMED ALDAJANI", id: "17759" }
    ],
    "Duty Manager": [
-       { name: "Ahmad Mohammad Mufti", id: "17733" },
-       { name: "Hossam Ali Banabilah", id: "17634" },
-       { name: "Sohaib Hossain Andargiry", id: "17753" },
-       { name: "Turki Tursom Ahmad", id: "17635" },
-       { name: "Abdulaziz Kamal Alandijani", id: "17626" }
+       { name: "Ahmad Mufti", id: "17733" },
+       { name: "Hossam Banabilah", id: "17634" },
+       { name: "Sohaib Andargiry", id: "17753" },
+       { name: "Turki Ahmad", id: "17635" },
+       { name: "Abdulaziz Alandijani", id: "17626" }
    ],
    "Encoder": [
-       { name: "Tala Assad Shawly", id: "21716" },
-       { name: "Fadhl Ali Almkwas", id: "22731" },
-       { name: "Emma Dhaifallah Alghraibi", id: "22730" },
-       { name: "Reem Ali Alqurashi", id: "21428" }
+       { name: "Tala Shawly", id: "21716" },
+       { name: "Fadhl Almkwas", id: "22731" },
+       { name: "Emma Alghraibi", id: "22730" },
+       { name: "Reem Alqurashi", id: "21428" }
    ],
    /*"Quality": [
-       { name: "Mohamed Rizk Ibrahim", id: "1" }
+       { name: "Mohamed Ibrahim", id: "1" }
    ],*/
    "Drivers": [
-       { name: "Meshal Nawaf Alsharif", id: "1" },
-       { name: "Waseem Mohammed Alkhuzaee", id: "1" },
-       { name: "Rayan Muslih Alhuzali", id: "1" },
-       { name: "Nawaf Abdullah Albasarai", id: "1" },
-       { name: "Bandar Hammad Aldadi", id: "1" },
-       { name: "Yousef Abbas Badawi Atiah", id: "1" },
-       { name: "Mohd Kamil Kayyum", id: "1" },
+       { name: "Meshal Alsharif", id: "1" },
+       { name: "Waseem Alkhuzaee", id: "1" },
+       { name: "Rayan Alhuzali", id: "1" },
+       { name: "Nawaf Albasarai", id: "1" },
+       { name: "Bandar Aldadi", id: "1" },
+       { name: "Yousef Atiah", id: "1" },
+       { name: "Mohd Kayyum", id: "1" },
        { name: "Afsal Mullappally", id: "1" },
-       { name: "Rayan Siddiq Alsindi", id: "1" }
+       { name: "Rayan Alsindi", id: "1" }
    ],
    "RCM": [
-       { name: "Sohaib Khaled abdulrheem", id: "19810" },
-       { name: "Nouf Sultan Almaqati", id: "21419" },
-       { name: "Razan Turki Alhakami", id: "22402" }
+       { name: "Sohaib abdulrheem", id: "19810" },
+       { name: "Nouf Almaqati", id: "21419" },
+       { name: "Razan Alhakami", id: "22402" }
    ],
    "Respiratory Therapy": [
-       { name: "Abdulilah Hashem alzhrani", id: "1" },
-       { name: "Mohammed Hassan Alghamdi", id: "1" },
-       { name: "Asr Mohammed Mofareh", id: "1" },
-       { name: "Rawan Jaylan Alkhayri", id: "1" }
+       { name: "Abdulilah alzhrani", id: "1" },
+       { name: "Mohammed Alghamdi", id: "1" },
+       { name: "Asr Mofareh", id: "1" },
+       { name: "Rawan Alkhayri", id: "1" }
    ],
    "Radiology": [
-       { name: "Fahad Abdulrahman Alnufaiai", id: "1" },
-       { name: "Ahmed Abdelrehim Abdelkarim", id: "1" },
-       { name: "Nawaf Turki Alotaibi", id: "1" },
-       { name: "Faisal Ridha Alkuhayli", id: "1" },
-       { name: "Nadeera Hamsiraji Saga", id: "1" }
+       { name: "Fahad Alnufaiai", id: "1" },
+       { name: "Ahmed Abdelkarim", id: "1" },
+       { name: "Nawaf Alotaibi", id: "1" },
+       { name: "Faisal Alkuhayli", id: "1" },
+       { name: "Nadeera Saga", id: "1" }
    ],
    "Laboratory": [
-       { name: "Abdullah faisal Alhazmi", id: "1" },
-       { name: "Hassan Khaled Sendi", id: "1" },
-       { name: "Hamed Awadh Alsharif", id: "1" },
-       { name: "Dana Mohammed Alqurashi", id: "1" },
-       { name: "Mohdi Thaiban Aldajani", id: "1" },
-       { name: "Ahmed Abdelmoez Saad", id: "1" }
+       { name: "Abdullah Alhazmi", id: "1" },
+       { name: "Hassan Sendi", id: "1" },
+       { name: "Hamed Alsharif", id: "1" },
+       { name: "Dana Alqurashi", id: "1" },
+       { name: "Mohdi Aldajani", id: "1" },
+       { name: "Ahmed Saad", id: "1" }
    ],
    "ICU": [
        { name: "Jaseela Ongaloramma", id: "1" },
        { name: "Ahmed Mostafa", id: "1" },
        { name: "Abdelrehem Fahmy", id: "1" },
-       { name: "Abdelrahman Abdelnaby Ibrahim", id: "1" },
-       { name: "Shireentaj Mansoor Kiresur", id: "1" },
-       { name: "Soad Mohammed Ali", id: "1" },
-       { name: "Hameed Unnisa Begum", id: "1" },
+       { name: "Abdelrahman Ibrahim", id: "1" },
+       { name: "Shireentaj Kiresur", id: "1" },
+       { name: "Soad Ali", id: "1" },
+       { name: "Hameed Begum", id: "1" },
        { name: "Bushra Mohamed", id: "1" },
        { name: "Fatma Ali", id: "1" },
-       { name: "Nafeesa Ahmed Elhassan", id: "1" },
+       { name: "Nafeesa Elhassan", id: "1" },
        { name: "Afrah Fathima", id: "1" },
-       { name: "Marwa Abdelaty Mahmoud", id: "1" },
-       { name: "Amina A Sulaiman", id: "1" },
+       { name: "Marwa Mahmoud", id: "1" },
+       { name: "Amina Sulaiman", id: "1" },
        { name: "Sara Hamed", id: "1" },
        { name: "Memunat Onozer", id: "1" },
        { name: "Shahid Aafreedi", id: "1" },
        { name: "Ayman Abdullah", id: "1" },
-       { name: "Mahmoud Tawfik Mohamed", id: "1" },
-       { name: "Mahmoud Khairy Attia", id: "1" },
-       { name: "Ali Mohamed Ali", id: "1" },
-       { name: "Ahmed Mohamed Elhamshary", id: "1" },
+       { name: "Mahmoud Mohamed", id: "1" },
+       { name: "Mahmoud Attia", id: "1" },
+       { name: "Ali Ali", id: "1" },
+       { name: "Ahmed Elhamshary", id: "1" },
        { name: "Ahmed Khairy", id: "1" },
        { name: "Abdulhameed Abdullah", id: "1" },
        { name: "Mansour Ali", id: "1" },
-       { name: "Mustafa Ahmed Hussein", id: "1" },
+       { name: "Mustafa Hussein", id: "1" },
        { name: "Omar Hamada", id: "1" },
        { name: "Mahmoud Mohamed", id: "1" },
        { name: "Mossad Mofreh", id: "1" },
-       { name: "Abdelsadek Elsayed Turkey", id: "1" },
+       { name: "Abdelsadek Turkey", id: "1" },
        { name: "Ashwag Mustafa", id: "1" },
        { name: "Hasna Abid", id: "1" },
-       { name: "Hesham Mohamed Hamdy", id: "1" },
+       { name: "Hesham Hamdy", id: "1" },
        { name: "Yasmeen Aslam", id: "1" },
-       { name: "Shafi Ullah Zada", id: "1" },
+       { name: "Shafi Zada", id: "1" },
        { name: "Islam Hegazy", id: "1" },
        { name: "Nasser Gamal", id: "1" },
-       { name: "Gehad Ramadan Hamoud", id: "1" },
+       { name: "Gehad Hamoud", id: "1" },
        { name: "Rohina Momtaz", id: "1" },
        { name: "Abdelghany Mahrous", id: "1" },
        { name: "Samar Fouad", id: "1" },
-       { name: "Mohamed Ali Ghonim", id: "1" },
-       { name: "Ramy Jamal Hafez Mohammed", id: "1" },
-       { name: "Mohamed Mushhot Attya Nada", id: "1" },
-       { name: "Bahaa Mohamed Ali Ezz", id: "1" },
-       { name: "Mohamed Hassan Ali", id: "1" }
+       { name: "Mohamed Ghonim", id: "1" },
+       { name: "Ramy Mohammed", id: "1" },
+       { name: "Mohamed Nada", id: "1" },
+       { name: "Bahaa Ezz", id: "1" },
+       { name: "Mohamed Ali", id: "1" }
    ],
    "Cath Lab": [
-       { name: "Mahmood Shaban Mansour", id: "1" },
-       { name: "Saman Hashmi Aslam", id: "1" },
-       { name: "Ali Abdullah Atifah", id: "1" },
-       { name: "Aly Mohamed Alahjari", id: "1" },
-       { name: "Mohammed Atallah Alosaimi", id: "1" },
-       { name: "Abdulaziz Mohammed Aldahiri", id: "1" }
+       { name: "Mahmood Mansour", id: "1" },
+       { name: "Saman Aslam", id: "1" },
+       { name: "Ali Atifah", id: "1" },
+       { name: "Aly Alahjari", id: "1" },
+       { name: "Mohammed Alosaimi", id: "1" },
+       { name: "Abdulaziz Aldahiri", id: "1" }
    ],
    "Security": [
-       { name: "Saud Hamed Almuqati", id: "1" },
-       { name: "Abdullah Ahmed Baoazair", id: "1" },
-       { name: "Meshari Mohammed Almuwalad", id: "1" },
-       { name: "Gazi Alhabashi Alhabashi", id: "1" }
+       { name: "Saud Almuqati", id: "1" },
+       { name: "Abdullah Baoazair", id: "1" },
+       { name: "Meshari Almuwalad", id: "1" },
+       { name: "Gazi Alhabashi", id: "1" }
    ],
    "Information Technology": [
-       { name: "Hemat Sadek Selim", id: "1" }
+       { name: "Hemat Selim", id: "1" }
    ],
    /*"Supply Chain": [
-       { name: "Shrooq Hassan Alobaidi", id: "1" }
+       { name: "Shrooq Alobaidi", id: "1" }
    ],
    "Human Resources": [
-       { name: "Mohammed Ahmed Alsharif", id: "1" }
+       { name: "Mohammed Alsharif", id: "1" }
    ],*/
    "Emergency Department": [
        { name: "Abdeen Kunna", id: "1" },
-       { name: "Yasein Omer Osmen Omer", id: "1" },
-       { name: "Mahmoud Mohamed Ellamey", id: "1" },
-       { name: "Atheer Faisal Alsulami", id: "1" },
+       { name: "Yasein Omer", id: "1" },
+       { name: "Mahmoud Ellamey", id: "1" },
+       { name: "Atheer Alsulami", id: "1" },
        { name: "Negm Eid", id: "1" },
-       { name: "Ahmed Rawhy Younes", id: "1" },
-       { name: "Eslam Abu Bakr", id: "1" },
-       { name: "Fatima Othman Washa", id: "1" },
-       { name: "Asmaa ElSayed Mahmoud", id: "1" },
-       { name: "Samar Elsayed Mohamed", id: "1" },
-       { name: "Neama Gamal Shahata Asy", id: "1" },
-       { name: "Dina Abdelaziz Elzoghby", id: "1" },
+       { name: "Ahmed Younes", id: "1" },
+       { name: "Eslam Bakr", id: "1" },
+       { name: "Fatima Washa", id: "1" },
+       { name: "Asmaa Mahmoud", id: "1" },
+       { name: "Samar Mohamed", id: "1" },
+       { name: "Neama Asy", id: "1" },
+       { name: "Dina Elzoghby", id: "1" },
        { name: "Tahmina Nissar", id: "1" },
        { name: "Lariba Ashraf", id: "1" },
-       { name: "Masbah Brwen Aslam", id: "1" },
+       { name: "Masbah Aslam", id: "1" },
        { name: "Maha Snoussi", id: "1" },
-       { name: "Omima Taha Mahmoud", id: "1" },
-       { name: "Abdelrahman Taha Abdelgawwad", id: "1" },
-       { name: "Kawsar Mehmood Aqil", id: "1" },
-       { name: "Abdulmalik Yahya Macaraya", id: "1" },
-       { name: "Mohamed Mohamed Alhawari", id: "1" },
-       { name: "Mohamed Ramadan Khattab", id: "1" },
+       { name: "Omima Mahmoud", id: "1" },
+       { name: "Abdelrahman Abdelgawwad", id: "1" },
+       { name: "Kawsar Aqil", id: "1" },
+       { name: "Abdulmalik Macaraya", id: "1" },
+       { name: "Mohamed Alhawari", id: "1" },
+       { name: "Mohamed Khattab", id: "1" },
        { name: "Irshad Bashir", id: "1" },
-       { name: "Waleed Abdulmoati Alshafeai", id: "1" },
-       { name: "Mohammad Zohaib Ihsanullah", id: "1" },
+       { name: "Waleed Alshafeai", id: "1" },
+       { name: "Mohammad Ihsanullah", id: "1" },
        { name: "Mohamed Sheta", id: "1" },
-       { name: "Amr Said Rashed", id: "1" },
-       { name: "Abdelghany Adel Abdelghany", id: "1" },
-       { name: "Omar Abdeltawab Abdelhameed", id: "1" },
-       { name: "Ahmed Mohamed Elsamahy", id: "1" },
+       { name: "Amr Rashed", id: "1" },
+       { name: "Abdelghany Abdelghany", id: "1" },
+       { name: "Omar Abdelhameed", id: "1" },
+       { name: "Ahmed Elsamahy", id: "1" },
        { name: "Mohamed Essam", id: "1" },
        { name: "Ahmed Madian", id: "1" },
        { name: "Kamal Zaib", id: "1" },
-       { name: "Mahmoud Ali Elsebaey Gafar", id: "1" },
+       { name: "Mahmoud Gafar", id: "1" },
        { name: "Ali Faiek", id: "1" },
-       { name: "Muhammad Farhan Meling", id: "1" },
-       { name: "Ahmed Elsayed Kamal", id: "1" },
-       { name: "Amal Kmid Saripada", id: "1" },
-       { name: "Taibah Mahfouz Alhamzah", id: "1" }
+       { name: "Muhammad Meling", id: "1" },
+       { name: "Ahmed Kamal", id: "1" },
+       { name: "Amal Saripada", id: "1" },
+       { name: "Taibah Alhamzah", id: "1" }
    ],
    /*"Finance": [
-       { name: "Khalid Ahmed Rawas", id: "1" },
-       { name: "Mohamed Amjd Kalib", id: "1" }
+       { name: "Khalid Rawas", id: "1" },
+       { name: "Mohamed Kalib", id: "1" }
    ],*/
    "General Practice": [
-       { name: "Abdullah Sulaiman Babaalghayth", id: "1" },
-       { name: "Kamel Hisham Darwish", id: "1" },
-       { name: "Nada Abdelhafeez Mohamed", id: "1" },
-       { name: "Hana Abdirahman Abdi", id: "1" },
+       { name: "Abdullah Babaalghayth", id: "1" },
+       { name: "Kamel Darwish", id: "1" },
+       { name: "Nada Mohamed", id: "1" },
+       { name: "Hana Abdi", id: "1" },
        { name: "Muna Hajabdullah", id: "1" }
    ],
    "Pharmacy": [
-       { name: "Wed Alaa Hassan", id: "1" },
-       { name: "Abdullah Yousef Abdullah", id: "1" },
-       { name: "Maad Ibrahim Makkawi", id: "1" },
-       { name: "Adi Abdulrahman Alqurashi", id: "1" },
-       { name: "Ahmed Abdulmutakabbir Almaghrabi", id: "1" },
-       { name: "Abdulrahman Abdullah Alghamdi", id: "1" },
-       { name: "Abdulrahman Faisal Baomar", id: "1" }
+       { name: "Wed Hassan", id: "1" },
+       { name: "Abdullah Abdullah", id: "1" },
+       { name: "Maad Makkawi", id: "1" },
+       { name: "Adi Alqurashi", id: "1" },
+       { name: "Ahmed Almaghrabi", id: "1" },
+       { name: "Abdulrahman Alghamdi", id: "1" },
+       { name: "Abdulrahman Baomar", id: "1" }
    ],
    /*"Anesthesia": [
-       { name: "Abdelrahman Tarek Osman", id: "1" },
-       { name: "Samia Rageb El Azab", id: "1" }
+       { name: "Abdelrahman Osman", id: "1" },
+       { name: "Samia Azab", id: "1" }
    ],*/
    "Cardiology": [
-       { name: "Mostafa Said Haggag", id: "1" },
-       { name: "Abdulkabir Osman Abdishakur", id: "1" },
-       { name: "Mujeeb Ulla Tareen", id: "1" },
-       { name: "Ahmed Nourelbagi Abdullateef", id: "1" }
+       { name: "Mostafa Haggag", id: "1" },
+       { name: "Abdulkabir Abdishakur", id: "1" },
+       { name: "Mujeeb Tareen", id: "1" },
+       { name: "Ahmed Abdullateef", id: "1" }
    ],
    /*"Clinical Nutrition": [
-       { name: "Safia Shaker Abdulrahman Bajoudah", id: "1" }
+       { name: "Safia Bajoudah", id: "1" }
    ],
    "Physiotherapy": [
-       { name: "Azzam Naif Alqathama", id: "1" }
+       { name: "Azzam Alqathama", id: "1" }
    ],
    "Nursing Leadership & Education": [
-       { name: "Mustafa Faleh Abumusleh", id: "1" },
+       { name: "Mustafa Abumusleh", id: "1" },
        { name: "Rehab Hamed", id: "1" }
    ],
    "Social Services": [
-       { name: "Dina Abdulaziz Alrashdi", id: "1" }
+       { name: "Dina Alrashdi", id: "1" }
    ]*/
 };
 
@@ -1696,6 +1705,7 @@ let currentDepartment = "";
 let currentDeptName = "";
 let selectedCandidate = "";
 let selectedCandidateId = "";
+let selectedEmpRef = null;
 let recognitionStory = "";
 let isNoSelection = false;
 let isSubmitting = false;
@@ -1751,9 +1761,9 @@ function selectDepartment(code, name) {
     document.getElementById("codeError").style.display = "none";
 
     const img = document.getElementById("accessDeptImg");
-    img.src = getDeptImage(name);
-    img.alt = name;
-    img.onerror = function() { this.src = "dept-default.jpg"; this.onerror = null; };
+    img.src = "lock.jpg";
+    img.alt = "Access";
+    img.onerror = function() { this.style.display = "none"; };
 
     goToStep(2);
 }
@@ -1763,6 +1773,9 @@ function updateHeaderTexts(step) {
     document.getElementById("headerLine1").textContent = t.line1;
     document.getElementById("headerLine2").textContent = t.line2;
     document.getElementById("headerLine3").textContent = t.line3;
+    if (step === 2 && currentDeptName) {
+        document.getElementById("headerLine2").textContent = currentDeptName;
+    }
 }
 
 function onStepClick(step) {
@@ -1852,10 +1865,11 @@ function renderEmployees(list) {
     const container = document.getElementById("empList");
     container.innerHTML = "";
     list.forEach(emp => {
-        const isSelected = !isNoSelection && emp.name === selectedCandidate;
+        const isSelected = !isNoSelection && emp === selectedEmpRef;
         const card = document.createElement("div");
         card.className = "emp-card" + (isSelected ? " selected" : "");
         card.dataset.name = emp.name;
+        card._emp = emp;
         card.onclick = () => selectEmployee(emp);
         card.innerHTML = `
             <div class="emp-avatar">${getInitials(emp.name)}</div>
@@ -1874,10 +1888,11 @@ function selectEmployee(emp) {
     isNoSelection = false;
     selectedCandidate = emp.name;
     selectedCandidateId = emp.id;
+    selectedEmpRef = emp;
     document.getElementById("noSelectCard").classList.remove("selected");
     document.getElementById("noSelectContinueWrap").classList.remove("visible");
     document.querySelectorAll(".emp-card").forEach(c => {
-        c.classList.toggle("selected", c.dataset.name === emp.name);
+        c.classList.toggle("selected", c._emp === emp);
     });
     updateNominateUI();
 }
@@ -1886,6 +1901,7 @@ function selectNoEmployee() {
     isNoSelection = true;
     selectedCandidate = "No Employee Selected This Quarter";
     selectedCandidateId = "";
+    selectedEmpRef = null;
     recognitionStory = "";
     document.getElementById("reasonText").value = "";
     updateCharCount();
