@@ -19,7 +19,6 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-    /* Fixed header = top padding (>= safe-area) + 58px navbar + 8px bottom padding */
     --header-h: calc(max(8px, env(safe-area-inset-top, 8px)) + 66px);
 }
 
@@ -41,8 +40,6 @@ body {
     line-height: 1.6;
     min-height: 100%;
     min-height: 100dvh;
-    /* html is solid #FFFFFF (what Safari samples for its bottom bar).
-       The page image lives on the fixed body::before layer below. */
     background: transparent;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -419,7 +416,6 @@ header {
 
 .step-panel.active { display: block; }
 
-/* Same fade-in as the home page: opacity 0 -> 1, rising 35px over 1.3s */
 @keyframes pageFade {
     from { opacity: 0; transform: translateY(35px); }
     to { opacity: 1; transform: none; }
@@ -1262,7 +1258,6 @@ body.exec-bg::before {
     margin-bottom: 22px;
 }
 
-/* Both Executive pages (Selection + Individual Contributor) share these classes */
 .exec-choice-wrap {
     max-width: 900px;
     margin: 64px auto 0;
@@ -1482,7 +1477,6 @@ input::placeholder, textarea::placeholder {
     font-optical-sizing: none !important;
 }
 
-/* Mobile: tighter vertical density so more fits in one viewport */
 @media (max-width: 700px) {
     .page-header-texts { margin-top: 20px; margin-bottom: 28px; }
     .page-header-texts .line1 { margin-bottom: 12px; }
@@ -1495,7 +1489,7 @@ input::placeholder, textarea::placeholder {
     }
     .dept-img { width: 48px; height: 48px; margin-bottom: 4px; border-radius: 8px; }
     .dept-name { font-size: 0.75rem; }
-    #step2 { padding-top: 110px; }
+    #step2 { padding-top: 90px; }
     .access-box { padding: 18px 16px; margin-top: 0; border-radius: 14px; }
     .access-dept-img { width: 40px; height: 40px; margin-bottom: 10px; }
     .code-field { margin-bottom: 10px; }
@@ -1557,7 +1551,6 @@ input::placeholder, textarea::placeholder {
 
 
 
-/* ===== Criteria popup modal ===== */
 .criteria-modal-overlay {
     display: none;
     position: fixed;
@@ -1689,7 +1682,6 @@ input::placeholder, textarea::placeholder {
 }
 
 
-/* Executive pages (mobile): one set of rules for BOTH pages so they stay identical */
 @media (max-width: 700px) {
     .exec-choice-wrap {
         margin-top: 48px;
@@ -1816,7 +1808,6 @@ input::placeholder, textarea::placeholder {
     </section>
 
     <section class="step-panel" id="step3">
-        <!-- Criteria shown as modal; this panel is a brief placeholder while modal is open -->
         <div class="page-back-wrap">
             <button type="button" class="page-back-btn" onclick="goToStep(2)">Back</button>
         </div>
@@ -2135,7 +2126,6 @@ input::placeholder, textarea::placeholder {
 
 
 
-<!-- Criteria popup -->
 <div class="criteria-modal-overlay" id="criteriaModal" role="dialog" aria-modal="true" aria-labelledby="criteriaModalTitle">
     <div class="criteria-modal">
         <div class="criteria-modal-header">
@@ -3781,7 +3771,7 @@ function saveExecState(panelId) {
             mode: execMode,
             auth: execAuthenticated
         }));
-    } catch (e) { /* storage unavailable: refresh just falls back to Nominate */ }
+    } catch (e) {  }
 }
 
 function clearExecState() {
@@ -3793,7 +3783,6 @@ function showPanel(id) {
     const el = document.getElementById(id);
     if (el) el.classList.add("active");
     window.scrollTo({ top: 0, behavior: "smooth" });
-    // Remember where we are inside Executive; leaving it (e.g. success screen) forgets it.
     if (id.indexOf("exec") === 0) saveExecState(id);
     else clearExecState();
 }
@@ -3806,7 +3795,6 @@ function setDashboardVisible(visible) {
 }
 
 function setExecHeaderMode(inExec) {
-    // Dashboard only after successful executive code — never on the code screen alone.
     const execBtn = document.getElementById("executiveBtn");
     if (execBtn) execBtn.style.display = (inExec && execAuthenticated) ? "none" : "";
     setDashboardVisible(!!(inExec && execAuthenticated));
@@ -4232,19 +4220,15 @@ renderDepartments();
 updateProgress(1);
 updateHeaderTexts(1);
 
-// Leaving Executive through Home / Nominate must not bring the user back to it on load.
 document.querySelectorAll('header a[href="/"], #nominateBtn').forEach(function (a) {
     a.addEventListener("click", clearExecState);
 });
 
-// After a refresh, put the user back on the Executive page they were on.
 function restoreExecState() {
     let saved = null;
     try { saved = JSON.parse(sessionStorage.getItem(EXEC_STATE_KEY) || "null"); } catch (e) {}
     if (!saved || !saved.panel) return;
 
-    // Arriving fresh (e.g. clicking Nominate from the Dashboard) must show the normal
-    // Nominate page. Only a refresh or Back/Forward restores the Executive page.
     let navType = "navigate";
     try {
         const nav = performance.getEntriesByType("navigation")[0];
@@ -4255,7 +4239,6 @@ function restoreExecState() {
         return;
     }
 
-    // Code screen, or any saved state without a successful code entry -> code screen.
     if (!saved.auth || saved.panel === "execAccess") {
         startExecutive();
         return;
@@ -4268,7 +4251,6 @@ function restoreExecState() {
     document.getElementById("progressWrap").style.display = "none";
     document.getElementById("pageHeaderTexts").style.display = "none";
 
-    // Selections live only in memory, so pages deeper than the list restart that list fresh.
     if (saved.panel === "execCategory") {
         goExecIndividual();
     } else if (saved.panel === "execDHNominate" || (saved.panel === "execReview" && saved.mode === "dh")) {
