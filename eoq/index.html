@@ -18,6 +18,11 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+:root {
+    /* Fixed header = top padding (>= safe-area) + 58px navbar + 8px bottom padding */
+    --header-h: calc(max(8px, env(safe-area-inset-top, 8px)) + 66px);
+}
+
 html {
     min-height: 100%;
     min-height: 100dvh;
@@ -44,7 +49,7 @@ body {
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    padding-top: 74px;
+    padding-top: var(--header-h);
     padding-bottom: env(safe-area-inset-bottom, 0);
     display: flex;
     flex-direction: column;
@@ -525,7 +530,7 @@ header {
 .access-box {
     max-width: 440px;
     width: 92%;
-    margin: 24px auto 0;
+    margin: 56px auto 0;
     background: #fff;
     border-radius: 20px;
     padding: 36px 32px;
@@ -1256,9 +1261,10 @@ body.exec-bg {
     margin-bottom: 22px;
 }
 
+/* Both Executive pages (Selection + Individual Contributor) share these classes */
 .exec-choice-wrap {
     max-width: 900px;
-    margin: 56px auto 0;
+    margin: 64px auto 0;
     padding: 0 16px 24px;
 }
 
@@ -1296,7 +1302,8 @@ body.exec-bg {
     background: #fff;
     border: 1px solid #e0edf3;
     border-radius: 16px;
-    padding: 22px 24px;
+    padding: 24px;
+    min-height: 112px;
     cursor: pointer;
     transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     text-align: left;
@@ -1325,6 +1332,7 @@ body.exec-bg {
     font-size: 1.15rem;
     font-weight: 750;
     color: #05255E;
+    line-height: 1.3;
     margin-bottom: 6px;
 }
 
@@ -1346,88 +1354,6 @@ body.exec-bg {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
-    font-weight: 800;
-}
-
-.exec-category-cards {
-    display: flex;
-    flex-direction: row;
-    gap: 18px;
-    max-width: 900px;
-    margin: 28px auto 0;
-    align-items: stretch;
-}
-
-.exec-cat-card {
-    flex: 1 1 0;
-    min-width: 0;
-    min-height: 120px;
-    height: auto;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    background: #fff;
-    border: 1px solid #e0edf3;
-    border-radius: 16px;
-    padding: 22px 24px;
-    text-align: left;
-    cursor: pointer;
-    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-}
-
-@media (max-width: 700px) {
-    .exec-category-cards {
-        flex-direction: column;
-    }
-}
-    
-.exec-cat-card:hover {
-    border-color: #9ddfea;
-    box-shadow: 0 8px 24px rgba(23,50,77,0.1);
-    transform: translateY(-2px);
-}
-
-.exec-cat-img {
-    width: 64px;
-    height: 64px;
-    object-fit: contain;
-    border-radius: 12px;
-    flex-shrink: 0;
-    margin: 0;
-    display: block;
-}
-
-.exec-cat-texts {
-    flex: 1;
-    min-width: 0;
-}
-
-.exec-cat-card h3 {
-    font-size: 1.15rem;
-    font-weight: 750;
-    color: #05255E;
-    margin-bottom: 6px;
-}
-
-.exec-cat-card p {
-    font-size: 0.92rem;
-    color: #557083;
-    font-weight: 500;
-    margin: 0;
-    line-height: 1.45;
-}
-
-.exec-cat-arrow {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: transparent;
-    color: #08245B;
     font-size: 1.1rem;
     font-weight: 800;
 }
@@ -1538,17 +1464,6 @@ body.exec-bg {
 .dh-card.selected .dh-circle-inner,
 .emp-card.selected .emp-circle-inner { opacity: 1; }
 
-@media (max-width: 700px) {
-    .exec-box, .exec-cat-card {
-        padding: 18px 16px;
-        gap: 14px;
-    }
-    .exec-box-img, .exec-cat-img {
-        width: 52px;
-        height: 52px;
-    }
-}
-
 @media (prefers-reduced-motion: reduce) {
     .step-panel, .employee-list-pane, .reason-pane {
         transition: none !important;
@@ -1568,7 +1483,6 @@ input::placeholder, textarea::placeholder {
 
 /* Mobile: tighter vertical density so more fits in one viewport */
 @media (max-width: 700px) {
-    body { padding-top: 58px; }
     .page-header-texts { margin-top: 20px; margin-bottom: 28px; }
     .page-header-texts .line1 { margin-bottom: 12px; }
     .page-header-texts .line2 { margin-bottom: 12px; }
@@ -1580,7 +1494,7 @@ input::placeholder, textarea::placeholder {
     }
     .dept-img { width: 48px; height: 48px; margin-bottom: 4px; border-radius: 8px; }
     .dept-name { font-size: 0.75rem; }
-    .access-box { padding: 18px 16px; margin-top: 8px; border-radius: 14px; }
+    .access-box { padding: 18px 16px; margin-top: 36px; border-radius: 14px; }
     .access-dept-img { width: 40px; height: 40px; margin-bottom: 10px; }
     .code-field { margin-bottom: 10px; }
     .code-field input { height: 40px; font-size: 15px; }
@@ -1636,14 +1550,6 @@ input::placeholder, textarea::placeholder {
     .exec-access-icon { width: 40px; height: 40px; margin-bottom: 8px; }
     .exec-access-headline { font-size: 0.95rem; margin-bottom: 10px; letter-spacing: 0.22em; }
     .exec-access-box h2 { font-size: 0.95rem; margin-bottom: 12px; }
-    .exec-box, .exec-cat-card { padding: 18px 16px; gap: 14px; height: auto; min-height: 88px; }
-    .exec-box-img, .exec-cat-img { width: 36px; height: 36px; }
-    .exec-box-texts h3, .exec-cat-card h3 { font-size: 1rem; margin-bottom: 4px; }
-    .exec-box-texts p, .exec-cat-card p { font-size: 0.85rem; }
-    .exec-box-arrow, .exec-cat-arrow { width: 30px; height: 30px; font-size: 1rem; }
-    .exec-choice-sub { margin-bottom: 14px; font-size: 0.88rem; }
-    .exec-category-cards { margin-top: 20px; gap: 18px; }
-    .exec-boxes { gap: 10px; }
     footer { padding: 10px 14px; font-size: 0.62rem; }
 }
 
@@ -1781,15 +1687,11 @@ input::placeholder, textarea::placeholder {
 }
 
 
-/* Executive pages: clear fixed header + no overlapping cards */
+/* Executive pages (mobile): one set of rules for BOTH pages so they stay identical */
 @media (max-width: 700px) {
-    body {
-        padding-top: 72px;
-    }
     .exec-choice-wrap {
-        margin-top: 40px;
-        padding-top: 8px;
-        padding-bottom: 32px;
+        margin-top: 48px;
+        padding: 0 16px 32px;
     }
     .exec-choice-headline {
         margin-bottom: 10px;
@@ -1799,26 +1701,33 @@ input::placeholder, textarea::placeholder {
         line-height: 1.25;
     }
     .exec-choice-sub {
-        margin-bottom: 24px;
+        margin-bottom: 28px;
         font-size: 0.95rem;
     }
     .exec-boxes {
-        gap: 14px;
-    }
-    .exec-category-cards {
-        flex-direction: column;
-        gap: 14px;
-        margin-top: 20px;
-        width: 100%;
-    }
-    .exec-cat-card {
-        width: 100%;
-        height: auto;
-        min-height: 0;
-        padding: 16px;
+        gap: 16px;
     }
     .exec-box {
-        padding: 16px;
+        padding: 24px 16px;
+        gap: 14px;
+        min-height: 112px;
+        border-radius: 16px;
+    }
+    .exec-box-img {
+        width: 36px;
+        height: 36px;
+    }
+    .exec-box-texts h3 {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+    .exec-box-texts p {
+        font-size: 0.85rem;
+    }
+    .exec-box-arrow {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
     }
     .page-back-wrap {
         margin-top: 24px;
@@ -2078,27 +1987,27 @@ input::placeholder, textarea::placeholder {
     <section class="step-panel" id="execCategory">
         <div class="exec-choice-wrap">
             <div class="exec-choice-headline">
-                <h1 style="font-size: clamp(1.5rem, 3.5vw, 2rem);">Outstanding Individual Contributor</h1>
+                <h1>Outstanding Individual Contributor</h1>
             </div>
-            <div class="exec-choice-sub" style="margin-bottom: 28px;">
-                Select the outstanding individual from your assigned category.
+            <div class="exec-choice-sub">
+                Select the outstanding individual from your assigned category.<br>
             </div>
-            <div class="exec-category-cards">
-                <div class="exec-cat-card" onclick="goExecStaff('admin')">
-                    <img src="admin-staff.jpg" alt="" class="exec-cat-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
-                    <div class="exec-cat-texts">
+            <div class="exec-boxes">
+                <div class="exec-box" onclick="goExecStaff('admin')">
+                    <img src="admin-staff.jpg" alt="" class="exec-box-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
+                    <div class="exec-box-texts">
                         <h3>Administrative Staff</h3>
                         <p>Selected by the Administrative Director</p>
                     </div>
-                    <div class="exec-cat-arrow">→</div>
+                    <div class="exec-box-arrow">→</div>
                 </div>
-                <div class="exec-cat-card" onclick="goExecStaff('medical')">
-                    <img src="medical-staff.jpg" alt="" class="exec-cat-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
-                    <div class="exec-cat-texts">
+                <div class="exec-box" onclick="goExecStaff('medical')">
+                    <img src="medical-staff.jpg" alt="" class="exec-box-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
+                    <div class="exec-box-texts">
                         <h3>Medical Staff</h3>
                         <p>Selected by the Medical Services Director</p>
                     </div>
-                    <div class="exec-cat-arrow">→</div>
+                    <div class="exec-box-arrow">→</div>
                 </div>
             </div>
         </div>
@@ -3861,11 +3770,30 @@ function hideAllPanels() {
     document.querySelectorAll(".step-panel").forEach(p => p.classList.remove("active"));
 }
 
+const EXEC_STATE_KEY = "eoqExecState";
+
+function saveExecState(panelId) {
+    try {
+        sessionStorage.setItem(EXEC_STATE_KEY, JSON.stringify({
+            panel: panelId,
+            mode: execMode,
+            auth: execAuthenticated
+        }));
+    } catch (e) { /* storage unavailable: refresh just falls back to Nominate */ }
+}
+
+function clearExecState() {
+    try { sessionStorage.removeItem(EXEC_STATE_KEY); } catch (e) {}
+}
+
 function showPanel(id) {
     hideAllPanels();
     const el = document.getElementById(id);
     if (el) el.classList.add("active");
     window.scrollTo({ top: 0, behavior: "smooth" });
+    // Remember where we are inside Executive; leaving it (e.g. success screen) forgets it.
+    if (id.indexOf("exec") === 0) saveExecState(id);
+    else clearExecState();
 }
 
 let execAuthenticated = false;
@@ -3987,6 +3915,7 @@ function goExecIndividual() {
 }
 
 function exitExecutive() {
+    clearExecState();
     execAuthenticated = false;
     setDashboardVisible(false);
     setExecHeaderMode(false);
@@ -4300,6 +4229,44 @@ async function confirmExecVote() {
 renderDepartments();
 updateProgress(1);
 updateHeaderTexts(1);
+
+// Leaving Executive through Home / Nominate must not bring the user back to it on load.
+document.querySelectorAll('header a[href="/"], #nominateBtn').forEach(function (a) {
+    a.addEventListener("click", clearExecState);
+});
+
+// After a refresh, put the user back on the Executive page they were on.
+function restoreExecState() {
+    let saved = null;
+    try { saved = JSON.parse(sessionStorage.getItem(EXEC_STATE_KEY) || "null"); } catch (e) {}
+    if (!saved || !saved.panel) return;
+
+    // Code screen, or any saved state without a successful code entry -> code screen.
+    if (!saved.auth || saved.panel === "execAccess") {
+        startExecutive();
+        return;
+    }
+
+    document.body.classList.add("exec-bg");
+    document.body.classList.remove("has-bg", "no-bg");
+    execAuthenticated = true;
+    setExecHeaderMode(true);
+    document.getElementById("progressWrap").style.display = "none";
+    document.getElementById("pageHeaderTexts").style.display = "none";
+
+    // Selections live only in memory, so pages deeper than the list restart that list fresh.
+    if (saved.panel === "execCategory") {
+        goExecIndividual();
+    } else if (saved.panel === "execDHNominate" || (saved.panel === "execReview" && saved.mode === "dh")) {
+        goExecDeptHead();
+    } else if (saved.panel === "execStaffNominate" || saved.panel === "execReview") {
+        if (saved.mode === "admin" || saved.mode === "medical") goExecStaff(saved.mode);
+        else showPanel("execCategory");
+    } else {
+        showPanel("execChoice");
+    }
+}
+restoreExecState();
 </script>
 
 </body>
