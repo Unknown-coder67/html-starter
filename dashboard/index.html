@@ -31,7 +31,11 @@
     --green: #16a34a;
 }
 
-html { min-height: 100%; overflow-y: scroll; }
+html {
+    min-height: 100%;
+    overflow-y: scroll;
+    background-color: #FFFFFF;
+}
 
 body {
     font-family: "DM Sans", Arial, Helvetica, sans-serif;
@@ -41,15 +45,25 @@ body {
     color: var(--navy);
     line-height: 1.5;
     min-height: 100dvh;
+    background-color: #FFFFFF;
+    -webkit-font-smoothing: antialiased;
+    padding-top: 74px;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
     background-color: #f0f6f9;
     background-image: url("/desktop-background.jpg");
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    -webkit-font-smoothing: antialiased;
-    padding-top: 74px;
-    padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
 header {
@@ -86,20 +100,27 @@ header {
     .header-nav { gap: 10px; }
     .header-nav a.nav-btn { font-size: 12.5px; padding: 9px 12px; height: 40px; }
     .header-nav a.nav-btn::after { left: 12px; width: calc(100% - 24px); }
-    body { padding-top: 64px; }
-    .page { padding: 20px 4% 40px; }
-    .top-row { margin-bottom: 18px; }
-    .card { padding: 14px 16px; border-radius: 14px; }
-    .card .amount { font-size: 1.8rem; }
-    .card .pct { font-size: 0.95rem; }
-    .cards { gap: 12px; margin-bottom: 18px; }
-    .tabs { padding: 12px 14px; gap: 6px; }
-    .tab { padding: 7px 12px; font-size: 0.82rem; }
-    thead th { padding: 10px 12px; font-size: 0.75rem; }
-    tbody td { padding: 12px; font-size: 0.85rem; }
+    body { padding-top: 58px; }
+    .page { padding: 14px 4% 28px; }
+    .top-row { margin-bottom: 12px; gap: 12px; }
+    .top-left .eyebrow { font-size: 0.9rem; }
+    .quarter-select { height: 38px; padding: 8px 36px 8px 12px; font-size: 0.85rem; }
+    .export-btn { height: 38px; padding: 0 14px; font-size: 0.85rem; }
+    .card { padding: 12px 14px; border-radius: 12px; }
+    .card .label { font-size: 0.82rem; }
+    .card .amount { font-size: 1.55rem; }
+    .card .pct { font-size: 0.85rem; }
+    .cards { gap: 10px; margin-bottom: 14px; }
+    .tabs { padding: 10px 12px; gap: 6px; }
+    .tab { padding: 6px 10px; font-size: 0.78rem; }
+    .tab .count { padding: 0 7px; font-size: 0.72rem; }
+    thead th { padding: 8px 10px; font-size: 0.72rem; }
+    tbody td { padding: 10px; font-size: 0.8rem; }
+    .dl-btn { width: 32px; height: 32px; }
+    footer { padding: 10px 14px !important; font-size: 0.62rem !important; }
 }
 
-.page { max-width: 1400px; margin: 0 auto; padding: 32px 5% 60px; }
+.page { max-width: 1400px; margin: 0 auto; padding: 32px 5% 60px; flex: 1 0 auto; width: 100%; }
 
 .top-row {
     display: flex; align-items: flex-start; justify-content: space-between;
@@ -278,6 +299,10 @@ td.muted { color: var(--muted); }
     </section>
 
 </main>
+
+<footer style="text-align:center;padding:18px 20px;padding-bottom:max(18px, env(safe-area-inset-bottom, 18px));color:#02102B;font-size:0.7rem;background:transparent;margin-top:auto;">
+    © 2026 Care Medical Jiwar
+</footer>
 
 <script>
 const SUPABASE_URL = "https://fthkfenbpetpzlcpxvoc.supabase.co";
