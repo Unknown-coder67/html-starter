@@ -1258,8 +1258,8 @@ body.exec-bg {
 
 .exec-choice-wrap {
     max-width: 900px;
-    margin: 0 auto;
-    padding: 0 16px;
+    margin: 56px auto 0;
+    padding: 0 16px 24px;
 }
 
 .exec-choice-headline {
@@ -1356,12 +1356,14 @@ body.exec-bg {
     gap: 18px;
     max-width: 900px;
     margin: 28px auto 0;
+    align-items: stretch;
 }
 
 .exec-cat-card {
     flex: 1 1 0;
     min-width: 0;
-    height: 200px;
+    min-height: 120px;
+    height: auto;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -1776,6 +1778,52 @@ input::placeholder, textarea::placeholder {
     .criteria-modal-actions { padding: 14px 16px 18px; }
     .criteria-modal-actions .got-it-btn { padding: 10px 24px; font-size: 0.88rem; }
     .criteria-modal-actions .criteria-back-btn { font-size: 0.88rem; margin-top: 12px; }
+}
+
+
+/* Executive pages: clear fixed header + no overlapping cards */
+@media (max-width: 700px) {
+    body {
+        padding-top: 72px;
+    }
+    .exec-choice-wrap {
+        margin-top: 40px;
+        padding-top: 8px;
+        padding-bottom: 32px;
+    }
+    .exec-choice-headline {
+        margin-bottom: 10px;
+    }
+    .exec-choice-headline h1 {
+        font-size: clamp(1.4rem, 6vw, 1.85rem);
+        line-height: 1.25;
+    }
+    .exec-choice-sub {
+        margin-bottom: 24px;
+        font-size: 0.95rem;
+    }
+    .exec-boxes {
+        gap: 14px;
+    }
+    .exec-category-cards {
+        flex-direction: column;
+        gap: 14px;
+        margin-top: 20px;
+        width: 100%;
+    }
+    .exec-cat-card {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        padding: 16px;
+    }
+    .exec-box {
+        padding: 16px;
+    }
+    .page-back-wrap {
+        margin-top: 24px;
+        margin-bottom: 16px;
+    }
 }
 
 </style>
