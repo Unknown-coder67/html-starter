@@ -45,7 +45,12 @@ body {
     color: var(--navy);
     line-height: 1.5;
     min-height: 100dvh;
-    background-color: #FFFFFF;
+    background-color: #e8f4f8;
+    background-image: url("/desktop-background.jpg");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     padding-top: 74px;
     padding-bottom: env(safe-area-inset-bottom, 0);
@@ -53,17 +58,12 @@ body {
     display: flex;
     flex-direction: column;
 }
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-color: #f0f6f9;
-    background-image: url("/desktop-background.jpg");
-    background-size: cover;
-    background-position: center top;
-    background-repeat: no-repeat;
+
+@media (max-width: 700px) {
+    body {
+        background-image: url("/mobile-background.jpg");
+        background-attachment: scroll;
+    }
 }
 
 header {
