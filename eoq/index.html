@@ -52,26 +52,22 @@ body::before {
     z-index: -1;
     pointer-events: none;
     background-color: #e8f4f8;
+    background-image: url("/desktop-background.jpg");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
 }
 
-body.has-bg::before {
-    background-image: url("/desktop-background.jpg");
+body.has-bg::before,
+body.no-bg::before,
+body.exec-bg::before {
+    background-image: url("/desktop-background.jpg") !important;
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
     background-color: #e8f4f8;
 }
 
-@media (max-width: 700px) {
-    body.has-bg::before {
-        background-image: url("/mobile-background.jpg");
-    }
-}
-
-body.no-bg::before {
-    background-image: none !important;
-    background-color: #f0f6f9;
-}
 body.no-bg {
     background-color: #FFFFFF;
 }
@@ -1698,12 +1694,9 @@ input::placeholder, textarea::placeholder {
 }
 .criteria-modal-body {
     padding: 16px 22px 8px;
-    overflow-y: auto;
-    flex: 1 1 auto;
     color: #17324d;
     font-size: 0.9rem;
     line-height: 1.5;
-    -webkit-overflow-scrolling: touch;
 }
 .criteria-modal-body h3 {
     color: #05255E;
@@ -1721,13 +1714,19 @@ input::placeholder, textarea::placeholder {
     color: #3a4f63;
     font-weight: 500;
 }
-.criteria-modal-footer {
-    padding: 14px 22px 18px;
-    border-top: 1px solid #e8f0f4;
-    text-align: center;
-    flex-shrink: 0;
+.criteria-modal-scroll {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    min-height: 0;
 }
-.criteria-modal-footer .got-it-btn {
+.criteria-modal-actions {
+    padding: 18px 22px 24px;
+    text-align: center;
+    border-top: 1px solid #e8f0f4;
+    margin-top: 8px;
+}
+.criteria-modal-actions .got-it-btn {
     display: inline-block;
     background: #D79A1E;
     color: #17171D;
@@ -1739,8 +1738,26 @@ input::placeholder, textarea::placeholder {
     cursor: pointer;
     transition: box-shadow 0.25s;
 }
-.criteria-modal-footer .got-it-btn:hover {
+.criteria-modal-actions .got-it-btn:hover {
     box-shadow: 0 0 22px rgba(215,154,30,0.5);
+}
+.criteria-modal-actions .criteria-back-btn {
+    display: block;
+    margin: 14px auto 0;
+    background: none;
+    border: none;
+    padding: 6px 10px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #08245B;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.criteria-modal-actions .criteria-back-btn:hover {
+    color: #00B7E2;
 }
 @media (max-width: 700px) {
     .criteria-modal {
@@ -1751,8 +1768,9 @@ input::placeholder, textarea::placeholder {
     .criteria-modal-header h2 { font-size: 1.05rem; }
     .criteria-modal-body { padding: 12px 16px 6px; font-size: 0.82rem; }
     .criteria-modal-body h3 { font-size: 0.88rem; margin: 10px 0 4px; }
-    .criteria-modal-footer { padding: 10px 16px 14px; }
-    .criteria-modal-footer .got-it-btn { padding: 10px 24px; font-size: 0.88rem; }
+    .criteria-modal-actions { padding: 14px 16px 18px; }
+    .criteria-modal-actions .got-it-btn { padding: 10px 24px; font-size: 0.88rem; }
+    .criteria-modal-actions .criteria-back-btn { font-size: 0.88rem; margin-top: 12px; }
 }
 
 </style>
@@ -2160,9 +2178,12 @@ input::placeholder, textarea::placeholder {
             <h2 id="criteriaModalTitle">Evaluation Criteria</h2>
             <p id="criteriaModalSub">Review the standards for this department before nominating.</p>
         </div>
-        <div class="criteria-modal-body" id="criteriaModalBody"></div>
-        <div class="criteria-modal-footer">
-            <button type="button" class="got-it-btn" onclick="closeCriteriaModal()">GOT IT – LET’S BEGIN</button>
+        <div class="criteria-modal-scroll" id="criteriaModalScroll">
+            <div class="criteria-modal-body" id="criteriaModalBody"></div>
+            <div class="criteria-modal-actions">
+                <button type="button" class="got-it-btn" onclick="closeCriteriaModal()">GOT IT – LET’S BEGIN</button>
+                <button type="button" class="criteria-back-btn" onclick="criteriaModalBack()">Back</button>
+            </div>
         </div>
     </div>
 </div>
@@ -3188,6 +3209,15 @@ function openCriteriaModal() {
   if (sub) sub.textContent = "These standards help ensure fair and meaningful recognition for this department.";
   overlay.classList.add("open");
   document.body.style.overflow = "hidden";
+  const scrollEl = document.getElementById("criteriaModalScroll");
+  if (scrollEl) scrollEl.scrollTop = 0;
+}
+
+function criteriaModalBack() {
+  const overlay = document.getElementById("criteriaModal");
+  if (overlay) overlay.classList.remove("open");
+  document.body.style.overflow = "";
+  goToStep(2);
 }
 
 function closeCriteriaModal() {
