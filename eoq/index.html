@@ -35,7 +35,13 @@ body {
     line-height: 1.6;
     min-height: 100%;
     min-height: 100dvh;
-    background-color: #FFFFFF;
+    /* Image on body itself — solid white was covering body::before (z-index: -1) */
+    background-color: #e8f4f8;
+    background-image: url("/desktop-background.jpg");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     padding-top: 74px;
@@ -45,31 +51,37 @@ body {
     overflow-x: hidden;
     position: relative;
 }
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-color: #e8f4f8;
+
+@media (max-width: 700px) {
+    body {
+        background-image: url("/mobile-background.jpg");
+        background-attachment: scroll; /* iOS is more reliable without fixed */
+    }
+}
+
+body.has-bg,
+body.no-bg,
+body.exec-bg {
     background-image: url("/desktop-background.jpg");
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
-}
-
-body.has-bg::before,
-body.no-bg::before,
-body.exec-bg::before {
-    background-image: url("/desktop-background.jpg") !important;
-    background-size: cover;
-    background-position: center top;
-    background-repeat: no-repeat;
+    background-attachment: fixed;
     background-color: #e8f4f8;
 }
 
+@media (max-width: 700px) {
+    body.has-bg,
+    body.no-bg,
+    body.exec-bg {
+        background-image: url("/mobile-background.jpg");
+        background-attachment: scroll;
+    }
+}
+
 body.no-bg {
-    background-color: #FFFFFF;
+    /* keep the photo even on success */
+    background-color: #e8f4f8;
 }
 
 header {
@@ -1204,13 +1216,7 @@ footer {
 }
 
 
-body.exec-bg::before {
-    background-image: url("/desktop-background.jpg") !important;
-    background-size: cover;
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-color: #e8f4f8;
-}
+
 body.exec-bg {
     background-color: #FFFFFF;
 }
@@ -1625,7 +1631,7 @@ input::placeholder, textarea::placeholder {
     .home-btn { padding: 9px 16px; font-size: 0.8rem; margin-top: 12px; }
     .page-back-wrap { margin: 12px auto 0; }
     .top-search-input { height: 36px; font-size: 0.82rem; }
-    .exec-access-box { padding: 20px 16px; margin-top: 80px; }
+    .exec-access-box { padding: 20px 16px; margin-top: 120px; }
     .exec-access-icon { width: 40px; height: 40px; margin-bottom: 8px; }
     .exec-access-headline { font-size: 0.95rem; margin-bottom: 10px; letter-spacing: 0.22em; }
     .exec-access-box h2 { font-size: 0.95rem; margin-bottom: 12px; }
