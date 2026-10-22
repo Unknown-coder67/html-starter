@@ -11,7 +11,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&family=Barlow+Semi+Condensed:wght@300&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -22,6 +22,7 @@ html {
     min-height: 100%;
     min-height: 100dvh;
     overflow-y: scroll;
+    background-color: #FFFFFF;
 }
 
 body {
@@ -34,7 +35,7 @@ body {
     line-height: 1.6;
     min-height: 100%;
     min-height: 100dvh;
-    background-color: #e8f4f8;
+    background-color: #FFFFFF;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     padding-top: 74px;
@@ -42,25 +43,37 @@ body {
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    position: relative;
+}
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-color: #e8f4f8;
 }
 
-body.has-bg {
+body.has-bg::before {
     background-image: url("/desktop-background.jpg");
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-color: #e8f4f8;
 }
 
 @media (max-width: 700px) {
-    body.has-bg {
+    body.has-bg::before {
         background-image: url("/mobile-background.jpg");
     }
 }
 
-body.no-bg {
+body.no-bg::before {
     background-image: none !important;
     background-color: #f0f6f9;
+}
+body.no-bg {
+    background-color: #FFFFFF;
 }
 
 header {
@@ -509,7 +522,7 @@ header {
     background: #fff;
     border-radius: 20px;
     padding: 36px 32px;
-    box-shadow: -8px 12px 28px rgba(23,50,77,0.10), 8px 12px 28px rgba(23,50,77,0.10), 0 16px 32px rgba(23,50,77,0.12);
+    box-shadow: 0 10px 28px rgba(23,50,77,0.12), 0 4px 10px rgba(23,50,77,0.06);
     text-align: center;
 }
 
@@ -1193,12 +1206,15 @@ footer {
 }
 
 
-body.exec-bg {
+body.exec-bg::before {
     background-image: url("/desktop-background.jpg") !important;
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-color: #e8f4f8;
+}
+body.exec-bg {
+    background-color: #FFFFFF;
 }
 
 .exec-access-box {
@@ -1208,7 +1224,7 @@ body.exec-bg {
     background: #fff;
     border-radius: 20px;
     padding: 40px 32px;
-    box-shadow: -8px 12px 28px rgba(23,50,77,0.10), 8px 12px 28px rgba(23,50,77,0.10), 0 16px 32px rgba(23,50,77,0.12);
+    box-shadow: 0 10px 28px rgba(23,50,77,0.12), 0 4px 10px rgba(23,50,77,0.06);
     text-align: center;
 }
 .exec-access-icon {
@@ -1220,10 +1236,12 @@ body.exec-bg {
     display: block;
 }
 .exec-access-headline {
-    font-size: 1.15rem;
-    font-weight: 750;
+    font-family: "Barlow Semi Condensed", "DM Sans", Arial, Helvetica, sans-serif !important;
+    font-size: 1.35rem;
+    font-weight: 300 !important;
+    font-variation-settings: normal !important;
     color: #D6A95B;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.28em;
     margin-bottom: 18px;
     text-transform: uppercase;
 }
@@ -1305,12 +1323,6 @@ body.exec-bg {
     font-weight: 750;
     color: #05255E;
     margin-bottom: 6px;
-}
-.exec-box-texts h3.exec-individual-title {
-    color: #00B7E2;
-}
-.exec-choice-headline h1.exec-individual-h1 {
-    color: #00B7E2;
 }
 
 .exec-box-texts p {
@@ -1548,82 +1560,91 @@ input::placeholder, textarea::placeholder {
 
 /* Mobile: tighter vertical density so more fits in one viewport */
 @media (max-width: 700px) {
-    body { padding-top: 64px; }
-    .page-header-texts { margin-top: 16px; margin-bottom: 20px; }
-    .page-header-texts .line1 { margin-bottom: 8px; }
-    .page-header-texts .line2 { margin-bottom: 10px; }
-    .progress-wrap { margin: 0 auto 22px; }
+    body { padding-top: 58px; }
+    .page-header-texts { margin-top: 10px; margin-bottom: 12px; }
+    .page-header-texts .line1 { margin-bottom: 4px; }
+    .page-header-texts .line2 { margin-bottom: 6px; }
+    .progress-wrap { margin: 0 auto 14px; }
     .dept-card {
-        padding: 12px 10px 10px;
-        aspect-ratio: 200 / 130;
-        border-radius: 12px;
-    }
-    .dept-img { width: 40px; height: 40px; margin-bottom: 6px; border-radius: 10px; }
-    .dept-name { font-size: 0.82rem; }
-    .access-box { padding: 24px 20px; margin-top: 12px; border-radius: 16px; }
-    .access-dept-img { width: 48px; height: 48px; margin-bottom: 14px; }
-    .code-field { margin-bottom: 12px; }
-    .code-field input { height: 44px; }
-    .continue-btn { height: 44px; }
-    .criteria-body { padding: 16px 18px 20px; max-height: 52vh; font-size: 0.85rem; }
-    .criteria-body h3 { font-size: 0.95rem; margin: 12px 0 5px; }
-    .criteria-body li { margin-bottom: 2px; }
-    .got-it-wrapper { margin-top: 14px; padding-top: 12px; }
-    .got-it-btn { padding: 10px 24px; font-size: 0.9rem; }
-    .emp-card, .dh-card {
-        padding: 8px 10px;
-        gap: 10px;
+        padding: 8px 8px 6px;
+        aspect-ratio: 200 / 110;
         border-radius: 10px;
     }
-    .emp-avatar, .dh-avatar { width: 34px; height: 34px; font-size: 0.8rem; }
-    .emp-name, .dh-name { font-size: 0.88rem; }
-    .dh-dept { font-size: 0.72rem; }
-    .emp-circle, .dh-circle { width: 18px; height: 18px; }
-    .emp-circle-inner, .dh-circle-inner { width: 8px; height: 8px; }
-    .dh-list, .emp-list { gap: 8px; max-height: 300px; }
-    .no-select-card { padding: 10px 12px; gap: 10px; margin-top: 20px; }
-    .no-select-circle { width: 22px; height: 22px; }
-    .no-select-circle-inner { width: 10px; height: 10px; }
-    .no-select-img { width: 32px; height: 32px; }
-    .no-select-title { font-size: 0.85rem; }
-    .no-select-desc { font-size: 0.72rem; }
-    .no-select-continue-btn { padding: 9px 18px; font-size: 0.85rem; }
-    .reason-title { font-size: 0.92rem; margin-bottom: 4px; }
-    .reason-hint { font-size: 0.75rem; margin-bottom: 8px; }
-    .reason-textarea { min-height: 90px; padding: 10px 12px; font-size: 0.85rem; }
-    .char-count { margin-bottom: 8px; }
-    .next-btn { padding: 9px 18px; font-size: 0.85rem; }
-    .review-box { padding: 22px 18px; border-radius: 14px; }
-    .review-box h2 { font-size: 1.2rem; margin-bottom: 16px; }
-    .review-person { gap: 12px; margin-bottom: 16px; }
-    .review-avatar { width: 52px; height: 52px; font-size: 1.1rem; }
-    .review-name { font-size: 1.1rem; }
+    .dept-img { width: 32px; height: 32px; margin-bottom: 4px; border-radius: 8px; }
+    .dept-name { font-size: 0.75rem; }
+    .access-box { padding: 18px 16px; margin-top: 8px; border-radius: 14px; }
+    .access-dept-img { width: 40px; height: 40px; margin-bottom: 10px; }
+    .code-field { margin-bottom: 10px; }
+    .code-field input { height: 40px; font-size: 15px; }
+    .continue-btn { height: 40px; font-size: 0.9rem; }
+    .criteria-body { padding: 12px 14px 14px; max-height: 48vh; font-size: 0.8rem; }
+    .criteria-body h3 { font-size: 0.88rem; margin: 8px 0 3px; }
+    .criteria-body li { margin-bottom: 2px; }
+    .got-it-wrapper { margin-top: 10px; padding-top: 8px; }
+    .got-it-btn { padding: 8px 20px; font-size: 0.82rem; }
+    .emp-card, .dh-card {
+        padding: 6px 8px;
+        gap: 8px;
+        border-radius: 8px;
+    }
+    .emp-avatar, .dh-avatar { width: 28px; height: 28px; font-size: 0.72rem; }
+    .emp-name, .dh-name { font-size: 0.8rem; }
+    .dh-dept { font-size: 0.68rem; }
+    .emp-circle, .dh-circle { width: 16px; height: 16px; }
+    .emp-circle-inner, .dh-circle-inner { width: 7px; height: 7px; }
+    .dh-list, .emp-list { gap: 6px; max-height: 42vh; }
+    .no-select-card { padding: 8px 10px; gap: 8px; margin-top: 12px; }
+    .no-select-circle { width: 18px; height: 18px; }
+    .no-select-circle-inner { width: 8px; height: 8px; }
+    .no-select-img { width: 28px; height: 28px; }
+    .no-select-title { font-size: 0.78rem; }
+    .no-select-desc { font-size: 0.68rem; }
+    .no-select-continue-btn { padding: 8px 14px; font-size: 0.8rem; }
+    .reason-title { font-size: 0.85rem; margin-bottom: 3px; }
+    .reason-hint { font-size: 0.7rem; margin-bottom: 6px; }
+    .reason-textarea { min-height: 70px; padding: 8px 10px; font-size: 0.8rem; }
+    .char-count { margin-bottom: 6px; font-size: 0.7rem; }
+    .next-btn { padding: 8px 14px; font-size: 0.8rem; }
+    .review-box { padding: 16px 14px; border-radius: 12px; }
+    .review-box h2 { font-size: 1.15rem; margin-bottom: 12px; }
+    .review-person { gap: 10px; margin-bottom: 12px; }
+    .review-avatar { width: 44px; height: 44px; font-size: 1rem; }
+    .review-name { font-size: 1rem; }
     .review-dept { font-size: 0.82rem; }
-    .story-box { padding: 14px 14px 36px; margin-bottom: 16px; min-height: 80px; }
-    .story-box h3 { font-size: 0.85rem; margin-bottom: 8px; }
-    .story-text { font-size: 0.85rem; }
-    .btn-back, .btn-submit { padding: 9px 16px; font-size: 0.85rem; }
-    .success-panel { padding: 28px 22px; margin-top: 16px; }
-    .success-icon-wrap { width: 70px; height: 70px; margin-bottom: 14px; }
-    .success-icon { width: 60px; height: 60px; font-size: 30px; }
-    .success-panel h2 { font-size: 1.3rem; }
+    .story-box { padding: 10px 12px 32px; margin-bottom: 12px; min-height: 64px; }
+    .story-box h3 { font-size: 0.8rem; margin-bottom: 6px; }
+    .story-text { font-size: 0.8rem; }
+    .btn-back, .btn-submit { padding: 8px 14px; font-size: 0.8rem; }
+    .success-panel { padding: 22px 18px; margin-top: 12px; }
+    .success-icon-wrap { width: 60px; height: 60px; margin-bottom: 10px; }
+    .success-icon { width: 52px; height: 52px; font-size: 26px; }
+    .success-panel h2 { font-size: 1.2rem; }
     .success-panel p { font-size: 0.88rem; }
-    .home-btn { padding: 11px 20px; font-size: 0.85rem; margin-top: 16px; }
-    .page-back-wrap { margin: 20px auto 0; }
-    .top-search-input { height: 40px; font-size: 0.88rem; }
-    .exec-access-box { padding: 28px 22px; margin-top: 20px; }
-    .exec-access-icon { width: 48px; height: 48px; margin-bottom: 12px; }
-    .exec-access-headline { font-size: 1rem; margin-bottom: 12px; }
-    .exec-access-box h2 { font-size: 1.05rem; margin-bottom: 16px; }
-    .exec-box, .exec-cat-card { padding: 14px 14px; gap: 12px; height: auto; min-height: 0; }
-    .exec-box-img, .exec-cat-img { width: 44px; height: 44px; }
-    .exec-box-texts h3, .exec-cat-card h3 { font-size: 1rem; margin-bottom: 4px; }
-    .exec-box-texts p, .exec-cat-card p { font-size: 0.82rem; }
+    .home-btn { padding: 9px 16px; font-size: 0.8rem; margin-top: 12px; }
+    .page-back-wrap { margin: 12px auto 0; }
+    .top-search-input { height: 36px; font-size: 0.82rem; }
+    .exec-access-box { padding: 20px 16px; margin-top: 12px; }
+    .exec-access-icon { width: 40px; height: 40px; margin-bottom: 8px; }
+    .exec-access-headline { font-size: 0.95rem; margin-bottom: 10px; letter-spacing: 0.22em; }
+    .exec-access-box h2 { font-size: 0.95rem; margin-bottom: 12px; }
+    .exec-box, .exec-cat-card { padding: 10px 12px; gap: 10px; height: auto; min-height: 0; }
+    .exec-box-img, .exec-cat-img { width: 36px; height: 36px; }
+    .exec-box-texts h3, .exec-cat-card h3 { font-size: 0.9rem; margin-bottom: 2px; }
+    .exec-box-texts p, .exec-cat-card p { font-size: 0.75rem; }
     .exec-box-arrow, .exec-cat-arrow { width: 30px; height: 30px; font-size: 1rem; }
-    .exec-choice-sub { margin-bottom: 20px; font-size: 0.95rem; }
-    .exec-category-cards { margin-top: 16px; gap: 12px; }
-    .exec-boxes { gap: 12px; }
-    footer { padding: 12px 16px; font-size: 0.65rem; }
+    .exec-choice-sub { margin-bottom: 14px; font-size: 0.88rem; }
+    .exec-category-cards { margin-top: 12px; gap: 10px; }
+    .exec-boxes { gap: 10px; }
+    footer { padding: 10px 14px; font-size: 0.62rem; }
+}
+
+
+.exec-access-headline {
+    font-family: "Barlow Semi Condensed", "DM Sans", Arial, Helvetica, sans-serif !important;
+    font-weight: 300 !important;
+    font-variation-settings: normal !important;
+    font-optical-sizing: auto !important;
+    letter-spacing: 0.28em !important;
 }
 
 </style>
@@ -1938,7 +1959,7 @@ input::placeholder, textarea::placeholder {
                 <div class="exec-box" onclick="goExecIndividual()">
                     <img src="individual-contributor.jpg" alt="" class="exec-box-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
                     <div class="exec-box-texts">
-                        <h3 class="exec-individual-title">Outstanding Individual Contributor</h3>
+                        <h3>Outstanding Individual Contributor</h3>
                         <p>Select the outstanding individual in your assigned category.</p>
                     </div>
                     <div class="exec-box-arrow">→</div>
@@ -1953,7 +1974,7 @@ input::placeholder, textarea::placeholder {
     <section class="step-panel" id="execCategory">
         <div class="exec-choice-wrap">
             <div class="exec-choice-headline">
-                <h1 class="exec-individual-h1" style="font-size: clamp(1.5rem, 3.5vw, 2rem);">Outstanding Individual Contributor</h1>
+                <h1 style="font-size: clamp(1.5rem, 3.5vw, 2rem);">Outstanding Individual Contributor</h1>
             </div>
             <div class="exec-choice-sub" style="margin-bottom: 28px;">
                 Select the outstanding individual from your assigned category.
