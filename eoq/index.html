@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="icon" type="image/png" href="/favicon.png">
 <title>Nominate | Care Medical Jiwar</title>
 
@@ -507,7 +509,7 @@ header {
     background: #fff;
     border-radius: 20px;
     padding: 36px 32px;
-    box-shadow: 0 12px 40px rgba(23,50,77,0.12);
+    box-shadow: -8px 12px 28px rgba(23,50,77,0.10), 8px 12px 28px rgba(23,50,77,0.10), 0 16px 32px rgba(23,50,77,0.12);
     text-align: center;
 }
 
@@ -1206,8 +1208,24 @@ body.exec-bg {
     background: #fff;
     border-radius: 20px;
     padding: 40px 32px;
-    box-shadow: 0 12px 40px rgba(23,50,77,0.12);
+    box-shadow: -8px 12px 28px rgba(23,50,77,0.10), 8px 12px 28px rgba(23,50,77,0.10), 0 16px 32px rgba(23,50,77,0.12);
     text-align: center;
+}
+.exec-access-icon {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+    border-radius: 14px;
+    margin: 0 auto 16px;
+    display: block;
+}
+.exec-access-headline {
+    font-size: 1.15rem;
+    font-weight: 750;
+    color: #D6A95B;
+    letter-spacing: 0.06em;
+    margin-bottom: 18px;
+    text-transform: uppercase;
 }
 
 .exec-access-box h2 {
@@ -1287,6 +1305,12 @@ body.exec-bg {
     font-weight: 750;
     color: #05255E;
     margin-bottom: 6px;
+}
+.exec-box-texts h3.exec-individual-title {
+    color: #00B7E2;
+}
+.exec-choice-headline h1.exec-individual-h1 {
+    color: #00B7E2;
 }
 
 .exec-box-texts p {
@@ -1521,6 +1545,87 @@ input::placeholder, textarea::placeholder {
     font-variation-settings: "opsz" 14, "wght" 750 !important;
     font-optical-sizing: none !important;
 }
+
+/* Mobile: tighter vertical density so more fits in one viewport */
+@media (max-width: 700px) {
+    body { padding-top: 64px; }
+    .page-header-texts { margin-top: 16px; margin-bottom: 20px; }
+    .page-header-texts .line1 { margin-bottom: 8px; }
+    .page-header-texts .line2 { margin-bottom: 10px; }
+    .progress-wrap { margin: 0 auto 22px; }
+    .dept-card {
+        padding: 12px 10px 10px;
+        aspect-ratio: 200 / 130;
+        border-radius: 12px;
+    }
+    .dept-img { width: 40px; height: 40px; margin-bottom: 6px; border-radius: 10px; }
+    .dept-name { font-size: 0.82rem; }
+    .access-box { padding: 24px 20px; margin-top: 12px; border-radius: 16px; }
+    .access-dept-img { width: 48px; height: 48px; margin-bottom: 14px; }
+    .code-field { margin-bottom: 12px; }
+    .code-field input { height: 44px; }
+    .continue-btn { height: 44px; }
+    .criteria-body { padding: 16px 18px 20px; max-height: 52vh; font-size: 0.85rem; }
+    .criteria-body h3 { font-size: 0.95rem; margin: 12px 0 5px; }
+    .criteria-body li { margin-bottom: 2px; }
+    .got-it-wrapper { margin-top: 14px; padding-top: 12px; }
+    .got-it-btn { padding: 10px 24px; font-size: 0.9rem; }
+    .emp-card, .dh-card {
+        padding: 8px 10px;
+        gap: 10px;
+        border-radius: 10px;
+    }
+    .emp-avatar, .dh-avatar { width: 34px; height: 34px; font-size: 0.8rem; }
+    .emp-name, .dh-name { font-size: 0.88rem; }
+    .dh-dept { font-size: 0.72rem; }
+    .emp-circle, .dh-circle { width: 18px; height: 18px; }
+    .emp-circle-inner, .dh-circle-inner { width: 8px; height: 8px; }
+    .dh-list, .emp-list { gap: 8px; max-height: 300px; }
+    .no-select-card { padding: 10px 12px; gap: 10px; margin-top: 20px; }
+    .no-select-circle { width: 22px; height: 22px; }
+    .no-select-circle-inner { width: 10px; height: 10px; }
+    .no-select-img { width: 32px; height: 32px; }
+    .no-select-title { font-size: 0.85rem; }
+    .no-select-desc { font-size: 0.72rem; }
+    .no-select-continue-btn { padding: 9px 18px; font-size: 0.85rem; }
+    .reason-title { font-size: 0.92rem; margin-bottom: 4px; }
+    .reason-hint { font-size: 0.75rem; margin-bottom: 8px; }
+    .reason-textarea { min-height: 90px; padding: 10px 12px; font-size: 0.85rem; }
+    .char-count { margin-bottom: 8px; }
+    .next-btn { padding: 9px 18px; font-size: 0.85rem; }
+    .review-box { padding: 22px 18px; border-radius: 14px; }
+    .review-box h2 { font-size: 1.2rem; margin-bottom: 16px; }
+    .review-person { gap: 12px; margin-bottom: 16px; }
+    .review-avatar { width: 52px; height: 52px; font-size: 1.1rem; }
+    .review-name { font-size: 1.1rem; }
+    .review-dept { font-size: 0.82rem; }
+    .story-box { padding: 14px 14px 36px; margin-bottom: 16px; min-height: 80px; }
+    .story-box h3 { font-size: 0.85rem; margin-bottom: 8px; }
+    .story-text { font-size: 0.85rem; }
+    .btn-back, .btn-submit { padding: 9px 16px; font-size: 0.85rem; }
+    .success-panel { padding: 28px 22px; margin-top: 16px; }
+    .success-icon-wrap { width: 70px; height: 70px; margin-bottom: 14px; }
+    .success-icon { width: 60px; height: 60px; font-size: 30px; }
+    .success-panel h2 { font-size: 1.3rem; }
+    .success-panel p { font-size: 0.88rem; }
+    .home-btn { padding: 11px 20px; font-size: 0.85rem; margin-top: 16px; }
+    .page-back-wrap { margin: 20px auto 0; }
+    .top-search-input { height: 40px; font-size: 0.88rem; }
+    .exec-access-box { padding: 28px 22px; margin-top: 20px; }
+    .exec-access-icon { width: 48px; height: 48px; margin-bottom: 12px; }
+    .exec-access-headline { font-size: 1rem; margin-bottom: 12px; }
+    .exec-access-box h2 { font-size: 1.05rem; margin-bottom: 16px; }
+    .exec-box, .exec-cat-card { padding: 14px 14px; gap: 12px; height: auto; min-height: 0; }
+    .exec-box-img, .exec-cat-img { width: 44px; height: 44px; }
+    .exec-box-texts h3, .exec-cat-card h3 { font-size: 1rem; margin-bottom: 4px; }
+    .exec-box-texts p, .exec-cat-card p { font-size: 0.82rem; }
+    .exec-box-arrow, .exec-cat-arrow { width: 30px; height: 30px; font-size: 1rem; }
+    .exec-choice-sub { margin-bottom: 20px; font-size: 0.95rem; }
+    .exec-category-cards { margin-top: 16px; gap: 12px; }
+    .exec-boxes { gap: 12px; }
+    footer { padding: 12px 16px; font-size: 0.65rem; }
+}
+
 </style>
 </head>
 
@@ -1533,11 +1638,9 @@ input::placeholder, textarea::placeholder {
         </a>
         <nav class="header-nav">
             <a href="/" class="nav-btn" id="homeBtn">Home</a>
+            <a href="/eoq/" class="nav-btn" id="nominateBtn">Nominate</a>
+            <a href="#" class="nav-btn" id="executiveBtn" onclick="startExecutive(event)">Executive</a>
             <a href="/dashboard" class="nav-btn" id="dashboardBtn" style="display:none;">Dashboard</a>
-            <span class="nav-swap">
-                <a href="#" class="nav-btn" id="executiveBtn" onclick="startExecutive(event)">Executive</a>
-                <a href="/eoq/" class="nav-btn nav-hidden" id="nominateBtn">Nominate</a>
-            </span>
         </nav>
     </div>
 </header>
@@ -1798,6 +1901,8 @@ input::placeholder, textarea::placeholder {
 
     <section class="step-panel" id="execAccess">
         <div class="exec-access-box">
+            <img src="lock.jpg" alt="Executive Access" class="exec-access-icon" onerror="this.src='dept-default.jpg'; this.onerror=null;">
+            <div class="exec-access-headline">EXECUTIVE ACCESS</div>
             <h2>Please enter your code to continue.</h2>
             <div class="code-field">
                 <input type="text" id="execCode" placeholder="Department code..." autocomplete="off" inputmode="text" enterkeyhint="go">
@@ -1833,7 +1938,7 @@ input::placeholder, textarea::placeholder {
                 <div class="exec-box" onclick="goExecIndividual()">
                     <img src="individual-contributor.jpg" alt="" class="exec-box-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
                     <div class="exec-box-texts">
-                        <h3>Outstanding Individual Contributor</h3>
+                        <h3 class="exec-individual-title">Outstanding Individual Contributor</h3>
                         <p>Select the outstanding individual in your assigned category.</p>
                     </div>
                     <div class="exec-box-arrow">→</div>
@@ -1848,7 +1953,7 @@ input::placeholder, textarea::placeholder {
     <section class="step-panel" id="execCategory">
         <div class="exec-choice-wrap">
             <div class="exec-choice-headline">
-                <h1 style="font-size: clamp(1.5rem, 3.5vw, 2rem);">Outstanding Individual Contributor</h1>
+                <h1 class="exec-individual-h1" style="font-size: clamp(1.5rem, 3.5vw, 2rem);">Outstanding Individual Contributor</h1>
             </div>
             <div class="exec-choice-sub" style="margin-bottom: 28px;">
                 Select the outstanding individual from your assigned category.
@@ -2447,7 +2552,7 @@ function updateProgress(step) {
         s.classList.remove("active", "completed");
         const circle = s.querySelector(".step-circle");
         if (n < step) {
-            circle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+            circle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#08245B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
         } else {
             circle.textContent = n;
         }
@@ -2829,9 +2934,9 @@ function showPanel(id) {
 
 function setExecHeaderMode(inExec) {
     const execBtn = document.getElementById("executiveBtn");
-    const nominateBtn = document.getElementById("nominateBtn");
-    if (execBtn) execBtn.classList.toggle("nav-hidden", inExec);
-    if (nominateBtn) nominateBtn.classList.toggle("nav-hidden", !inExec);
+    const dashboardBtn = document.getElementById("dashboardBtn");
+    if (execBtn) execBtn.style.display = inExec ? "none" : "";
+    if (dashboardBtn) dashboardBtn.style.display = inExec ? "flex" : "none";
 }
 
 function setExecProgress(mode, step) {
@@ -2845,7 +2950,7 @@ function setExecProgress(mode, step) {
         <div class="progress-steps">
             <div class="progress-bar-fill" id="progressFill" style="width: ${step === 1 ? "0%" : "100%"}; max-width: 50%; left: 25%;"></div>
             <div class="step ${step === 1 ? "active" : "completed"}" data-step="1">
-                <div class="step-circle">${step > 1 ? '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' : "1"}</div>
+                <div class="step-circle">${step > 1 ? '<svg viewBox="0 0 24 24" fill="none" stroke="#08245B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' : "1"}</div>
                 <div class="step-label">Select</div>
             </div>
             <div class="step ${step === 2 ? "active" : ""}" data-step="2">
