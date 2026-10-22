@@ -27,6 +27,7 @@ html {
     min-height: 100%;
     min-height: 100dvh;
     overflow-y: scroll;
+    background: #FFFFFF;
     background-color: #FFFFFF;
 }
 
@@ -40,13 +41,9 @@ body {
     line-height: 1.6;
     min-height: 100%;
     min-height: 100dvh;
-    /* Image on body itself — solid white was covering body::before (z-index: -1) */
-    background-color: #e8f4f8;
-    background-image: url("/desktop-background.jpg");
-    background-size: cover;
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    /* html is solid #FFFFFF (what Safari samples for its bottom bar).
+       The page image lives on the fixed body::before layer below. */
+    background: transparent;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     padding-top: var(--header-h);
@@ -57,36 +54,26 @@ body {
     position: relative;
 }
 
-@media (max-width: 700px) {
-    body {
-        background-image: url("/mobile-background.jpg");
-        background-attachment: scroll; /* iOS is more reliable without fixed */
-    }
-}
-
-body.has-bg,
-body.no-bg,
-body.exec-bg {
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    background-color: #e8f4f8;
     background-image: url("/desktop-background.jpg");
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-color: #e8f4f8;
 }
 
 @media (max-width: 700px) {
-    body.has-bg,
-    body.no-bg,
-    body.exec-bg {
+    body::before {
         background-image: url("/mobile-background.jpg");
-        background-attachment: scroll;
     }
-}
-
-body.no-bg {
-    /* keep the photo even on success */
-    background-color: #e8f4f8;
 }
 
 header {
@@ -422,14 +409,26 @@ header {
 
 .step-panel {
     display: none;
-    animation: fadeUp 0.4s ease;
+    animation: pageFade 1.3s ease;
+}
+
+.page-header-texts,
+.progress-wrap {
+    animation: pageFade 1.3s ease;
 }
 
 .step-panel.active { display: block; }
 
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(14px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Same fade-in as the home page: opacity 0 -> 1, rising 35px over 1.3s */
+@keyframes pageFade {
+    from { opacity: 0; transform: translateY(35px); }
+    to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .step-panel,
+    .page-header-texts,
+    .progress-wrap { animation: none; }
 }
 
 .top-search-wrap {
@@ -527,10 +526,12 @@ header {
     justify-content: center;
 }
 
+#step2 { padding-top: 44px; }
+
 .access-box {
     max-width: 440px;
     width: 92%;
-    margin: 56px auto 0;
+    margin: 0 auto;
     background: #fff;
     border-radius: 20px;
     padding: 36px 32px;
@@ -1221,7 +1222,7 @@ footer {
 
 
 
-body.exec-bg {
+body.exec-bg::before {
     background-color: #FFFFFF;
 }
 
@@ -1494,7 +1495,8 @@ input::placeholder, textarea::placeholder {
     }
     .dept-img { width: 48px; height: 48px; margin-bottom: 4px; border-radius: 8px; }
     .dept-name { font-size: 0.75rem; }
-    .access-box { padding: 18px 16px; margin-top: 36px; border-radius: 14px; }
+    #step2 { padding-top: 110px; }
+    .access-box { padding: 18px 16px; margin-top: 0; border-radius: 14px; }
     .access-dept-img { width: 40px; height: 40px; margin-bottom: 10px; }
     .code-field { margin-bottom: 10px; }
     .code-field input { height: 40px; font-size: 15px; }
@@ -1967,7 +1969,7 @@ input::placeholder, textarea::placeholder {
                         <h3>Outstanding Department Head</h3>
                         <p>Select the leading department head</p>
                     </div>
-                    <div class="exec-box-arrow">→</div>
+                    <div class="exec-box-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
                 </div>
                 <div class="exec-box" onclick="goExecIndividual()">
                     <img src="individual-contributor.jpg" alt="" class="exec-box-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
@@ -1975,7 +1977,7 @@ input::placeholder, textarea::placeholder {
                         <h3>Outstanding Individual Contributor</h3>
                         <p>Select the outstanding individual in your assigned category.</p>
                     </div>
-                    <div class="exec-box-arrow">→</div>
+                    <div class="exec-box-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
                 </div>
             </div>
         </div>
@@ -1999,7 +2001,7 @@ input::placeholder, textarea::placeholder {
                         <h3>Administrative Staff</h3>
                         <p>Selected by the Administrative Director</p>
                     </div>
-                    <div class="exec-box-arrow">→</div>
+                    <div class="exec-box-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
                 </div>
                 <div class="exec-box" onclick="goExecStaff('medical')">
                     <img src="medical-staff.jpg" alt="" class="exec-box-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
@@ -2007,7 +2009,7 @@ input::placeholder, textarea::placeholder {
                         <h3>Medical Staff</h3>
                         <p>Selected by the Medical Services Director</p>
                     </div>
-                    <div class="exec-box-arrow">→</div>
+                    <div class="exec-box-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
                 </div>
             </div>
         </div>
@@ -4240,6 +4242,18 @@ function restoreExecState() {
     let saved = null;
     try { saved = JSON.parse(sessionStorage.getItem(EXEC_STATE_KEY) || "null"); } catch (e) {}
     if (!saved || !saved.panel) return;
+
+    // Arriving fresh (e.g. clicking Nominate from the Dashboard) must show the normal
+    // Nominate page. Only a refresh or Back/Forward restores the Executive page.
+    let navType = "navigate";
+    try {
+        const nav = performance.getEntriesByType("navigation")[0];
+        if (nav && nav.type) navType = nav.type;
+    } catch (e) {}
+    if (navType !== "reload" && navType !== "back_forward") {
+        clearExecState();
+        return;
+    }
 
     // Code screen, or any saved state without a successful code entry -> code screen.
     if (!saved.auth || saved.panel === "execAccess") {
