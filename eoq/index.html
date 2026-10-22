@@ -11,7 +11,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&family=Barlow+Semi+Condensed:wght@300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -522,7 +522,9 @@ header {
     background: #fff;
     border-radius: 20px;
     padding: 36px 32px;
-    box-shadow: 0 10px 28px rgba(23,50,77,0.12), 0 4px 10px rgba(23,50,77,0.06);
+    box-shadow: 0 12px 28px rgba(23,50,77,0.14);
+    clip-path: inset(0 -48px -48px -48px);
+    -webkit-clip-path: inset(0 -48px -48px -48px);
     text-align: center;
 }
 
@@ -1224,7 +1226,9 @@ body.exec-bg {
     background: #fff;
     border-radius: 20px;
     padding: 40px 32px;
-    box-shadow: 0 10px 28px rgba(23,50,77,0.12), 0 4px 10px rgba(23,50,77,0.06);
+    box-shadow: 0 12px 28px rgba(23,50,77,0.14);
+    clip-path: inset(0 -48px -48px -48px);
+    -webkit-clip-path: inset(0 -48px -48px -48px);
     text-align: center;
 }
 .exec-access-icon {
@@ -1236,12 +1240,10 @@ body.exec-bg {
     display: block;
 }
 .exec-access-headline {
-    font-family: "Barlow Semi Condensed", "DM Sans", Arial, Helvetica, sans-serif !important;
-    font-size: 1.35rem;
-    font-weight: 300 !important;
-    font-variation-settings: normal !important;
+    font-size: 1.15rem;
+    font-weight: 750;
     color: #D6A95B;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.08em;
     margin-bottom: 18px;
     text-transform: uppercase;
 }
@@ -1267,13 +1269,13 @@ body.exec-bg {
 .exec-choice-headline h1 {
     font-size: clamp(1.8rem, 4vw, 2.4rem);
     font-weight: 750;
-    color: #05255E;
+    color: #D6A95B;
     letter-spacing: 0.02em;
 }
 
 .exec-choice-sub {
     text-align: center;
-    color: #00B7E2;
+    color: #557083;
     font-size: 1.05rem;
     font-weight: 500;
     line-height: 1.5;
@@ -1432,7 +1434,8 @@ body.exec-bg {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-height: 380px;
+    /* Exactly ~5 employee cards visible; scroll for the rest */
+    max-height: calc((66px * 5) + (10px * 4));
     overflow-y: auto;
 }
 
@@ -1443,6 +1446,8 @@ body.exec-bg {
     align-items: center;
     gap: 12px;
     padding: 12px 14px;
+    min-height: 66px;
+    box-sizing: border-box;
     background: #FFFFFF;
     border: 1px solid #e0edf3;
     border-radius: 12px;
@@ -1561,10 +1566,10 @@ input::placeholder, textarea::placeholder {
 /* Mobile: tighter vertical density so more fits in one viewport */
 @media (max-width: 700px) {
     body { padding-top: 58px; }
-    .page-header-texts { margin-top: 10px; margin-bottom: 12px; }
-    .page-header-texts .line1 { margin-bottom: 4px; }
-    .page-header-texts .line2 { margin-bottom: 6px; }
-    .progress-wrap { margin: 0 auto 14px; }
+    .page-header-texts { margin-top: 20px; margin-bottom: 28px; }
+    .page-header-texts .line1 { margin-bottom: 12px; }
+    .page-header-texts .line2 { margin-bottom: 12px; }
+    .progress-wrap { margin: 0 auto 28px; }
     .dept-card {
         padding: 8px 8px 6px;
         aspect-ratio: 200 / 110;
@@ -1586,13 +1591,14 @@ input::placeholder, textarea::placeholder {
         padding: 6px 8px;
         gap: 8px;
         border-radius: 8px;
+        min-height: 40px;
     }
     .emp-avatar, .dh-avatar { width: 28px; height: 28px; font-size: 0.72rem; }
     .emp-name, .dh-name { font-size: 0.8rem; }
     .dh-dept { font-size: 0.68rem; }
     .emp-circle, .dh-circle { width: 16px; height: 16px; }
     .emp-circle-inner, .dh-circle-inner { width: 7px; height: 7px; }
-    .dh-list, .emp-list { gap: 6px; max-height: 42vh; }
+    .dh-list, .emp-list { gap: 6px; max-height: calc((40px * 5) + (6px * 4)); }
     .no-select-card { padding: 8px 10px; gap: 8px; margin-top: 12px; }
     .no-select-circle { width: 18px; height: 18px; }
     .no-select-circle-inner { width: 8px; height: 8px; }
@@ -1639,12 +1645,114 @@ input::placeholder, textarea::placeholder {
 }
 
 
-.exec-access-headline {
-    font-family: "Barlow Semi Condensed", "DM Sans", Arial, Helvetica, sans-serif !important;
-    font-weight: 300 !important;
-    font-variation-settings: normal !important;
-    font-optical-sizing: auto !important;
-    letter-spacing: 0.28em !important;
+
+/* ===== Criteria popup modal ===== */
+.criteria-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(8, 36, 91, 0.45);
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    padding-top: max(16px, env(safe-area-inset-top, 16px));
+    padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
+    box-sizing: border-box;
+}
+.criteria-modal-overlay.open {
+    display: flex;
+}
+.criteria-modal {
+    background: #fff;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 560px;
+    max-height: min(82vh, 720px);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 16px 48px rgba(8, 36, 91, 0.22);
+    overflow: hidden;
+    animation: criteriaPop 0.28s ease;
+}
+@keyframes criteriaPop {
+    from { opacity: 0; transform: translateY(18px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.criteria-modal-header {
+    padding: 18px 22px 12px;
+    border-bottom: 1px solid #e8f0f4;
+    flex-shrink: 0;
+}
+.criteria-modal-header h2 {
+    font-size: 1.15rem;
+    font-weight: 750;
+    color: #05255E;
+    margin: 0 0 4px;
+}
+.criteria-modal-header p {
+    font-size: 0.85rem;
+    color: #8aa0b0;
+    margin: 0;
+    font-weight: 500;
+}
+.criteria-modal-body {
+    padding: 16px 22px 8px;
+    overflow-y: auto;
+    flex: 1 1 auto;
+    color: #17324d;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    -webkit-overflow-scrolling: touch;
+}
+.criteria-modal-body h3 {
+    color: #05255E;
+    font-size: 0.95rem;
+    font-weight: 750;
+    margin: 14px 0 6px;
+}
+.criteria-modal-body h3:first-child { margin-top: 0; }
+.criteria-modal-body ol {
+    padding-left: 20px;
+    margin: 0 0 4px;
+}
+.criteria-modal-body li {
+    margin-bottom: 3px;
+    color: #3a4f63;
+    font-weight: 500;
+}
+.criteria-modal-footer {
+    padding: 14px 22px 18px;
+    border-top: 1px solid #e8f0f4;
+    text-align: center;
+    flex-shrink: 0;
+}
+.criteria-modal-footer .got-it-btn {
+    display: inline-block;
+    background: #D79A1E;
+    color: #17171D;
+    border: none;
+    border-radius: 18px;
+    padding: 13px 34px;
+    font-size: 0.98rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: box-shadow 0.25s;
+}
+.criteria-modal-footer .got-it-btn:hover {
+    box-shadow: 0 0 22px rgba(215,154,30,0.5);
+}
+@media (max-width: 700px) {
+    .criteria-modal {
+        max-height: min(78vh, 640px);
+        border-radius: 14px;
+    }
+    .criteria-modal-header { padding: 14px 16px 10px; }
+    .criteria-modal-header h2 { font-size: 1.05rem; }
+    .criteria-modal-body { padding: 12px 16px 6px; font-size: 0.82rem; }
+    .criteria-modal-body h3 { font-size: 0.88rem; margin: 10px 0 4px; }
+    .criteria-modal-footer { padding: 10px 16px 14px; }
+    .criteria-modal-footer .got-it-btn { padding: 10px 24px; font-size: 0.88rem; }
 }
 
 </style>
@@ -1726,88 +1834,13 @@ input::placeholder, textarea::placeholder {
     </section>
 
     <section class="step-panel" id="step3">
-        <div class="criteria-panel">
-            <div class="criteria-body">
-                <h3>First: Professional and Behavioral Commitment</h3>
-                <ol>
-                    <li>Adherence to working hours, attendance, and departure times.</li>
-                    <li>Compliance with hospital rules and policies.</li>
-                    <li>Adherence to professional ethics and medical confidentiality.</li>
-                    <li>Professional appearance and adherence to the official uniform/dress code.</li>
-                    <li>Respect for supervisors, colleagues, patients, and visitors.</li>
-                </ol>
-
-                <h3>Second: Quality of Job Performance</h3>
-                <ol>
-                    <li>Proficiency in performing assigned job duties.</li>
-                    <li>Accuracy in carrying out tasks and minimizing errors.</li>
-                    <li>Timely completion of transactions and tasks without compromising quality.</li>
-                    <li>Ability to work effectively under pressure.</li>
-                </ol>
-
-                <h3>Third: Patient and Visitor Relations</h3>
-                <ol>
-                    <li>Courteous reception and positive communication.</li>
-                    <li>Commitment to patient service and satisfaction.</li>
-                    <li>Professional and tactful handling of complaints and difficult situations.</li>
-                    <li>Demonstrating empathy and consideration for patients’ human needs.</li>
-                    <li>Maintaining patient dignity and privacy.</li>
-                </ol>
-
-                <h3>Fourth: Teamwork and Cooperation</h3>
-                <ol>
-                    <li>Cooperation with team members.</li>
-                    <li>Contributing to a positive work environment.</li>
-                    <li>Sharing knowledge and experience with colleagues.</li>
-                    <li>Supporting other departments when needed.</li>
-                </ol>
-
-                <h3>Fifth: Discipline and Safety</h3>
-                <ol>
-                    <li>Compliance with occupational health and safety procedures.</li>
-                    <li>Compliance with infection prevention and control policies (for clinical staff).</li>
-                    <li>Reporting hazards or professional errors.</li>
-                    <li>Proper use of equipment and tools.</li>
-                    <li>Proper care and protection of hospital property.</li>
-                </ol>
-
-                <h3>Sixth: Professional Development and Learning</h3>
-                <ol>
-                    <li>Commitment to professional self-development.</li>
-                    <li>Participation in training courses and workshops.</li>
-                    <li>Applying acquired knowledge and skills in the workplace.</li>
-                    <li>Keeping up to date with new instructions, policies, and guidelines.</li>
-                    <li>Demonstrating a willingness to improve performance.</li>
-                </ol>
-
-                <h3>Seventh: Initiative and Innovation</h3>
-                <ol>
-                    <li>Suggesting ideas to improve work processes.</li>
-                    <li>Effectively identifying and solving problems.</li>
-                    <li>Taking initiative without waiting for direction.</li>
-                    <li>Participating in quality improvement projects.</li>
-                    <li>Demonstrating flexibility and adaptability to change.</li>
-                </ol>
-
-                <h3>Eighth: Responsibility and Reliability</h3>
-                <ol>
-                    <li>Taking responsibility for assigned duties.</li>
-                    <li>Meeting deadlines.</li>
-                    <li>Demonstrating professional honesty and integrity.</li>
-                    <li>Maintaining the confidentiality and security of patient and hospital information.</li>
-                </ol>
-
-                <div class="got-it-wrapper">
-                    <button class="got-it-btn" onclick="goToStep(4)">GOT IT – LET’S BEGIN</button>
-                </div>
-            </div>
-        </div>
+        <!-- Criteria shown as modal; this panel is a brief placeholder while modal is open -->
         <div class="page-back-wrap">
             <button type="button" class="page-back-btn" onclick="goToStep(2)">Back</button>
         </div>
     </section>
 
-    <section class="step-panel" id="step4">
+<section class="step-panel" id="step4">
         <div class="nominate-outer">
                 <div class="nominate-split" id="nominateSplit">
                     <div class="employee-list-pane">
@@ -2119,6 +2152,21 @@ input::placeholder, textarea::placeholder {
     </section>
 
 
+
+<!-- Criteria popup -->
+<div class="criteria-modal-overlay" id="criteriaModal" role="dialog" aria-modal="true" aria-labelledby="criteriaModalTitle">
+    <div class="criteria-modal">
+        <div class="criteria-modal-header">
+            <h2 id="criteriaModalTitle">Evaluation Criteria</h2>
+            <p id="criteriaModalSub">Review the standards for this department before nominating.</p>
+        </div>
+        <div class="criteria-modal-body" id="criteriaModalBody"></div>
+        <div class="criteria-modal-footer">
+            <button type="button" class="got-it-btn" onclick="closeCriteriaModal()">GOT IT – LET’S BEGIN</button>
+        </div>
+    </div>
+</div>
+
 </main>
 
 <footer>
@@ -2374,6 +2422,782 @@ const departmentEmployees = {
    ]*/
 };
 
+
+const defaultCriteria = [
+  {
+    title: "First: Professional and Behavioral Commitment",
+    items: [
+      "Adherence to working hours, attendance, and departure times.",
+      "Compliance with hospital rules and policies.",
+      "Adherence to professional ethics and medical confidentiality.",
+      "Professional appearance and adherence to the official uniform/dress code.",
+      "Respect for supervisors, colleagues, patients, and visitors."
+    ]
+  },
+  {
+    title: "Second: Quality of Job Performance",
+    items: [
+      "Proficiency in performing assigned job duties.",
+      "Accuracy in carrying out tasks and minimizing errors.",
+      "Timely completion of transactions and tasks without compromising quality.",
+      "Ability to work effectively under pressure."
+    ]
+  },
+  {
+    title: "Third: Patient and Visitor Relations",
+    items: [
+      "Courteous reception and positive communication.",
+      "Commitment to patient service and satisfaction.",
+      "Professional and tactful handling of complaints and difficult situations.",
+      "Demonstrating empathy and consideration for patients’ human needs.",
+      "Maintaining patient dignity and privacy."
+    ]
+  },
+  {
+    title: "Fourth: Teamwork and Cooperation",
+    items: [
+      "Cooperation with team members.",
+      "Contributing to a positive work environment.",
+      "Sharing knowledge and experience with colleagues.",
+      "Supporting other departments when needed."
+    ]
+  },
+  {
+    title: "Fifth: Discipline and Safety",
+    items: [
+      "Compliance with occupational health and safety procedures.",
+      "Compliance with infection prevention and control policies (for clinical staff).",
+      "Reporting hazards or professional errors.",
+      "Proper use of equipment and tools.",
+      "Proper care and protection of hospital property."
+    ]
+  },
+  {
+    title: "Sixth: Professional Development and Learning",
+    items: [
+      "Commitment to professional self-development.",
+      "Participation in training courses and workshops.",
+      "Applying acquired knowledge and skills in the workplace.",
+      "Keeping up to date with new instructions, policies, and guidelines.",
+      "Demonstrating a willingness to improve performance."
+    ]
+  },
+  {
+    title: "Seventh: Initiative and Innovation",
+    items: [
+      "Suggesting ideas to improve work processes.",
+      "Effectively identifying and solving problems.",
+      "Taking initiative without waiting for direction.",
+      "Participating in quality improvement projects.",
+      "Demonstrating flexibility and adaptability to change."
+    ]
+  },
+  {
+    title: "Eighth: Responsibility and Reliability",
+    items: [
+      "Taking responsibility for assigned duties.",
+      "Meeting deadlines.",
+      "Demonstrating professional honesty and integrity.",
+      "Maintaining the confidentiality and security of patient and hospital information."
+    ]
+  }
+];
+
+const departmentCriteria = {
+  "Reception": [
+    {
+      title: "First: Attendance, Conduct & Professionalism",
+      items: [
+        "Commitment to attendance, departure, and shift schedules.",
+        "Courtesy, respect, and good communication with patients, visitors, and colleagues.",
+        "Maintaining discipline and professional conduct at all times.",
+        "Commitment to approved hospital instructions and procedures."
+      ]
+    },
+    {
+      title: "Second: Patient Service & Privacy",
+      items: [
+        "Good dealing with patients, visitors, and colleagues.",
+        "Commitment to confidentiality of patient information and maintaining privacy.",
+        "Keenness to improve the quality of service provided to patients.",
+        "Professional handling of patient complaints and inquiries."
+      ]
+    },
+    {
+      title: "Third: Accuracy & Speed of Reception Work",
+      items: [
+        "Taking responsibility and completing tasks accurately.",
+        "Quick response to tasks and requests.",
+        "Accurate registration of patient data and identity verification.",
+        "Speed in completing patient reception procedures without compromising accuracy.",
+        "Ensuring completeness of required documents and forms.",
+        "Speed in completing admission procedures."
+      ]
+    },
+    {
+      title: "Fourth: Guidance, Coordination & Organization",
+      items: [
+        "Good guidance of patients and visitors to the appropriate departments.",
+        "Effective coordination with nursing, physicians, and relevant departments.",
+        "Commitment to approved admission, transfer, and discharge procedures.",
+        "Maintaining organization of the reception area."
+      ]
+    },
+    {
+      title: "Fifth: Teamwork, Initiative & Resilience",
+      items: [
+        "Cooperation with colleagues and other departments and working as a team.",
+        "Initiative in helping colleagues and providing support when needed.",
+        "Ability to work under pressure and handle emergency situations.",
+        "Initiative to solve problems and report observations."
+      ]
+    }
+  ],
+  "Duty Manager": [
+    {
+      title: "First: Leadership & Shift Ownership",
+      items: [
+        "Takes full ownership of the shift as the on-site point of authority.",
+        "Makes timely, sound decisions under pressure.",
+        "Coordinates effectively with clinical and non-clinical departments.",
+        "Escalates critical issues appropriately and follows through to resolution.",
+        "Maintains a calm, professional presence during peak demand or incidents."
+      ]
+    },
+    {
+      title: "Second: Operational Excellence",
+      items: [
+        "Ensures smooth patient flow and bed management across the shift.",
+        "Monitors staffing levels and redistributes resources when needed.",
+        "Follows hospital protocols for admissions, transfers, and discharges.",
+        "Documents shift events accurately and hands over clearly to the next duty manager."
+      ]
+    },
+    {
+      title: "Third: Patient & Family Communication",
+      items: [
+        "Handles patient and family concerns with empathy and clarity.",
+        "De-escalates conflicts while protecting patient dignity.",
+        "Provides transparent updates during delays or service disruptions.",
+        "Supports front-line staff in difficult conversations."
+      ]
+    },
+    {
+      title: "Fourth: Team Support & Safety",
+      items: [
+        "Supports team members across departments during the shift.",
+        "Enforces safety, infection-control, and emergency procedures.",
+        "Reports hazards and incidents promptly.",
+        "Models respect, fairness, and professionalism to all staff."
+      ]
+    },
+    {
+      title: "Fifth: Reliability & Initiative",
+      items: [
+        "Consistently reliable in attendance and shift coverage.",
+        "Anticipates problems and acts before they escalate.",
+        "Suggests practical improvements to duty processes.",
+        "Upholds confidentiality and hospital policies at all times."
+      ]
+    }
+  ],
+  "Encoder": [
+    {
+      title: "First: Coding Accuracy",
+      items: [
+        "Accurate clinical coding in line with official guidelines and standards.",
+        "Careful review of documentation before code assignment.",
+        "Minimal coding errors and timely correction of issues.",
+        "Maintains confidentiality of clinical information at all times."
+      ]
+    },
+    {
+      title: "Second: Productivity & Quality",
+      items: [
+        "Meets coding turnaround expectations without loss of quality.",
+        "Consistent application of coding standards across cases.",
+        "Clear, professional queries to clinicians when documentation is incomplete.",
+        "Proper use of encoding systems and reference materials."
+      ]
+    },
+    {
+      title: "Third: Collaboration",
+      items: [
+        "Works effectively with clinicians, RCM, and health records teams.",
+        "Shares coding knowledge with team members.",
+        "Responds constructively to audits and feedback.",
+        "Supports a positive, detail-focused team culture."
+      ]
+    },
+    {
+      title: "Fourth: Professional Growth",
+      items: [
+        "Stays current with coding updates and regulations.",
+        "Reliable attendance and ownership of assigned work.",
+        "Initiative to improve coding processes and accuracy.",
+        "Integrity and adherence to hospital policies."
+      ]
+    }
+  ],
+  "Drivers": [
+    {
+      title: "First: Shared Professional Standards",
+      items: [
+        "Commitment to attendance, departure, and shift schedules.",
+        "Commitment to the official uniform and professional appearance.",
+        "Good dealing with patients, companions, and colleagues.",
+        "Courtesy and respect in communication.",
+        "Commitment to confidentiality of patient information and maintaining privacy.",
+        "Taking responsibility and completing tasks accurately.",
+        "Quick response to tasks and requests.",
+        "Commitment to approved hospital instructions and procedures.",
+        "Protecting hospital property and facilities.",
+        "Initiative to report problems."
+      ]
+    },
+    {
+      title: "Second: Teamwork & Resilience",
+      items: [
+        "Cooperation with colleagues and other departments and working as a team.",
+        "Initiative in helping colleagues and providing support when needed.",
+        "Ability to work under pressure and handle emergency situations."
+      ]
+    },
+    {
+      title: "Third: Safe Driving & Vehicle Care",
+      items: [
+        "Commitment to traffic rules and safe driving at all times.",
+        "Maintaining the safety of staff and passengers during transport.",
+        "Responding to transport requests in a timely manner.",
+        "Inspecting the vehicle and ensuring readiness before use.",
+        "Maintaining vehicle cleanliness and order.",
+        "Reporting faults, accidents, and safety-related observations.",
+        "Commitment to designated transport routes and instructions.",
+        "Maintaining the vehicle and hospital property."
+      ]
+    },
+    {
+      title: "Fourth: Ambulance / Emergency Transport",
+      items: [
+        "Quick response to emergency transport calls and requests.",
+        "Commitment to safe driving when transporting emergency cases.",
+        "Ensuring ambulance readiness according to the approved checklist.",
+        "Ensuring availability of required supplies per approved procedures.",
+        "Coordination with the medical team during emergency patient transport.",
+        "Commitment to patient transport procedures and maintaining their safety.",
+        "Immediate reporting of any fault that may affect ambulance readiness."
+      ]
+    }
+  ],
+  "Revenue Cycle Management": [
+    {
+      title: "First: Accuracy & Compliance",
+      items: [
+        "Accurate coding support, billing, and claims submission.",
+        "Compliance with payer rules and hospital financial policies.",
+        "Careful handling of patient financial information.",
+        "Timely follow-up on denials and outstanding accounts."
+      ]
+    },
+    {
+      title: "Second: Service Quality",
+      items: [
+        "Clear, professional communication with patients about billing matters.",
+        "Helpful resolution of billing questions and concerns.",
+        "Effective coordination with clinical and insurance stakeholders.",
+        "Protects confidentiality of financial and clinical data."
+      ]
+    },
+    {
+      title: "Third: Productivity & Reliability",
+      items: [
+        "Meets productivity targets without sacrificing accuracy.",
+        "Organized management of queues and worklists.",
+        "Consistent attendance and ownership of assigned portfolios.",
+        "Proper use of RCM systems and tools."
+      ]
+    },
+    {
+      title: "Fourth: Teamwork & Improvement",
+      items: [
+        "Cooperates with RCM and front-office colleagues.",
+        "Shares knowledge of payer and process updates.",
+        "Suggests process improvements that reduce denials or delays.",
+        "Upholds integrity and professionalism in all financial dealings."
+      ]
+    }
+  ],
+  "Respiratory Therapy": [
+    {
+      title: "First: Clinical Skill",
+      items: [
+        "Competent assessment and delivery of respiratory therapies.",
+        "Safe management of oxygen, ventilators, and related devices.",
+        "Accurate documentation and monitoring of patient response.",
+        "Prompt escalation when respiratory status worsens."
+      ]
+    },
+    {
+      title: "Second: Patient Support",
+      items: [
+        "Clear instruction and reassurance for patients on therapy.",
+        "Respect for comfort, dignity, and cultural needs.",
+        "Education of patients and families on respiratory care.",
+        "Professional communication with the care team."
+      ]
+    },
+    {
+      title: "Third: Safety & Collaboration",
+      items: [
+        "Infection control and equipment hygiene standards.",
+        "Coordination with physicians, nurses, and ICU/ED teams.",
+        "Proper use and maintenance of respiratory equipment.",
+        "Reporting of hazards and equipment faults."
+      ]
+    },
+    {
+      title: "Fourth: Professional Standards",
+      items: [
+        "Reliable coverage of assigned patients and shifts.",
+        "Ongoing development of respiratory therapy knowledge.",
+        "Initiative to improve respiratory care processes.",
+        "Confidentiality and adherence to hospital policies."
+      ]
+    }
+  ],
+  "Radiology": [
+    {
+      title: "First: Imaging Quality & Safety",
+      items: [
+        "High-quality images with correct positioning and protocols.",
+        "Strict radiation safety and ALARA principles.",
+        "Accurate patient identification and exam verification.",
+        "Proper care and operation of imaging equipment."
+      ]
+    },
+    {
+      title: "Second: Patient Care",
+      items: [
+        "Clear explanation of procedures and what to expect.",
+        "Comfort, dignity, and privacy throughout the exam.",
+        "Support for anxious or mobility-limited patients.",
+        "Timely communication of delays or preparation needs."
+      ]
+    },
+    {
+      title: "Third: Workflow & Teamwork",
+      items: [
+        "Efficient scheduling and room turnover.",
+        "Coordination with referring clinicians and support services.",
+        "Reliable documentation and image archiving.",
+        "Support for colleagues during high volume."
+      ]
+    },
+    {
+      title: "Fourth: Professional Standards",
+      items: [
+        "Punctuality and readiness for assigned lists.",
+        "Continuous improvement of technique and knowledge.",
+        "Compliance with hospital and radiation policies.",
+        "Confidentiality of patient images and reports."
+      ]
+    }
+  ],
+  "Laboratory": [
+    {
+      title: "First: Analytical Accuracy",
+      items: [
+        "Precise sample handling, processing, and reporting.",
+        "Strict adherence to laboratory SOPs and quality controls.",
+        "Timely turnaround without compromising result integrity.",
+        "Proper identification and rejection of unsuitable samples."
+      ]
+    },
+    {
+      title: "Second: Safety & Compliance",
+      items: [
+        "Full compliance with biosafety and infection-control rules.",
+        "Correct use of PPE, reagents, and equipment.",
+        "Accurate documentation and audit-ready records.",
+        "Prompt reporting of critical values and incidents."
+      ]
+    },
+    {
+      title: "Third: Service & Collaboration",
+      items: [
+        "Responsive support to clinical departments.",
+        "Clear communication on sample requirements and results.",
+        "Professional interaction with patients during collection when applicable.",
+        "Cooperation within the lab team and across shifts."
+      ]
+    },
+    {
+      title: "Fourth: Reliability & Improvement",
+      items: [
+        "Consistent attendance and shift readiness.",
+        "Ongoing learning of new methods and instruments.",
+        "Ideas that improve lab efficiency and quality.",
+        "Integrity and confidentiality in all laboratory work."
+      ]
+    }
+  ],
+  "Intensive Care Unit": [
+    {
+      title: "First: Clinical Excellence & Quality",
+      items: [
+        "Compliance with infection control and prevention protocols.",
+        "Accuracy and speed in electronic medical record documentation without errors.",
+        "Professional handling of critical cases and emergencies in the unit.",
+        "Applying patient safety standards (identity verification, fall prevention)."
+      ]
+    },
+    {
+      title: "Second: Discipline & Commitment",
+      items: [
+        "Full commitment to shift times (attendance, departure, and handover).",
+        "Adherence to the official uniform, ID badge, and professional appearance.",
+        "No unjustified absences or delays during the evaluation period.",
+        "Flexibility and readiness to cover shortages or extra shifts when needed."
+      ]
+    },
+    {
+      title: "Third: Patient Care & Experience",
+      items: [
+        "Humane, compassionate care and commitment to excellence (Ihsan) standards.",
+        "Full protection of patient privacy and confidentiality of information.",
+        "Record free of complaints via the department or official channels.",
+        "Receiving verbal or written appreciation from patients or their families."
+      ]
+    },
+    {
+      title: "Fourth: Teamwork & Behavior",
+      items: [
+        "Effective cooperation and harmony with the medical team and colleagues.",
+        "Helping train or guide new nursing staff and students in the unit.",
+        "Positive initiative and solving internal problems calmly and professionally.",
+        "Accepting guidance from the unit head and implementing it accurately."
+      ]
+    },
+    {
+      title: "Fifth: Development & Innovation",
+      items: [
+        "Validity of all mandatory certificates (e.g. BLS) and attendance at continuous education.",
+        "Submitting ideas or initiatives to improve the work environment or reduce waiting time.",
+        "Active participation in awareness or educational activities in the unit.",
+        "Delivering short lectures or sharing knowledge with colleagues."
+      ]
+    }
+  ],
+  "Cath Lab": [
+    {
+      title: "First: Procedural Excellence",
+      items: [
+        "Skilled support of diagnostic and interventional procedures.",
+        "Strict sterile technique and radiation safety.",
+        "Accurate preparation, monitoring, and documentation.",
+        "Calm, effective response during procedural complications."
+      ]
+    },
+    {
+      title: "Second: Patient Care",
+      items: [
+        "Clear pre- and post-procedure communication with patients.",
+        "Attention to comfort, dignity, and anxiety reduction.",
+        "Safe transfer and monitoring around the procedure table.",
+        "Respect for privacy throughout the cath-lab journey."
+      ]
+    },
+    {
+      title: "Third: Team & Safety",
+      items: [
+        "Seamless teamwork with cardiologists and lab staff.",
+        "Proper care of cath-lab equipment and inventory.",
+        "Prompt reporting of safety or equipment issues.",
+        "Compliance with all lab and hospital protocols."
+      ]
+    },
+    {
+      title: "Fourth: Reliability",
+      items: [
+        "Punctuality and readiness for scheduled lists.",
+        "Continuous improvement of cath-lab skills.",
+        "Integrity and confidentiality in all cases.",
+        "Initiative that strengthens lab quality and efficiency."
+      ]
+    }
+  ],
+  "Security": [
+    {
+      title: "First: Safety & Vigilance",
+      items: [
+        "Consistent monitoring of assigned areas and access points.",
+        "Prompt, appropriate response to security incidents.",
+        "Knowledge of emergency and evacuation procedures.",
+        "Professional control of access for staff, patients, and visitors."
+      ]
+    },
+    {
+      title: "Second: Conduct & Communication",
+      items: [
+        "Calm, respectful interaction with the public and staff.",
+        "Clear reporting of incidents and unusual activity.",
+        "Discretion and confidentiality in sensitive situations.",
+        "Support for clinical teams during disruptive events."
+      ]
+    },
+    {
+      title: "Third: Reliability",
+      items: [
+        "Punctuality and full coverage of assigned posts.",
+        "Proper uniform and professional appearance.",
+        "Care of security equipment and hospital property.",
+        "Adherence to hospital security policies at all times."
+      ]
+    },
+    {
+      title: "Fourth: Teamwork",
+      items: [
+        "Coordinates effectively with other security officers and departments.",
+        "Supports colleagues during peak periods or incidents.",
+        "Contributes to a safe, respectful hospital environment.",
+        "Takes initiative to prevent risks before they escalate."
+      ]
+    }
+  ],
+  "Information Technology": [
+    {
+      title: "First: System Reliability & Support",
+      items: [
+        "Timely response to IT tickets and user requests.",
+        "Effective troubleshooting of hardware, software, and network issues.",
+        "Maintains uptime and stability of critical hospital systems.",
+        "Clear communication of outages, fixes, and workarounds to users."
+      ]
+    },
+    {
+      title: "Second: Security & Compliance",
+      items: [
+        "Protects systems and data in line with hospital IT security policies.",
+        "Handles access rights and credentials responsibly.",
+        "Reports security risks and incidents promptly.",
+        "Maintains confidentiality of patient and staff information."
+      ]
+    },
+    {
+      title: "Third: Service Quality",
+      items: [
+        "Professional, patient support for clinical and administrative users.",
+        "Documents solutions so issues can be resolved faster next time.",
+        "Prioritizes requests that affect patient care and operations.",
+        "Follows change-management and backup procedures."
+      ]
+    },
+    {
+      title: "Fourth: Teamwork & Improvement",
+      items: [
+        "Collaborates effectively within the IT team and with other departments.",
+        "Shares knowledge and helps colleagues grow technical skills.",
+        "Suggests improvements to systems, processes, or user experience.",
+        "Reliable attendance and ownership of assigned systems and projects."
+      ]
+    }
+  ],
+  "Emergency Department": [
+    {
+      title: "First: Clinical Excellence & Quality",
+      items: [
+        "Compliance with infection control and prevention protocols.",
+        "Accuracy and speed in electronic medical record documentation without errors.",
+        "Professional handling of critical cases and emergencies in the unit.",
+        "Applying patient safety standards (identity verification, fall prevention)."
+      ]
+    },
+    {
+      title: "Second: Discipline & Commitment",
+      items: [
+        "Full commitment to shift times (attendance, departure, and handover).",
+        "Adherence to the official uniform, ID badge, and professional appearance.",
+        "No unjustified absences or delays during the evaluation period.",
+        "Flexibility and readiness to cover shortages or extra shifts when needed."
+      ]
+    },
+    {
+      title: "Third: Patient Care & Experience",
+      items: [
+        "Humane, compassionate care and commitment to excellence (Ihsan) standards.",
+        "Full protection of patient privacy and confidentiality of information.",
+        "Record free of complaints via the department or official channels.",
+        "Receiving verbal or written appreciation from patients or their families."
+      ]
+    },
+    {
+      title: "Fourth: Teamwork & Behavior",
+      items: [
+        "Effective cooperation and harmony with the medical team and colleagues.",
+        "Helping train or guide new nursing staff and students in the unit.",
+        "Positive initiative and solving internal problems calmly and professionally.",
+        "Accepting guidance from the unit head and implementing it accurately."
+      ]
+    },
+    {
+      title: "Fifth: Development & Innovation",
+      items: [
+        "Validity of all mandatory certificates (e.g. BLS) and attendance at continuous education.",
+        "Submitting ideas or initiatives to improve the work environment or reduce waiting time.",
+        "Active participation in awareness or educational activities in the unit.",
+        "Delivering short lectures or sharing knowledge with colleagues."
+      ]
+    }
+  ],
+  "General Practice": [
+    {
+      title: "First: Clinical Care",
+      items: [
+        "Thorough, evidence-based assessment and management.",
+        "Accurate documentation and follow-up planning.",
+        "Appropriate referrals and use of hospital resources.",
+        "Safe prescribing and clear patient education."
+      ]
+    },
+    {
+      title: "Second: Patient Experience",
+      items: [
+        "Respectful, attentive communication in clinic.",
+        "Clear explanations of diagnoses and treatment options.",
+        "Sensitivity to patient concerns and expectations.",
+        "Protection of privacy during consultations."
+      ]
+    },
+    {
+      title: "Third: Teamwork & Efficiency",
+      items: [
+        "Collaboration with nursing and support staff.",
+        "Efficient clinic flow without compromising care quality.",
+        "Reliable attendance and session readiness.",
+        "Support for colleagues during busy clinics."
+      ]
+    },
+    {
+      title: "Fourth: Professionalism",
+      items: [
+        "Continuous learning and guideline awareness.",
+        "Integrity, confidentiality, and policy compliance.",
+        "Constructive ideas to improve primary care services.",
+        "Respectful relationships with all hospital departments."
+      ]
+    }
+  ],
+  "Pharmacy": [
+    {
+      title: "First: Medication Safety & Accuracy",
+      items: [
+        "Error-free dispensing and verification of prescriptions.",
+        "Careful checking of doses, interactions, and allergies.",
+        "Clear labeling and patient counseling when required.",
+        "Strict compliance with controlled-substance procedures."
+      ]
+    },
+    {
+      title: "Second: Service & Communication",
+      items: [
+        "Responsive support to clinical units and physicians.",
+        "Professional communication with patients and staff.",
+        "Timely resolution of medication-related queries.",
+        "Protects confidentiality of patient medication information."
+      ]
+    },
+    {
+      title: "Third: Operational Reliability",
+      items: [
+        "Maintains stock, expiry control, and orderly storage.",
+        "Meets turnaround times without sacrificing accuracy.",
+        "Proper use of pharmacy systems and equipment.",
+        "Reports discrepancies and near misses promptly."
+      ]
+    },
+    {
+      title: "Fourth: Teamwork & Development",
+      items: [
+        "Cooperates with pharmacy and clinical colleagues.",
+        "Shares knowledge on medications and protocols.",
+        "Keeps up with formulary and policy updates.",
+        "Suggests improvements to pharmacy workflow and safety."
+      ]
+    }
+  ],
+  "Cardiology": [
+    {
+      title: "First: Clinical Excellence",
+      items: [
+        "High-quality cardiac care aligned with current guidelines.",
+        "Accurate assessment, monitoring, and documentation.",
+        "Safe performance or support of cardiac procedures.",
+        "Timely recognition and response to cardiac emergencies."
+      ]
+    },
+    {
+      title: "Second: Patient Relations",
+      items: [
+        "Clear explanation of cardiac conditions and care plans.",
+        "Empathy and respect for patients and families.",
+        "Protection of privacy during examinations and counseling.",
+        "Professional handling of concerns and expectations."
+      ]
+    },
+    {
+      title: "Third: Safety & Teamwork",
+      items: [
+        "Compliance with infection control and procedure safety.",
+        "Effective collaboration within the cardiology team.",
+        "Reliable handovers and interdisciplinary communication.",
+        "Proper use and care of cardiology equipment."
+      ]
+    },
+    {
+      title: "Fourth: Responsibility & Growth",
+      items: [
+        "Ownership of assigned patients and clinic duties.",
+        "Ongoing learning in cardiovascular practice.",
+        "Initiative to improve clinic or procedure workflows.",
+        "Honesty, confidentiality, and policy compliance."
+      ]
+    }
+  ]
+};
+
+function getCriteriaForDepartment(deptName) {
+  return departmentCriteria[deptName] || defaultCriteria;
+}
+
+function renderCriteriaHTML(sections) {
+  return sections.map(sec => {
+    const items = sec.items.map(it => `<li>${it}</li>`).join("");
+    return `<h3>${sec.title}</h3><ol>${items}</ol>`;
+  }).join("");
+}
+
+function openCriteriaModal() {
+  const overlay = document.getElementById("criteriaModal");
+  const body = document.getElementById("criteriaModalBody");
+  const sub = document.getElementById("criteriaModalSub");
+  const title = document.getElementById("criteriaModalTitle");
+  if (!overlay || !body) return;
+  const sections = getCriteriaForDepartment(currentDeptName);
+  body.innerHTML = renderCriteriaHTML(sections);
+  if (title) title.textContent = currentDeptName ? `${currentDeptName} — Evaluation Criteria` : "Evaluation Criteria";
+  if (sub) sub.textContent = "These standards help ensure fair and meaningful recognition for this department.";
+  overlay.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeCriteriaModal() {
+  const overlay = document.getElementById("criteriaModal");
+  if (overlay) overlay.classList.remove("open");
+  document.body.style.overflow = "";
+  goToStep(4);
+}
+
+
 function getDeptImage(name) {
     const slug = name.toLowerCase()
         .replace(/&/g, "and")
@@ -2556,6 +3380,14 @@ function goToStep(step) {
 
     if (step === 5) {
         prepareReview();
+    }
+
+    if (step === 3) {
+        openCriteriaModal();
+    } else {
+        const overlay = document.getElementById("criteriaModal");
+        if (overlay) overlay.classList.remove("open");
+        document.body.style.overflow = "";
     }
 
     window.scrollTo({ top: 0, behavior: "smooth" });
