@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="icon" type="image/png" href="/favicon.png">
 <title>Dashboard | Care Medical Jiwar</title>
 
@@ -40,6 +42,11 @@ body {
     line-height: 1.5;
     min-height: 100dvh;
     background-color: #f0f6f9;
+    background-image: url("/desktop-background.jpg");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     padding-top: 74px;
     padding-bottom: env(safe-area-inset-bottom, 0);
@@ -79,6 +86,17 @@ header {
     .header-nav { gap: 10px; }
     .header-nav a.nav-btn { font-size: 12.5px; padding: 9px 12px; height: 40px; }
     .header-nav a.nav-btn::after { left: 12px; width: calc(100% - 24px); }
+    body { padding-top: 64px; }
+    .page { padding: 20px 4% 40px; }
+    .top-row { margin-bottom: 18px; }
+    .card { padding: 14px 16px; border-radius: 14px; }
+    .card .amount { font-size: 1.8rem; }
+    .card .pct { font-size: 0.95rem; }
+    .cards { gap: 12px; margin-bottom: 18px; }
+    .tabs { padding: 12px 14px; gap: 6px; }
+    .tab { padding: 7px 12px; font-size: 0.82rem; }
+    thead th { padding: 10px 12px; font-size: 0.75rem; }
+    tbody td { padding: 12px; font-size: 0.85rem; }
 }
 
 .page { max-width: 1400px; margin: 0 auto; padding: 32px 5% 60px; }
@@ -287,11 +305,10 @@ const DEPARTMENTS = [
 
 const NO_SELECTION_NAME = "No Employee Selected This Quarter";
 
-// Download template settings. If TEMPLATE_URL can't be loaded, a built-in test design is drawn instead.
 const TEMPLATE = {
-    url: "/eoq/template.png",     // my real template (PNG recommended)
-    width: 1080, height: 1350,    // size of my template in pixels
-    avatar: { x: 540, y: 470, radius: 170 },                                   // circle centre + radius
+    url: "/eoq/template.png",
+    width: 1080, height: 1350,
+    avatar: { x: 540, y: 470, radius: 170 },
     name:   { x: 540, y: 760,  size: 64, color: "#08245B", maxWidth: 900 },
     dept:   { x: 540, y: 835,  size: 38, color: "#0E7490", maxWidth: 900 },
     story:  { x: 540, y: 940,  size: 34, color: "#33495f", maxWidth: 820, lineHeight: 48, maxLines: 6 }
@@ -367,7 +384,6 @@ function renderAll() {
     setCard("cardPending",   "pendingAmt",   "pendingPct",   pending,   pPct, progressColor);
     setCard("cardNone",      "noneAmt",      "nonePct",      none,      nPct, null);
 
-    // Tabs
     document.getElementById("tabAll").textContent = total;
     document.getElementById("tabCompleted").textContent = completed;
     document.getElementById("tabPending").textContent = pending;
@@ -510,7 +526,6 @@ async function downloadCard(row) {
     if (tpl) ctx.drawImage(tpl, 0, 0, T.width, T.height);
     else drawTestBackground(ctx, T);
 
-    // Avatar: photo if available (avatar_url column or /eoq/avatars/<name>.jpg), otherwise initials
     const photo = await tryImage(row.avatar || `/eoq/avatars/${slug(row.nominee)}.jpg`);
     const { x, y, radius } = T.avatar;
     ctx.save();
@@ -529,7 +544,6 @@ async function downloadCard(row) {
     ctx.lineWidth = 8; ctx.strokeStyle = "#fff";
     ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2); ctx.stroke();
 
-    // Text
     ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
 
     ctx.fillStyle = T.name.color; fitText(ctx, row.nominee, T.name, 800);
@@ -545,7 +559,6 @@ async function downloadCard(row) {
             .forEach((ln, i) => ctx.fillText(ln, T.story.x, T.story.y + i * T.story.lineHeight));
     }
 
-    // Save to the user's device
     const blob = await new Promise(res => canvas.toBlob(res, "image/png"));
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
@@ -554,7 +567,6 @@ async function downloadCard(row) {
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
 }
 
-// TEST design – shown only until I add a real template at TEMPLATE.url
 function drawTestBackground(ctx, T) {
     const g = ctx.createLinearGradient(0, 0, 0, T.height);
     g.addColorStop(0, "#e8f4f8"); g.addColorStop(1, "#ffffff");
