@@ -1434,7 +1434,6 @@ body.exec-bg {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    /* Exactly ~5 employee cards visible; scroll for the rest */
     max-height: calc((66px * 5) + (10px * 4));
     overflow-y: auto;
 }
@@ -1563,7 +1562,6 @@ input::placeholder, textarea::placeholder {
     font-optical-sizing: none !important;
 }
 
-/* Mobile: tighter vertical density so more fits in one viewport */
 @media (max-width: 700px) {
     body { padding-top: 58px; }
     .page-header-texts { margin-top: 20px; margin-bottom: 28px; }
@@ -1646,7 +1644,6 @@ input::placeholder, textarea::placeholder {
 
 
 
-/* ===== Criteria popup modal ===== */
 .criteria-modal-overlay {
     display: none;
     position: fixed;
@@ -1834,7 +1831,6 @@ input::placeholder, textarea::placeholder {
     </section>
 
     <section class="step-panel" id="step3">
-        <!-- Criteria shown as modal; this panel is a brief placeholder while modal is open -->
         <div class="page-back-wrap">
             <button type="button" class="page-back-btn" onclick="goToStep(2)">Back</button>
         </div>
@@ -2153,7 +2149,6 @@ input::placeholder, textarea::placeholder {
 
 
 
-<!-- Criteria popup -->
 <div class="criteria-modal-overlay" id="criteriaModal" role="dialog" aria-modal="true" aria-labelledby="criteriaModalTitle">
     <div class="criteria-modal">
         <div class="criteria-modal-header">
@@ -3785,11 +3780,17 @@ function showPanel(id) {
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+let execAuthenticated = false;
+
+function setDashboardVisible(visible) {
+    const dashboardBtn = document.getElementById("dashboardBtn");
+    if (dashboardBtn) dashboardBtn.style.display = visible ? "flex" : "none";
+}
+
 function setExecHeaderMode(inExec) {
     const execBtn = document.getElementById("executiveBtn");
-    const dashboardBtn = document.getElementById("dashboardBtn");
-    if (execBtn) execBtn.style.display = inExec ? "none" : "";
-    if (dashboardBtn) dashboardBtn.style.display = inExec ? "flex" : "none";
+    if (execBtn) execBtn.style.display = (inExec && execAuthenticated) ? "none" : "";
+    setDashboardVisible(!!(inExec && execAuthenticated));
 }
 
 function setExecProgress(mode, step) {
@@ -3834,13 +3835,15 @@ function setExecProgress(mode, step) {
 function startExecutive(e) {
     if (e) e.preventDefault();
     execMode = null;
+    execAuthenticated = false;
     document.body.classList.add("exec-bg");
     document.body.classList.remove("has-bg", "no-bg");
     document.getElementById("progressWrap").style.display = "none";
     document.getElementById("pageHeaderTexts").style.display = "none";
     document.getElementById("execCode").value = "";
     document.getElementById("execCodeError").style.display = "none";
-    setExecHeaderMode(true);
+    setDashboardVisible(false);
+    setExecHeaderMode(false);
     showPanel("execAccess");
 }
 
@@ -3861,8 +3864,8 @@ function verifyExecCode() {
     error.style.display = "none";
     document.getElementById("pageHeaderTexts").style.display = "none";
     document.getElementById("progressWrap").style.display = "none";
+    execAuthenticated = true;
     setExecHeaderMode(true);
-    document.getElementById("dashboardBtn").style.display = "flex";
     showPanel("execChoice");
 }
 
@@ -3895,10 +3898,16 @@ function goExecIndividual() {
 }
 
 function exitExecutive() {
-    window.location.href = document.getElementById("nominateBtn").getAttribute("href");
+    execAuthenticated = false;
+    setDashboardVisible(false);
+    setExecHeaderMode(false);
+    window.location.href = document.getElementById("nominateBtn").getAttribute("href") || "/eoq/";
 }
 
 function execBackToAccess() {
+    execAuthenticated = false;
+    setDashboardVisible(false);
+    setExecHeaderMode(false);
     document.getElementById("progressWrap").style.display = "none";
     document.getElementById("pageHeaderTexts").style.display = "none";
     document.getElementById("execCode").value = "";
