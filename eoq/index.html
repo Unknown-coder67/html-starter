@@ -497,8 +497,8 @@ header {
 }
 
 .dept-img {
-    width: 50px;
-    height: 50px;
+    width: 75px;
+    height: 75px;
     object-fit: contain;
     border-radius: 12px;
     margin-bottom: 10px;
@@ -1222,7 +1222,7 @@ body.exec-bg {
 .exec-access-box {
     max-width: 440px;
     width: 92%;
-    margin: 40px auto 0;
+    margin: 100px auto 0;
     background: #fff;
     border-radius: 20px;
     padding: 40px 32px;
@@ -1434,6 +1434,7 @@ body.exec-bg {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    /* Exactly ~5 employee cards visible; scroll for the rest */
     max-height: calc((66px * 5) + (10px * 4));
     overflow-y: auto;
 }
@@ -1562,6 +1563,7 @@ input::placeholder, textarea::placeholder {
     font-optical-sizing: none !important;
 }
 
+/* Mobile: tighter vertical density so more fits in one viewport */
 @media (max-width: 700px) {
     body { padding-top: 58px; }
     .page-header-texts { margin-top: 20px; margin-bottom: 28px; }
@@ -1627,7 +1629,7 @@ input::placeholder, textarea::placeholder {
     .home-btn { padding: 9px 16px; font-size: 0.8rem; margin-top: 12px; }
     .page-back-wrap { margin: 12px auto 0; }
     .top-search-input { height: 36px; font-size: 0.82rem; }
-    .exec-access-box { padding: 20px 16px; margin-top: 12px; }
+    .exec-access-box { padding: 20px 16px; margin-top: 56px; }
     .exec-access-icon { width: 40px; height: 40px; margin-bottom: 8px; }
     .exec-access-headline { font-size: 0.95rem; margin-bottom: 10px; letter-spacing: 0.22em; }
     .exec-access-box h2 { font-size: 0.95rem; margin-bottom: 12px; }
@@ -1644,6 +1646,7 @@ input::placeholder, textarea::placeholder {
 
 
 
+/* ===== Criteria popup modal ===== */
 .criteria-modal-overlay {
     display: none;
     position: fixed;
@@ -1831,6 +1834,7 @@ input::placeholder, textarea::placeholder {
     </section>
 
     <section class="step-panel" id="step3">
+        <!-- Criteria shown as modal; this panel is a brief placeholder while modal is open -->
         <div class="page-back-wrap">
             <button type="button" class="page-back-btn" onclick="goToStep(2)">Back</button>
         </div>
@@ -2149,6 +2153,7 @@ input::placeholder, textarea::placeholder {
 
 
 
+<!-- Criteria popup -->
 <div class="criteria-modal-overlay" id="criteriaModal" role="dialog" aria-modal="true" aria-labelledby="criteriaModalTitle">
     <div class="criteria-modal">
         <div class="criteria-modal-header">
@@ -3788,6 +3793,7 @@ function setDashboardVisible(visible) {
 }
 
 function setExecHeaderMode(inExec) {
+    // Dashboard only after successful executive code — never on the code screen alone.
     const execBtn = document.getElementById("executiveBtn");
     if (execBtn) execBtn.style.display = (inExec && execAuthenticated) ? "none" : "";
     setDashboardVisible(!!(inExec && execAuthenticated));
