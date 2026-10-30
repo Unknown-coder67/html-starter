@@ -471,10 +471,10 @@ header {
 
 .dept-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 18px;
-    width: calc(100vw - 200px);
-    max-width: 1320px;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    width: 70%;
+    max-width: 560px;
     position: relative;
     left: 50%;
     transform: translateX(-50%);
@@ -482,51 +482,51 @@ header {
 
 .dept-card {
     background: #fff;
-    border-radius: 16px;
-    padding: 20px 14px 16px;
+    border-radius: 12px;
+    padding: 12px 18px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    text-align: center;
-    box-shadow: 0 4px 14px rgba(23,50,77,0.08);
+    text-align: left;
+    box-shadow: -6px 0 0.14px -4px rgba(0, 183, 226, 0.35);
     border: 1px solid rgba(220,235,241,0.7);
     transition: transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
-    aspect-ratio: 200 / 155;
-    min-height: 0;
-    padding-top: 16px;
-    padding-bottom: 14px;
+    aspect-ratio: auto;
+    min-height: 52px;
     position: relative;
 }
 
 .dept-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 22px rgba(23,50,77,0.13);
+    transform: translateY(-2px);
+    box-shadow: -6px 0 18px -2px rgba(0, 183, 226, 0.5);
     border-color: #9ddfea;
 }
 
 .dept-img {
-    width: 75px;
-    height: 75px;
+    width: 44px;
+    height: 44px;
     object-fit: contain;
-    border-radius: 12px;
-    margin-bottom: 10px;
+    border-radius: 10px;
+    margin: 0 14px 0 0;
     flex-shrink: 0;
 }
 
 .dept-name {
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     font-weight: 750;
     color: #05255E;
     line-height: 1.3;
     flex: 1;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    text-align: left;
+    min-width: 0;
 }
 
 .dept-chevron {
-    display: none;
+    display: block;
     font-size: 1.25rem;
     font-weight: 800;
     color: #00B7E2;
@@ -1213,9 +1213,9 @@ footer {
 
 @media (max-width: 800px) {
     .dept-grid {
-        width: calc(100vw - 80px);
-        gap: 14px;
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        width: 80%;
+        max-width: 480px;
+        gap: 10px;
     }
 }
 
@@ -1367,7 +1367,6 @@ body.exec-bg::before {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    /* Exactly ~5 employee cards visible; scroll for the rest */
     max-height: calc((66px * 5) + (10px * 4));
     overflow-y: auto;
 }
@@ -1492,7 +1491,6 @@ input::placeholder, textarea::placeholder {
     .page-header-texts .line2 { margin-bottom: 12px; }
     .progress-wrap { margin: 0 auto 28px; }
 
-    /* Mobile: single-column stacked department cards */
     .dept-grid {
         grid-template-columns: 1fr;
         width: 90%;
