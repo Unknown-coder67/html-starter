@@ -92,6 +92,7 @@ header {
     align-items: center;
     justify-content: space-between;
     gap: 30px;
+    position: relative;
 }
 
 .logo {
@@ -101,12 +102,8 @@ header {
     transform: translate(-8px, 3px);
 }
 
-.header-nav {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 14px;
-}
+/* .header-nav rules live with .header-nav-pair below */
+
 
 .header-nav a {
     position: relative;
@@ -214,36 +211,65 @@ header {
     background: transparent !important;
     color: #00B7E2 !important;
     opacity: 1;
-    transform: none;
 }
 
 .header-nav a.nav-btn:hover .nav-label::after {
     transform: scaleX(1);
 }
 
-/* Fixed pair on the right — same two slots as home (NOMINATE | WINNERS) */
+/* Keep vertical centering on absolute Home when hovered */
+#homeBtn:hover {
+    transform: translateY(-50%);
+}
+
+/*
+ * Pair is pinned to the right edge of .navbar — same two slots as home
+ * (NOMINATE | WINNERS). Home sits further left and cannot shift the pair.
+ */
+.header-nav {
+    /* layout host only; children are absolutely placed */
+    display: block;
+    position: static;
+    width: 0;
+    height: 0;
+    overflow: visible;
+    gap: 0;
+}
+
 .header-nav-pair {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
     align-items: center;
     gap: 14px;
-    flex-shrink: 0;
+    z-index: 2;
 }
 
+/* Identical fixed slots so label length never moves them */
 .header-nav-pair .nav-btn {
-    width: 112px;
-    min-width: 112px;
-    max-width: 112px;
-    padding-left: 10px;
-    padding-right: 10px;
+    width: 110px;
+    min-width: 110px;
+    max-width: 110px;
+    padding-left: 8px;
+    padding-right: 8px;
     justify-content: center;
     flex-shrink: 0;
+    box-sizing: border-box;
 }
 
+/* Home: fixed offset left of the pair (pair width = 110+14+110 = 234) */
 #homeBtn {
+    position: absolute;
+    right: calc(234px + 14px);
+    top: 50%;
+    transform: translateY(-50%);
     width: auto;
     min-width: 0;
     padding-left: 12px;
     padding-right: 12px;
+    z-index: 2;
 }
 
 #executiveBtn {
@@ -268,12 +294,9 @@ header {
         height: 50px;
         transform: none;
     }
-    .header-nav {
-        gap: 8px;
-    }
     .header-nav a.nav-btn {
         font-size: 12.5px;
-        padding: 9px 10px;
+        padding: 9px 8px;
         height: 40px;
     }
     .header-nav-pair {
@@ -283,10 +306,11 @@ header {
         width: 96px;
         min-width: 96px;
         max-width: 96px;
-        padding-left: 6px;
-        padding-right: 6px;
+        padding-left: 4px;
+        padding-right: 4px;
     }
     #homeBtn {
+        right: calc(96px + 8px + 96px + 8px);
         padding-left: 8px;
         padding-right: 8px;
     }
@@ -295,15 +319,23 @@ header {
 @media (max-width: 480px) {
     .header-nav a.nav-btn {
         font-size: 11.5px;
-        padding: 8px 8px;
+        padding: 8px 6px;
         height: 36px;
     }
+    .header-nav-pair {
+        gap: 6px;
+    }
     .header-nav-pair .nav-btn {
-        width: 88px;
-        min-width: 88px;
-        max-width: 88px;
-        padding-left: 4px;
-        padding-right: 4px;
+        width: 86px;
+        min-width: 86px;
+        max-width: 86px;
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+    #homeBtn {
+        right: calc(86px + 6px + 86px + 6px);
+        padding-left: 6px;
+        padding-right: 6px;
     }
 }
 
