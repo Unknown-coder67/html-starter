@@ -473,8 +473,8 @@ header {
     display: grid;
     grid-template-columns: 1fr;
     gap: 12px;
-    width: 70%;
-    max-width: 560px;
+    width: 85%;
+    max-width: 720px;
     position: relative;
     left: 50%;
     transform: translateX(-50%);
@@ -1367,6 +1367,7 @@ body.exec-bg::before {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    /* Exactly ~5 employee cards visible; scroll for the rest */
     max-height: calc((66px * 5) + (10px * 4));
     overflow-y: auto;
 }
@@ -1491,6 +1492,7 @@ input::placeholder, textarea::placeholder {
     .page-header-texts .line2 { margin-bottom: 12px; }
     .progress-wrap { margin: 0 auto 28px; }
 
+    /* Mobile: single-column stacked department cards */
     .dept-grid {
         grid-template-columns: 1fr;
         width: 90%;
@@ -1791,11 +1793,11 @@ input::placeholder, textarea::placeholder {
 <header>
     <div class="navbar">
         <a href="/">
-            <img src="/logo.jpg" alt="Care Medical Jiwar" class="logo">
+            <img src="/logo.jpg" alt="Company Logo" class="logo">
         </a>
         <nav class="header-nav">
             <a href="/" class="nav-btn" id="homeBtn">Home</a>
-            <a href="/eoq/" class="nav-btn" id="nominateBtn">Nominate</a>
+            <a href="/eoq/" class="nav-btn" id="nominateBtn">NOMINATE</a>
             <a href="#" class="nav-btn" id="executiveBtn" onclick="startExecutive(event)">Executive</a>
             <a href="/dashboard" class="nav-btn" id="dashboardBtn" style="display:none;">Dashboard</a>
         </nav>
