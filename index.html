@@ -454,21 +454,20 @@ header {
     position: absolute;
     left: 0;
     right: 0;
-    height: 90px;
+    height: 70px;
     pointer-events: none;
     z-index: 2;
 }
 
-/* Stronger / taller top fade so the jpg top edge is fully hidden */
+/* Short but strong top fade – opaque only near the edge, then drops quickly */
 .who-next-fade-top {
     top: 0;
-    height: 150px; /* taller than the shared .who-next-fade height */
+    height: 55px;
     background: linear-gradient(
         to bottom,
         #FFFFFF 0%,
-        #FFFFFF 30%,
-        rgba(255,255,255,0.9) 55%,
-        rgba(255,255,255,0.45) 80%,
+        rgba(255,255,255,0.85) 25%,
+        rgba(255,255,255,0.35) 60%,
         transparent 100%
     );
 }
@@ -999,11 +998,11 @@ footer {
     }
 
     .who-next-fade {
-        height: 70px;
+        height: 55px;
     }
 
     .who-next-fade-top {
-        height: 120px; /* keep top fade stronger on tablet sizes */
+        height: 48px;
     }
 
     .who-next-banner .giant-title {
@@ -1114,11 +1113,11 @@ footer {
     }
 
     .who-next-fade {
-        height: 55px;
+        height: 48px;
     }
 
     .who-next-fade-top {
-        height: 100px; /* keep top fade stronger on mobile */
+        height: 42px;
     }
 
     .who-next-banner .giant-title {
@@ -1179,11 +1178,11 @@ footer {
     }
 
     .who-next-fade {
-        height: 45px;
+        height: 40px;
     }
 
     .who-next-fade-top {
-        height: 90px; /* keep top fade stronger on small phones */
+        height: 38px;
     }
 }
 
