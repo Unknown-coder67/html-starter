@@ -447,81 +447,32 @@ header {
     object-fit: cover;
     object-position: center;
     display: block;
-}
 
-/* Short smooth white fades on all 4 edges (mobile full-width banner) */
-.who-next-fade {
-    position: absolute;
-    pointer-events: none;
-    z-index: 2;
-}
-
-.who-next-fade-top {
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 42px;
-    background: linear-gradient(
-        to bottom,
-        #FFFFFF 0%,
-        rgba(255,255,255,0.95) 12%,
-        rgba(255,255,255,0.80) 28%,
-        rgba(255,255,255,0.55) 48%,
-        rgba(255,255,255,0.28) 70%,
-        rgba(255,255,255,0.10) 85%,
+    /* Fade the JPG itself from all 4 edges (elliptical left/right like ) and ( ) */
+    -webkit-mask-image: radial-gradient(
+        ellipse 98% 92% at 50% 50%,
+        #000 48%,
+        rgba(0,0,0,0.92) 58%,
+        rgba(0,0,0,0.75) 68%,
+        rgba(0,0,0,0.50) 78%,
+        rgba(0,0,0,0.25) 88%,
+        rgba(0,0,0,0.08) 95%,
         transparent 100%
     );
-}
-
-.who-next-fade-bottom {
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 42px;
-    background: linear-gradient(
-        to top,
-        #FFFFFF 0%,
-        rgba(255,255,255,0.95) 12%,
-        rgba(255,255,255,0.80) 28%,
-        rgba(255,255,255,0.55) 48%,
-        rgba(255,255,255,0.28) 70%,
-        rgba(255,255,255,0.10) 85%,
+    mask-image: radial-gradient(
+        ellipse 98% 92% at 50% 50%,
+        #000 48%,
+        rgba(0,0,0,0.92) 58%,
+        rgba(0,0,0,0.75) 68%,
+        rgba(0,0,0,0.50) 78%,
+        rgba(0,0,0,0.25) 88%,
+        rgba(0,0,0,0.08) 95%,
         transparent 100%
     );
-}
-
-.who-next-fade-left {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 42px;
-    background: linear-gradient(
-        to right,
-        #FFFFFF 0%,
-        rgba(255,255,255,0.95) 12%,
-        rgba(255,255,255,0.80) 28%,
-        rgba(255,255,255,0.55) 48%,
-        rgba(255,255,255,0.28) 70%,
-        rgba(255,255,255,0.10) 85%,
-        transparent 100%
-    );
-}
-
-.who-next-fade-right {
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 42px;
-    background: linear-gradient(
-        to left,
-        #FFFFFF 0%,
-        rgba(255,255,255,0.95) 12%,
-        rgba(255,255,255,0.80) 28%,
-        rgba(255,255,255,0.55) 48%,
-        rgba(255,255,255,0.28) 70%,
-        rgba(255,255,255,0.10) 85%,
-        transparent 100%
-    );
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
 }
 
 .who-next-banner .giant-title {
@@ -624,49 +575,36 @@ header {
     background-position: center;
     background-repeat: no-repeat;
 
+    /* Same elliptical edge fade as mobile – image itself becomes transparent at edges */
+    -webkit-mask-image: radial-gradient(
+        ellipse 98% 92% at 50% 50%,
+        #000 48%,
+        rgba(0,0,0,0.92) 58%,
+        rgba(0,0,0,0.75) 68%,
+        rgba(0,0,0,0.50) 78%,
+        rgba(0,0,0,0.25) 88%,
+        rgba(0,0,0,0.08) 95%,
+        transparent 100%
+    );
+    mask-image: radial-gradient(
+        ellipse 98% 92% at 50% 50%,
+        #000 48%,
+        rgba(0,0,0,0.92) 58%,
+        rgba(0,0,0,0.75) 68%,
+        rgba(0,0,0,0.50) 78%,
+        rgba(0,0,0,0.25) 88%,
+        rgba(0,0,0,0.08) 95%,
+        transparent 100%
+    );
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-}
-
-/* 4-edge white fades for desktop/laptop version of the box */
-.giant-title .desktop-fade {
-    position: absolute;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.giant-title .desktop-fade-top {
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 70px;
-    background: linear-gradient(to bottom, #FFFFFF 0%, rgba(255,255,255,0.75) 40%, transparent 100%);
-}
-
-.giant-title .desktop-fade-bottom {
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 70px;
-    background: linear-gradient(to top, #FFFFFF 0%, rgba(255,255,255,0.75) 40%, transparent 100%);
-}
-
-.giant-title .desktop-fade-left {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 60px;
-    background: linear-gradient(to right, #FFFFFF 0%, rgba(255,255,255,0.7) 45%, transparent 100%);
-}
-
-.giant-title .desktop-fade-right {
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 60px;
-    background: linear-gradient(to left, #FFFFFF 0%, rgba(255,255,255,0.7) 45%, transparent 100%);
 }
 
 .giant-title .lines {
@@ -1044,16 +982,6 @@ footer {
         height: 320px;
     }
 
-    .who-next-fade-top,
-    .who-next-fade-bottom {
-        height: 38px;
-    }
-
-    .who-next-fade-left,
-    .who-next-fade-right {
-        width: 38px;
-    }
-
     .who-next-banner .giant-title {
         font-size: clamp(2.8rem, 12vw, 4rem);
     }
@@ -1161,16 +1089,6 @@ footer {
         height: 260px;
     }
 
-    .who-next-fade-top,
-    .who-next-fade-bottom {
-        height: 36px;
-    }
-
-    .who-next-fade-left,
-    .who-next-fade-right {
-        width: 36px;
-    }
-
     .who-next-banner .giant-title {
         font-size: 2.8rem;
     }
@@ -1226,16 +1144,6 @@ footer {
 
     .who-next-banner {
         height: 220px;
-    }
-
-    .who-next-fade-top,
-    .who-next-fade-bottom {
-        height: 32px;
-    }
-
-    .who-next-fade-left,
-    .who-next-fade-right {
-        width: 32px;
     }
 }
 
@@ -1333,10 +1241,6 @@ footer {
 <section class="who-next-banner fade-in" id="who-is-next-mobile">
     <div class="who-next-img-wrap">
         <img src="/who-is-next.jpg" alt="" class="who-next-img">
-        <div class="who-next-fade who-next-fade-top" aria-hidden="true"></div>
-        <div class="who-next-fade who-next-fade-bottom" aria-hidden="true"></div>
-        <div class="who-next-fade who-next-fade-left" aria-hidden="true"></div>
-        <div class="who-next-fade who-next-fade-right" aria-hidden="true"></div>
         <h2 class="giant-title">
             <span class="lines">
                 <span class="who-line">WHO'S</span>
@@ -1350,11 +1254,6 @@ footer {
 <section class="next-section fade-in" id="who-is-next">
     <div class="next-left">
         <h2 class="giant-title">
-            <!-- 4-edge white fades for desktop -->
-            <div class="desktop-fade desktop-fade-top" aria-hidden="true"></div>
-            <div class="desktop-fade desktop-fade-bottom" aria-hidden="true"></div>
-            <div class="desktop-fade desktop-fade-left" aria-hidden="true"></div>
-            <div class="desktop-fade desktop-fade-right" aria-hidden="true"></div>
             <span class="lines">
                 <span class="who-line">WHO'S</span>
                 <span class="next-line">NEXT?</span>
