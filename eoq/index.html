@@ -102,8 +102,6 @@ header {
     transform: translate(-8px, 3px);
 }
 
-/* .header-nav rules live with .header-nav-pair below */
-
 
 .header-nav a {
     position: relative;
@@ -259,10 +257,9 @@ header {
     box-sizing: border-box;
 }
 
-/* Home: fixed offset left of the pair (pair width = 110+14+110 = 234) */
 #homeBtn {
     position: absolute;
-    right: calc(234px + 14px);
+    right: calc(110px + 14px);
     top: 50%;
     transform: translateY(-50%);
     width: auto;
@@ -310,7 +307,7 @@ header {
         padding-right: 4px;
     }
     #homeBtn {
-        right: calc(96px + 8px + 96px + 8px);
+        right: calc(96px + 8px);
         padding-left: 8px;
         padding-right: 8px;
     }
@@ -333,7 +330,7 @@ header {
         padding-right: 2px;
     }
     #homeBtn {
-        right: calc(86px + 6px + 86px + 6px);
+        right: calc(86px + 6px);
         padding-left: 6px;
         padding-right: 6px;
     }
@@ -581,7 +578,7 @@ header {
 
 .dept-card:hover {
     transform: translateY(-2px);
-    box-shadow: -6px 0 18px -2px rgba(0, 183, 226, 0.5);
+    box-shadow: -4px 0 10px -2px rgba(0, 183, 226, 0.22);
     border-color: #9ddfea;
 }
 
@@ -1574,7 +1571,6 @@ input::placeholder, textarea::placeholder {
     .page-header-texts .line2 { margin-bottom: 12px; }
     .progress-wrap { margin: 0 auto 28px; }
 
-    /* Mobile: single-column stacked department cards */
     .dept-grid {
         grid-template-columns: 1fr;
         width: 90%;
@@ -1595,7 +1591,7 @@ input::placeholder, textarea::placeholder {
     }
     .dept-card:hover {
         transform: translateY(-2px);
-        box-shadow: -6px 0 18px -2px rgba(0, 183, 226, 0.5);
+        box-shadow: -4px 0 10px -2px rgba(0, 183, 226, 0.22);
         border-color: #9ddfea;
     }
     .dept-img {
@@ -1879,7 +1875,6 @@ input::placeholder, textarea::placeholder {
         <nav class="header-nav">
             <a href="/" class="nav-btn" id="homeBtn"><span class="nav-label">HOME</span></a>
             <div class="header-nav-pair">
-                <a href="/eoq/" class="nav-btn" id="nominateBtn"><span class="nav-label">EOQ</span></a>
                 <a href="#" class="nav-btn" id="executiveBtn" onclick="startExecutive(event)"><span class="nav-label">EXECUTIVE</span></a>
                 <a href="/dashboard" class="nav-btn" id="dashboardBtn" style="display:none;"><span class="nav-label">DASHBOARD</span></a>
             </div>
@@ -4015,7 +4010,7 @@ function exitExecutive() {
     execAuthenticated = false;
     setDashboardVisible(false);
     setExecHeaderMode(false);
-    window.location.href = document.getElementById("nominateBtn").getAttribute("href") || "/eoq/";
+    window.location.href = "/eoq/";
 }
 
 function execBackToAccess() {
@@ -4326,7 +4321,7 @@ renderDepartments();
 updateProgress(1);
 updateHeaderTexts(1);
 
-document.querySelectorAll('header a[href="/"], #nominateBtn').forEach(function (a) {
+document.querySelectorAll('header a[href="/"]').forEach(function (a) {
     a.addEventListener("click", clearExecState);
 });
 
