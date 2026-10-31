@@ -1911,6 +1911,7 @@ input::placeholder, textarea::placeholder {
 
     <div class="page-header-texts" id="pageHeaderTexts">
         <div class="line1" id="headerLine1">Employee of the Quarter</div>
+        <img src="lock.jpg" alt="Access" class="access-dept-img" id="accessDeptImg" onerror="this.style.display='none'" style="display:none;">
         <div class="line2" id="headerLine2">Select Your Department</div>
         <div class="line3" id="headerLine3">Select your department to meet your teamy</div>
     </div>
@@ -1948,7 +1949,6 @@ input::placeholder, textarea::placeholder {
 
     <section class="step-panel" id="step2">
         <div class="access-box">
-            <img src="lock.jpg" alt="Access" class="access-dept-img" id="accessDeptImg" onerror="this.style.display='none'">
 
             <div class="code-field">
                 <input type="text" id="departmentCode" placeholder="Department code..." autocomplete="off" inputmode="text" enterkeyhint="go">
@@ -3529,6 +3529,12 @@ function goToStep(step) {
     }
 
     updateHeaderTexts(step);
+
+    const lockImg = document.getElementById("accessDeptImg");
+    if (lockImg) {
+        lockImg.style.display = (step === 2) ? "block" : "none";
+    }
+    
     currentStep = step;
     if (step > maxReachedStep) maxReachedStep = step;
 
