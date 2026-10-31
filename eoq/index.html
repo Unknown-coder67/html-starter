@@ -619,39 +619,20 @@ header {
 
 
 .emp-group {
-    margin-top: 22px;
-    margin-bottom: 8px;
-    background: #fff;
-    border: 1px solid #e0edf3;
-    border-radius: 14px;
-    padding: 12px 12px 10px;
+    margin-top: 20px;
+    margin-bottom: 4px;
 }
 .emp-group:first-child {
     margin-top: 0;
 }
 .emp-group-title {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     font-weight: 750;
     color: #00B7E2;
     letter-spacing: 0.02em;
-    padding: 0 4px 10px;
+    padding: 0 4px 8px;
     margin-bottom: 8px;
     border-bottom: 2px solid #e0edf3;
-}
-.emp-group-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-height: calc((66px * 2) + (10px * 1) + 8px);
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-right: 2px;
-}
-/* Outer list must fit: hint + 2 group boxes (title + 2 cards each) */
-.emp-list.facilities-mode {
-    max-height: none;
-    overflow: visible;
-    gap: 0;
 }
 .facilities-continue-wrap {
     display: none;
@@ -661,22 +642,6 @@ header {
 }
 .facilities-continue-wrap.visible {
     display: flex;
-}
-.facilities-hint {
-    font-size: 0.82rem;
-    color: #8aa0b0;
-    margin: 0 0 12px;
-    text-align: center;
-}
-@media (max-width: 700px) {
-    .emp-group-list {
-        max-height: calc((40px * 2) + (6px * 1) + 8px);
-        gap: 6px;
-    }
-    .emp-list.facilities-mode {
-        max-height: none;
-        overflow: visible;
-    }
 }
 
 #step2 { padding-top: 34px; }
@@ -3324,42 +3289,29 @@ const departmentCriteria = {
   ],
   "Facilities Team": [
     {
-      title: "أولاً: موظفو التدبير المنزلي (Housekeeping)",
+      title: "معايير تقييم فريق الخدمات والمرافق",
       items: [
-        "الالتزام بالتوجيهات والتعليمات.",
-        "إنجاز المهام بسرعة.",
-        "المحافظة على النظافة اليومية.",
+        "الالتزام بالتوجيهات والتعليمات الصادرة من المشرفين.",
+        "إنجاز المهام بسرعة وكفاءة.",
+        "المحافظة على النظافة الشخصية ونظافة مكان العمل يوميًا.",
         "الالتزام بالزي الرسمي والأحذية النظيفة والمرتبة.",
-        "مساعدة الزملاء الآخرين.",
-        "التحدث بأدب مع الجميع.",
+        "مساعدة الزملاء ودعمهم عند الحاجة.",
+        "التحدث بأدب واحترام مع الجميع.",
         "أداء أعمال النظافة بجودة عالية.",
-        "سرعة الاستجابة.",
-        "الالتزام بمواعيد العمل.",
-        "تحمل المسؤولية المتعلقة بعمله.",
+        "سرعة الاستجابة للطلبات والمهام.",
+        "الالتزام بمواعيد العمل والحضور في الوقت المحدد.",
+        "تحمل المسؤولية المتعلقة بالمهام الموكلة.",
         "إنهاء المهام قبل مغادرة المستشفى.",
-        "تقديم أفكار لتحسين أعمال التنظيف.",
-        "التحلي بالإيجابية دائماً.",
+        "تقديم أفكار ومقترحات لتحسين أعمال النظافة والصيانة.",
+        "التحلي بالإيجابية في بيئة العمل.",
         "دعم أعضاء الفريق الآخرين.",
-        "المعرفة بأساليب التنظيف الصحيحة.",
-        "المحافظة على المظهر الشخصي النظيف والمرتب."
-      ]
-    },
-    {
-      title: "ثانياً: الموظفون الفنيون (Technician Staff)",
-      items: [
-        "الالتزام بالتوجيهات والتعليمات.",
-        "سرعة الاستجابة.",
-        "إنجاز العمل بسرعة.",
-        "المساعدة في المهام الأخرى.",
-        "المحافظة على النظافة اليومية.",
-        "الالتزام بالزي الرسمي والأحذية بشكل صحيح.",
-        "تحمل المسؤولية.",
-        "التحدث بأدب.",
-        "تقديم أفكار جيدة للعمل.",
-        "إنجاز المهام في الوقت المحدد.",
-        "الالتزام بسياسات المستشفى.",
-        "تقديم المساعدة عند الحاجة.",
-        "احترام الجميع."
+        "المعرفة بأساليب وإجراءات التنظيف الصحيحة.",
+        "المحافظة على المظهر الشخصي النظيف والمرتب.",
+        "إنجاز الأعمال الفنية بسرعة ودقة.",
+        "المساعدة في المهام الإضافية عند الحاجة.",
+        "تحمل المسؤولية عن أعمال الصيانة الفنية.",
+        "الالتزام بسياسات وإجراءات المستشفى.",
+        "الاحترام المتبادل مع جميع الزملاء والموظفين."
       ]
     }
   ]
@@ -3462,7 +3414,6 @@ let selectedCandidateId = "";
 let selectedEmpRef = null;
 let recognitionStory = "";
 let isNoSelection = false;
-let facSelections = { "Housekeeping Staff": null, "Technician Staff": null };
 let isSubmitting = false;
 let currentEmployees = [];
 let isEditingStory = false;
@@ -3546,8 +3497,7 @@ function updateHeaderTexts(step) {
 function onStepClick(step) {
     if (step > maxReachedStep) return;
     if (step === currentStep) return;
-    if (step >= 5 && !selectedCandidate && !isNoSelection) return;
-    if (step >= 5 && isFacilitiesDept() && !isNoSelection && !facilitiesBothSelected()) return;
+    if (step >= 5 && !selectedCandidate) return;
     goToStep(step);
 }
 
@@ -3584,17 +3534,10 @@ function goToStep(step) {
 
     if (step === 4) {
         currentEmployees = departmentEmployees[currentDeptName] || [];
-        if (isFacilitiesDept()) {
-            resetFacSelections();
-            selectedCandidate = "";
-            selectedCandidateId = "";
-            selectedEmpRef = null;
-            isNoSelection = false;
-        }
         document.getElementById("searchInput").value = "";
         const searchWrap = document.getElementById("nominateSearchWrap");
         if (searchWrap) {
-            searchWrap.style.display = (!isFacilitiesDept() && currentEmployees.length > 8) ? "block" : "none";
+            searchWrap.style.display = currentEmployees.length > 8 ? "block" : "none";
         }
         renderEmployees(currentEmployees);
         updateNominateUI();
@@ -3650,35 +3593,8 @@ function isFacilitiesDept() {
     return currentDeptName === "Facilities Team";
 }
 
-function resetFacSelections() {
-    facSelections = { "Housekeeping Staff": null, "Technician Staff": null };
-}
-
-function facilitiesBothSelected() {
-    return !!(facSelections["Housekeeping Staff"] && facSelections["Technician Staff"]);
-}
-
-function syncFacilitiesCandidate() {
-    if (facilitiesBothSelected()) {
-        const hk = facSelections["Housekeeping Staff"];
-        const tech = facSelections["Technician Staff"];
-        selectedCandidate = "Housekeeping: " + hk.name + " | Technician: " + tech.name;
-        selectedCandidateId = hk.id + "," + tech.id;
-        selectedEmpRef = null;
-    } else {
-        selectedCandidate = "";
-        selectedCandidateId = "";
-        selectedEmpRef = null;
-    }
-}
-
 function createEmpCard(emp) {
-    let isSelected = false;
-    if (isFacilitiesDept() && emp.group) {
-        isSelected = !isNoSelection && facSelections[emp.group] === emp;
-    } else {
-        isSelected = !isNoSelection && emp === selectedEmpRef;
-    }
+    const isSelected = !isNoSelection && emp === selectedEmpRef;
     const card = document.createElement("div");
     card.className = "emp-card" + (isSelected ? " selected" : "");
     card.dataset.name = emp.name;
@@ -3700,16 +3616,10 @@ function renderEmployees(list) {
     const container = document.getElementById("empList");
     container.innerHTML = "";
     const hasGroups = list.some(e => e.group);
-    container.classList.toggle("facilities-mode", hasGroups);
     if (!hasGroups) {
         list.forEach(emp => container.appendChild(createEmpCard(emp)));
         return;
     }
-    const hint = document.createElement("p");
-    hint.className = "facilities-hint";
-    hint.textContent = "Select one employee from each group to continue.";
-    container.appendChild(hint);
-
     const order = [];
     const byGroup = {};
     list.forEach(emp => {
@@ -3727,29 +3637,12 @@ function renderEmployees(list) {
         title.className = "emp-group-title";
         title.textContent = g;
         wrap.appendChild(title);
-        const listEl = document.createElement("div");
-        listEl.className = "emp-group-list";
-        byGroup[g].forEach(emp => listEl.appendChild(createEmpCard(emp)));
-        wrap.appendChild(listEl);
+        byGroup[g].forEach(emp => wrap.appendChild(createEmpCard(emp)));
         container.appendChild(wrap);
     });
 }
 
 function selectEmployee(emp) {
-    if (isFacilitiesDept() && emp.group) {
-        isNoSelection = false;
-        document.getElementById("noSelectCard").classList.remove("selected");
-        document.getElementById("noSelectContinueWrap").classList.remove("visible");
-        if (facSelections[emp.group] === emp) {
-            facSelections[emp.group] = null;
-        } else {
-            facSelections[emp.group] = emp;
-        }
-        syncFacilitiesCandidate();
-        renderEmployees(currentEmployees);
-        updateNominateUI();
-        return;
-    }
     if (!isNoSelection && selectedEmpRef === emp) {
         selectedCandidate = "";
         selectedCandidateId = "";
@@ -3776,7 +3669,6 @@ function selectNoEmployee() {
         selectedCandidate = "";
         selectedCandidateId = "";
         selectedEmpRef = null;
-        resetFacSelections();
         document.getElementById("noSelectCard").classList.remove("selected");
         updateNominateUI();
         return;
@@ -3785,15 +3677,12 @@ function selectNoEmployee() {
     selectedCandidate = "No Employee Selected This Quarter";
     selectedCandidateId = "";
     selectedEmpRef = null;
-    resetFacSelections();
     recognitionStory = "";
     document.getElementById("reasonText").value = "";
     updateCharCount();
     document.querySelectorAll(".emp-card").forEach(c => c.classList.remove("selected"));
     document.getElementById("noSelectCard").classList.add("selected");
     document.getElementById("noSelectContinueWrap").classList.add("visible");
-    const facWrap = document.getElementById("facilitiesContinueWrap");
-    if (facWrap) facWrap.classList.remove("visible");
     updateNominateUI();
 }
 
@@ -3810,20 +3699,20 @@ function updateNominateUI() {
         split.classList.remove("has-selection");
         continueWrap.classList.add("visible");
         nextBtn.disabled = true;
-    } else if (facilities) {
-        split.classList.remove("has-selection");
-        continueWrap.classList.remove("visible");
-        nextBtn.disabled = true;
-        recognitionStory = "";
-        const ta = document.getElementById("reasonText");
-        if (ta) ta.value = "";
-        if (facilitiesBothSelected() && facWrap) {
-            facWrap.classList.add("visible");
-        }
     } else if (selectedCandidate) {
-        split.classList.add("has-selection");
-        continueWrap.classList.remove("visible");
-        nextBtn.disabled = !document.getElementById("reasonText").value.trim();
+        if (facilities) {
+            split.classList.remove("has-selection");
+            continueWrap.classList.remove("visible");
+            if (facWrap) facWrap.classList.add("visible");
+            nextBtn.disabled = true;
+            recognitionStory = "";
+            const ta = document.getElementById("reasonText");
+            if (ta) ta.value = "";
+        } else {
+            split.classList.add("has-selection");
+            continueWrap.classList.remove("visible");
+            nextBtn.disabled = !document.getElementById("reasonText").value.trim();
+        }
     } else {
         split.classList.remove("has-selection");
         continueWrap.classList.remove("visible");
@@ -3874,30 +3763,24 @@ function prepareReview() {
         document.getElementById("reviewName").textContent = "No Employee Selected This Quarter";
         document.getElementById("reviewDept").textContent = currentDeptName + " Department";
         document.getElementById("storyBox").style.display = "none";
-    } else if (isFacilitiesDept() && facilitiesBothSelected()) {
-        const hk = facSelections["Housekeeping Staff"];
-        const tech = facSelections["Technician Staff"];
-        document.getElementById("reviewAvatar").textContent = "2";
-        document.getElementById("reviewName").textContent =
-            "Housekeeping: " + hk.name + "\nTechnician: " + tech.name;
-        document.getElementById("reviewName").style.whiteSpace = "pre-line";
-        document.getElementById("reviewDept").textContent = currentDeptName + " Department";
-        document.getElementById("storyBox").style.display = "none";
-        recognitionStory = "";
     } else {
         document.getElementById("reviewAvatar").textContent = getInitials(selectedCandidate);
         document.getElementById("reviewName").textContent = selectedCandidate;
-        document.getElementById("reviewName").style.whiteSpace = "";
         document.getElementById("reviewDept").textContent = currentDeptName + " Department";
-        document.getElementById("storyBox").style.display = "block";
-        document.getElementById("storyText").textContent = recognitionStory;
-        document.getElementById("storyText").contentEditable = "false";
-        isEditingStory = false;
-        document.getElementById("editStoryBtn").innerHTML = `
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-            </svg> Edit`;
+        if (isFacilitiesDept()) {
+            document.getElementById("storyBox").style.display = "none";
+            recognitionStory = "";
+        } else {
+            document.getElementById("storyBox").style.display = "block";
+            document.getElementById("storyText").textContent = recognitionStory;
+            document.getElementById("storyText").contentEditable = "false";
+            isEditingStory = false;
+            document.getElementById("editStoryBtn").innerHTML = `
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg> Edit`;
+        }
     }
 }
 
