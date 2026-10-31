@@ -642,10 +642,16 @@ header {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-height: calc((66px * 2) + (10px * 1) + 20px);
+    max-height: calc((66px * 2) + (10px * 1) + 8px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     padding-right: 2px;
+}
+/* Outer list must fit: hint + 2 group boxes (title + 2 cards each) */
+.emp-list.facilities-mode {
+    max-height: none;
+    overflow: visible;
+    gap: 0;
 }
 .facilities-continue-wrap {
     display: none;
@@ -664,8 +670,12 @@ header {
 }
 @media (max-width: 700px) {
     .emp-group-list {
-        max-height: calc((40px * 2) + (6px * 1) + 16px);
+        max-height: calc((40px * 2) + (6px * 1) + 8px);
         gap: 6px;
+    }
+    .emp-list.facilities-mode {
+        max-height: none;
+        overflow: visible;
     }
 }
 
@@ -1668,7 +1678,7 @@ input::placeholder, textarea::placeholder {
         display: block;
     }
 
-    #step2 { padding-top: 60px; }
+    #step2 { padding-top: 80px; }
     .access-box { width: 82%; padding: 28px 14px; margin-top: 0; border-radius: 14px; }
     .access-dept-img { width: 40px; height: 40px; margin-bottom: 10px; }
     .code-field { margin-bottom: 10px; }
@@ -3690,6 +3700,7 @@ function renderEmployees(list) {
     const container = document.getElementById("empList");
     container.innerHTML = "";
     const hasGroups = list.some(e => e.group);
+    container.classList.toggle("facilities-mode", hasGroups);
     if (!hasGroups) {
         list.forEach(emp => container.appendChild(createEmpCard(emp)));
         return;
