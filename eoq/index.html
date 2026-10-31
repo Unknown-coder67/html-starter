@@ -643,12 +643,6 @@ header {
 .facilities-continue-wrap.visible {
     display: flex;
 }
-.facilities-hint {
-    font-size: 0.82rem;
-    color: #8aa0b0;
-    margin: 0 0 12px;
-    text-align: center;
-}
 
 #step2 { padding-top: 34px; }
 
@@ -2573,9 +2567,9 @@ const departmentEmployees = {
        { name: "Rozeena Begum", id: "FK10", group: "Housekeeping Staff" },
        { name: "Sonia Akhtar", id: "FK11", group: "Housekeeping Staff" },
        { name: "Shifa", id: "FK12", group: "Housekeeping Staff" },
-       { name: "Mujeeb", id: "FT01", group: "Technician Staff" },
-       { name: "Anas", id: "FT02", group: "Technician Staff" },
-       { name: "M.Taj", id: "FT03", group: "Technician Staff" }
+       { name: "Mujeeb (Plumber)", id: "FT01", group: "Technician Staff" },
+       { name: "Anas (AC Technician)", id: "FT02", group: "Technician Staff" },
+       { name: "M.Taj (Electrician)", id: "FT03", group: "Technician Staff" }
    ],
    /*"Clinical Nutrition": [
        { name: "Safia Bajoudah", id: "1" }
@@ -3295,42 +3289,42 @@ const departmentCriteria = {
   ],
   "Facilities Team": [
     {
-      title: "أولاً: موظفو التدبير المنزلي (Housekeeping)",
+      title: "Housekeeping Staff",
       items: [
-        "الالتزام بالتوجيهات والتعليمات.",
-        "إنجاز المهام بسرعة.",
-        "المحافظة على النظافة اليومية.",
-        "الالتزام بالزي الرسمي والأحذية النظيفة والمرتبة.",
-        "مساعدة الزملاء الآخرين.",
-        "التحدث بأدب مع الجميع.",
-        "أداء أعمال النظافة بجودة عالية.",
-        "سرعة الاستجابة.",
-        "الالتزام بمواعيد العمل.",
-        "تحمل المسؤولية المتعلقة بعمله.",
-        "إنهاء المهام قبل مغادرة المستشفى.",
-        "تقديم أفكار لتحسين أعمال التنظيف.",
-        "التحلي بالإيجابية دائماً.",
-        "دعم أعضاء الفريق الآخرين.",
-        "المعرفة بأساليب التنظيف الصحيحة.",
-        "المحافظة على المظهر الشخصي النظيف والمرتب."
+        "Follow the advice.",
+        "Complete tasks fast.",
+        "Everyday hygiene.",
+        "Always keep uniforms and shoes clean and proper.",
+        "Help other staff.",
+        "Speak politely to everyone.",
+        "Do cleaning work well.",
+        "Quick response.",
+        "Work on time.",
+        "Take responsibility related to his work.",
+        "Finish the task before leaving the hospital.",
+        "Create ideas for cleaning.",
+        "Always positive.",
+        "Support the other staff.",
+        "Knowledge for cleaning.",
+        "Clean and neat by self."
       ]
     },
     {
-      title: "ثانياً: الموظفون الفنيون (Technician Staff)",
+      title: "Technician Staff",
       items: [
-        "الالتزام بالتوجيهات والتعليمات.",
-        "سرعة الاستجابة.",
-        "إنجاز العمل بسرعة.",
-        "المساعدة في المهام الأخرى.",
-        "المحافظة على النظافة اليومية.",
-        "الالتزام بالزي الرسمي والأحذية بشكل صحيح.",
-        "تحمل المسؤولية.",
-        "التحدث بأدب.",
-        "تقديم أفكار جيدة للعمل.",
-        "إنجاز المهام في الوقت المحدد.",
-        "الالتزام بسياسات المستشفى.",
-        "تقديم المساعدة عند الحاجة.",
-        "احترام الجميع."
+        "Follow the advice.",
+        "Quick response.",
+        "Fast work.",
+        "Help with other tasks.",
+        "Hygiene everyday.",
+        "Uniforms and shoes properly.",
+        "Take responsibility.",
+        "Speak politely.",
+        "Create good ideas.",
+        "Complete task on time.",
+        "Follow the hospital policy.",
+        "Helpful.",
+        "Respect to everyone."
       ]
     }
   ]
@@ -3675,10 +3669,6 @@ function renderEmployees(list) {
         list.forEach(emp => container.appendChild(createEmpCard(emp)));
         return;
     }
-    const hint = document.createElement("p");
-    hint.className = "facilities-hint";
-    container.appendChild(hint);
-
     const order = [];
     const byGroup = {};
     list.forEach(emp => {
