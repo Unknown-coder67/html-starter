@@ -643,6 +643,12 @@ header {
 .facilities-continue-wrap.visible {
     display: flex;
 }
+.facilities-hint {
+    font-size: 0.82rem;
+    color: #8aa0b0;
+    margin: 0 0 12px;
+    text-align: center;
+}
 
 #step2 { padding-top: 34px; }
 
@@ -2567,9 +2573,9 @@ const departmentEmployees = {
        { name: "Rozeena Begum", id: "FK10", group: "Housekeeping Staff" },
        { name: "Sonia Akhtar", id: "FK11", group: "Housekeeping Staff" },
        { name: "Shifa", id: "FK12", group: "Housekeeping Staff" },
-       { name: "Mujeeb (Plumber)", id: "FT01", group: "Technician Staff" },
-       { name: "Anas (AC Technician)", id: "FT02", group: "Technician Staff" },
-       { name: "M.Taj (Electrician)", id: "FT03", group: "Technician Staff" }
+       { name: "Mujeeb", id: "FT01", group: "Technician Staff" },
+       { name: "Anas", id: "FT02", group: "Technician Staff" },
+       { name: "M.Taj", id: "FT03", group: "Technician Staff" }
    ],
    /*"Clinical Nutrition": [
        { name: "Safia Bajoudah", id: "1" }
@@ -3289,29 +3295,42 @@ const departmentCriteria = {
   ],
   "Facilities Team": [
     {
-      title: "معايير تقييم فريق الخدمات والمرافق",
+      title: "أولاً: موظفو التدبير المنزلي (Housekeeping)",
       items: [
-        "الالتزام بالتوجيهات والتعليمات الصادرة من المشرفين.",
-        "إنجاز المهام بسرعة وكفاءة.",
-        "المحافظة على النظافة الشخصية ونظافة مكان العمل يوميًا.",
+        "الالتزام بالتوجيهات والتعليمات.",
+        "إنجاز المهام بسرعة.",
+        "المحافظة على النظافة اليومية.",
         "الالتزام بالزي الرسمي والأحذية النظيفة والمرتبة.",
-        "مساعدة الزملاء ودعمهم عند الحاجة.",
-        "التحدث بأدب واحترام مع الجميع.",
+        "مساعدة الزملاء الآخرين.",
+        "التحدث بأدب مع الجميع.",
         "أداء أعمال النظافة بجودة عالية.",
-        "سرعة الاستجابة للطلبات والمهام.",
-        "الالتزام بمواعيد العمل والحضور في الوقت المحدد.",
-        "تحمل المسؤولية المتعلقة بالمهام الموكلة.",
+        "سرعة الاستجابة.",
+        "الالتزام بمواعيد العمل.",
+        "تحمل المسؤولية المتعلقة بعمله.",
         "إنهاء المهام قبل مغادرة المستشفى.",
-        "تقديم أفكار ومقترحات لتحسين أعمال النظافة والصيانة.",
-        "التحلي بالإيجابية في بيئة العمل.",
+        "تقديم أفكار لتحسين أعمال التنظيف.",
+        "التحلي بالإيجابية دائماً.",
         "دعم أعضاء الفريق الآخرين.",
-        "المعرفة بأساليب وإجراءات التنظيف الصحيحة.",
-        "المحافظة على المظهر الشخصي النظيف والمرتب.",
-        "إنجاز الأعمال الفنية بسرعة ودقة.",
-        "المساعدة في المهام الإضافية عند الحاجة.",
-        "تحمل المسؤولية عن أعمال الصيانة الفنية.",
-        "الالتزام بسياسات وإجراءات المستشفى.",
-        "الاحترام المتبادل مع جميع الزملاء والموظفين."
+        "المعرفة بأساليب التنظيف الصحيحة.",
+        "المحافظة على المظهر الشخصي النظيف والمرتب."
+      ]
+    },
+    {
+      title: "ثانياً: الموظفون الفنيون (Technician Staff)",
+      items: [
+        "الالتزام بالتوجيهات والتعليمات.",
+        "سرعة الاستجابة.",
+        "إنجاز العمل بسرعة.",
+        "المساعدة في المهام الأخرى.",
+        "المحافظة على النظافة اليومية.",
+        "الالتزام بالزي الرسمي والأحذية بشكل صحيح.",
+        "تحمل المسؤولية.",
+        "التحدث بأدب.",
+        "تقديم أفكار جيدة للعمل.",
+        "إنجاز المهام في الوقت المحدد.",
+        "الالتزام بسياسات المستشفى.",
+        "تقديم المساعدة عند الحاجة.",
+        "احترام الجميع."
       ]
     }
   ]
@@ -3414,6 +3433,7 @@ let selectedCandidateId = "";
 let selectedEmpRef = null;
 let recognitionStory = "";
 let isNoSelection = false;
+let facSelections = { "Housekeeping Staff": null, "Technician Staff": null };
 let isSubmitting = false;
 let currentEmployees = [];
 let isEditingStory = false;
@@ -3497,7 +3517,8 @@ function updateHeaderTexts(step) {
 function onStepClick(step) {
     if (step > maxReachedStep) return;
     if (step === currentStep) return;
-    if (step >= 5 && !selectedCandidate) return;
+    if (step >= 5 && !selectedCandidate && !isNoSelection) return;
+    if (step >= 5 && isFacilitiesDept() && !isNoSelection && !facilitiesBothSelected()) return;
     goToStep(step);
 }
 
@@ -3534,10 +3555,17 @@ function goToStep(step) {
 
     if (step === 4) {
         currentEmployees = departmentEmployees[currentDeptName] || [];
+        if (isFacilitiesDept()) {
+            resetFacSelections();
+            selectedCandidate = "";
+            selectedCandidateId = "";
+            selectedEmpRef = null;
+            isNoSelection = false;
+        }
         document.getElementById("searchInput").value = "";
         const searchWrap = document.getElementById("nominateSearchWrap");
         if (searchWrap) {
-            searchWrap.style.display = currentEmployees.length > 8 ? "block" : "none";
+            searchWrap.style.display = (isFacilitiesDept() || currentEmployees.length > 8) ? "block" : "none";
         }
         renderEmployees(currentEmployees);
         updateNominateUI();
@@ -3593,8 +3621,35 @@ function isFacilitiesDept() {
     return currentDeptName === "Facilities Team";
 }
 
+function resetFacSelections() {
+    facSelections = { "Housekeeping Staff": null, "Technician Staff": null };
+}
+
+function facilitiesBothSelected() {
+    return !!(facSelections["Housekeeping Staff"] && facSelections["Technician Staff"]);
+}
+
+function syncFacilitiesCandidate() {
+    if (facilitiesBothSelected()) {
+        const hk = facSelections["Housekeeping Staff"];
+        const tech = facSelections["Technician Staff"];
+        selectedCandidate = "Housekeeping: " + hk.name + " | Technician: " + tech.name;
+        selectedCandidateId = hk.id + "," + tech.id;
+        selectedEmpRef = null;
+    } else {
+        selectedCandidate = "";
+        selectedCandidateId = "";
+        selectedEmpRef = null;
+    }
+}
+
 function createEmpCard(emp) {
-    const isSelected = !isNoSelection && emp === selectedEmpRef;
+    let isSelected = false;
+    if (isFacilitiesDept() && emp.group) {
+        isSelected = !isNoSelection && facSelections[emp.group] === emp;
+    } else {
+        isSelected = !isNoSelection && emp === selectedEmpRef;
+    }
     const card = document.createElement("div");
     card.className = "emp-card" + (isSelected ? " selected" : "");
     card.dataset.name = emp.name;
@@ -3620,6 +3675,11 @@ function renderEmployees(list) {
         list.forEach(emp => container.appendChild(createEmpCard(emp)));
         return;
     }
+    const hint = document.createElement("p");
+    hint.className = "facilities-hint";
+    hint.textContent = "Select one employee from each group to continue.";
+    container.appendChild(hint);
+
     const order = [];
     const byGroup = {};
     list.forEach(emp => {
@@ -3643,6 +3703,26 @@ function renderEmployees(list) {
 }
 
 function selectEmployee(emp) {
+    if (isFacilitiesDept() && emp.group) {
+        isNoSelection = false;
+        document.getElementById("noSelectCard").classList.remove("selected");
+        document.getElementById("noSelectContinueWrap").classList.remove("visible");
+        if (facSelections[emp.group] === emp) {
+            facSelections[emp.group] = null;
+        } else {
+            facSelections[emp.group] = emp;
+        }
+        syncFacilitiesCandidate();
+        // Re-render so selected state is correct within each group (search-safe)
+        const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
+        const base = currentEmployees || [];
+        const filtered = q
+            ? base.filter(e => e.name.toLowerCase().includes(q))
+            : base;
+        renderEmployees(filtered.length || !q ? filtered : base);
+        updateNominateUI();
+        return;
+    }
     if (!isNoSelection && selectedEmpRef === emp) {
         selectedCandidate = "";
         selectedCandidateId = "";
@@ -3669,6 +3749,7 @@ function selectNoEmployee() {
         selectedCandidate = "";
         selectedCandidateId = "";
         selectedEmpRef = null;
+        resetFacSelections();
         document.getElementById("noSelectCard").classList.remove("selected");
         updateNominateUI();
         return;
@@ -3677,12 +3758,15 @@ function selectNoEmployee() {
     selectedCandidate = "No Employee Selected This Quarter";
     selectedCandidateId = "";
     selectedEmpRef = null;
+    resetFacSelections();
     recognitionStory = "";
     document.getElementById("reasonText").value = "";
     updateCharCount();
     document.querySelectorAll(".emp-card").forEach(c => c.classList.remove("selected"));
     document.getElementById("noSelectCard").classList.add("selected");
     document.getElementById("noSelectContinueWrap").classList.add("visible");
+    const facWrap = document.getElementById("facilitiesContinueWrap");
+    if (facWrap) facWrap.classList.remove("visible");
     updateNominateUI();
 }
 
@@ -3699,20 +3783,20 @@ function updateNominateUI() {
         split.classList.remove("has-selection");
         continueWrap.classList.add("visible");
         nextBtn.disabled = true;
-    } else if (selectedCandidate) {
-        if (facilities) {
-            split.classList.remove("has-selection");
-            continueWrap.classList.remove("visible");
-            if (facWrap) facWrap.classList.add("visible");
-            nextBtn.disabled = true;
-            recognitionStory = "";
-            const ta = document.getElementById("reasonText");
-            if (ta) ta.value = "";
-        } else {
-            split.classList.add("has-selection");
-            continueWrap.classList.remove("visible");
-            nextBtn.disabled = !document.getElementById("reasonText").value.trim();
+    } else if (facilities) {
+        split.classList.remove("has-selection");
+        continueWrap.classList.remove("visible");
+        nextBtn.disabled = true;
+        recognitionStory = "";
+        const ta = document.getElementById("reasonText");
+        if (ta) ta.value = "";
+        if (facilitiesBothSelected() && facWrap) {
+            facWrap.classList.add("visible");
         }
+    } else if (selectedCandidate) {
+        split.classList.add("has-selection");
+        continueWrap.classList.remove("visible");
+        nextBtn.disabled = !document.getElementById("reasonText").value.trim();
     } else {
         split.classList.remove("has-selection");
         continueWrap.classList.remove("visible");
@@ -3763,24 +3847,30 @@ function prepareReview() {
         document.getElementById("reviewName").textContent = "No Employee Selected This Quarter";
         document.getElementById("reviewDept").textContent = currentDeptName + " Department";
         document.getElementById("storyBox").style.display = "none";
+    } else if (isFacilitiesDept() && facilitiesBothSelected()) {
+        const hk = facSelections["Housekeeping Staff"];
+        const tech = facSelections["Technician Staff"];
+        document.getElementById("reviewAvatar").textContent = "2";
+        document.getElementById("reviewName").textContent =
+            "Housekeeping: " + hk.name + "\nTechnician: " + tech.name;
+        document.getElementById("reviewName").style.whiteSpace = "pre-line";
+        document.getElementById("reviewDept").textContent = currentDeptName + " Department";
+        document.getElementById("storyBox").style.display = "none";
+        recognitionStory = "";
     } else {
         document.getElementById("reviewAvatar").textContent = getInitials(selectedCandidate);
         document.getElementById("reviewName").textContent = selectedCandidate;
+        document.getElementById("reviewName").style.whiteSpace = "";
         document.getElementById("reviewDept").textContent = currentDeptName + " Department";
-        if (isFacilitiesDept()) {
-            document.getElementById("storyBox").style.display = "none";
-            recognitionStory = "";
-        } else {
-            document.getElementById("storyBox").style.display = "block";
-            document.getElementById("storyText").textContent = recognitionStory;
-            document.getElementById("storyText").contentEditable = "false";
-            isEditingStory = false;
-            document.getElementById("editStoryBtn").innerHTML = `
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                </svg> Edit`;
-        }
+        document.getElementById("storyBox").style.display = "block";
+        document.getElementById("storyText").textContent = recognitionStory;
+        document.getElementById("storyText").contentEditable = "false";
+        isEditingStory = false;
+        document.getElementById("editStoryBtn").innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg> Edit`;
     }
 }
 
