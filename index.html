@@ -425,94 +425,119 @@ header {
     max-width: 1920px;
 }
 
-.next-section {
+/* ========== WHO'S NEXT full-width image banner ========== */
+.who-next-banner {
+    position: relative;
     width: 100%;
-    background-color: #FFFFFF;
-    padding: 56px 0 48px;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    column-gap: 80px;
-    align-items: start;
-    box-sizing: border-box;
+    height: 400px;
+    overflow: hidden;
+    background: #FFFFFF;
 }
 
-.next-left {
-    padding-left: 40px;
+.who-next-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.who-next-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* White fades top & bottom so image blends into page */
+.who-next-fade {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 90px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.who-next-fade-top {
+    top: 0;
+    background: linear-gradient(to bottom, #FFFFFF 0%, rgba(255,255,255,0.7) 35%, transparent 100%);
+}
+
+.who-next-fade-bottom {
+    bottom: 0;
+    background: linear-gradient(to top, #FFFFFF 0%, rgba(255,255,255,0.7) 35%, transparent 100%);
+}
+
+.who-next-banner .giant-title {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    aspect-ratio: auto;
+    background: none;
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-}
-
-.giant-title {
+    align-items: center;
+    justify-content: center;
     font-family: "DM Sans", Arial, sans-serif;
     font-size: clamp(3.2rem, 7vw, 5.5rem);
     line-height: 1;
     color: #08245B;
-    margin: 0;
-
-    width: 100%;
-    max-width: 441px;
-    height: auto;
-    aspect-ratio: 441 / 372;
-
-    padding: 40px;
     box-sizing: border-box;
-
-    background-image: url("/who-is-next.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
-.giant-title .lines {
+.who-next-banner .giant-title .lines {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0;
     width: 100%;
-
-    transform: translateY(25px);
+    transform: none;
 }
 
-.giant-title .who-line {
+.who-next-banner .giant-title .who-line {
     display: block;
-
     font-family: "DM Sans", Arial, sans-serif;
     font-size: 0.32em;
     font-weight: 300;
     font-style: normal;
     font-variation-settings: "opsz" 14, "wght" 300;
     line-height: 0.7;
-
     text-align: center;
     margin: 0;
     padding: 0;
     letter-spacing: -0.02em;
-    transform: translateX(0);
+    transform: none;
 }
 
-.giant-title .next-line {
+.who-next-banner .giant-title .next-line {
     display: flex;
     flex-direction: column;
     align-items: center;
-
     font-size: 0.5em;
     font-weight: 750;
     font-variation-settings: "opsz" 14, "wght" 750;
     line-height: 1;
-
     text-align: center;
     margin: 0;
     padding: 0;
     letter-spacing: -0.02em;
 }
 
+.next-section {
+    width: 100%;
+    background-color: #FFFFFF;
+    padding: 48px 40px 48px;
+    display: block;
+    box-sizing: border-box;
+}
+
 .next-right {
-    padding-right: 40px;
+    max-width: 900px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
 }
@@ -763,14 +788,7 @@ footer {
         width: 210px;
     }
     .next-section {
-        column-gap: 48px;
-        padding: 48px 0 40px;
-    }
-    .next-left {
-        padding-left: 24px;
-    }
-    .next-right {
-        padding-right: 24px;
+        padding: 40px 24px 40px;
     }
     .jiwar-inner {
         gap: 40px;
@@ -840,19 +858,20 @@ footer {
         scroll-margin-top: 150px;
     }
 
-    .next-section {
-        grid-template-columns: 1fr;
-        row-gap: 32px;
-        padding: 44px 24px 36px;
+    .who-next-banner {
+        height: 320px;
     }
-    .next-left {
-        padding-left: 0;
+
+    .who-next-fade {
+        height: 70px;
     }
-    .next-right {
-        padding-right: 0;
-    }
-    .giant-title {
+
+    .who-next-banner .giant-title {
         font-size: clamp(2.8rem, 12vw, 4rem);
+    }
+
+    .next-section {
+        padding: 36px 24px 36px;
     }
 
     .jiwar-inner {
@@ -939,15 +958,29 @@ footer {
     .celebrating-block p {
         font-size: 1.05rem;
     }
-    .next-section {
-        padding: 40px 16px 32px;
+
+    .who-next-banner {
+        height: 260px;
     }
-    .giant-title {
+
+    .who-next-fade {
+        height: 55px;
+    }
+
+    .who-next-banner .giant-title {
         font-size: 2.8rem;
-        max-width: 100%;
     }
+
+    .next-section {
+        padding: 32px 16px 32px;
+        max-width: 430px;
+    }
+
     .focus-item {
         padding: 22px 0;
+    }
+    .focus-item + .focus-item {
+        margin-left: 0;
     }
     .focus-title {
         font-size: 1.25rem;
@@ -982,6 +1015,14 @@ footer {
     .header-nav a.winners-btn-header::after {
         left: 10px;
         width: calc(100% - 20px);
+    }
+
+    .who-next-banner {
+        height: 220px;
+    }
+
+    .who-next-fade {
+        height: 45px;
     }
 }
 
@@ -1075,17 +1116,22 @@ footer {
     </div>
 </section>
 
-<section class="next-section fade-in" id="who-is-next">
-    <div class="next-left">
-    <h2 class="giant-title">
-        <span class="lines">
-            <span class="who-line">WHO'S</span>
-            <span class="next-line">
-                NEXT?
+<!-- Full-width "Who's Next" image band (below cards, above focus titles) -->
+<section class="who-next-banner fade-in" id="who-is-next">
+    <div class="who-next-img-wrap">
+        <img src="/who-is-next.jpg" alt="" class="who-next-img">
+        <div class="who-next-fade who-next-fade-top" aria-hidden="true"></div>
+        <div class="who-next-fade who-next-fade-bottom" aria-hidden="true"></div>
+        <h2 class="giant-title">
+            <span class="lines">
+                <span class="who-line">WHO'S</span>
+                <span class="next-line">NEXT?</span>
             </span>
-        </span>
-    </h2>
+        </h2>
     </div>
+</section>
+
+<section class="next-section fade-in">
     <div class="next-right">
         <div class="focus-item">
             <div class="focus-item-inner">
