@@ -634,13 +634,13 @@ header {
     margin-bottom: 8px;
     border-bottom: 2px solid #e0edf3;
 }
-.facilities-continue-wrap {
+.nascom-continue-wrap {
     display: none;
     justify-content: flex-end;
     margin-top: 14px;
     padding-top: 4px;
 }
-.facilities-continue-wrap.visible {
+.nascom-continue-wrap.visible {
     display: flex;
 }
 
@@ -2013,7 +2013,7 @@ input::placeholder, textarea::placeholder {
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                             </button>
                         </div>
-                        <div class="facilities-continue-wrap" id="facilitiesContinueWrap">
+                        <div class="nascom-continue-wrap" id="nascomContinueWrap">
                             <button class="no-select-continue-btn" onclick="goToStep(5)">
                                 Continue
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -3512,7 +3512,7 @@ function onStepClick(step) {
     if (step > maxReachedStep) return;
     if (step === currentStep) return;
     if (step >= 5 && !selectedCandidate && !isNoSelection) return;
-    if (step >= 5 && isFacilitiesDept() && !isNoSelection && !facilitiesBothSelected()) return;
+    if (step >= 5 && isNascomDept() && !isNoSelection && !nascomBothSelected()) return;
     goToStep(step);
 }
 
@@ -3549,7 +3549,7 @@ function goToStep(step) {
 
     if (step === 4) {
         currentEmployees = departmentEmployees[currentDeptName] || [];
-        if (isFacilitiesDept()) {
+        if (isNascomDept()) {
             resetFacSelections();
             selectedCandidate = "";
             selectedCandidateId = "";
@@ -3559,7 +3559,7 @@ function goToStep(step) {
         document.getElementById("searchInput").value = "";
         const searchWrap = document.getElementById("nominateSearchWrap");
         if (searchWrap) {
-            searchWrap.style.display = (isFacilitiesDept() || currentEmployees.length > 8) ? "block" : "none";
+            searchWrap.style.display = (isNascomDept() || currentEmployees.length > 8) ? "block" : "none";
         }
         renderEmployees(currentEmployees);
         updateNominateUI();
@@ -3611,20 +3611,20 @@ function getInitials(name) {
     return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
-function isFacilitiesDept() {
-    return currentDeptName === "Facilities Team";
+function isNascomDept() {
+    return currentDeptName === "Nascom";
 }
 
 function resetFacSelections() {
     facSelections = { "Housekeeping Staff": null, "Technician Staff": null };
 }
 
-function facilitiesBothSelected() {
+function nascomBothSelected() {
     return !!(facSelections["Housekeeping Staff"] && facSelections["Technician Staff"]);
 }
 
-function syncFacilitiesCandidate() {
-    if (facilitiesBothSelected()) {
+function syncNascomCandidate() {
+    if (nascomBothSelected()) {
         const hk = facSelections["Housekeeping Staff"];
         const tech = facSelections["Technician Staff"];
         selectedCandidate = "Housekeeping: " + hk.name + " | Technician: " + tech.name;
@@ -3639,7 +3639,7 @@ function syncFacilitiesCandidate() {
 
 function createEmpCard(emp) {
     let isSelected = false;
-    if (isFacilitiesDept() && emp.group) {
+    if (isNascomDept() && emp.group) {
         isSelected = !isNoSelection && facSelections[emp.group] === emp;
     } else {
         isSelected = !isNoSelection && emp === selectedEmpRef;
@@ -3692,7 +3692,7 @@ function renderEmployees(list) {
 }
 
 function selectEmployee(emp) {
-    if (isFacilitiesDept() && emp.group) {
+    if (isNascomDept() && emp.group) {
         isNoSelection = false;
         document.getElementById("noSelectCard").classList.remove("selected");
         document.getElementById("noSelectContinueWrap").classList.remove("visible");
@@ -3701,7 +3701,7 @@ function selectEmployee(emp) {
         } else {
             facSelections[emp.group] = emp;
         }
-        syncFacilitiesCandidate();
+        syncNascomCandidate();
         // Re-render so selected state is correct within each group (search-safe)
         const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
         const base = currentEmployees || [];
@@ -3754,7 +3754,7 @@ function selectNoEmployee() {
     document.querySelectorAll(".emp-card").forEach(c => c.classList.remove("selected"));
     document.getElementById("noSelectCard").classList.add("selected");
     document.getElementById("noSelectContinueWrap").classList.add("visible");
-    const facWrap = document.getElementById("facilitiesContinueWrap");
+    const facWrap = document.getElementById("nascomContinueWrap");
     if (facWrap) facWrap.classList.remove("visible");
     updateNominateUI();
 }
@@ -3763,8 +3763,8 @@ function updateNominateUI() {
     const split = document.getElementById("nominateSplit");
     const nextBtn = document.getElementById("nextToReviewBtn");
     const continueWrap = document.getElementById("noSelectContinueWrap");
-    const facWrap = document.getElementById("facilitiesContinueWrap");
-    const facilities = isFacilitiesDept();
+    const facWrap = document.getElementById("nascomContinueWrap");
+    const nascom = isNascomDept();
 
     if (facWrap) facWrap.classList.remove("visible");
 
@@ -3772,14 +3772,14 @@ function updateNominateUI() {
         split.classList.remove("has-selection");
         continueWrap.classList.add("visible");
         nextBtn.disabled = true;
-    } else if (facilities) {
+    } else if (nascom) {
         split.classList.remove("has-selection");
         continueWrap.classList.remove("visible");
         nextBtn.disabled = true;
         recognitionStory = "";
         const ta = document.getElementById("reasonText");
         if (ta) ta.value = "";
-        if (facilitiesBothSelected() && facWrap) {
+        if (nascomBothSelected() && facWrap) {
             facWrap.classList.add("visible");
         }
     } else if (selectedCandidate) {
@@ -3836,7 +3836,7 @@ function prepareReview() {
         document.getElementById("reviewName").textContent = "No Employee Selected This Quarter";
         document.getElementById("reviewDept").textContent = currentDeptName + " Department";
         document.getElementById("storyBox").style.display = "none";
-    } else if (isFacilitiesDept() && facilitiesBothSelected()) {
+    } else if (isNascomDept() && nascomBothSelected()) {
         const hk = facSelections["Housekeeping Staff"];
         const tech = facSelections["Technician Staff"];
         document.getElementById("reviewAvatar").textContent = "2";
@@ -3970,7 +3970,7 @@ async function confirmVote() {
     submitBtn.textContent = "Submitting...";
 
     const winnerName = isNoSelection ? "No Employee Selected This Quarter" : selectedCandidate;
-    const storyValue = (isNoSelection || isFacilitiesDept()) ? null : recognitionStory;
+    const storyValue = (isNoSelection || isNascomDept()) ? null : recognitionStory;
 
     try {
         const { error: insertError } = await supabaseClient
@@ -4001,7 +4001,7 @@ async function confirmVote() {
                 body: {
                     department_name: currentDeptName,
                     winner_name: winnerName,
-                    recognition_story: (isNoSelection || isFacilitiesDept()) ? "" : recognitionStory
+                    recognition_story: (isNoSelection || isNascomDept()) ? "" : recognitionStory
                 }
             });
         } catch (emailErr) {
