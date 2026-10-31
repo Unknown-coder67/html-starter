@@ -425,8 +425,9 @@ header {
     max-width: 1920px;
 }
 
-/* ========== WHO'S NEXT full-width image banner ========== */
+/* ========== WHO'S NEXT – mobile full-width banner (hidden on desktop) ========== */
 .who-next-banner {
+    display: none; /* shown only on mobile via media query */
     position: relative;
     width: 100%;
     height: 600px;
@@ -448,7 +449,7 @@ header {
     display: block;
 }
 
-/* White fades top & bottom so image blends into page */
+/* White fades top & bottom so image blends into page (mobile only) */
 .who-next-fade {
     position: absolute;
     left: 0;
@@ -527,17 +528,134 @@ header {
     letter-spacing: -0.02em;
 }
 
+/* ========== Desktop/laptop: left-side smaller box + focus items ========== */
 .next-section {
     width: 100%;
     background-color: #FFFFFF;
-    padding: 48px 40px 48px;
-    display: block;
+    padding: 56px 0 48px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 80px;
+    align-items: start;
     box-sizing: border-box;
 }
 
+.next-left {
+    padding-left: 40px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+/* Desktop giant-title: smaller box with background image + 4-edge white fades */
+.giant-title {
+    position: relative;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: clamp(3.2rem, 7vw, 5.5rem);
+    line-height: 1;
+    color: #08245B;
+    margin: 0;
+
+    width: 100%;
+    max-width: 441px;
+    height: auto;
+    aspect-ratio: 441 / 372;
+
+    padding: 40px;
+    box-sizing: border-box;
+
+    background-image: url("/who-is-next.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* 4-edge white fades for desktop/laptop version of the box */
+.giant-title .desktop-fade {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.giant-title .desktop-fade-top {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: linear-gradient(to bottom, #FFFFFF 0%, rgba(255,255,255,0.75) 40%, transparent 100%);
+}
+
+.giant-title .desktop-fade-bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: linear-gradient(to top, #FFFFFF 0%, rgba(255,255,255,0.75) 40%, transparent 100%);
+}
+
+.giant-title .desktop-fade-left {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    background: linear-gradient(to right, #FFFFFF 0%, rgba(255,255,255,0.7) 45%, transparent 100%);
+}
+
+.giant-title .desktop-fade-right {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 60px;
+    background: linear-gradient(to left, #FFFFFF 0%, rgba(255,255,255,0.7) 45%, transparent 100%);
+}
+
+.giant-title .lines {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    transform: translateY(25px);
+}
+
+.giant-title .who-line {
+    display: block;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 0.32em;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings: "opsz" 14, "wght" 300;
+    line-height: 0.7;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    letter-spacing: -0.02em;
+    transform: translateX(0);
+}
+
+.giant-title .next-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.5em;
+    font-weight: 750;
+    font-variation-settings: "opsz" 14, "wght" 750;
+    line-height: 1;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    letter-spacing: -0.02em;
+}
+
 .next-right {
-    max-width: 900px;
-    margin: 0 auto;
+    padding-right: 40px;
     display: flex;
     flex-direction: column;
 }
@@ -788,7 +906,14 @@ footer {
         width: 210px;
     }
     .next-section {
-        padding: 40px 24px 40px;
+        column-gap: 48px;
+        padding: 48px 0 40px;
+    }
+    .next-left {
+        padding-left: 24px;
+    }
+    .next-right {
+        padding-right: 24px;
     }
     .jiwar-inner {
         gap: 40px;
@@ -858,7 +983,9 @@ footer {
         scroll-margin-top: 150px;
     }
 
+    /* Mobile: show full-width banner, hide desktop left box */
     .who-next-banner {
+        display: block;
         height: 320px;
     }
 
@@ -871,7 +998,17 @@ footer {
     }
 
     .next-section {
+        grid-template-columns: 1fr;
+        row-gap: 32px;
         padding: 36px 24px 36px;
+    }
+
+    .next-left {
+        display: none; /* desktop box hidden on mobile */
+    }
+
+    .next-right {
+        padding-right: 0;
     }
 
     .jiwar-inner {
@@ -979,9 +1116,12 @@ footer {
     .focus-item {
         padding: 22px 0;
     }
+
+    /* Keep second focus item indented on mobile (same as desktop) */
     .focus-item + .focus-item {
-        margin-left: 0;
+        margin-left: 50px;
     }
+
     .focus-title {
         font-size: 1.25rem;
     }
@@ -1116,8 +1256,8 @@ footer {
     </div>
 </section>
 
-<!-- Full-width "Who's Next" image band (below cards, above focus titles) -->
-<section class="who-next-banner fade-in" id="who-is-next">
+<!-- Mobile-only full-width "Who's Next" banner (kept as current design) -->
+<section class="who-next-banner fade-in" id="who-is-next-mobile">
     <div class="who-next-img-wrap">
         <img src="/who-is-next.jpg" alt="" class="who-next-img">
         <div class="who-next-fade who-next-fade-top" aria-hidden="true"></div>
@@ -1131,7 +1271,21 @@ footer {
     </div>
 </section>
 
-<section class="next-section fade-in">
+<!-- Desktop/laptop: left-side smaller box + focus items (old layout) -->
+<section class="next-section fade-in" id="who-is-next">
+    <div class="next-left">
+        <h2 class="giant-title">
+            <!-- 4-edge white fades for desktop -->
+            <div class="desktop-fade desktop-fade-top" aria-hidden="true"></div>
+            <div class="desktop-fade desktop-fade-bottom" aria-hidden="true"></div>
+            <div class="desktop-fade desktop-fade-left" aria-hidden="true"></div>
+            <div class="desktop-fade desktop-fade-right" aria-hidden="true"></div>
+            <span class="lines">
+                <span class="who-line">WHO'S</span>
+                <span class="next-line">NEXT?</span>
+            </span>
+        </h2>
+    </div>
     <div class="next-right">
         <div class="focus-item">
             <div class="focus-item-inner">
