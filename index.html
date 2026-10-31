@@ -449,64 +449,81 @@ header {
     display: block;
 }
 
-/* White fades left & right so image blends into page (mobile only) */
+/* Short smooth white fades on all 4 edges (mobile full-width banner) */
 .who-next-fade {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 55px;
     pointer-events: none;
     z-index: 2;
 }
 
-.who-next-fade-top {          /* now acts as LEFT fade */
+.who-next-fade-top {
+    top: 0;
     left: 0;
-    right: auto;
-    width: 55px;
-    height: auto;
+    right: 0;
+    height: 42px;
     background: linear-gradient(
-        to right,
+        to bottom,
         #FFFFFF 0%,
-        rgba(255,255,255,0.98) 5%,
-        rgba(255,255,255,0.95) 10%,
-        rgba(255,255,255,0.90) 15%,
-        rgba(255,255,255,0.82) 22%,
-        rgba(255,255,255,0.72) 30%,
-        rgba(255,255,255,0.60) 38%,
-        rgba(255,255,255,0.48) 46%,
-        rgba(255,255,255,0.36) 55%,
-        rgba(255,255,255,0.25) 65%,
-        rgba(255,255,255,0.15) 75%,
-        rgba(255,255,255,0.08) 85%,
-        rgba(255,255,255,0.03) 93%,
+        rgba(255,255,255,0.95) 12%,
+        rgba(255,255,255,0.80) 28%,
+        rgba(255,255,255,0.55) 48%,
+        rgba(255,255,255,0.28) 70%,
+        rgba(255,255,255,0.10) 85%,
         transparent 100%
     );
 }
 
-.who-next-fade-bottom {       /* now acts as RIGHT fade */
+.who-next-fade-bottom {
+    bottom: 0;
+    left: 0;
     right: 0;
-    left: auto;
-    width: 55px;
-    height: auto;
+    height: 42px;
     background: linear-gradient(
-        to left,
+        to top,
         #FFFFFF 0%,
-        rgba(255,255,255,0.98) 5%,
-        rgba(255,255,255,0.95) 10%,
-        rgba(255,255,255,0.90) 15%,
-        rgba(255,255,255,0.82) 22%,
-        rgba(255,255,255,0.72) 30%,
-        rgba(255,255,255,0.60) 38%,
-        rgba(255,255,255,0.48) 46%,
-        rgba(255,255,255,0.36) 55%,
-        rgba(255,255,255,0.25) 65%,
-        rgba(255,255,255,0.15) 75%,
-        rgba(255,255,255,0.08) 85%,
-        rgba(255,255,255,0.03) 93%,
+        rgba(255,255,255,0.95) 12%,
+        rgba(255,255,255,0.80) 28%,
+        rgba(255,255,255,0.55) 48%,
+        rgba(255,255,255,0.28) 70%,
+        rgba(255,255,255,0.10) 85%,
         transparent 100%
     );
 }
-    
+
+.who-next-fade-left {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 42px;
+    background: linear-gradient(
+        to right,
+        #FFFFFF 0%,
+        rgba(255,255,255,0.95) 12%,
+        rgba(255,255,255,0.80) 28%,
+        rgba(255,255,255,0.55) 48%,
+        rgba(255,255,255,0.28) 70%,
+        rgba(255,255,255,0.10) 85%,
+        transparent 100%
+    );
+}
+
+.who-next-fade-right {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 42px;
+    background: linear-gradient(
+        to left,
+        #FFFFFF 0%,
+        rgba(255,255,255,0.95) 12%,
+        rgba(255,255,255,0.80) 28%,
+        rgba(255,255,255,0.55) 48%,
+        rgba(255,255,255,0.28) 70%,
+        rgba(255,255,255,0.10) 85%,
+        transparent 100%
+    );
+}
+
 .who-next-banner .giant-title {
     position: absolute;
     inset: 0;
@@ -534,7 +551,7 @@ header {
     align-items: center;
     gap: 0;
     width: 100%;
-    transform: translateY(18px);   /* increase the number to lower it more */
+    transform: none;
 }
 
 .who-next-banner .giant-title .who-line {
@@ -1027,12 +1044,14 @@ footer {
         height: 320px;
     }
 
-    .who-next-fade {
-        height: 55px;
+    .who-next-fade-top,
+    .who-next-fade-bottom {
+        height: 38px;
     }
 
-    .who-next-fade-top {
-        height: 48px;
+    .who-next-fade-left,
+    .who-next-fade-right {
+        width: 38px;
     }
 
     .who-next-banner .giant-title {
@@ -1142,12 +1161,14 @@ footer {
         height: 260px;
     }
 
-    .who-next-fade {
-        height: 48px;
+    .who-next-fade-top,
+    .who-next-fade-bottom {
+        height: 36px;
     }
 
-    .who-next-fade-top {
-        height: 42px;
+    .who-next-fade-left,
+    .who-next-fade-right {
+        width: 36px;
     }
 
     .who-next-banner .giant-title {
@@ -1207,12 +1228,14 @@ footer {
         height: 220px;
     }
 
-    .who-next-fade {
-        height: 40px;
+    .who-next-fade-top,
+    .who-next-fade-bottom {
+        height: 32px;
     }
 
-    .who-next-fade-top {
-        height: 38px;
+    .who-next-fade-left,
+    .who-next-fade-right {
+        width: 32px;
     }
 }
 
@@ -1312,6 +1335,8 @@ footer {
         <img src="/who-is-next.jpg" alt="" class="who-next-img">
         <div class="who-next-fade who-next-fade-top" aria-hidden="true"></div>
         <div class="who-next-fade who-next-fade-bottom" aria-hidden="true"></div>
+        <div class="who-next-fade who-next-fade-left" aria-hidden="true"></div>
+        <div class="who-next-fade who-next-fade-right" aria-hidden="true"></div>
         <h2 class="giant-title">
             <span class="lines">
                 <span class="who-line">WHO'S</span>
