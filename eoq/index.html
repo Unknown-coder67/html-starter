@@ -4137,16 +4137,16 @@ function setExecProgress(mode, step) {
         pageHeader.style.display = "block";
         if (mode === "dh") {
             setHeaderLine("headerLine1", "");
-            setHeaderLine("headerLine2", step === 1 ? "Outstanding Department Head" : "Review Your Nomination");
+            setHeaderLine("headerLine2", step === 1 ? "Outstanding Department Head" : "Review Your Selection");
             setHeaderLine("headerLine3", step === 1
-                ? "Review the shortlisted department heads and select the winner together as the executive team."
+                ? "Choose the Leader Who Made a Difference This Quarter"
                 : "Confirm the details before submitting your final choice.");
         } else if (mode === "staff") {
             const cat = execMode === "admin" ? "Administrative Staff" : "Medical Staff";
             setHeaderLine("headerLine1", "");
-            setHeaderLine("headerLine2", step === 1 ? cat : "Review Your Nomination");
+            setHeaderLine("headerLine2", step === 1 ? cat : "Review Your Selection");
             setHeaderLine("headerLine3", step === 1
-                ? "Pick the colleague who made a real difference this quarter."
+                ? "Choose the employee who made a real difference this quarter"
                 : "Confirm the details before submitting your final choice.");
         }
     }
