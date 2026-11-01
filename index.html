@@ -960,32 +960,77 @@ footer {
         height: 320px;
     }
 
-    /* Mobile only: image itself fades to ~0% opacity on all 4 edges, elliptical */
+    /* Mobile only: curtain-style fade. Left ")" / right "(" (ellipses centred on each
+       side edge), bottom fades linearly, top has no fade. Layers are intersected. */
     .who-next-img {
         -webkit-mask-image: radial-gradient(
-            ellipse closest-side at 50% 50%,
-            #000 0%,
-            #000 30%,
-            rgba(0,0,0,0.92) 45%,
-            rgba(0,0,0,0.72) 58%,
-            rgba(0,0,0,0.45) 70%,
-            rgba(0,0,0,0.20) 82%,
-            rgba(0,0,0,0.06) 91%,
-            rgba(0,0,0,0.001) 97%,
-            transparent 100%
+            ellipse 45% 50% at 0% 50%,
+            transparent 0%,
+            rgba(0,0,0,0.001) 3%,
+            rgba(0,0,0,0.06) 10%,
+            rgba(0,0,0,0.20) 20%,
+            rgba(0,0,0,0.45) 32%,
+            rgba(0,0,0,0.72) 44%,
+            rgba(0,0,0,0.92) 57%,
+            #000 70%
+        ),
+        radial-gradient(
+            ellipse 45% 50% at 100% 50%,
+            transparent 0%,
+            rgba(0,0,0,0.001) 3%,
+            rgba(0,0,0,0.06) 10%,
+            rgba(0,0,0,0.20) 20%,
+            rgba(0,0,0,0.45) 32%,
+            rgba(0,0,0,0.72) 44%,
+            rgba(0,0,0,0.92) 57%,
+            #000 70%
+        ),
+        linear-gradient(
+            to top,
+            transparent 0%,
+            rgba(0,0,0,0.001) 2%,
+            rgba(0,0,0,0.06) 5%,
+            rgba(0,0,0,0.20) 10%,
+            rgba(0,0,0,0.45) 16%,
+            rgba(0,0,0,0.72) 22%,
+            rgba(0,0,0,0.92) 28%,
+            #000 35%
         );
         mask-image: radial-gradient(
-            ellipse closest-side at 50% 50%,
-            #000 0%,
-            #000 30%,
-            rgba(0,0,0,0.92) 45%,
-            rgba(0,0,0,0.72) 58%,
-            rgba(0,0,0,0.45) 70%,
-            rgba(0,0,0,0.20) 82%,
-            rgba(0,0,0,0.06) 91%,
-            rgba(0,0,0,0.001) 97%,
-            transparent 100%
+            ellipse 45% 50% at 0% 50%,
+            transparent 0%,
+            rgba(0,0,0,0.001) 3%,
+            rgba(0,0,0,0.06) 10%,
+            rgba(0,0,0,0.20) 20%,
+            rgba(0,0,0,0.45) 32%,
+            rgba(0,0,0,0.72) 44%,
+            rgba(0,0,0,0.92) 57%,
+            #000 70%
+        ),
+        radial-gradient(
+            ellipse 45% 50% at 100% 50%,
+            transparent 0%,
+            rgba(0,0,0,0.001) 3%,
+            rgba(0,0,0,0.06) 10%,
+            rgba(0,0,0,0.20) 20%,
+            rgba(0,0,0,0.45) 32%,
+            rgba(0,0,0,0.72) 44%,
+            rgba(0,0,0,0.92) 57%,
+            #000 70%
+        ),
+        linear-gradient(
+            to top,
+            transparent 0%,
+            rgba(0,0,0,0.001) 2%,
+            rgba(0,0,0,0.06) 5%,
+            rgba(0,0,0,0.20) 10%,
+            rgba(0,0,0,0.45) 16%,
+            rgba(0,0,0,0.72) 22%,
+            rgba(0,0,0,0.92) 28%,
+            #000 35%
         );
+        -webkit-mask-composite: source-in;
+        mask-composite: intersect;
         -webkit-mask-size: 100% 100%;
         mask-size: 100% 100%;
         -webkit-mask-repeat: no-repeat;
