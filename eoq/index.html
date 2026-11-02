@@ -102,9 +102,6 @@ header {
     transform: translate(-8px, 3px);
 }
 
-/* .header-nav rules live with .header-nav-pair below */
-
-
 .header-nav a {
     position: relative;
     display: block;
@@ -183,7 +180,6 @@ header {
     column-gap: 8px;
 }
 
-/* Kill default underline on nav-btn; label span owns the underline (text-width only) */
 .header-nav a.nav-btn::after {
     content: none !important;
     display: none !important;
@@ -217,17 +213,11 @@ header {
     transform: scaleX(1);
 }
 
-/* Keep vertical centering on absolute Home when hovered */
 #homeBtn:hover {
     transform: translateY(-50%);
 }
 
-/*
- * Pair is pinned to the right edge of .navbar — same two slots as home
- * (NOMINATE | WINNERS). Home sits further left and cannot shift the pair.
- */
 .header-nav {
-    /* layout host only; children are absolutely placed */
     display: block;
     position: static;
     width: 0;
@@ -247,7 +237,6 @@ header {
     z-index: 2;
 }
 
-/* Identical fixed slots so label length never moves them */
 .header-nav-pair .nav-btn {
     width: 110px;
     min-width: 110px;
@@ -259,7 +248,6 @@ header {
     box-sizing: border-box;
 }
 
-/* Home: fixed offset left of the pair (pair width = 110+14+110 = 234) */
 #homeBtn {
     position: absolute;
     right: calc(110px + 14px);
@@ -1469,7 +1457,6 @@ body.exec-bg::before {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    /* Exactly ~5 employee cards visible; scroll for the rest */
     max-height: calc((66px * 5) + (10px * 4));
     overflow-y: auto;
 }
@@ -1594,7 +1581,6 @@ input::placeholder, textarea::placeholder {
     .page-header-texts .line2 { margin-bottom: 12px; }
     .progress-wrap { margin: 0 auto 28px; }
 
-    /* Mobile: single-column stacked department cards */
     .dept-grid {
         grid-template-columns: 1fr;
         width: 90%;
@@ -3701,7 +3687,6 @@ function selectEmployee(emp) {
             facSelections[emp.group] = emp;
         }
         syncNascomCandidate();
-        // Re-render so selected state is correct within each group (search-safe)
         const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
         const base = currentEmployees || [];
         const filtered = q
