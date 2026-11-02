@@ -632,8 +632,6 @@ header {
     display: flex;
 }
 
-#step2 
-
 .access-box {
     max-width: 440px;
     width: 92%;
@@ -1680,6 +1678,59 @@ input::placeholder, textarea::placeholder {
     .exec-access-headline { font-size: 0.95rem; margin-bottom: 18px; letter-spacing: 0.22em; }
     .exec-access-box h2 { font-size: 0.95rem; margin-bottom: 20px; }
     footer { padding: 10px 14px; font-size: 0.62rem; }
+
+.criteria-modal {
+        max-height: min(78vh, 640px);
+        border-radius: 14px;
+    }
+    .criteria-modal-header { padding: 14px 16px 10px; }
+    .criteria-modal-header h2 { font-size: 1.05rem; }
+    .criteria-modal-body { padding: 12px 16px 6px; font-size: 0.82rem; }
+    .criteria-modal-body h3 { font-size: 0.88rem; margin: 10px 0 4px; }
+    .criteria-modal-actions { padding: 14px 16px 18px; }
+    .criteria-modal-actions .got-it-btn { padding: 10px 24px; font-size: 0.88rem; }
+    .criteria-modal-actions .criteria-back-btn { font-size: 0.88rem; margin-top: 12px; }
+
+.exec-choice-wrap {
+        margin-top: 48px;
+        padding: 0 16px 32px;
+    }
+    .exec-choice-headline {
+        margin-bottom: 10px;
+    }
+    .exec-choice-headline h1 {
+        font-size: clamp(1.4rem, 6vw, 1.85rem);
+        line-height: 1.25;
+    }
+    .exec-choice-sub {
+        margin-bottom: 28px;
+        font-size: 0.95rem;
+    }
+    .exec-boxes {
+        gap: 16px;
+    }
+    .exec-box {
+        padding: 24px 16px;
+        gap: 14px;
+        min-height: 112px;
+        border-radius: 16px;
+    }
+    .exec-box-img {
+        width: 36px;
+        height: 36px;
+    }
+    .exec-box-texts h3 {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+    .exec-box-texts p {
+        font-size: 0.85rem;
+    }
+    .exec-box-arrow {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
 }
 
 
@@ -1810,67 +1861,10 @@ input::placeholder, textarea::placeholder {
 .criteria-modal-actions .criteria-back-btn:hover {
     color: #00B7E2;
 }
-@media (max-width: 700px) {
-    .criteria-modal {
-        max-height: min(78vh, 640px);
-        border-radius: 14px;
-    }
-    .criteria-modal-header { padding: 14px 16px 10px; }
-    .criteria-modal-header h2 { font-size: 1.05rem; }
-    .criteria-modal-body { padding: 12px 16px 6px; font-size: 0.82rem; }
-    .criteria-modal-body h3 { font-size: 0.88rem; margin: 10px 0 4px; }
-    .criteria-modal-actions { padding: 14px 16px 18px; }
-    .criteria-modal-actions .got-it-btn { padding: 10px 24px; font-size: 0.88rem; }
-    .criteria-modal-actions .criteria-back-btn { font-size: 0.88rem; margin-top: 12px; }
-}
 
 
-@media (max-width: 700px) {
-    .exec-choice-wrap {
-        margin-top: 48px;
-        padding: 0 16px 32px;
-    }
-    .exec-choice-headline {
-        margin-bottom: 10px;
-    }
-    .exec-choice-headline h1 {
-        font-size: clamp(1.4rem, 6vw, 1.85rem);
-        line-height: 1.25;
-    }
-    .exec-choice-sub {
-        margin-bottom: 28px;
-        font-size: 0.95rem;
-    }
-    .exec-boxes {
-        gap: 16px;
-    }
-    .exec-box {
-        padding: 24px 16px;
-        gap: 14px;
-        min-height: 112px;
-        border-radius: 16px;
-    }
-    .exec-box-img {
-        width: 36px;
-        height: 36px;
-    }
-    .exec-box-texts h3 {
-        font-size: 1rem;
-        margin-bottom: 6px;
-    }
-    .exec-box-texts p {
-        font-size: 0.85rem;
-    }
-    .exec-box-arrow {
-        width: 30px;
-        height: 30px;
-        font-size: 1rem;
-    }
-    .page-back-wrap {
-        margin-top: 24px;
-        margin-bottom: 16px;
-    }
-}
+
+
 
 </style>
 </head>
