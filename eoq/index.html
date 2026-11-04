@@ -1284,28 +1284,46 @@ footer {
         align-items: stretch;
     }
     .employee-list-pane { flex: 0 0 auto; width: 100%; }
+
+    /* Keep the pane in the flow so we can animate it.
+       Hidden state: collapsed height, invisible, shifted down. */
     .reason-pane {
-        display: none;
-        width: 100%;
-    }
-    .nominate-split.has-selection .reason-pane {
         display: flex;
+        flex-direction: column;
         width: 100%;
         margin-left: 0;
-        margin-top: 18px;
-    }
-    .reason-inner { min-width: 0; }
-
-    /* Mobile: slow slide-up + fade for "What made them stand out" */
-    .reason-inner {
+        margin-top: 0;
+        max-height: 0;
         opacity: 0;
-        transform: translateY(56px);
-        transition: opacity 1s ease,
-                    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+        overflow: hidden;
+        visibility: hidden;
+        transform: translateY(48px);
+        transition:
+            max-height 1s ease,
+            opacity 1s ease,
+            margin-top 1s ease,
+            transform 1s cubic-bezier(0.22, 1, 0.36, 1),
+            visibility 0s linear 1s;   /* become invisible only after the fade finishes */
     }
-    .nominate-split.has-selection .reason-inner {
+
+    /* Visible state when an employee is selected */
+    .nominate-split.has-selection .reason-pane {
+        max-height: 520px;          /* enough room for the content */
         opacity: 1;
+        margin-top: 18px;
+        visibility: visible;
         transform: translateY(0);
+        transition:
+            max-height 1s ease,
+            opacity 1s ease,
+            margin-top 1s ease,
+            transform 1s cubic-bezier(0.22, 1, 0.36, 1),
+            visibility 0s linear 0s;   /* become visible immediately */
+    }
+
+    .reason-inner {
+        min-width: 0;
+        /* the pane itself now handles the slide + fade */
     }
 }
 
