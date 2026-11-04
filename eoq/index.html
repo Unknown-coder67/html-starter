@@ -1295,6 +1295,18 @@ footer {
         margin-top: 18px;
     }
     .reason-inner { min-width: 0; }
+
+    /* Mobile only: reason pane entrance animation */
+    .reason-inner {
+        opacity: 0;
+        transform: translateY(48px);
+        transition: opacity 0.5s ease 0.08s,
+                    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.05s;
+    }
+    .nominate-split.has-selection .reason-inner {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @media (max-width: 1560px) {
@@ -3674,6 +3686,32 @@ function renderEmployees(list) {
     });
 }
 
+/* ===== Mobile helper: scroll list under header + reveal reason ===== */
+function scrollListUnderHeaderAndRevealReason(splitId) {
+    if (!window.matchMedia("(max-width: 1000px)").matches) return;
+
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            const split = document.getElementById(splitId);
+            if (!split) return;
+
+            const listPane = split.querySelector(".employee-list-pane");
+            if (!listPane) return;
+
+            const header = document.querySelector("header");
+            const headerH = header ? header.offsetHeight : 74;
+
+            const rect = listPane.getBoundingClientRect();
+            const targetY = window.scrollY + rect.top - headerH - 12;
+
+            window.scrollTo({
+                top: Math.max(0, targetY),
+                behavior: "smooth"
+            });
+        });
+    });
+}
+
 function selectEmployee(emp) {
     if (isNascomDept() && emp.group) {
         isNoSelection = false;
@@ -3712,6 +3750,7 @@ function selectEmployee(emp) {
         c.classList.toggle("selected", c._emp === emp);
     });
     updateNominateUI();
+    scrollListUnderHeaderAndRevealReason("nominateSplit");
 }
 
 function selectNoEmployee() {
@@ -4285,6 +4324,7 @@ function selectExecDH(item) {
     renderExecDH(departmentHeads);
     document.getElementById("execDHSplit").classList.add("has-selection");
     document.getElementById("execDHNextBtn").disabled = !document.getElementById("execDHReason").value.trim();
+    scrollListUnderHeaderAndRevealReason("execDHSplit");
 }
 
 function selectExecDHNo() {
@@ -4355,6 +4395,7 @@ function selectExecStaff(emp) {
     renderExecStaff(execCurrentList);
     document.getElementById("execStaffSplit").classList.add("has-selection");
     document.getElementById("execStaffNextBtn").disabled = !document.getElementById("execStaffReason").value.trim();
+    scrollListUnderHeaderAndRevealReason("execStaffSplit");
 }
 
 function selectExecStaffNo() {
