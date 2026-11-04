@@ -1283,23 +1283,40 @@ footer {
         flex-direction: column;
         align-items: stretch;
     }
-    .employee-list-pane { flex: 0 0 auto; width: 100%; }
-
-    /* Keep the pane in the flow so we can animate it.
-       Hidden state: collapsed height, invisible, shifted further down. */
-    .reason-pane {
-        display: flex;
-        flex-direction: column;
+    .employee-list-pane {
+        flex: 0 0 auto;
         width: 100% !important;
         max-width: 100% !important;
-        box-sizing: border-box;
-        margin-left: 0;
+    }
+
+    /* Completely override desktop width/margin animation.
+       Keep the pane in normal flow so we can animate height + opacity + transform. */
+    .reason-pane,
+    .nominate-split.has-selection .reason-pane {
+        flex: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        box-sizing: border-box !important;
+        left: auto !important;
+        right: auto !important;
+        transform-origin: center top;
+    }
+
+    /* Hidden / closed state */
+    .reason-pane {
+        display: flex !important;
+        flex-direction: column;
         margin-top: 0;
         max-height: 0;
         opacity: 0;
         overflow: hidden;
         visibility: hidden;
-        transform: translateY(110px);   /* larger travel distance */
+        transform: translateY(120px);
+        /* only animate the properties we care about – no width/margin-left */
         transition:
             max-height 1s ease,
             opacity 1s ease,
@@ -1308,28 +1325,28 @@ footer {
             visibility 0s linear 1s;
     }
 
-    /* Visible state when an employee is selected */
+    /* Open state – short delay so the page scroll starts first */
     .nominate-split.has-selection .reason-pane {
-        max-height: 520px;
+        max-height: 560px;
         opacity: 1;
         margin-top: 18px;
         visibility: visible;
         transform: translateY(0);
-        width: 100% !important;
-        max-width: 100% !important;
         transition:
-            max-height 1s ease,
-            opacity 1s ease,
-            margin-top 1s ease,
-            transform 1s cubic-bezier(0.22, 1, 0.36, 1),
-            visibility 0s linear 0s;
+            max-height 1s ease 0.3s,
+            opacity 1s ease 0.3s,
+            margin-top 1s ease 0.3s,
+            transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s,
+            visibility 0s linear 0.3s;
     }
 
     .reason-inner {
         min-width: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
-        box-sizing: border-box;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 }
 
