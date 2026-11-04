@@ -1296,12 +1296,12 @@ footer {
     }
     .reason-inner { min-width: 0; }
 
-    /* Mobile only: reason pane entrance animation */
+    /* Mobile: slow slide-up + fade for "What made them stand out" */
     .reason-inner {
         opacity: 0;
-        transform: translateY(48px);
-        transition: opacity 0.5s ease 0.08s,
-                    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.05s;
+        transform: translateY(56px);
+        transition: opacity 1s ease,
+                    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .nominate-split.has-selection .reason-inner {
         opacity: 1;
@@ -3686,30 +3686,57 @@ function renderEmployees(list) {
     });
 }
 
-/* ===== Mobile helper: scroll list under header + reveal reason ===== */
+
+/* ===== Mobile helpers: 1s ease scroll + save/restore position ===== */
+let savedScrollYBeforeSelect = null;
+
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+function smoothScrollTo(targetY, duration = 1000) {
+  const startY = window.scrollY;
+  const distance = targetY - startY;
+  if (Math.abs(distance) < 2) return;
+  const startTime = performance.now();
+
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = easeInOutCubic(progress);
+    window.scrollTo(0, startY + distance * eased);
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
 function scrollListUnderHeaderAndRevealReason(splitId) {
-    if (!window.matchMedia("(max-width: 1000px)").matches) return;
+  if (!window.matchMedia("(max-width: 1000px)").matches) return;
 
+  // save current position so we can restore on unselect
+  savedScrollYBeforeSelect = window.scrollY;
+
+  requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            const split = document.getElementById(splitId);
-            if (!split) return;
+      const split = document.getElementById(splitId);
+      if (!split) return;
+      const listPane = split.querySelector(".employee-list-pane");
+      if (!listPane) return;
 
-            const listPane = split.querySelector(".employee-list-pane");
-            if (!listPane) return;
-
-            const header = document.querySelector("header");
-            const headerH = header ? header.offsetHeight : 74;
-
-            const rect = listPane.getBoundingClientRect();
-            const targetY = window.scrollY + rect.top - headerH - 12;
-
-            window.scrollTo({
-                top: Math.max(0, targetY),
-                behavior: "smooth"
-            });
-        });
+      const header = document.querySelector("header");
+      const headerH = header ? header.offsetHeight : 74;
+      const rect = listPane.getBoundingClientRect();
+      const targetY = window.scrollY + rect.top - headerH - 12;
+      smoothScrollTo(Math.max(0, targetY), 1000);
     });
+  });
+}
+
+function restoreScrollAfterUnselect() {
+  if (!window.matchMedia("(max-width: 1000px)").matches) return;
+  if (savedScrollYBeforeSelect === null) return;
+  smoothScrollTo(savedScrollYBeforeSelect, 1000);
+  savedScrollYBeforeSelect = null;
 }
 
 function selectEmployee(emp) {
@@ -3738,6 +3765,7 @@ function selectEmployee(emp) {
         selectedEmpRef = null;
         document.querySelectorAll(".emp-card").forEach(c => c.classList.remove("selected"));
         updateNominateUI();
+        restoreScrollAfterUnselect();
         return;
     }
     isNoSelection = false;
@@ -4314,6 +4342,7 @@ function selectExecDH(item) {
         renderExecDH(departmentHeads);
         document.getElementById("execDHSplit").classList.remove("has-selection");
         document.getElementById("execDHNextBtn").disabled = true;
+        restoreScrollAfterUnselect();
         return;
     }
     execIsNoSelection = false;
@@ -4386,6 +4415,7 @@ function selectExecStaff(emp) {
         renderExecStaff(execCurrentList);
         document.getElementById("execStaffSplit").classList.remove("has-selection");
         document.getElementById("execStaffNextBtn").disabled = true;
+        restoreScrollAfterUnselect();
         return;
     }
     execIsNoSelection = false;
