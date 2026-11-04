@@ -1306,7 +1306,7 @@ footer {
         transform-origin: center top;
     }
 
-    /* Hidden / closed state */
+    /* Hidden / closed state – same 0.3s delay as open */
     .reason-pane {
         display: flex !important;
         flex-direction: column;
@@ -1318,11 +1318,11 @@ footer {
         transform: translateY(120px);
         /* only animate the properties we care about – no width/margin-left */
         transition:
-            max-height 1s ease,
-            opacity 1s ease,
-            margin-top 1s ease,
-            transform 1s cubic-bezier(0.22, 1, 0.36, 1),
-            visibility 0s linear 1s;
+            max-height 1s ease 0.3s,
+            opacity 1s ease 0.3s,
+            margin-top 1s ease 0.3s,
+            transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s,
+            visibility 0s linear 1.3s;   /* hide after delay + duration */
     }
 
     /* Open state – short delay so the page scroll starts first */
