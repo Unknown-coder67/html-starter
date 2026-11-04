@@ -1286,44 +1286,50 @@ footer {
     .employee-list-pane { flex: 0 0 auto; width: 100%; }
 
     /* Keep the pane in the flow so we can animate it.
-       Hidden state: collapsed height, invisible, shifted down. */
+       Hidden state: collapsed height, invisible, shifted further down. */
     .reason-pane {
         display: flex;
         flex-direction: column;
-        width: 100%;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
         margin-left: 0;
         margin-top: 0;
         max-height: 0;
         opacity: 0;
         overflow: hidden;
         visibility: hidden;
-        transform: translateY(48px);
+        transform: translateY(110px);   /* larger travel distance */
         transition:
             max-height 1s ease,
             opacity 1s ease,
             margin-top 1s ease,
             transform 1s cubic-bezier(0.22, 1, 0.36, 1),
-            visibility 0s linear 1s;   /* become invisible only after the fade finishes */
+            visibility 0s linear 1s;
     }
 
     /* Visible state when an employee is selected */
     .nominate-split.has-selection .reason-pane {
-        max-height: 520px;          /* enough room for the content */
+        max-height: 520px;
         opacity: 1;
         margin-top: 18px;
         visibility: visible;
         transform: translateY(0);
+        width: 100% !important;
+        max-width: 100% !important;
         transition:
             max-height 1s ease,
             opacity 1s ease,
             margin-top 1s ease,
             transform 1s cubic-bezier(0.22, 1, 0.36, 1),
-            visibility 0s linear 0s;   /* become visible immediately */
+            visibility 0s linear 0s;
     }
 
     .reason-inner {
-        min-width: 0;
-        /* the pane itself now handles the slide + fade */
+        min-width: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
     }
 }
 
