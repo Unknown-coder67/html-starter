@@ -425,11 +425,12 @@ header {
     max-width: 1920px;
 }
 
+/* ========== WHO'S NEXT – mobile full-width banner (hidden on desktop) ========== */
 .who-next-banner {
     display: none;
     position: relative;
     width: 100%;
-    height: 240px;
+    height: 600px;
     overflow: hidden;
     background: #FFFFFF;
 }
@@ -507,6 +508,7 @@ header {
     letter-spacing: -0.02em;
 }
 
+/* ========== Desktop/laptop: left-side smaller box + focus items ========== */
 .next-section {
     width: 100%;
     background-color: #FFFFFF;
@@ -950,6 +952,7 @@ footer {
         scroll-margin-top: 150px;
     }
 
+    /* Mobile: show full-width banner, hide desktop box */
     .who-next-banner {
         display: block;
     }
@@ -966,11 +969,6 @@ footer {
 
     .next-left {
         display: none;
-    }
-
-    .next-left .giant-title {
-        -webkit-mask-image: none;
-        mask-image: none;
     }
 
     .next-right {
@@ -1063,7 +1061,7 @@ footer {
     }
 
     .who-next-banner {
-        height: 190px;
+        height: 260px;
     }
 
     .who-next-banner .giant-title {
@@ -1119,7 +1117,7 @@ footer {
     }
 
     .who-next-banner {
-        height: 175px;
+        height: 220px;
     }
 }
 
@@ -1213,6 +1211,7 @@ footer {
     </div>
 </section>
 
+<!-- Mobile-only full-width "Who's Next" banner -->
 <section class="who-next-banner fade-in" id="who-is-next-mobile">
     <div class="who-next-img-wrap">
         <img src="/mobile-who-is-next.jpg" alt="" class="who-next-img">
@@ -1225,6 +1224,7 @@ footer {
     </div>
 </section>
 
+<!-- Desktop/laptop: left-side smaller box + focus items -->
 <section class="next-section fade-in" id="who-is-next">
     <div class="next-left">
         <h2 class="giant-title">
