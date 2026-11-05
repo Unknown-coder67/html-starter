@@ -1307,6 +1307,7 @@ footer {
     }
 
     /* Hidden / closed state – same 0.3s delay as open */
+/* Hidden / closed state – same 1.5s + ease-in-out as the page scroll */
 .reason-pane {
     display: flex !important;
     flex-direction: column;
@@ -1317,14 +1318,14 @@ footer {
     visibility: hidden;
     transform: translateY(120px);
     transition:
-        max-height 1.5s ease 0s,                    /* 1.5s, no delay */
-        opacity 1.5s ease 0s,
-        margin-top 1.5s ease 0s,
-        transform 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0s,
-        visibility 0s linear 1.5s;                  /* hide only after animation finishes */
+        max-height 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0s,   /* matches easeInOutCubic */
+        opacity 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0s,
+        margin-top 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0s,
+        transform 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0s,
+        visibility 0s linear 1.5s;
 }
 
-/* Open state – same timing, starts immediately with the scroll */
+/* Open state – same curve so it accelerates with the scroll */
 .nominate-split.has-selection .reason-pane {
     max-height: 560px;
     opacity: 1;
@@ -1332,10 +1333,10 @@ footer {
     visibility: visible;
     transform: translateY(0);
     transition:
-        max-height 1.5s ease 0s,
-        opacity 1.5s ease 0s,
-        margin-top 1.5s ease 0s,
-        transform 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0s,
+        max-height 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0s,
+        opacity 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0s,
+        margin-top 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0s,
+        transform 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0s,
         visibility 0s linear 0s;
 }
 
