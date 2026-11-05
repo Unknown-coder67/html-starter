@@ -1307,38 +1307,37 @@ footer {
     }
 
     /* Hidden / closed state – same 0.3s delay as open */
-    .reason-pane {
-        display: flex !important;
-        flex-direction: column;
-        margin-top: 0;
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;
-        visibility: hidden;
-        transform: translateY(120px);
-        /* only animate the properties we care about – no width/margin-left */
-        transition:
-            max-height 2s ease 0.3s,
-            opacity 2s ease 0.3s,
-            margin-top 2s ease 0.3s,
-            transform 2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s,
-            visibility 0s linear 1.3s;   /* hide after delay + duration */
-    }
+.reason-pane {
+    display: flex !important;
+    flex-direction: column;
+    margin-top: 0;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transform: translateY(120px);
+    transition:
+        max-height 1.5s ease 0s,                    /* 1.5s, no delay */
+        opacity 1.5s ease 0s,
+        margin-top 1.5s ease 0s,
+        transform 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0s,
+        visibility 0s linear 1.5s;                  /* hide only after animation finishes */
+}
 
-    /* Open state – short delay so the page scroll starts first */
-    .nominate-split.has-selection .reason-pane {
-        max-height: 560px;
-        opacity: 1;
-        margin-top: 18px;
-        visibility: visible;
-        transform: translateY(0);
-        transition:
-            max-height 1s ease 0.3s,
-            opacity 1s ease 0.3s,
-            margin-top 1s ease 0.3s,
-            transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s,
-            visibility 0s linear 0.3s;
-    }
+/* Open state – same timing, starts immediately with the scroll */
+.nominate-split.has-selection .reason-pane {
+    max-height: 560px;
+    opacity: 1;
+    margin-top: 18px;
+    visibility: visible;
+    transform: translateY(0);
+    transition:
+        max-height 1.5s ease 0s,
+        opacity 1.5s ease 0s,
+        margin-top 1.5s ease 0s,
+        transform 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0s,
+        visibility 0s linear 0s;
+}
 
     .reason-inner {
         min-width: 0 !important;
@@ -3730,14 +3729,14 @@ function renderEmployees(list) {
 }
 
 
-/* ===== Mobile helpers: 1s ease scroll + save/restore position ===== */
+/* ===== Mobile helpers: 1.5s ease scroll + save/restore position ===== */
 let savedScrollYBeforeSelect = null;
 
 function easeInOutCubic(t) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
-function smoothScrollTo(targetY, duration = 2000) {
+function smoothScrollTo(targetY, duration = 1500) {   // 1.5 seconds
   const startY = window.scrollY;
   const distance = targetY - startY;
   if (Math.abs(distance) < 2) return;
@@ -3770,7 +3769,7 @@ function scrollListUnderHeaderAndRevealReason(splitId) {
       const headerH = header ? header.offsetHeight : 74;
       const rect = listPane.getBoundingClientRect();
       const targetY = window.scrollY + rect.top - headerH - 12;
-      smoothScrollTo(Math.max(0, targetY), 2000);
+      smoothScrollTo(Math.max(0, targetY), 1500);   // 1.5 seconds – matches reason-pane
     });
   });
 }
@@ -3778,7 +3777,7 @@ function scrollListUnderHeaderAndRevealReason(splitId) {
 function restoreScrollAfterUnselect() {
   if (!window.matchMedia("(max-width: 1000px)").matches) return;
   if (savedScrollYBeforeSelect === null) return;
-  smoothScrollTo(savedScrollYBeforeSelect, 2000);
+  smoothScrollTo(savedScrollYBeforeSelect, 1500);   // 1.5 seconds – matches reason-pane
   savedScrollYBeforeSelect = null;
 }
 
@@ -4126,15 +4125,14 @@ let execCurrentList = [];
 let execIsSubmitting = false;
 
 const departmentHeads = [
-    { name: "Mohamed Sheta", dept: "RCM + Encoder", id: "DH01" }, // ✅
-    { name: "Hossam Ali Banabilah", dept: "Reception + Drivers", id: "DH02" }, // ✅
-    { name: "Turki Tursom", dept: "Security", id: "DH03" }, // ✅
-    { name: "Dr. Mahmoud Ellamey", dept: "Emergency Department", id: "DH04" }, // ✅
-    { name: "Dr. Abdulrahman Faisal Baomar", dept: "Pharmacy", id: "DH05" }, // ✅
-    { name: "Mustafa Faleh", dept: "Nursing", id: "DH06" }, // ✅
-    { name: "Dr. Ahmed Abdelrehim", dept: "Radiology", id: "DH07" }, // ✅
-    { name: "Emran", dept: "Nascom", id: "DH08" },
-    { name: "Dr. Ahmed Abdelmoez Saad", dept: "Laboratory", id: "DH09" }
+    { name: "Mohamed Sheta", dept: "RCM + Encoder Department", id: "DH01" },
+    { name: "Hossam Ali Banabilah", dept: "Reception + Drivers Department", id: "DH02" },
+    { name: "Turki Tursom", dept: "Security Department", id: "DH03" },
+    { name: "Dr. Mahmoud Ellamey", dept: "Emergency Department", id: "DH04" },
+    { name: "Dr. Abdulrahman Faisal Baomar", dept: "Pharmacy Department", id: "DH05" },
+    { name: "Mustafa Faleh", dept: "Nursing Department", id: "DH06" },
+    { name: "Dr. Ahmed Abdelrehim", dept: "Radiology Department", id: "DH07" },
+    { name: "Dr. Ahmed Abdelmoez Saad", dept: "Laboratory Department", id: "DH09" }
 ];
 
 const adminStaff = [
@@ -4148,7 +4146,7 @@ const adminStaff = [
 ];
 
 const medicalStaff = [
-    { name: "Mohammed Ibrahim ", id: "MS01" },
+    { name: "Mohammed Rizk", id: "MS01" },
     { name: "Abdualziz Gedelleila", id: "MS02" },
     { name: "Dina Alrashdi", id: "MS03" },
     { name: "Azzam Alqathama", id: "MS04" },
