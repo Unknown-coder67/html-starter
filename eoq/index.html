@@ -1318,10 +1318,10 @@ footer {
         transform: translateY(120px);
         /* only animate the properties we care about – no width/margin-left */
         transition:
-            max-height 1s ease 0.3s,
-            opacity 1s ease 0.3s,
-            margin-top 1s ease 0.3s,
-            transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s,
+            max-height 2s ease 0.3s,
+            opacity 2s ease 0.3s,
+            margin-top 2s ease 0.3s,
+            transform 2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s,
             visibility 0s linear 1.3s;   /* hide after delay + duration */
     }
 
@@ -3737,7 +3737,7 @@ function easeInOutCubic(t) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
-function smoothScrollTo(targetY, duration = 1000) {
+function smoothScrollTo(targetY, duration = 2000) {
   const startY = window.scrollY;
   const distance = targetY - startY;
   if (Math.abs(distance) < 2) return;
@@ -3770,7 +3770,7 @@ function scrollListUnderHeaderAndRevealReason(splitId) {
       const headerH = header ? header.offsetHeight : 74;
       const rect = listPane.getBoundingClientRect();
       const targetY = window.scrollY + rect.top - headerH - 12;
-      smoothScrollTo(Math.max(0, targetY), 1000);
+      smoothScrollTo(Math.max(0, targetY), 2000);
     });
   });
 }
@@ -3778,7 +3778,7 @@ function scrollListUnderHeaderAndRevealReason(splitId) {
 function restoreScrollAfterUnselect() {
   if (!window.matchMedia("(max-width: 1000px)").matches) return;
   if (savedScrollYBeforeSelect === null) return;
-  smoothScrollTo(savedScrollYBeforeSelect, 1000);
+  smoothScrollTo(savedScrollYBeforeSelect, 2000);
   savedScrollYBeforeSelect = null;
 }
 
