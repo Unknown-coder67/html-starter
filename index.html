@@ -2,14 +2,33 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff" media="(max-width: 700px)">
 <meta name="robots" content="noindex, nofollow">
 <title>Care Medical Jiwar</title>
 <link rel="icon" type="image/png" href="/favicon.png">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap');
-    
+
+/* Goldplay SemiBold - installed / network-provided font.
+   To ship it with the site, add  url("/fonts/goldplay-semibold.woff2") format("woff2")  as a 3rd src. */
+@font-face {
+    font-family: "Goldplay SemiBold";
+    src: local("Goldplay SemiBold"), local("Goldplay-SemiBold"),
+         url("/fonts/goldplay-semibold.woff2") format("woff2"),
+         url("/fonts/goldplay-semibold.woff") format("woff");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+:root {
+    --font: "Goldplay SemiBold", "Goldplay-SemiBold", sans-serif;
+}
+*, *::before, *::after, button, input, select, textarea {
+    font-family: var(--font);
+    font-weight: 600;
+    font-synthesis: none;
+}
 * {
     box-sizing: border-box;
     margin: 0;
@@ -17,11 +36,11 @@
 }
 
 body {
-    font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback", Arial, Helvetica, sans-serif;
+    font-family: var(--font);
     font-feature-settings: normal;
-    font-variation-settings: "opsz" 14, "wght" 750;
+    font-variation-settings: normal;
     font-optical-sizing: none;
-    font-weight: 750;
+    font-weight: 600;
     font-style: normal;
     background: #FFFFFF;
     color: #08245B;
@@ -74,12 +93,12 @@ header {
     background: none;
     color: rgb(23, 23, 29);
     cursor: pointer;
-    font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback";
+    font-family: var(--font);
     font-size: 14.4px;
     font-style: normal;
-    font-weight: 750;
+    font-weight: 600;
     font-feature-settings: normal;
-    font-variation-settings: "opsz" 14, "wght" 750;
+    font-variation-settings: normal;
     font-optical-sizing: none;
     line-height: 21.6px;
     letter-spacing: normal;
@@ -123,11 +142,11 @@ header {
     border-radius: 999px;
     padding: 12px 17px;
 
-    font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback", Arial, Helvetica, sans-serif;
+    font-family: var(--font);
     font-size: 15.04px;
-    font-weight: 750;
+    font-weight: 600;
     font-feature-settings: normal;
-    font-variation-settings: "opsz" 14, "wght" 750;
+    font-variation-settings: normal;
     font-optical-sizing: none;
     line-height: 22.56px;
 
@@ -197,12 +216,12 @@ header {
     margin: 40px 0 20px;
     color: #08245B;
     font-size: 1rem;
-    font-weight: 750;
+    font-weight: 600;
 }
 
 .bottom-line h3 {
     font-size: clamp(1.5rem, 3.2vw, 2rem);
-    font-weight: 750;
+    font-weight: 600;
 }
 
 .cards-section {
@@ -257,7 +276,7 @@ header {
     color: #557083;
     font-size: 0.95rem;
     margin-bottom: 0;
-    font-weight: 750;
+    font-weight: 600;
 }
     
 @media (max-width: 900px) {
@@ -389,7 +408,7 @@ header {
     color: #718896;
     text-decoration: none;
     font-size: 1.50rem;
-    font-weight: 750;
+    font-weight: 600;
     line-height: 1.3;
     padding: 8px 0 8px 12px;
     border-left: 2px solid transparent;
@@ -444,7 +463,7 @@ header {
 }
 
 .giant-title {
-    font-family: "DM Sans", Arial, sans-serif;
+    font-family: var(--font);
     font-size: clamp(3.2rem, 7vw, 5.5rem);
     line-height: 1;
     color: #08245B;
@@ -479,11 +498,11 @@ header {
 
 .giant-title .who-line {
     display: block;
-    font-family: "DM Sans", Arial, sans-serif;
+    font-family: var(--font);
     font-size: 0.32em;
-    font-weight: 300;
+    font-weight: 600;
     font-style: normal;
-    font-variation-settings: "opsz" 14, "wght" 300;
+    font-variation-settings: normal;
     line-height: 0.7;
     text-align: center;
     margin: 0;
@@ -497,8 +516,8 @@ header {
     flex-direction: column;
     align-items: center;
     font-size: 0.5em;
-    font-weight: 750;
-    font-variation-settings: "opsz" 14, "wght" 750;
+    font-weight: 600;
+    font-variation-settings: normal;
     line-height: 1;
     text-align: center;
     margin: 0;
@@ -545,7 +564,7 @@ header {
 
 .focus-title {
     font-size: clamp(1.35rem, 2.5vw, 1.75rem);
-    font-weight: 750;
+    font-weight: 600;
     color: #08245B;
     line-height: 1.3;
     margin: 0 0 14px;
@@ -560,7 +579,7 @@ header {
     color: #557083;
     font-size: 1.05rem;
     line-height: 1.7;
-    font-weight: 500;
+    font-weight: 600;
     margin: 0 0 18px;
     max-width: 640px;
 }
@@ -574,9 +593,9 @@ header {
     border: none;
     border-radius: 999px;
     padding: 12px 20px;
-    font-family: inherit;
+    font-family: var(--font);
     font-size: 0.95rem;
-    font-weight: 750;
+    font-weight: 600;
     cursor: pointer;
     text-decoration: none;
     transition: opacity 0.2s ease, transform 0.2s ease;
@@ -588,7 +607,7 @@ header {
 }
 
 .winners-btn .arrow {
-    font-weight: 900;
+    font-weight: 600;
     -webkit-text-stroke: 1px currentColor;
 }
 
@@ -620,7 +639,7 @@ header {
 .jiwar-label {
     color: #00B7E2;
     font-size: 0.95rem;
-    font-weight: 750;
+    font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     margin-bottom: 18px;
@@ -629,7 +648,7 @@ header {
 .jiwar-headline {
     color: #08245B;
     font-size: clamp(2rem, 4vw, 3.2rem);
-    font-weight: 750;
+    font-weight: 600;
     line-height: 1.15;
     margin-bottom: 16px;
     white-space: pre-line;
@@ -653,9 +672,9 @@ header {
     border: none;
     border-radius: 0;
     padding: 0;
-    font-family: inherit;
+    font-family: var(--font);
     font-size: 1rem;
-    font-weight: 750;
+    font-weight: 600;
     cursor: pointer;
     text-decoration: none;
     transition: color 0.2s ease, opacity 0.2s ease;
@@ -668,7 +687,7 @@ header {
 }
 
 .jiwar-btn .arrow {
-    font-weight: 900;
+    font-weight: 600;
     -webkit-text-stroke: 1px currentColor;
 }
 
@@ -705,7 +724,7 @@ header {
 .wall-note .wall-to {
     font-size: 0.72rem;
     color: #0DC8EA;
-    font-weight: 750;
+    font-weight: 600;
     margin-bottom: 6px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -723,7 +742,7 @@ header {
     margin-top: 10px;
     font-size: 0.72rem;
     color: #718896;
-    font-weight: 750;
+    font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -900,11 +919,11 @@ footer {
     }
     .header-nav a.nominate-btn,
     .header-nav a.winners-btn-header {
-        font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback", Arial, Helvetica, sans-serif;
+        font-family: var(--font);
         font-size: 12.5px;
-        font-weight: 750;
+        font-weight: 600;
         font-feature-settings: normal;
-        font-variation-settings: "opsz" 14, "wght" 750;
+        font-variation-settings: normal;
         font-optical-sizing: none;
         padding: 9px 12px;
         height: 40px;
@@ -965,11 +984,11 @@ footer {
 @media (max-width: 480px) {
     .header-nav a.nominate-btn,
     .header-nav a.winners-btn-header {
-        font-family: "Twemoji Country Flags", "DM Sans", "DM Sans Fallback", Arial, Helvetica, sans-serif;
+        font-family: var(--font);
         font-size: 11.5px;
-        font-weight: 750;
+        font-weight: 600;
         font-feature-settings: normal;
-        font-variation-settings: "opsz" 14, "wght" 750;
+        font-variation-settings: normal;
         font-optical-sizing: none;
         padding: 8px 10px;
         height: 36px;
@@ -988,9 +1007,183 @@ footer {
         transition: none;
     }
 }
+
+/* ================= MOBILE-ONLY DESIGN (max-width: 700px) ================= */
+.m-only { display: none; }
+@media (max-width: 700px) {
+    .d-only { display: none !important; }
+
+    html, body { background: #eff6fe; }
+
+    .m-only {
+        /* >>> YOUR images - change the paths here <<< */
+        --m-banner: url("/mobile-banner.jpg");
+        --m-eoq:    url("/mobile-eoq-bg.jpg");
+        --m-eoq-ratio:  1216 / 608;    /* width / height of mobile-eoq-bg.jpg */
+        --m-safe-top:    env(safe-area-inset-top, 0px);
+        --m-safe-bottom: env(safe-area-inset-bottom, 0px);
+        --m-header-h: calc(74px + var(--m-safe-top));   /* white header height */
+        --m-hero-h: 50vw;                                /* = banner image height (1280x640 is 2:1), so the image fills the box with no solid gap */
+        --m-wave-h: 77.5vw;                              /* size of the wave cut-out / glow drawing */
+        --m-wave-top: -23.5vw;                           /* its top edge relative to the banner top: puts the wave in the lower part of the image */
+        --m-about-lift: -9vw;                            /* >>> raise/lower the About block: more negative = higher, closer to the wave; 0 = right below the banner box <<< */
+        --m-grad-top: #F0F4FA;                           /* page colour right below the wave */
+        --m-grad-bottom: #eff6fe;                        /* page colour at the very bottom */
+
+        /* wave cut + glow at the bottom of the banner (drawn here, not in the jpg).
+           viewBox is 620 tall so the glow has room under the wave and is no longer cut flat. */
+        --m-wave-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20620'%20preserveAspectRatio='none'%3E%3Cpath%20d='M0%200H800V492C720%20526%20640%20548%20540%20546C400%20543%20220%20470%200%20484Z'%20fill='%23000'/%3E%3C/svg%3E");
+        --m-wave-glow: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20620'%20preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient%20id='g'%20x1='0'%20x2='1'%20y1='0'%20y2='0'%3E%3Cstop%20offset='0'%20stop-color='%231fa6ff'%20stop-opacity='.35'/%3E%3Cstop%20offset='.4'%20stop-color='%232ac4ff'/%3E%3Cstop%20offset='.75'%20stop-color='%237fe8ff'/%3E%3Cstop%20offset='1'%20stop-color='%232ac4ff'%20stop-opacity='.6'/%3E%3C/linearGradient%3E%3Cfilter%20id='b'%20x='-5%'%20y='-60%'%20width='110%'%20height='220%'%3E%3CfeGaussianBlur%20stdDeviation='9'/%3E%3C/filter%3E%3C/defs%3E%3Cpath%20d='M0%20484C220%20470%20400%20543%20540%20546C640%20548%20720%20526%20800%20492'%20fill='none'%20stroke='%2318a8ff'%20stroke-width='20'%20opacity='.8'%20filter='url(%23b)'/%3E%3Cpath%20d='M0%20484C220%20470%20400%20543%20540%20546C640%20548%20720%20526%20800%20492'%20fill='none'%20stroke='url(%23g)'%20stroke-width='3.2'/%3E%3C/svg%3E");
+
+        display: block;
+        position: relative;
+        min-height: 100vh;
+        /* flat #d1dff2 down to the wave, then a slow gradient to almost white at the bottom */
+        background:
+            linear-gradient(180deg, var(--m-grad-top), var(--m-grad-bottom))
+                0 calc(var(--m-header-h) + var(--m-hero-h)) / 100% calc(100% - var(--m-header-h) - var(--m-hero-h)) no-repeat,
+            var(--m-grad-top);
+        color: #08245B;
+        line-height: 1.5;
+        overflow: hidden;
+        -webkit-font-smoothing: antialiased;
+    }
+    .m-only * { box-sizing: border-box; margin: 0; padding: 0; }
+    /* Goldplay SemiBold everywhere on the mobile version */
+    .m-only, .m-only * { font-family: var(--font) !important; font-weight: 600 !important; font-synthesis: none; }
+    .m-only a { text-decoration: none; color: inherit; }
+
+    /* solid strip at the very bottom edge: Safari tints its bottom toolbar from this */
+    .m-only .m-edge { position: fixed; left: 0; right: 0; z-index: 60; pointer-events: none; }
+    .m-only .m-edge.bottom { bottom: 0; height: env(safe-area-inset-bottom, 0px); background: #eff6fe; }
+
+    .m-only main { position: relative; z-index: 1; padding-top: var(--m-header-h); }
+
+    /* first screen = white header + banner + about + values card (fills the viewport exactly).
+       The Employee of the Quarter box and "Our People. Our Pride." are below the fold. */
+    .m-only .m-top { min-height: calc(100vh - var(--m-header-h)); min-height: calc(100svh - var(--m-header-h)); display: flex; flex-direction: column; }
+
+    .m-only .btn { display: inline-flex; align-items: center; cursor: pointer; border-radius: 999px; line-height: 1.2; white-space: nowrap; }
+    .m-only .btn svg { flex: none; }
+    .m-only .btn-cyan { background: linear-gradient(180deg, #2adaf7, #0fb9ee); color: #051a45; box-shadow: 0 4px 14px rgba(20, 200, 240, .45); }
+    .m-only .btn-outline { background: transparent; color: #08245B; }
+    .m-only .bar { display: block; border-radius: 5px; background: #14c8f0; box-shadow: 0 0 8px rgba(20, 200, 240, .6); }
+
+    /* ---- white header (same as desktop) with a menu button instead of EOQ / WINNERS ---- */
+    .m-only .m-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: #FFFFFF; padding: calc(8px + var(--m-safe-top)) 5% 8px; }
+    .m-only .m-navbar { max-width: 1920px; width: 100%; height: 58px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .m-only .m-logo { width: 100px; height: 100px; object-fit: contain; display: block; }
+
+    .m-only .m-menu-btn { width: 40px; height: 40px; border: none; background: transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .m-only .m-menu-btn span { display: block; width: 24px; height: 2.5px; border-radius: 2px; background: #08245B; }
+
+    /* ---- right side menu: starts at the header's button row, runs to the bottom of the screen ---- */
+    .m-only .m-menu {
+        position: fixed; z-index: 1100;
+        top: calc(var(--m-safe-top) + 8px); right: 0; bottom: 0;
+        width: 64vw;
+        background: #001f4d;
+        border-radius: 22px 0 0 22px;
+        box-shadow: -8px 0 28px rgba(0, 20, 60, .28);
+        transform: translateX(105%);
+        visibility: hidden;
+        transition: transform .4s cubic-bezier(.22, .8, .26, 1), visibility 0s linear .4s;
+    }
+    .m-only .m-menu.open { transform: translateX(0); visibility: visible; transition: transform .4s cubic-bezier(.22, .8, .26, 1), visibility 0s; }
+    .m-only .m-menu .m-menu-btn { position: absolute; top: 9px; right: 5vw; }   /* same spot as the header button */
+    .m-only .m-menu .m-menu-btn span { background: #FFFFFF; }
+    .m-only .m-menu-list { list-style: none; position: absolute; left: 0; right: 0; top: 74px; padding: 0 6vw 0 5vw; }
+    .m-only .m-menu-list li + li { border-top: 1px solid rgba(70, 140, 220, .3); }
+    .m-only .m-menu-list a { display: flex; align-items: center; gap: 4.5vw; padding: 4.4vw 0; color: #FFFFFF; font-size: clamp(13px, 3.15vw, 20px); line-height: 1.2; }
+    .m-only .m-menu-list svg { flex: none; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .m-only .m-menu-list svg.ic { width: 5.6vw; height: 5.6vw; stroke: #14c8f0; stroke-width: 1.8; }
+    .m-only .m-menu-list svg.chev { width: 3vw; height: 3vw; margin-left: auto; stroke: #FFFFFF; stroke-width: 2.4; }
+
+    /* ---- hero: banner jpg (bottom aligned, top trimmed), bottom edge cut into a wave in code.
+       Below the wave the page colour (#d1dff2) shows through, so the wave always matches it. ---- */
+    .m-only .hero {
+        position: relative; flex: none; isolation: isolate;
+        width: 100%;
+        height: var(--m-hero-h);
+        padding: 9vw 8vw 0;
+        color: #fff;
+        text-align: left;
+    }
+    .m-only .hero::before {
+        content: ""; position: absolute; inset: 0; z-index: -2;
+        background: var(--m-banner) center bottom / cover no-repeat #001f4e;   /* image ratio = box ratio, so it fills the box exactly */
+        -webkit-mask: var(--m-wave-mask) left var(--m-wave-top) / 100% var(--m-wave-h) no-repeat;
+                mask: var(--m-wave-mask) left var(--m-wave-top) / 100% var(--m-wave-h) no-repeat;
+    }
+    .m-only .hero::after {
+        content: ""; position: absolute; inset: 0; z-index: -1;
+        background: var(--m-wave-glow) left var(--m-wave-top) / 100% var(--m-wave-h) no-repeat;
+        pointer-events: none;
+    }
+    .m-only .hero h1 { font-size: clamp(22px, 6.3vw, 42px); line-height: 1.17; letter-spacing: -.1px; text-align: left; }
+    .m-only .hero h1 .accent { color: #14c8f0; white-space: nowrap; }
+    .m-only .ecg { display: inline-block; width: 1.7em; height: .8em; margin-left: .25em; vertical-align: -.05em; overflow: visible; }
+    .m-only .hero .bar { width: 10vw; height: max(3px, 1vw); margin: 2.4vw 0 0; }
+
+    /* ---- About (right under the banner, above the values) ---- */
+    .m-only .about { position: relative; z-index: 2; flex: none; margin-top: var(--m-about-lift); padding: 0 0 3vw; }
+    .m-only .about .wrap { padding: 0 8vw; }
+    .m-only .about h2 { font-size: clamp(18px, 5.6vw, 34px); line-height: 1.15; color: #08245B; }
+    .m-only .about .bar { width: 8.25vw; height: max(3px, .8vw); margin: 2.2vw 0 3vw; }
+    .m-only .about p { font-size: clamp(11px, 3vw, 17px); line-height: 1.45; color: #08245B; }
+
+    /* ---- values card ---- */
+    .m-only .values { flex: 1 1 auto; display: flex; align-items: center; padding: 5vw 0; }
+    .m-only .values .wrap { width: 100%; padding: 0 5.5vw; }
+    .m-only .values-title { display: flex; align-items: center; justify-content: center; gap: 3vw; margin-bottom: 4vw; font-size: clamp(16px, 5vw, 30px); line-height: 1.15; color: #08245B; text-align: center; }
+    .m-only .values-title::before, .m-only .values-title::after { content: ""; flex: none; width: 12vw; height: 1.5px; background: #08245B; }
+    .m-only .values-card {
+        display: grid; grid-template-columns: repeat(4, 1fr);
+        background: linear-gradient(180deg, #ebf4fd, #e5f1fd);
+        border: none;
+        border-radius: 3vw;
+        box-shadow: 0 9px 12px -8px rgba(20, 70, 140, .38);   /* bottom shadow only */
+        padding: 2.5vw 0 2.8vw;
+    }
+    .m-only .value { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1.8vw; text-align: center; padding: 0 2px; font-size: clamp(9px, 2.5vw, 14px); line-height: 1.2; color: #08245B; }
+    .m-only .value + .value::before { content: ""; position: absolute; left: 0; top: 10%; bottom: 10%; width: 1px; background: linear-gradient(180deg, transparent, rgba(8,36,91,.25), transparent); }
+    .m-only .value svg { width: 7.6vw; height: 7.6vw; stroke: #08245B; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ---- Employee of the Quarter (background = your EOQ jpg; box ratio = jpg ratio) ---- */
+    .m-only .eoq-section { flex: none; padding: 0 0 2vw; }
+    .m-only .eoq-section .wrap { padding: 0 2.75vw; }
+    .m-only .eoq {
+        position: relative;
+        display: grid; grid-template-columns: 52% 1fr; align-items: center;
+        aspect-ratio: var(--m-eoq-ratio);
+        border-radius: 5.6vw;
+        background: var(--m-eoq) left center / cover no-repeat #d1dff2;
+        color: #fff; overflow: hidden;
+        box-shadow: 0 10px 26px rgba(8, 36, 91, .25);
+    }
+    .m-only .eoq-text { grid-column: 2; min-width: 0; padding: 0 5vw 0 0; }
+    .m-only .eoq-text h2 { font-size: clamp(13px, 4.2vw, 26px); line-height: 1.12; }
+    .m-only .eoq-text .bar { width: 5vw; height: max(2px, .7vw); margin: 1.8vw 0 1.6vw; }
+    .m-only .eoq-text p { font-size: clamp(9px, 2.5vw, 14px); line-height: 1.32; color: #e3efff; margin-bottom: 2.6vw; }
+    .m-only .eoq-text .btn { padding: 1.5vw 3.4vw; font-size: clamp(9.5px, 2.55vw, 14px); gap: 1.6vw; }
+    .m-only .eoq-text .btn svg { width: 1.25em; height: 1.25em; }
+
+    /* ---- Our People. Our Pride. ---- */
+    .m-only .pride { position: relative; padding: 4vw 0 8vw; }
+    .m-only .pride .wrap { padding: 0 8vw; }
+    .m-only .pride h2 { font-size: clamp(13px, 4.2vw, 26px); line-height: 1.12; color: #08245B; }
+    .m-only .pride .bar { width: 8.25vw; height: max(3px, .8vw); margin: 2.4vw 0 3.2vw; }
+    .m-only .pride p { max-width: 64vw; font-size: clamp(9px, 2.5vw, 14px); line-height: 1.32; color: #0b2a5b; margin-bottom: 3.2vw; }
+    .m-only .pride .btn-outline { padding: 1.5vw 3.6vw; font-size: clamp(10px, 2.6vw, 15px); gap: 2vw; border: max(1.5px, .25vw) solid #08245B; }
+    .m-only .pride .btn svg { width: 1.3em; height: 1.3em; }
+
+    /* ---- footer (mobile) ---- */
+    .m-only footer { text-align: center; padding: 18px 20px calc(18px + var(--m-safe-bottom)); color: #557083; font-size: 0.7rem; background: transparent; }
+}
 </style>
 </head>
 <body>
+<div class="d-only">
 <header>
     <div class="navbar">
         <a href="/">
@@ -998,7 +1191,7 @@ footer {
         </a>
         <nav class="header-nav">
             <a href="/eoq/" class="nominate-btn">EOQ</a>
-            <a href="winners/index.html" class="winners-btn-header">WINNERS</a>
+            <a href="winners" class="winners-btn-header">WINNERS</a>
         </nav>
     </div>
 </header>
@@ -1126,6 +1319,133 @@ Who made things a little better</p>
 <footer>
     © 2026 Care Medical Jiwar
 </footer>
+</div>
+
+<!-- ================= MOBILE HOME (phones only) ================= -->
+<div class="m-only">
+<div class="m-edge bottom" id="mEdgeBottom" aria-hidden="true"></div>
+<header class="m-header">
+    <div class="m-navbar">
+        <a href="/"><img src="/logo.jpg" alt="Care Medical Jiwar" class="m-logo"></a>
+        <button type="button" class="m-menu-btn" data-m-menu-toggle aria-label="Open menu" aria-expanded="false" aria-controls="mMenu"><span></span><span></span><span></span></button>
+    </div>
+</header>
+<nav class="m-menu" id="mMenu" aria-label="Menu">
+    <button type="button" class="m-menu-btn" data-m-menu-toggle aria-label="Close menu"><span></span><span></span><span></span></button>
+    <ul class="m-menu-list">
+        <li>
+            <a href="/eoq/">
+                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>
+                <span>Employee of the Quarter</span>
+                <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            </a>
+        </li>
+        <li>
+            <a href="winners/index.html">
+                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z"/><path d="M8 6H4v1a4 4 0 0 0 4 4M16 6h4v1a4 4 0 0 1-4 4"/><path d="M12 13v4M8.5 20h7M10 17h4"/></svg>
+                <span>Winners</span>
+                <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            </a>
+        </li>
+        <li>
+            <a href="/executive/">
+                <svg class="ic" viewBox="0 0 64 64" aria-hidden="true" style="stroke-width:3.4"><circle cx="32" cy="14" r="6.5"/><circle cx="14" cy="24" r="6"/><circle cx="50" cy="24" r="6"/><path d="M20 44c0-8 5-13 12-13s12 5 12 13"/><path d="M3 46c0-7 4-11 10-11M61 46c0-7-4-11-10-11"/><path d="M3 46h8M53 46h8M20 44v4M44 44v4"/></svg>
+                <span>Executive</span>
+                <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            </a>
+        </li>
+    </ul>
+</nav>
+<main>
+    <div class="m-top">
+    <section class="hero">
+        <div class="wrap">
+            <h1>Caring with<br>Every <span class="accent">Heartbeat<svg class="ecg" viewBox="0 0 100 30" fill="none" stroke="#14c8f0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="0,15 30,15 38,6 47,26 57,1 66,28 73,15 100,15"/></svg></span></h1>
+            <span class="bar"></span>
+        </div>
+    </section>
+
+    <section class="about" id="m-about">
+        <div class="wrap">
+            <h2>About</h2>
+            <span class="bar"></span>
+            <p>We believe that care begins with people. Inspired by the spirit of this place, where countless journeys meet, this space honors the people behind the care, a place to recognize their efforts and celebrate the difference they make every day.</p>
+        </div>
+    </section>
+
+    <section class="values" id="m-values">
+        <div class="wrap">
+            <h2 class="values-title">What We Celebrate</h2>
+            <div class="values-card">
+                <div class="value">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                        <path d="M32 33C16 22 17 6 26 6c4 0 6 3 6 5 0-2 2-5 6-5 9 0 10 16-6 27z"/>
+                        <path d="M4 36l9-1c4 0 7 1 10 3l7 4c2 1 2 4 0 5-1 1-3 1-4 0"/>
+                        <path d="M4 36v20l12 2 14 4 26-10c3-1 3-5 0-5l-9 2"/>
+                        <path d="M60 36l-9-1c-4 0-7 1-10 3l-8 5"/>
+                        <path d="M60 36v18"/>
+                    </svg>
+                    <span>Care</span>
+                </div>
+                <div class="value">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                        <circle cx="32" cy="24" r="16"/>
+                        <path d="M32 14l3 6.2 6.8 1-4.9 4.8 1.2 6.8-6.1-3.2-6.1 3.2 1.2-6.8-4.9-4.8 6.8-1z"/>
+                        <path d="M22 38l-8 20 9-3 5 7 6-17M42 38l8 20-9-3-5 7-6-17"/>
+                    </svg>
+                    <span>Excellence</span>
+                </div>
+                <div class="value">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                        <path d="M32 6l20 7v17c0 14-9 23-20 28C21 53 12 44 12 30V13z"/>
+                        <path d="M22 32l7 7 13-14"/>
+                    </svg>
+                    <span>Integrity</span>
+                </div>
+                <div class="value">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                        <circle cx="32" cy="14" r="6.5"/><circle cx="14" cy="24" r="6"/><circle cx="50" cy="24" r="6"/>
+                        <path d="M20 44c0-8 5-13 12-13s12 5 12 13"/>
+                        <path d="M3 46c0-7 4-11 10-11M61 46c0-7-4-11-10-11"/>
+                        <path d="M3 46h8M53 46h8M20 44v4M44 44v4"/>
+                    </svg>
+                    <span>Teamwork</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    </div><!-- /m-top -->
+
+    <section class="eoq-section">
+        <div class="wrap">
+            <div class="eoq">
+                <div class="eoq-text">
+                    <h2>Employee of<br>the Quarter</h2>
+                    <span class="bar"></span>
+                    <p>Every quarter we celebrate one star from every department for their dedication, teamwork, and commitment to excellence.</p>
+                    <a href="/eoq/" class="btn btn-cyan">Choose Your Star <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pride">
+        <div class="wrap">
+            <h2>Our People. Our Pride.</h2>
+            <span class="bar"></span>
+            <p>Our pride begins with the people behind everything we do. Every role has a purpose, every contribution has its place. Together, they are what make us who we are.</p>
+            <a href="winners/index.html" class="btn btn-outline">Meet Our Winners <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+        </div>
+    </section>
+</main>
+<footer>
+    © 2026 Care Medical Jiwar
+</footer>
+</div>
+
 <script>
     
 (function () {
@@ -1133,6 +1453,17 @@ Who made things a little better</p>
   const bannerWrap = document.querySelector(".banner-wrap");
   const header = document.querySelector("header");
   if (!video || !bannerWrap) return;
+
+  if (window.matchMedia("(max-width: 700px)").matches) {
+    // phones use the static mobile design: don't load the desktop banner video
+    while (video.firstChild) video.removeChild(video.firstChild);
+    video.removeAttribute("autoplay");
+    video.removeAttribute("poster");
+    video.preload = "none";
+    video.load();
+    return;
+  }
+
 
   const SCROLL_KEY = "jiwar_home_scroll";
   const navEntry = performance.getEntriesByType("navigation")[0];
@@ -1438,6 +1769,28 @@ celebratingLinks.forEach((link) => {
   }
 
   loadNotes();
+})();
+</script>
+<script>
+/* mobile side menu: slide in / out */
+(function () {
+  var menu = document.getElementById("mMenu");
+  if (!menu) return;
+  var toggles = document.querySelectorAll("[data-m-menu-toggle]");
+  var header = document.querySelector(".m-header");
+  function setOpen(open) {
+    menu.classList.toggle("open", open);
+    for (var i = 0; i < toggles.length; i++) toggles[i].setAttribute("aria-expanded", open ? "true" : "false");
+  }
+  for (var i = 0; i < toggles.length; i++) {
+    toggles[i].addEventListener("click", function () { setOpen(!menu.classList.contains("open")); });
+  }
+  document.addEventListener("click", function (e) {
+    if (!menu.classList.contains("open")) return;
+    if (menu.contains(e.target) || (header && header.contains(e.target))) return;
+    setOpen(false);
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") setOpen(false); });
 })();
 </script>
 </body>
