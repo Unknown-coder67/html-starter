@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#001f4e" media="(max-width: 700px)">
+<meta name="theme-color" content="#ffffff" media="(max-width: 700px)">
 <meta name="robots" content="noindex, nofollow">
 <title>Care Medical Jiwar</title>
 <link rel="icon" type="image/png" href="/favicon.png">
@@ -14,7 +14,9 @@
    To ship it with the site, add  url("/fonts/Goldplay-SemiBold.woff2") format("woff2")  as a 3rd src. */
 @font-face {
     font-family: "Goldplay SemiBold";
-    src: local("Goldplay SemiBold"), local("Goldplay-SemiBold");
+    src: local("Goldplay SemiBold"), local("Goldplay-SemiBold"),
+         url("/fonts/Goldplay-SemiBold.woff2") format("woff2"),
+         url("/fonts/Goldplay-SemiBold.woff") format("woff");
     font-weight: 600;
     font-style: normal;
     font-display: swap;
@@ -1011,40 +1013,48 @@ footer {
 @media (max-width: 700px) {
     .d-only { display: none !important; }
 
-    /* Overscroll / toolbar-area colours: top = banner sky, bottom = page background */
-    html, body { background: #001f4e; }
+    html, body { background: #eff6fe; }
 
     .m-only {
         /* >>> YOUR images - change the paths here <<< */
         --m-banner: url("/mobile-banner.jpg");
         --m-eoq:    url("/mobile-eoq-bg.jpg");
         --m-eoq-ratio:  1216 / 608;    /* width / height of mobile-eoq-bg.jpg */
-        --m-safe-top:    env(safe-area-inset-top, 0px);     /* iPhone notch / status-bar area */
-        --m-safe-bottom: env(safe-area-inset-bottom, 0px);  /* iPhone home-indicator area */
-        --m-fill: #d1dff2;             /* page background colour (also shows under the banner wave) */
+        --m-safe-top:    env(safe-area-inset-top, 0px);
+        --m-safe-bottom: env(safe-area-inset-bottom, 0px);
+        --m-header-h: calc(74px + var(--m-safe-top));   /* white header height */
+        --m-hero-h: 69.5vw;                              /* banner height (top solid colour trimmed) */
+        --m-grad-top: #d1dff2;                           /* page colour right below the wave */
+        --m-grad-bottom: #eff6fe;                        /* page colour at the very bottom */
 
-        /* wave cut + glow at the bottom of the banner (drawn here, not in the jpg) */
-        --m-wave-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20560'%20preserveAspectRatio='none'%3E%3Cpath%20d='M0%200H800V492C720%20526%20640%20548%20540%20546C400%20543%20220%20470%200%20484Z'%20fill='%23000'/%3E%3C/svg%3E");
-        --m-wave-glow: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20560'%20preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient%20id='g'%20x1='0'%20x2='1'%20y1='0'%20y2='0'%3E%3Cstop%20offset='0'%20stop-color='%231fa6ff'%20stop-opacity='.35'/%3E%3Cstop%20offset='.4'%20stop-color='%232ac4ff'/%3E%3Cstop%20offset='.75'%20stop-color='%237fe8ff'/%3E%3Cstop%20offset='1'%20stop-color='%232ac4ff'%20stop-opacity='.6'/%3E%3C/linearGradient%3E%3Cfilter%20id='b'%20x='-5%'%20y='-60%'%20width='110%'%20height='220%'%3E%3CfeGaussianBlur%20stdDeviation='9'/%3E%3C/filter%3E%3C/defs%3E%3Cpath%20d='M0%20484C220%20470%20400%20543%20540%20546C640%20548%20720%20526%20800%20492'%20fill='none'%20stroke='%2318a8ff'%20stroke-width='20'%20opacity='.8'%20filter='url(%23b)'/%3E%3Cpath%20d='M0%20484C220%20470%20400%20543%20540%20546C640%20548%20720%20526%20800%20492'%20fill='none'%20stroke='url(%23g)'%20stroke-width='3.2'/%3E%3C/svg%3E");
+        /* wave cut + glow at the bottom of the banner (drawn here, not in the jpg).
+           viewBox is 620 tall so the glow has room under the wave and is no longer cut flat. */
+        --m-wave-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20620'%20preserveAspectRatio='none'%3E%3Cpath%20d='M0%200H800V492C720%20526%20640%20548%20540%20546C400%20543%20220%20470%200%20484Z'%20fill='%23000'/%3E%3C/svg%3E");
+        --m-wave-glow: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20620'%20preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient%20id='g'%20x1='0'%20x2='1'%20y1='0'%20y2='0'%3E%3Cstop%20offset='0'%20stop-color='%231fa6ff'%20stop-opacity='.35'/%3E%3Cstop%20offset='.4'%20stop-color='%232ac4ff'/%3E%3Cstop%20offset='.75'%20stop-color='%237fe8ff'/%3E%3Cstop%20offset='1'%20stop-color='%232ac4ff'%20stop-opacity='.6'/%3E%3C/linearGradient%3E%3Cfilter%20id='b'%20x='-5%'%20y='-60%'%20width='110%'%20height='220%'%3E%3CfeGaussianBlur%20stdDeviation='9'/%3E%3C/filter%3E%3C/defs%3E%3Cpath%20d='M0%20484C220%20470%20400%20543%20540%20546C640%20548%20720%20526%20800%20492'%20fill='none'%20stroke='%2318a8ff'%20stroke-width='20'%20opacity='.8'%20filter='url(%23b)'/%3E%3Cpath%20d='M0%20484C220%20470%20400%20543%20540%20546C640%20548%20720%20526%20800%20492'%20fill='none'%20stroke='url(%23g)'%20stroke-width='3.2'/%3E%3C/svg%3E");
 
         display: block;
         position: relative;
         min-height: 100vh;
-        background: var(--m-fill);
+        /* flat #d1dff2 down to the wave, then a slow gradient to almost white at the bottom */
+        background:
+            linear-gradient(180deg, var(--m-grad-top), var(--m-grad-bottom))
+                0 calc(var(--m-header-h) + var(--m-hero-h)) / 100% calc(100% - var(--m-header-h) - var(--m-hero-h)) no-repeat,
+            var(--m-grad-top);
         color: #08245B;
         line-height: 1.5;
         overflow: hidden;
         -webkit-font-smoothing: antialiased;
     }
     .m-only * { box-sizing: border-box; margin: 0; padding: 0; }
+    /* Goldplay SemiBold everywhere on the mobile version */
+    .m-only, .m-only * { font-family: var(--font) !important; font-weight: 600 !important; font-synthesis: none; }
     .m-only a { text-decoration: none; color: inherit; }
 
-    /* solid strips at the very top/bottom edges: Safari tints its toolbars from these */
+    /* solid strip at the very bottom edge: Safari tints its bottom toolbar from this */
     .m-only .m-edge { position: fixed; left: 0; right: 0; z-index: 60; pointer-events: none; }
-    .m-only .m-edge.top    { top: 0;    height: env(safe-area-inset-top, 0px); background: #001f4e; }
-    .m-only .m-edge.bottom { bottom: 0; height: env(safe-area-inset-bottom, 0px); background: #d1dff2; }
+    .m-only .m-edge.bottom { bottom: 0; height: env(safe-area-inset-bottom, 0px); background: #eff6fe; }
 
-    .m-only main { position: relative; z-index: 1; }
+    .m-only main { position: relative; z-index: 1; padding-top: var(--m-header-h); }
 
     /* first screen = banner + about + values + Employee of the Quarter.
        "Our People. Our Pride." starts below the fold. */
@@ -1056,39 +1066,65 @@ footer {
     .m-only .btn-outline { background: transparent; color: #08245B; }
     .m-only .bar { display: block; border-radius: 5px; background: #14c8f0; box-shadow: 0 0 8px rgba(20, 200, 240, .6); }
 
-    /* transparent header with the logo (same sizes as the other pages' mobile header) */
-    .m-only .m-header { position: absolute; top: var(--m-safe-top); left: 0; width: 100%; z-index: 5; padding: 8px 5%; background: transparent; }
-    .m-only .m-navbar { height: 58px; display: flex; align-items: center; }
+    /* ---- white header (same as desktop) with a menu button instead of EOQ / WINNERS ---- */
+    .m-only .m-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: #FFFFFF; padding: calc(8px + var(--m-safe-top)) 5% 8px; }
+    .m-only .m-navbar { max-width: 1920px; width: 100%; height: 58px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
     .m-only .m-logo { width: 100px; height: 100px; object-fit: contain; display: block; }
 
-    /* ---- hero: the banner jpg runs up behind the status bar; its bottom edge is cut into a wave in code.
-       Below the wave the page background (--m-fill) shows through, so the wave always matches it. ---- */
+    .m-only .m-menu-btn { width: 40px; height: 40px; border: none; background: transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .m-only .m-menu-btn span { display: block; width: 24px; height: 2.5px; border-radius: 2px; background: #08245B; }
+
+    /* ---- right side menu: starts at the header's button row, runs to the bottom of the screen ---- */
+    .m-only .m-menu {
+        position: fixed; z-index: 1100;
+        top: calc(var(--m-safe-top) + 8px); right: 0; bottom: 0;
+        width: 64vw;
+        background: #001f4d;
+        border-radius: 22px 0 0 22px;
+        box-shadow: -8px 0 28px rgba(0, 20, 60, .28);
+        transform: translateX(105%);
+        visibility: hidden;
+        transition: transform .4s cubic-bezier(.22, .8, .26, 1), visibility 0s linear .4s;
+    }
+    .m-only .m-menu.open { transform: translateX(0); visibility: visible; transition: transform .4s cubic-bezier(.22, .8, .26, 1), visibility 0s; }
+    .m-only .m-menu .m-menu-btn { position: absolute; top: 9px; right: 5vw; }   /* same spot as the header button */
+    .m-only .m-menu .m-menu-btn span { background: #FFFFFF; }
+    .m-only .m-menu-list { list-style: none; position: absolute; left: 0; right: 0; top: 74px; padding: 0 6vw 0 5vw; }
+    .m-only .m-menu-list li + li { border-top: 1px solid rgba(70, 140, 220, .3); }
+    .m-only .m-menu-list a { display: flex; align-items: center; gap: 4.5vw; padding: 4.4vw 0; color: #FFFFFF; font-size: clamp(13px, 3.15vw, 20px); line-height: 1.2; }
+    .m-only .m-menu-list svg { flex: none; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .m-only .m-menu-list svg.ic { width: 5.6vw; height: 5.6vw; stroke: #14c8f0; stroke-width: 1.8; }
+    .m-only .m-menu-list svg.chev { width: 3vw; height: 3vw; margin-left: auto; stroke: #FFFFFF; stroke-width: 2.4; }
+
+    /* ---- hero: banner jpg (bottom aligned, top trimmed), bottom edge cut into a wave in code.
+       Below the wave the page colour (#d1dff2) shows through, so the wave always matches it. ---- */
     .m-only .hero {
         position: relative; flex: none; isolation: isolate;
         width: 100%;
-        height: calc(70vw + var(--m-safe-top));
-        padding: calc(26vw + var(--m-safe-top)) 7.5vw 0;     /* top = space for the logo */
+        height: var(--m-hero-h);
+        margin-bottom: -6vw;                  /* pulls the next section up into the empty glow room */
+        padding: 9vw 8vw 0;
         color: #fff;
-        text-align: center;
+        text-align: left;
     }
     .m-only .hero::before {
         content: ""; position: absolute; inset: 0; z-index: -2;
-        background: var(--m-banner) center bottom / 100% auto no-repeat #001f4e;   /* image is bottom-aligned, never stretched */
-        -webkit-mask: var(--m-wave-mask) left bottom / 100% 70vw no-repeat, linear-gradient(#000, #000) left top / 100% calc(100% - 69.5vw) no-repeat;
-                mask: var(--m-wave-mask) left bottom / 100% 70vw no-repeat, linear-gradient(#000, #000) left top / 100% calc(100% - 69.5vw) no-repeat;
+        background: var(--m-banner) center calc(100% - 7.5vw) / 100% auto no-repeat #001f4e;   /* image keeps its original spot relative to the wave */
+        -webkit-mask: var(--m-wave-mask) left bottom / 100% 77.5vw no-repeat;
+                mask: var(--m-wave-mask) left bottom / 100% 77.5vw no-repeat;
     }
     .m-only .hero::after {
         content: ""; position: absolute; inset: 0; z-index: -1;
-        background: var(--m-wave-glow) left bottom / 100% 70vw no-repeat;
+        background: var(--m-wave-glow) left bottom / 100% 77.5vw no-repeat;
         pointer-events: none;
     }
-    .m-only .hero h1 { font-size: clamp(24px, 7.4vw, 48px); line-height: 1.17; letter-spacing: -.1px; text-align: center; }
+    .m-only .hero h1 { font-size: clamp(22px, 6.3vw, 42px); line-height: 1.17; letter-spacing: -.1px; text-align: left; }
     .m-only .hero h1 .accent { color: #14c8f0; white-space: nowrap; }
-    .m-only .ecg { display: inline-block; width: 1.9em; height: .8em; margin-left: .25em; vertical-align: -.05em; overflow: visible; }
-    .m-only .hero .bar { width: 10vw; height: max(3px, 1vw); margin: 2.4vw auto 0; }
+    .m-only .ecg { display: inline-block; width: 1.7em; height: .8em; margin-left: .25em; vertical-align: -.05em; overflow: visible; }
+    .m-only .hero .bar { width: 10vw; height: max(3px, 1vw); margin: 2.4vw 0 0; }
 
-    /* ---- About (sits right under the banner, above the values) ---- */
-    .m-only .about { flex: none; padding: 1vw 0 3vw; }
+    /* ---- About (right under the banner, above the values) ---- */
+    .m-only .about { flex: none; padding: 3vw 0 3vw; }
     .m-only .about .wrap { padding: 0 8vw; }
     .m-only .about h2 { font-size: clamp(18px, 5.6vw, 34px); line-height: 1.15; color: #08245B; }
     .m-only .about .bar { width: 8.25vw; height: max(3px, .8vw); margin: 2.2vw 0 3vw; }
@@ -1099,10 +1135,10 @@ footer {
     .m-only .values .wrap { width: 100%; padding: 0 5.5vw; }
     .m-only .values-card {
         display: grid; grid-template-columns: repeat(4, 1fr);
-        background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(234,245,255,.85));
-        border: 1px solid rgba(255,255,255,.9);
+        background: linear-gradient(180deg, #ebf4fd, #e5f1fd);
+        border: none;
         border-radius: 3vw;
-        box-shadow: 0 8px 24px rgba(20, 70, 140, .13), inset 0 1px 0 #fff;
+        box-shadow: 0 9px 12px -8px rgba(20, 70, 140, .38);   /* bottom shadow only */
         padding: 2.5vw 0 2.8vw;
     }
     .m-only .value { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1.8vw; text-align: center; padding: 0 2px; font-size: clamp(9px, 2.5vw, 14px); line-height: 1.2; color: #08245B; }
@@ -1117,7 +1153,7 @@ footer {
         display: grid; grid-template-columns: 52% 1fr; align-items: center;
         aspect-ratio: var(--m-eoq-ratio);
         border-radius: 5.6vw;
-        background: var(--m-eoq) left center / cover no-repeat var(--m-fill);
+        background: var(--m-eoq) left center / cover no-repeat #d1dff2;
         color: #fff; overflow: hidden;
         box-shadow: 0 10px 26px rgba(8, 36, 91, .25);
     }
@@ -1129,13 +1165,16 @@ footer {
     .m-only .eoq-text .btn svg { width: 1.25em; height: 1.25em; }
 
     /* ---- Our People. Our Pride. ---- */
-    .m-only .pride { position: relative; padding: 7.5vw 0 calc(12vw + var(--m-safe-bottom)); }
+    .m-only .pride { position: relative; padding: 7.5vw 0 8vw; }
     .m-only .pride .wrap { padding: 0 8vw; }
     .m-only .pride h2 { font-size: clamp(16px, 4.3vw, 30px); line-height: 1.15; color: #08245B; }
     .m-only .pride .bar { width: 8.25vw; height: max(3px, .8vw); margin: 2.4vw 0 3.2vw; }
     .m-only .pride p { max-width: 64vw; font-size: clamp(10px, 2.45vw, 15px); line-height: 1.4; color: #0b2a5b; margin-bottom: 3.2vw; }
     .m-only .pride .btn-outline { padding: 1.5vw 3.6vw; font-size: clamp(10px, 2.6vw, 15px); gap: 2vw; border: max(1.5px, .25vw) solid #08245B; }
     .m-only .pride .btn svg { width: 1.3em; height: 1.3em; }
+
+    /* ---- footer (mobile) ---- */
+    .m-only footer { text-align: center; padding: 18px 20px calc(18px + var(--m-safe-bottom)); color: #557083; font-size: 0.7rem; background: transparent; }
 }
 </style>
 </head>
@@ -1280,13 +1319,39 @@ Who made things a little better</p>
 
 <!-- ================= MOBILE HOME (phones only) ================= -->
 <div class="m-only">
-<div class="m-edge top" id="mEdgeTop" aria-hidden="true"></div>
 <div class="m-edge bottom" id="mEdgeBottom" aria-hidden="true"></div>
 <header class="m-header">
     <div class="m-navbar">
-        <a href="/"><img src="/logo-light.png" alt="Care Medical Jiwar" class="m-logo"></a>
+        <a href="/"><img src="/logo.jpg" alt="Care Medical Jiwar" class="m-logo"></a>
+        <button type="button" class="m-menu-btn" data-m-menu-toggle aria-label="Open menu" aria-expanded="false" aria-controls="mMenu"><span></span><span></span><span></span></button>
     </div>
 </header>
+<nav class="m-menu" id="mMenu" aria-label="Menu">
+    <button type="button" class="m-menu-btn" data-m-menu-toggle aria-label="Close menu"><span></span><span></span><span></span></button>
+    <ul class="m-menu-list">
+        <li>
+            <a href="/eoq/">
+                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>
+                <span>Employee of the Quarter</span>
+                <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            </a>
+        </li>
+        <li>
+            <a href="winners/index.html">
+                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z"/><path d="M8 6H4v1a4 4 0 0 0 4 4M16 6h4v1a4 4 0 0 1-4 4"/><path d="M12 13v4M8.5 20h7M10 17h4"/></svg>
+                <span>Winners</span>
+                <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            </a>
+        </li>
+        <li>
+            <a href="/executive/">
+                <svg class="ic" viewBox="0 0 64 64" aria-hidden="true" style="stroke-width:3.4"><circle cx="32" cy="14" r="6.5"/><circle cx="14" cy="24" r="6"/><circle cx="50" cy="24" r="6"/><path d="M20 44c0-8 5-13 12-13s12 5 12 13"/><path d="M3 46c0-7 4-11 10-11M61 46c0-7-4-11-10-11"/><path d="M3 46h8M53 46h8M20 44v4M44 44v4"/></svg>
+                <span>Executive</span>
+                <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            </a>
+        </li>
+    </ul>
+</nav>
 <main>
     <div class="m-top">
     <section class="hero">
@@ -1327,21 +1392,19 @@ Who made things a little better</p>
                 </div>
                 <div class="value">
                     <svg viewBox="0 0 64 64" aria-hidden="true">
+                        <path d="M32 6l20 7v17c0 14-9 23-20 28C21 53 12 44 12 30V13z"/>
+                        <path d="M22 32l7 7 13-14"/>
+                    </svg>
+                    <span>Integrity</span>
+                </div>
+                <div class="value">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
                         <circle cx="32" cy="14" r="6.5"/><circle cx="14" cy="24" r="6"/><circle cx="50" cy="24" r="6"/>
                         <path d="M20 44c0-8 5-13 12-13s12 5 12 13"/>
                         <path d="M3 46c0-7 4-11 10-11M61 46c0-7-4-11-10-11"/>
                         <path d="M3 46h8M53 46h8M20 44v4M44 44v4"/>
                     </svg>
                     <span>Teamwork</span>
-                </div>
-                <div class="value">
-                    <svg viewBox="0 0 64 64" aria-hidden="true">
-                        <path d="M33 54V34"/>
-                        <path d="M33 38C20 38 8 30 8 16c14 0 25 8 25 22z"/>
-                        <path d="M33 30C33 16 42 8 58 8c0 14-9 24-25 22z"/>
-                        <path d="M8 16c8 4 14 10 20 18M58 8c-8 6-14 12-20 20"/>
-                    </svg>
-                    <span>Responsibility</span>
                 </div>
             </div>
         </div>
@@ -1371,6 +1434,9 @@ Who made things a little better</p>
         </div>
     </section>
 </main>
+<footer>
+    © 2026 Care Medical Jiwar
+</footer>
 </div>
 
 <script>
@@ -1699,23 +1765,25 @@ celebratingLinks.forEach((link) => {
 })();
 </script>
 <script>
-/* Safari toolbar colour: banner colour at the top, #d1dff2 at the very bottom (phones only) */
+/* mobile side menu: slide in / out */
 (function () {
-  if (!window.matchMedia("(max-width: 700px)").matches) return;
-  var meta = document.querySelector('meta[name="theme-color"]');
-  if (!meta) return;
-  var TOP = "#001f4e", BOTTOM = "#d1dff2";
-  function update() {
-    var atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 80;
-    var c = atBottom ? BOTTOM : TOP;
-    meta.setAttribute("content", c);
-    document.documentElement.style.background = c;
-    document.body.style.background = c;
-    /* the fixed bottom strip stays #d1dff2 at all times (set in CSS) so the bottom toolbar always matches */
+  var menu = document.getElementById("mMenu");
+  if (!menu) return;
+  var toggles = document.querySelectorAll("[data-m-menu-toggle]");
+  var header = document.querySelector(".m-header");
+  function setOpen(open) {
+    menu.classList.toggle("open", open);
+    for (var i = 0; i < toggles.length; i++) toggles[i].setAttribute("aria-expanded", open ? "true" : "false");
   }
-  window.addEventListener("scroll", update, { passive: true });
-  window.addEventListener("resize", update);
-  update();
+  for (var i = 0; i < toggles.length; i++) {
+    toggles[i].addEventListener("click", function () { setOpen(!menu.classList.contains("open")); });
+  }
+  document.addEventListener("click", function (e) {
+    if (!menu.classList.contains("open")) return;
+    if (menu.contains(e.target) || (header && header.contains(e.target))) return;
+    setOpen(false);
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") setOpen(false); });
 })();
 </script>
 </body>
