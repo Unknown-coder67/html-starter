@@ -1013,48 +1013,61 @@ footer {
         /* >>> YOUR images - change the paths here <<< */
         --m-banner: url("/mobile-banner.jpg");
         --m-eoq:    url("/mobile-eoq-bg.jpg");
-        --m-eoq-ratio: 756 / 338; /* <<< width / height of mobile-eoq-bg.jpg */
-        --m-home:   url("/mobile-home-bg.jpg");
+        --m-home:   url("/mobile-background.jpg");
+        --m-eoq-ratio:  1216 / 608;    /* width / height of mobile-eoq-bg.jpg */
+        --m-home-ratio: 941 / 1672;    /* width / height of mobile-background.jpg */
+        --m-fill: #eef5fc;             /* colour for any area with no image on it */
 
         display: block;
+        position: relative;
         min-height: 100vh;
-        background: var(--m-home) center top / contain no-repeat,
-                    linear-gradient(180deg, #e6f3ff 0%, #f3f9ff 40%, #eaf5ff 100%);
+        background: var(--m-fill);
         color: #08245B;
         line-height: 1.5;
-        overflow-x: hidden;
+        overflow: hidden;
         -webkit-font-smoothing: antialiased;
     }
 .m-only * { box-sizing: border-box; margin: 0; padding: 0; }
 .m-only a { text-decoration: none; color: inherit; }
+.m-only /* page background image: sits at the bottom, .m-only top fades into the fill colour */
+.m-bg {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 0;
+    width: 100%; aspect-ratio: var(--m-home-ratio);
+    background: var(--m-home) center / 100% 100% no-repeat;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%);
+            mask-image: linear-gradient(to bottom, transparent 0%, #000 22%);
+    pointer-events: none;
+}
+.m-only main { position: relative; z-index: 1; }
 .m-only .wrap { width: 100%; max-width: 560px; margin: 0 auto; padding: 0 clamp(20px, 7vw, 40px); }
 .m-only .btn {
     display: inline-flex; align-items: center; gap: 12px;
     border-radius: 999px; padding: 13px 26px;
     font-size: clamp(14px, 3.7vw, 18px); line-height: 1.2; cursor: pointer;
-    transition: transform .2s ease;
 }
-.m-only .btn:active { transform: translateY(1px); }
 .m-only .btn svg { width: 1.35em; height: 1.35em; flex: none; }
-.m-only .btn-light { background: linear-gradient(180deg, #ffffff, #e6f2ff); color: #08245B; box-shadow: 0 8px 22px rgba(0, 20, 70, .35); }
-.m-only .btn-cyan { background: linear-gradient(180deg, #2adaf7, #0fb9ee); color: #051a45; box-shadow: 0 8px 24px rgba(20, 200, 240, .45); }
+.m-only .btn-cyan { background: linear-gradient(180deg, #2adaf7, #0fb9ee); color: #051a45; box-shadow: 0 6px 18px rgba(20, 200, 240, .45); }
 .m-only .btn-outline { background: transparent; color: #08245B; border: 2px solid #08245B; padding: 11px 26px; }
 .m-only .bar { display: block; width: 54px; height: 5px; border-radius: 5px; background: #14c8f0; box-shadow: 0 0 10px rgba(20, 200, 240, .6); }
-.m-only /* hero  (background = YOUR banner jpg) */
+.m-only /* transparent header with the logo (same sizes as the other pages' mobile header) */
+.m-header { position: absolute; top: 0; left: 0; width: 100%; z-index: 5; padding: 8px 5%; background: transparent; }
+.m-only .m-navbar { height: 58px; display: flex; align-items: center; }
+.m-only .m-logo { width: 100px; height: 100px; object-fit: contain; display: block; }
+.m-only /* hero  (background = YOUR banner jpg, .m-only no overlay colour) */
 .hero {
     position: relative;
-    background: var(--m-banner) center bottom / contain no-repeat,
-                linear-gradient(170deg, #041a4a 0%, #07265f 45%, #0a3a86 100%);
+    width: 100%;
+    aspect-ratio: 100 / 70;                       /* ~40% shorter than before */
+    background: var(--m-banner) center bottom / cover no-repeat var(--m-fill);
     color: #fff;
-    padding-top: clamp(56px, 14vw, 90px);
-    padding-bottom: clamp(90px, 24vw, 170px);
+    padding-top: clamp(56px, 15vw, 84px);          /* space for the logo */
     overflow: hidden;
 }
-.m-only .hero h1 { font-size: clamp(30px, 8.4vw, 52px); line-height: 1.17; letter-spacing: -.2px; }
+.m-only .hero h1 { font-size: clamp(22px, 6.7vw, 44px); line-height: 1.15; letter-spacing: -.2px; }
 .m-only .hero h1 .accent { color: #14c8f0; white-space: nowrap; }
 .m-only .ecg { display: inline-block; width: 1.9em; height: .8em; margin-left: .25em; vertical-align: -.05em; overflow: visible; }
-.m-only .hero .bar { margin: clamp(14px, 3.5vw, 24px) 0 clamp(14px, 3.5vw, 22px); width: clamp(46px, 11vw, 70px); }
-.m-only .hero p { max-width: min(26em, 64%); font-size: clamp(14px, 4.1vw, 20px); line-height: 1.6; color: #e8f1ff; margin-bottom: clamp(20px, 5vw, 32px); }
+.m-only .hero .bar { margin: clamp(8px, 2.4vw, 14px) 0 clamp(8px, 2.4vw, 12px); width: clamp(40px, 10vw, 60px); height: 4px; }
+.m-only .hero p { max-width: min(30em, 74%); font-size: clamp(12px, 3.4vw, 17px); line-height: 1.42; color: #e8f1ff; }
 .m-only /* values card */
 .values { position: relative; z-index: 5; padding-top: clamp(4px, 2vw, 14px); }
 .m-only .values .wrap, .m-only .eoq-section .wrap { padding-left: clamp(12px, 3vw, 40px); padding-right: clamp(12px, 3vw, 40px); }
@@ -1069,25 +1082,23 @@ footer {
 .m-only .value { position: relative; display: flex; flex-direction: column; align-items: center; gap: clamp(6px, 1.6vw, 12px); text-align: center; padding: 0 4px; font-size: clamp(11.5px, 3vw, 16px); color: #08245B; }
 .m-only .value + .value::before { content: ""; position: absolute; left: 0; top: 8%; bottom: 8%; width: 1px; background: linear-gradient(180deg, transparent, rgba(8,36,91,.25), transparent); }
 .m-only .value svg { width: clamp(34px, 9vw, 52px); height: clamp(34px, 9vw, 52px); stroke: #08245B; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.m-only /* Employee of the Quarter  (background = YOUR EOQ jpg) */
+.m-only /* Employee of the Quarter  (background = YOUR EOQ jpg; box ratio = image ratio) */
 .eoq-section { padding-top: clamp(26px, 7vw, 48px); }
 .m-only .eoq {
     position: relative;
-    display: grid; grid-template-columns: 1fr 1.1fr; align-items: center;
+    display: grid; grid-template-columns: 52% 1fr;          /* left = trophy area of the jpg, right = text */
+    align-items: center;
     aspect-ratio: var(--m-eoq-ratio);
-    padding: clamp(18px, 4.5vw, 36px) clamp(14px, 4vw, 36px);
     border-radius: clamp(26px, 6vw, 44px);
-    background: var(--m-eoq) center / contain no-repeat,
-                linear-gradient(135deg, #0a3d8f 0%, #062c6e 50%, #04215a 100%);
+    background: var(--m-eoq) left center / cover no-repeat var(--m-fill);
     color: #fff; overflow: hidden;
     box-shadow: 0 18px 40px rgba(8, 36, 91, .28);
 }
-.m-only .eoq-text { grid-column: 2; position: relative; padding-left: clamp(12px, 3vw, 28px); }
-.m-only .eoq-text::before { content: ""; position: absolute; left: 0; top: 4%; bottom: 4%; width: 1px; background: linear-gradient(180deg, transparent, rgba(150,210,255,.6), transparent); }
-.m-only .eoq-text h2 { font-size: clamp(20px, 5.4vw, 32px); line-height: 1.15; }
-.m-only .eoq-text .bar { width: 38px; height: 4px; margin: clamp(10px, 2.4vw, 16px) 0; }
-.m-only .eoq-text p { font-size: clamp(12.5px, 3.3vw, 16px); line-height: 1.5; color: #e3efff; margin-bottom: clamp(14px, 3.4vw, 22px); }
-.m-only .eoq-text .btn { padding: 11px 20px; font-size: clamp(13px, 3.4vw, 16px); gap: 10px; white-space: nowrap; }
+.m-only .eoq-text { grid-column: 2; min-width: 0; padding: 0 clamp(8px, 3.4vw, 28px) 0 0; }
+.m-only .eoq-text h2 { font-size: clamp(14px, 4.3vw, 28px); line-height: 1.12; }
+.m-only .eoq-text .bar { width: 30px; height: 3px; margin: clamp(5px, 1.5vw, 10px) 0; }
+.m-only .eoq-text p { font-size: clamp(10px, 2.75vw, 15px); line-height: 1.38; color: #e3efff; margin-bottom: clamp(7px, 2vw, 14px); }
+.m-only .eoq-text .btn { padding: clamp(6px, 1.8vw, 11px) clamp(11px, 3.2vw, 20px); font-size: clamp(10.5px, 3vw, 16px); gap: 8px; white-space: nowrap; }
 .m-only /* Our People. Our Pride. */
 .pride { position: relative; padding-top: clamp(36px, 9vw, 64px); padding-bottom: clamp(70px, 18vw, 130px); }
 .m-only .pride h2 { font-size: clamp(28px, 7.4vw, 44px); line-height: 1.15; color: #08245B; }
@@ -1237,13 +1248,18 @@ Who made things a little better</p>
 
 <!-- ================= MOBILE HOME (phones only) ================= -->
 <div class="m-only">
+<div class="m-bg" aria-hidden="true"></div>
+<header class="m-header">
+    <div class="m-navbar">
+        <a href="/"><img src="/logo-light.png" alt="Care Medical Jiwar" class="m-logo"></a>
+    </div>
+</header>
 <main>
     <section class="hero">
         <div class="wrap">
             <h1>Caring with<br>Every <span class="accent">Heartbeat<svg class="ecg" viewBox="0 0 100 30" fill="none" stroke="#14c8f0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="0,15 30,15 38,6 47,26 57,1 66,28 73,15 100,15"/></svg></span></h1>
             <span class="bar"></span>
             <p>A hospital-wide recognition program that celebrates our people, their performance, and commitment to Care Medical values.</p>
-            <a href="#m-values" class="btn btn-light">About the Program <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
         </div>
     </section>
 
