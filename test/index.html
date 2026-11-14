@@ -1012,8 +1012,7 @@ footer {
     .d-only { display: none !important; }
 
     /* Overscroll / toolbar-area colours: top = banner sky, bottom = dark wave of the background image */
-    html { background: linear-gradient(to bottom, #001f4e 50%, #012d65 50%); min-height: 100%; }
-    body { background: transparent; }
+    html, body { background: #001f4e; }
 
     .m-only {
         /* >>> YOUR images - change the paths here <<< */
@@ -1041,6 +1040,11 @@ footer {
     }
     .m-only * { box-sizing: border-box; margin: 0; padding: 0; }
     .m-only a { text-decoration: none; color: inherit; }
+
+    /* solid strips at the very top/bottom edges: Safari tints its toolbars from these */
+    .m-only .m-edge { position: fixed; left: 0; right: 0; z-index: 60; background: #001f4e; pointer-events: none; }
+    .m-only .m-edge.top    { top: 0;    height: env(safe-area-inset-top, 0px); }
+    .m-only .m-edge.bottom { bottom: 0; height: env(safe-area-inset-bottom, 0px); }
 
     /* page background image: sits at the bottom, its top fades into the fill colour */
     .m-only .m-bg {
@@ -1280,6 +1284,8 @@ Who made things a little better</p>
 <!-- ================= MOBILE HOME (phones only) ================= -->
 <div class="m-only">
 <div class="m-bg" aria-hidden="true"></div>
+<div class="m-edge top" id="mEdgeTop" aria-hidden="true"></div>
+<div class="m-edge bottom" id="mEdgeBottom" aria-hidden="true"></div>
 <header class="m-header">
     <div class="m-navbar">
         <a href="/"><img src="/logo-light.png" alt="Care Medical Jiwar" class="m-logo"></a>
@@ -1698,7 +1704,11 @@ celebratingLinks.forEach((link) => {
   var TOP = "#001f4e", BOTTOM = "#012d65";
   function update() {
     var atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 80;
-    meta.setAttribute("content", atBottom ? BOTTOM : TOP);
+    var c = atBottom ? BOTTOM : TOP;
+    meta.setAttribute("content", c);
+    document.documentElement.style.background = c;
+    document.body.style.background = c;
+    var eb = document.getElementById("mEdgeBottom"); if (eb) eb.style.background = c;
   }
   window.addEventListener("scroll", update, { passive: true });
   window.addEventListener("resize", update);
