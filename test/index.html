@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#012551" media="(max-width: 700px)">
+<meta name="theme-color" content="#001f4e" media="(max-width: 700px)">
 <meta name="robots" content="noindex, nofollow">
 <title>Care Medical Jiwar</title>
 <link rel="icon" type="image/png" href="/favicon.png">
@@ -1011,8 +1011,9 @@ footer {
 @media (max-width: 700px) {
     .d-only { display: none !important; }
 
-    /* Safari top/bottom toolbar + overscroll colour */
-    html, body { background: #012551; }
+    /* Overscroll / toolbar-area colours: top = banner sky, bottom = dark wave of the background image */
+    html { background: linear-gradient(to bottom, #001f4e 50%, #012d65 50%); min-height: 100%; }
+    body { background: transparent; }
 
     .m-only {
         /* >>> YOUR images - change the paths here <<< */
@@ -1020,9 +1021,10 @@ footer {
         --m-eoq:    url("/mobile-eoq-bg.jpg");
         --m-home:   url("/mobile-background2.jpg");
         --m-eoq-ratio:  1216 / 608;    /* width / height of mobile-eoq-bg.jpg */
-        --m-home-ratio: 941 / 1672;    /* width / height of the home background jpg */
+        --m-home-ratio: 1290 / 2322;   /* width / height of mobile-background2.jpg */
+        --m-safe-top:    env(safe-area-inset-top, 0px);     /* iPhone notch / status-bar area */
+        --m-safe-bottom: env(safe-area-inset-bottom, 0px);  /* iPhone home-indicator area */
         --m-fill: #eef5fc;             /* colour for any area with no image on it */
-        --m-bar:  #012551;             /* Safari toolbar colour */
 
         /* wave cut + glow at the bottom of the banner (drawn here, not in the jpg) */
         --m-wave-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20560'%20preserveAspectRatio='none'%3E%3Cpath%20d='M0%200H800V492C720%20526%20640%20548%20540%20546C400%20543%20220%20470%200%20484Z'%20fill='%23000'/%3E%3C/svg%3E");
@@ -1039,11 +1041,6 @@ footer {
     }
     .m-only * { box-sizing: border-box; margin: 0; padding: 0; }
     .m-only a { text-decoration: none; color: inherit; }
-
-    /* solid bars behind the Safari toolbars (safe-area strips) */
-    .m-only .m-edge { position: fixed; left: 0; right: 0; z-index: 60; background: var(--m-bar); pointer-events: none; }
-    .m-only .m-edge.top    { top: 0;    height: env(safe-area-inset-top, 0px); }
-    .m-only .m-edge.bottom { bottom: 0; height: env(safe-area-inset-bottom, 0px); }
 
     /* page background image: sits at the bottom, its top fades into the fill colour */
     .m-only .m-bg {
@@ -1067,34 +1064,34 @@ footer {
     .m-only .bar { display: block; border-radius: 5px; background: #14c8f0; box-shadow: 0 0 8px rgba(20, 200, 240, .6); }
 
     /* transparent header with the logo (same sizes as the other pages' mobile header) */
-    .m-only .m-header { position: absolute; top: 0; left: 0; width: 100%; z-index: 5; padding: 8px 5%; background: transparent; }
+    .m-only .m-header { position: absolute; top: var(--m-safe-top); left: 0; width: 100%; z-index: 5; padding: 8px 5%; background: transparent; }
     .m-only .m-navbar { height: 58px; display: flex; align-items: center; }
     .m-only .m-logo { width: 100px; height: 100px; object-fit: contain; display: block; }
 
-    /* ---- hero: banner jpg cut into a wave by the mask ---- */
+    /* ---- hero: the banner jpg runs up behind the status bar; its bottom edge is cut into a wave in code ---- */
     .m-only .hero {
         position: relative; flex: none; isolation: isolate;
         width: 100%;
-        aspect-ratio: 100 / 70;
-        padding: 20vw 7.5vw 0;                 /* top = space for the logo */
+        height: calc(70vw + var(--m-safe-top));
+        padding: calc(15vw + var(--m-safe-top)) 7.5vw 0;     /* top = space for the logo */
         color: #fff;
     }
     .m-only .hero::before {
         content: ""; position: absolute; inset: 0; z-index: -2;
-        background: var(--m-banner) center bottom / cover no-repeat;
-        -webkit-mask: var(--m-wave-mask) center / 100% 100% no-repeat;
-                mask: var(--m-wave-mask) center / 100% 100% no-repeat;
+        background: var(--m-banner) center bottom / 100% auto no-repeat #001f4e;   /* image is bottom-aligned, never stretched */
+        -webkit-mask: var(--m-wave-mask) left bottom / 100% 70vw no-repeat, linear-gradient(#000, #000) left top / 100% calc(100% - 69.5vw) no-repeat;
+                mask: var(--m-wave-mask) left bottom / 100% 70vw no-repeat, linear-gradient(#000, #000) left top / 100% calc(100% - 69.5vw) no-repeat;
     }
     .m-only .hero::after {
         content: ""; position: absolute; inset: 0; z-index: -1;
-        background: var(--m-wave-glow) center / 100% 100% no-repeat;
+        background: var(--m-wave-glow) left bottom / 100% 70vw no-repeat;
         pointer-events: none;
     }
     .m-only .hero h1 { font-size: clamp(20px, 5.9vw, 40px); line-height: 1.17; letter-spacing: -.1px; }
     .m-only .hero h1 .accent { color: #14c8f0; white-space: nowrap; }
     .m-only .ecg { display: inline-block; width: 1.9em; height: .8em; margin-left: .25em; vertical-align: -.05em; overflow: visible; }
-    .m-only .hero .bar { width: 8.75vw; height: max(3px, .9vw); margin: 2.4vw 0 2.8vw; }
-    .m-only .hero p { max-width: 76%; font-size: clamp(9.5px, 2.6vw, 15px); line-height: 1.4; color: #eaf2ff; }
+    .m-only .hero .bar { width: 8.75vw; height: max(3px, .9vw); margin: 2vw 0 2.4vw; }
+    .m-only .hero p { max-width: 61%; font-size: clamp(9.5px, 2.5vw, 15px); line-height: 1.36; color: #eaf2ff; }
 
     /* ---- values card ---- */
     .m-only .values { flex: 1 1 auto; display: flex; align-items: center; padding: 6vw 0; }
@@ -1131,7 +1128,7 @@ footer {
     .m-only .eoq-text .btn svg { width: 1.25em; height: 1.25em; }
 
     /* ---- Our People. Our Pride. ---- */
-    .m-only .pride { position: relative; padding: 7.5vw 0 20vw; }
+    .m-only .pride { position: relative; padding: 7.5vw 0 calc(20vw + var(--m-safe-bottom)); }
     .m-only .pride .wrap { padding: 0 8vw; }
     .m-only .pride h2 { font-size: clamp(16px, 4.3vw, 30px); line-height: 1.15; color: #08245B; }
     .m-only .pride .bar { width: 8.25vw; height: max(3px, .8vw); margin: 2.4vw 0 3.2vw; }
@@ -1283,8 +1280,6 @@ Who made things a little better</p>
 <!-- ================= MOBILE HOME (phones only) ================= -->
 <div class="m-only">
 <div class="m-bg" aria-hidden="true"></div>
-<div class="m-edge top" aria-hidden="true"></div>
-<div class="m-edge bottom" aria-hidden="true"></div>
 <header class="m-header">
     <div class="m-navbar">
         <a href="/"><img src="/logo-light.png" alt="Care Medical Jiwar" class="m-logo"></a>
@@ -1692,6 +1687,22 @@ celebratingLinks.forEach((link) => {
   }
 
   loadNotes();
+})();
+</script>
+<script>
+/* Safari toolbar colour follows the banner at the top and the dark wave at the very bottom (phones only) */
+(function () {
+  if (!window.matchMedia("(max-width: 700px)").matches) return;
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if (!meta) return;
+  var TOP = "#001f4e", BOTTOM = "#012d65";
+  function update() {
+    var atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 80;
+    meta.setAttribute("content", atBottom ? BOTTOM : TOP);
+  }
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+  update();
 })();
 </script>
 </body>
