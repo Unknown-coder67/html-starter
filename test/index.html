@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#012551" media="(max-width: 700px)">
 <meta name="robots" content="noindex, nofollow">
 <title>Care Medical Jiwar</title>
 <link rel="icon" type="image/png" href="/favicon.png">
@@ -1009,14 +1010,23 @@ footer {
 .m-only { display: none; }
 @media (max-width: 700px) {
     .d-only { display: none !important; }
+
+    /* Safari top/bottom toolbar + overscroll colour */
+    html, body { background: #012551; }
+
     .m-only {
         /* >>> YOUR images - change the paths here <<< */
         --m-banner: url("/mobile-banner.jpg");
         --m-eoq:    url("/mobile-eoq-bg.jpg");
         --m-home:   url("/mobile-background2.jpg");
         --m-eoq-ratio:  1216 / 608;    /* width / height of mobile-eoq-bg.jpg */
-        --m-home-ratio: 941 / 1672;    /* width / height of mobile-background.jpg */
+        --m-home-ratio: 941 / 1672;    /* width / height of the home background jpg */
         --m-fill: #eef5fc;             /* colour for any area with no image on it */
+        --m-bar:  #012551;             /* Safari toolbar colour */
+
+        /* wave cut + glow at the bottom of the banner (drawn here, not in the jpg) */
+        --m-wave-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20560'%20preserveAspectRatio='none'%3E%3Cpath%20d='M0%200H800V492C720%20526%20640%20548%20540%20546C400%20543%20220%20470%200%20484Z'%20fill='%23000'/%3E%3C/svg%3E");
+        --m-wave-glow: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20560'%20preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient%20id='g'%20x1='0'%20x2='1'%20y1='0'%20y2='0'%3E%3Cstop%20offset='0'%20stop-color='%231fa6ff'%20stop-opacity='.35'/%3E%3Cstop%20offset='.4'%20stop-color='%232ac4ff'/%3E%3Cstop%20offset='.75'%20stop-color='%237fe8ff'/%3E%3Cstop%20offset='1'%20stop-color='%232ac4ff'%20stop-opacity='.6'/%3E%3C/linearGradient%3E%3Cfilter%20id='b'%20x='-5%'%20y='-60%'%20width='110%'%20height='220%'%3E%3CfeGaussianBlur%20stdDeviation='9'/%3E%3C/filter%3E%3C/defs%3E%3Cpath%20d='M0%20484C220%20470%20400%20543%20540%20546C640%20548%20720%20526%20800%20492'%20fill='none'%20stroke='%2318a8ff'%20stroke-width='20'%20opacity='.8'%20filter='url(%23b)'/%3E%3Cpath%20d='M0%20484C220%20470%20400%20543%20540%20546C640%20548%20720%20526%20800%20492'%20fill='none'%20stroke='url(%23g)'%20stroke-width='3.2'/%3E%3C/svg%3E");
 
         display: block;
         position: relative;
@@ -1027,83 +1037,107 @@ footer {
         overflow: hidden;
         -webkit-font-smoothing: antialiased;
     }
-.m-only * { box-sizing: border-box; margin: 0; padding: 0; }
-.m-only a { text-decoration: none; color: inherit; }
-.m-only /* page background image: sits at the bottom, .m-only top fades into the fill colour */
-.m-bg {
-    position: absolute; left: 0; right: 0; bottom: 0; z-index: 0;
-    width: 100%; aspect-ratio: var(--m-home-ratio);
-    background: var(--m-home) center / 100% 100% no-repeat;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%);
-            mask-image: linear-gradient(to bottom, transparent 0%, #000 22%);
-    pointer-events: none;
-}
-.m-only main { position: relative; z-index: 1; }
-.m-only .wrap { width: 100%; max-width: 560px; margin: 0 auto; padding: 0 clamp(20px, 7vw, 40px); }
-.m-only .btn {
-    display: inline-flex; align-items: center; gap: 12px;
-    border-radius: 999px; padding: 13px 26px;
-    font-size: clamp(14px, 3.7vw, 18px); line-height: 1.2; cursor: pointer;
-}
-.m-only .btn svg { width: 1.35em; height: 1.35em; flex: none; }
-.m-only .btn-cyan { background: linear-gradient(180deg, #2adaf7, #0fb9ee); color: #051a45; box-shadow: 0 6px 18px rgba(20, 200, 240, .45); }
-.m-only .btn-outline { background: transparent; color: #08245B; border: 2px solid #08245B; padding: 11px 26px; }
-.m-only .bar { display: block; width: 54px; height: 5px; border-radius: 5px; background: #14c8f0; box-shadow: 0 0 10px rgba(20, 200, 240, .6); }
-.m-only /* transparent header with the logo (same sizes as the other pages' mobile header) */
-.m-header { position: absolute; top: 0; left: 0; width: 100%; z-index: 5; padding: 8px 5%; background: transparent; }
-.m-only .m-navbar { height: 58px; display: flex; align-items: center; }
-.m-only .m-logo { width: 100px; height: 100px; object-fit: contain; display: block; }
-.m-only /* hero  (background = YOUR banner jpg, .m-only no overlay colour) */
-.hero {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 100 / 70;                       /* ~40% shorter than before */
-    background: var(--m-banner) center bottom / cover no-repeat var(--m-fill);
-    color: #fff;
-    padding-top: clamp(56px, 15vw, 84px);          /* space for the logo */
-    overflow: hidden;
-}
-.m-only .hero h1 { font-size: clamp(22px, 6.7vw, 44px); line-height: 1.15; letter-spacing: -.2px; }
-.m-only .hero h1 .accent { color: #14c8f0; white-space: nowrap; }
-.m-only .ecg { display: inline-block; width: 1.9em; height: .8em; margin-left: .25em; vertical-align: -.05em; overflow: visible; }
-.m-only .hero .bar { margin: clamp(8px, 2.4vw, 14px) 0 clamp(8px, 2.4vw, 12px); width: clamp(40px, 10vw, 60px); height: 4px; }
-.m-only .hero p { max-width: min(30em, 74%); font-size: clamp(12px, 3.4vw, 17px); line-height: 1.42; color: #e8f1ff; }
-.m-only /* values card */
-.values { position: relative; z-index: 5; padding-top: clamp(4px, 2vw, 14px); }
-.m-only .values .wrap, .m-only .eoq-section .wrap { padding-left: clamp(12px, 3vw, 40px); padding-right: clamp(12px, 3vw, 40px); }
-.m-only .values-card {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(234,245,255,.85));
-    border: 1px solid rgba(255,255,255,.9);
-    border-radius: clamp(18px, 4vw, 28px);
-    box-shadow: 0 14px 40px rgba(20, 70, 140, .16), inset 0 1px 0 #fff;
-    padding: clamp(14px, 3.6vw, 28px) 0;
-}
-.m-only .value { position: relative; display: flex; flex-direction: column; align-items: center; gap: clamp(6px, 1.6vw, 12px); text-align: center; padding: 0 4px; font-size: clamp(11.5px, 3vw, 16px); color: #08245B; }
-.m-only .value + .value::before { content: ""; position: absolute; left: 0; top: 8%; bottom: 8%; width: 1px; background: linear-gradient(180deg, transparent, rgba(8,36,91,.25), transparent); }
-.m-only .value svg { width: clamp(34px, 9vw, 52px); height: clamp(34px, 9vw, 52px); stroke: #08245B; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.m-only /* Employee of the Quarter  (background = YOUR EOQ jpg; box ratio = image ratio) */
-.eoq-section { padding-top: clamp(26px, 7vw, 48px); }
-.m-only .eoq {
-    position: relative;
-    display: grid; grid-template-columns: 52% 1fr;          /* left = trophy area of the jpg, right = text */
-    align-items: center;
-    aspect-ratio: var(--m-eoq-ratio);
-    border-radius: clamp(26px, 6vw, 44px);
-    background: var(--m-eoq) left center / cover no-repeat var(--m-fill);
-    color: #fff; overflow: hidden;
-    box-shadow: 0 18px 40px rgba(8, 36, 91, .28);
-}
-.m-only .eoq-text { grid-column: 2; min-width: 0; padding: 0 clamp(8px, 3.4vw, 28px) 0 0; }
-.m-only .eoq-text h2 { font-size: clamp(14px, 4.3vw, 28px); line-height: 1.12; }
-.m-only .eoq-text .bar { width: 30px; height: 3px; margin: clamp(5px, 1.5vw, 10px) 0; }
-.m-only .eoq-text p { font-size: clamp(10px, 2.75vw, 15px); line-height: 1.38; color: #e3efff; margin-bottom: clamp(7px, 2vw, 14px); }
-.m-only .eoq-text .btn { padding: clamp(6px, 1.8vw, 11px) clamp(11px, 3.2vw, 20px); font-size: clamp(10.5px, 3vw, 16px); gap: 8px; white-space: nowrap; }
-.m-only /* Our People. Our Pride. */
-.pride { position: relative; padding-top: clamp(36px, 9vw, 64px); padding-bottom: clamp(70px, 18vw, 130px); }
-.m-only .pride h2 { font-size: clamp(28px, 7.4vw, 44px); line-height: 1.15; color: #08245B; }
-.m-only .pride .bar { margin: clamp(10px, 2.4vw, 16px) 0 clamp(16px, 4vw, 26px); }
-.m-only .pride p { max-width: 27em; font-size: clamp(14px, 4vw, 18px); line-height: 1.6; color: #0b2a5b; margin-bottom: clamp(20px, 5vw, 32px); }
+    .m-only * { box-sizing: border-box; margin: 0; padding: 0; }
+    .m-only a { text-decoration: none; color: inherit; }
+
+    /* solid bars behind the Safari toolbars (safe-area strips) */
+    .m-only .m-edge { position: fixed; left: 0; right: 0; z-index: 60; background: var(--m-bar); pointer-events: none; }
+    .m-only .m-edge.top    { top: 0;    height: env(safe-area-inset-top, 0px); }
+    .m-only .m-edge.bottom { bottom: 0; height: env(safe-area-inset-bottom, 0px); }
+
+    /* page background image: sits at the bottom, its top fades into the fill colour */
+    .m-only .m-bg {
+        position: absolute; left: 0; right: 0; bottom: 0; z-index: 0;
+        width: 100%; aspect-ratio: var(--m-home-ratio);
+        background: var(--m-home) center / 100% 100% no-repeat;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%);
+                mask-image: linear-gradient(to bottom, transparent 0%, #000 22%);
+        pointer-events: none;
+    }
+    .m-only main { position: relative; z-index: 1; }
+
+    /* first screen = banner + values + Employee of the Quarter ONLY.
+       "Our People. Our Pride." starts below the fold. */
+    .m-only .m-top { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; }
+
+    .m-only .btn { display: inline-flex; align-items: center; cursor: pointer; border-radius: 999px; line-height: 1.2; white-space: nowrap; }
+    .m-only .btn svg { flex: none; }
+    .m-only .btn-cyan { background: linear-gradient(180deg, #2adaf7, #0fb9ee); color: #051a45; box-shadow: 0 4px 14px rgba(20, 200, 240, .45); }
+    .m-only .btn-outline { background: transparent; color: #08245B; }
+    .m-only .bar { display: block; border-radius: 5px; background: #14c8f0; box-shadow: 0 0 8px rgba(20, 200, 240, .6); }
+
+    /* transparent header with the logo (same sizes as the other pages' mobile header) */
+    .m-only .m-header { position: absolute; top: 0; left: 0; width: 100%; z-index: 5; padding: 8px 5%; background: transparent; }
+    .m-only .m-navbar { height: 58px; display: flex; align-items: center; }
+    .m-only .m-logo { width: 100px; height: 100px; object-fit: contain; display: block; }
+
+    /* ---- hero: banner jpg cut into a wave by the mask ---- */
+    .m-only .hero {
+        position: relative; flex: none; isolation: isolate;
+        width: 100%;
+        aspect-ratio: 100 / 70;
+        padding: 20vw 7.5vw 0;                 /* top = space for the logo */
+        color: #fff;
+    }
+    .m-only .hero::before {
+        content: ""; position: absolute; inset: 0; z-index: -2;
+        background: var(--m-banner) center bottom / cover no-repeat;
+        -webkit-mask: var(--m-wave-mask) center / 100% 100% no-repeat;
+                mask: var(--m-wave-mask) center / 100% 100% no-repeat;
+    }
+    .m-only .hero::after {
+        content: ""; position: absolute; inset: 0; z-index: -1;
+        background: var(--m-wave-glow) center / 100% 100% no-repeat;
+        pointer-events: none;
+    }
+    .m-only .hero h1 { font-size: clamp(20px, 5.9vw, 40px); line-height: 1.17; letter-spacing: -.1px; }
+    .m-only .hero h1 .accent { color: #14c8f0; white-space: nowrap; }
+    .m-only .ecg { display: inline-block; width: 1.9em; height: .8em; margin-left: .25em; vertical-align: -.05em; overflow: visible; }
+    .m-only .hero .bar { width: 8.75vw; height: max(3px, .9vw); margin: 2.4vw 0 2.8vw; }
+    .m-only .hero p { max-width: 76%; font-size: clamp(9.5px, 2.6vw, 15px); line-height: 1.4; color: #eaf2ff; }
+
+    /* ---- values card ---- */
+    .m-only .values { flex: 1 1 auto; display: flex; align-items: center; padding: 6vw 0; }
+    .m-only .values .wrap { width: 100%; padding: 0 5.5vw; }
+    .m-only .values-card {
+        display: grid; grid-template-columns: repeat(4, 1fr);
+        background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(234,245,255,.85));
+        border: 1px solid rgba(255,255,255,.9);
+        border-radius: 3vw;
+        box-shadow: 0 8px 24px rgba(20, 70, 140, .13), inset 0 1px 0 #fff;
+        padding: 2.5vw 0 2.8vw;
+    }
+    .m-only .value { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1.8vw; text-align: center; padding: 0 2px; font-size: clamp(9px, 2.5vw, 14px); line-height: 1.2; color: #08245B; }
+    .m-only .value + .value::before { content: ""; position: absolute; left: 0; top: 10%; bottom: 10%; width: 1px; background: linear-gradient(180deg, transparent, rgba(8,36,91,.25), transparent); }
+    .m-only .value svg { width: 7.6vw; height: 7.6vw; stroke: #08245B; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ---- Employee of the Quarter (background = your EOQ jpg; box ratio = jpg ratio) ---- */
+    .m-only .eoq-section { flex: none; padding: 0 0 6vw; }
+    .m-only .eoq-section .wrap { padding: 0 2.75vw; }
+    .m-only .eoq {
+        position: relative;
+        display: grid; grid-template-columns: 52% 1fr; align-items: center;
+        aspect-ratio: var(--m-eoq-ratio);
+        border-radius: 5.6vw;
+        background: var(--m-eoq) left center / cover no-repeat var(--m-fill);
+        color: #fff; overflow: hidden;
+        box-shadow: 0 10px 26px rgba(8, 36, 91, .25);
+    }
+    .m-only .eoq-text { grid-column: 2; min-width: 0; padding: 0 5vw 0 0; }
+    .m-only .eoq-text h2 { font-size: clamp(13px, 4.2vw, 26px); line-height: 1.12; }
+    .m-only .eoq-text .bar { width: 5vw; height: max(2px, .7vw); margin: 1.8vw 0 1.6vw; }
+    .m-only .eoq-text p { font-size: clamp(9px, 2.5vw, 14px); line-height: 1.32; color: #e3efff; margin-bottom: 2.6vw; }
+    .m-only .eoq-text .btn { padding: 1.5vw 3.4vw; font-size: clamp(9.5px, 2.55vw, 14px); gap: 1.6vw; }
+    .m-only .eoq-text .btn svg { width: 1.25em; height: 1.25em; }
+
+    /* ---- Our People. Our Pride. ---- */
+    .m-only .pride { position: relative; padding: 7.5vw 0 20vw; }
+    .m-only .pride .wrap { padding: 0 8vw; }
+    .m-only .pride h2 { font-size: clamp(16px, 4.3vw, 30px); line-height: 1.15; color: #08245B; }
+    .m-only .pride .bar { width: 8.25vw; height: max(3px, .8vw); margin: 2.4vw 0 3.2vw; }
+    .m-only .pride p { max-width: 64vw; font-size: clamp(10px, 2.45vw, 15px); line-height: 1.4; color: #0b2a5b; margin-bottom: 3.2vw; }
+    .m-only .pride .btn-outline { padding: 1.5vw 3.6vw; font-size: clamp(10px, 2.6vw, 15px); gap: 2vw; border: max(1.5px, .25vw) solid #08245B; }
+    .m-only .pride .btn svg { width: 1.3em; height: 1.3em; }
 }
 </style>
 </head>
@@ -1249,19 +1283,20 @@ Who made things a little better</p>
 <!-- ================= MOBILE HOME (phones only) ================= -->
 <div class="m-only">
 <div class="m-bg" aria-hidden="true"></div>
+<div class="m-edge top" aria-hidden="true"></div>
+<div class="m-edge bottom" aria-hidden="true"></div>
 <header class="m-header">
     <div class="m-navbar">
         <a href="/"><img src="/logo-light.png" alt="Care Medical Jiwar" class="m-logo"></a>
     </div>
 </header>
 <main>
+    <div class="m-top">
     <section class="hero">
         <div class="wrap">
             <h1>Caring with<br>Every <span class="accent">Heartbeat<svg class="ecg" viewBox="0 0 100 30" fill="none" stroke="#14c8f0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="0,15 30,15 38,6 47,26 57,1 66,28 73,15 100,15"/></svg></span></h1>
             <span class="bar"></span>
-            <p>We believe that care begins with people. Inspired by the spirit of this place, where countless journeys meet, this space honors the people behind the care, a place to recognize their efforts and celebrate the difference they make every day.
-
-</p>
+            <p>We believe that care begins with people. Inspired by the spirit of this place, where countless journeys meet, this space honors the people behind the care, a place to recognize their efforts and celebrate the difference they make every day.</p>
         </div>
     </section>
 
@@ -1320,6 +1355,8 @@ Who made things a little better</p>
             </div>
         </div>
     </section>
+
+    </div><!-- /m-top -->
 
     <section class="pride">
         <div class="wrap">
