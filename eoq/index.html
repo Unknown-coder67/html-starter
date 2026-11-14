@@ -4663,6 +4663,12 @@ function restoreExecState() {
     }
 }
 restoreExecState();
+
+/* Opened from the home page menu (jiwar.care/eoq/#executive): go straight to the Executive access screen.
+   If a reload just restored a logged-in Executive screen, leave that alone. */
+if (window.location.hash.toLowerCase() === "#executive" && !execAuthenticated) {
+    startExecutive();
+}
 </script>
 
 </body>
