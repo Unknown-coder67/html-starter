@@ -1023,7 +1023,9 @@ footer {
         --m-safe-top:    env(safe-area-inset-top, 0px);
         --m-safe-bottom: env(safe-area-inset-bottom, 0px);
         --m-header-h: calc(74px + var(--m-safe-top));   /* white header height */
-        --m-hero-h: 69.5vw;                              /* banner height (top solid colour trimmed) */
+        --m-hero-h: 50vw;                                /* = banner image height (1280x640 is 2:1), so the image fills the box with no solid gap */
+        --m-wave-h: 77.5vw;                              /* size of the wave cut-out / glow drawing */
+        --m-wave-top: -23.5vw;                           /* its top edge relative to the banner top: puts the wave in the lower part of the image */
         --m-grad-top: #F0F4FA;                           /* page colour right below the wave */
         --m-grad-bottom: #eff6fe;                        /* page colour at the very bottom */
 
@@ -1102,20 +1104,19 @@ footer {
         position: relative; flex: none; isolation: isolate;
         width: 100%;
         height: var(--m-hero-h);
-        margin-bottom: -6vw;                  /* pulls the next section up into the empty glow room */
         padding: 9vw 8vw 0;
         color: #fff;
         text-align: left;
     }
     .m-only .hero::before {
         content: ""; position: absolute; inset: 0; z-index: -2;
-        background: var(--m-banner) center calc(100% - 7.5vw) / 100% auto no-repeat #001f4e;   /* image keeps its original spot relative to the wave */
-        -webkit-mask: var(--m-wave-mask) left bottom / 100% 77.5vw no-repeat;
-                mask: var(--m-wave-mask) left bottom / 100% 77.5vw no-repeat;
+        background: var(--m-banner) center bottom / cover no-repeat #001f4e;   /* image ratio = box ratio, so it fills the box exactly */
+        -webkit-mask: var(--m-wave-mask) left var(--m-wave-top) / 100% var(--m-wave-h) no-repeat;
+                mask: var(--m-wave-mask) left var(--m-wave-top) / 100% var(--m-wave-h) no-repeat;
     }
     .m-only .hero::after {
         content: ""; position: absolute; inset: 0; z-index: -1;
-        background: var(--m-wave-glow) left bottom / 100% 77.5vw no-repeat;
+        background: var(--m-wave-glow) left var(--m-wave-top) / 100% var(--m-wave-h) no-repeat;
         pointer-events: none;
     }
     .m-only .hero h1 { font-size: clamp(22px, 6.3vw, 42px); line-height: 1.17; letter-spacing: -.1px; text-align: left; }
@@ -1124,7 +1125,7 @@ footer {
     .m-only .hero .bar { width: 10vw; height: max(3px, 1vw); margin: 2.4vw 0 0; }
 
     /* ---- About (right under the banner, above the values) ---- */
-    .m-only .about { flex: none; padding: 3vw 0 3vw; }
+    .m-only .about { flex: none; padding: 5vw 0 3vw; }
     .m-only .about .wrap { padding: 0 8vw; }
     .m-only .about h2 { font-size: clamp(18px, 5.6vw, 34px); line-height: 1.15; color: #08245B; }
     .m-only .about .bar { width: 8.25vw; height: max(3px, .8vw); margin: 2.2vw 0 3vw; }
