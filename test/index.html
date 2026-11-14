@@ -1013,11 +1013,12 @@ footer {
         /* >>> YOUR images - change the paths here <<< */
         --m-banner: url("/mobile-banner.jpg");
         --m-eoq:    url("/mobile-eoq-bg.jpg");
+        --m-eoq-ratio: 756 / 338; /* <<< width / height of mobile-eoq-bg.jpg */
         --m-home:   url("/mobile-home-bg.jpg");
 
         display: block;
         min-height: 100vh;
-        background: var(--m-home) center top / cover no-repeat,
+        background: var(--m-home) center top / contain no-repeat,
                     linear-gradient(180deg, #e6f3ff 0%, #f3f9ff 40%, #eaf5ff 100%);
         color: #08245B;
         line-height: 1.5;
@@ -1042,7 +1043,7 @@ footer {
 .m-only /* hero  (background = YOUR banner jpg) */
 .hero {
     position: relative;
-    background: var(--m-banner) center bottom / cover no-repeat,
+    background: var(--m-banner) center bottom / contain no-repeat,
                 linear-gradient(170deg, #041a4a 0%, #07265f 45%, #0a3a86 100%);
     color: #fff;
     padding-top: clamp(56px, 14vw, 90px);
@@ -1073,10 +1074,10 @@ footer {
 .m-only .eoq {
     position: relative;
     display: grid; grid-template-columns: 1fr 1.1fr; align-items: center;
-    min-height: clamp(210px, 58vw, 340px);
+    aspect-ratio: var(--m-eoq-ratio);
     padding: clamp(18px, 4.5vw, 36px) clamp(14px, 4vw, 36px);
     border-radius: clamp(26px, 6vw, 44px);
-    background: var(--m-eoq) center / cover no-repeat,
+    background: var(--m-eoq) center / contain no-repeat,
                 linear-gradient(135deg, #0a3d8f 0%, #062c6e 50%, #04215a 100%);
     color: #fff; overflow: hidden;
     box-shadow: 0 18px 40px rgba(8, 36, 91, .28);
