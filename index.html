@@ -1059,9 +1059,9 @@ footer {
 
     .m-only main { position: relative; z-index: 1; padding-top: var(--m-header-h); }
 
-    /* first screen = white header + banner + about + values card (fills the viewport exactly).
-       The Employee of the Quarter box and "Our People. Our Pride." are below the fold. */
-    .m-only .m-top { min-height: calc(100vh - var(--m-header-h)); min-height: calc(100svh - var(--m-header-h)); display: flex; flex-direction: column; }
+    /* first screen = white header + banner + about + values card + Employee of the Quarter box,
+       packed with small gaps (nothing is stretched to fill the viewport) so the EOQ box is visible without scrolling. */
+    .m-only .m-top { display: flex; flex-direction: column; }
 
     .m-only .btn { display: inline-flex; align-items: center; cursor: pointer; border-radius: 999px; line-height: 1.2; white-space: nowrap; }
     .m-only .btn svg { flex: none; }
@@ -1126,16 +1126,16 @@ footer {
     .m-only .hero .bar { width: 10vw; height: max(3px, 1vw); margin: 2.4vw 0 0; }
 
     /* ---- About (right under the banner, above the values) ---- */
-    .m-only .about { position: relative; z-index: 2; flex: none; margin-top: var(--m-about-lift); padding: 0 0 3vw; }
+    .m-only .about { position: relative; z-index: 2; flex: none; margin-top: var(--m-about-lift); padding: 0; }
     .m-only .about .wrap { padding: 0 8vw; }
     .m-only .about h2 { font-size: clamp(18px, 5.6vw, 34px); line-height: 1.15; color: #08245B; }
     .m-only .about .bar { width: 8.25vw; height: max(3px, .8vw); margin: 2.2vw 0 3vw; }
     .m-only .about p { font-size: clamp(11px, 3vw, 17px); line-height: 1.45; color: #08245B; }
 
     /* ---- values card ---- */
-    .m-only .values { flex: 1 1 auto; display: flex; align-items: center; padding: 5vw 0; }
+    .m-only .values { flex: none; display: flex; align-items: center; padding: 3.5vw 0 3.5vw; }   /* gap above "What We Celebrate" and below the card: raise/lower these two numbers */
     .m-only .values .wrap { width: 100%; padding: 0 5.5vw; }
-    .m-only .values-title { display: flex; align-items: center; justify-content: center; gap: 3vw; margin-bottom: 4vw; font-size: clamp(16px, 5vw, 30px); line-height: 1.15; color: #08245B; text-align: center; }
+    .m-only .values-title { display: flex; align-items: center; justify-content: center; gap: 3vw; margin-bottom: 3vw; font-size: clamp(16px, 5vw, 30px); line-height: 1.15; color: #08245B; text-align: center; }
     .m-only .values-title::before, .m-only .values-title::after { content: ""; flex: none; width: 12vw; height: 1.5px; background: #08245B; }
     .m-only .values-card {
         display: grid; grid-template-columns: repeat(4, 1fr);
@@ -1180,6 +1180,13 @@ footer {
     /* ---- footer (mobile) ---- */
     .m-only footer { text-align: center; padding: 18px 20px calc(18px + var(--m-safe-bottom)); color: #557083; font-size: 0.7rem; background: transparent; }
 }
+
+/* short phone screens (e.g. Safari with its toolbars showing): tighten the gaps a little more so the EOQ box still fits on the first screen */
+@media (max-width: 700px) and (max-height: 700px) {
+    .m-only .about .bar { margin: 2vw 0 2vw; }
+    .m-only .values { padding: 2vw 0; }
+    .m-only .values-title { margin-bottom: 2vw; }
+}
 </style>
 </head>
 <body>
@@ -1191,7 +1198,7 @@ footer {
         </a>
         <nav class="header-nav">
             <a href="/eoq/" class="nominate-btn">EOQ</a>
-            <a href="winners" class="winners-btn-header">WINNERS</a>
+            <a href="/winners" class="winners-btn-header">WINNERS</a>
         </nav>
     </div>
 </header>
@@ -1289,7 +1296,7 @@ footer {
                 <div class="focus-body">
                     <p>Our pride begins with the people behind everything we do.
 Every role has a purpose. every contribution has its place. Together, they are what make us who we are.</p>
-                    <a href="winners/index.html" class="winners-btn">Meet our winners<span class="arrow">→</span></a>
+                    <a href="/winners" class="winners-btn">Meet our winners<span class="arrow">→</span></a>
                 </div>
             </div>
         </div>
@@ -1341,14 +1348,14 @@ Who made things a little better</p>
             </a>
         </li>
         <li>
-            <a href="winners/index.html">
+            <a href="/winners">
                 <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z"/><path d="M8 6H4v1a4 4 0 0 0 4 4M16 6h4v1a4 4 0 0 1-4 4"/><path d="M12 13v4M8.5 20h7M10 17h4"/></svg>
                 <span>Winners</span>
                 <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
             </a>
         </li>
         <li>
-            <a href="/eoq/#executive">
+            <a href="/executive">
                 <svg class="ic" viewBox="0 0 64 64" aria-hidden="true" style="stroke-width:3.4"><circle cx="32" cy="14" r="6.5"/><circle cx="14" cy="24" r="6"/><circle cx="50" cy="24" r="6"/><path d="M20 44c0-8 5-13 12-13s12 5 12 13"/><path d="M3 46c0-7 4-11 10-11M61 46c0-7-4-11-10-11"/><path d="M3 46h8M53 46h8M20 44v4M44 44v4"/></svg>
                 <span>Executive</span>
                 <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
@@ -1437,7 +1444,7 @@ Who made things a little better</p>
             <h2>Our People. Our Pride.</h2>
             <span class="bar"></span>
             <p>Our pride begins with the people behind everything we do. Every role has a purpose, every contribution has its place. Together, they are what make us who we are.</p>
-            <a href="winners/index.html" class="btn btn-outline">Meet Our Winners <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+            <a href="/winners" class="btn btn-outline">Meet Our Winners <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
         </div>
     </section>
 </main>
