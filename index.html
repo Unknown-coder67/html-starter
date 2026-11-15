@@ -343,34 +343,12 @@ body {
         --m-wave-top: calc(-18vw + var(--m-wave-drop));
         --m-about-lift: calc(2vw + var(--m-wave-drop));   /* gap between the wave and "About" */
         --m-hero-ext: calc(var(--m-wave-drop) + 1.5vw);   /* extra image drawn under the hero so the lowered wave is not cut flat */
-        --m-eoq-flip: 1;           /* -1 = mirror the EOQ image (star on the right), 1 = leave as is */
         --m-banner-flip: 1;        /* -1 = mirror the banner image (mosque on the left), 1 = leave as is */
     }
-    .m-only .hero-d, .m-only .eoq-section { display: none; }
-
-    /* EOQ hero */
-    .m-only .hero-m { display: block; padding: 6.5vw 8vw 0; }
-    .m-only .hero-m::before { display: none; }
-    .m-only .hero-m::after { bottom: calc(-1 * var(--m-hero-ext) - 8vw); }   /* glow line + blur must not be clipped at the lowest point of the wave */
-    .m-only .hero-m .hero-bg {
-        position: absolute; left: 0; right: 0; top: 0; bottom: calc(-1 * var(--m-hero-ext)); z-index: -2; overflow: hidden;
-        -webkit-mask: var(--m-wave-mask) left var(--m-wave-top) / 100% var(--m-wave-h) no-repeat;
-                mask: var(--m-wave-mask) left var(--m-wave-top) / 100% var(--m-wave-h) no-repeat;
-    }
-    .m-only .hero-m .hero-bg i {
-        position: absolute; left: 0; right: 0; top: 0; height: var(--m-hero-h);   /* image keeps its normal size: no zoom */
-        background: var(--m-eoq) center bottom / cover no-repeat #001f4e;
-        transform: scaleX(var(--m-eoq-flip));
-    }
-    /* strip under the image: mirror of the image's bottom edge, so the lowered wave never shows an empty gap */
-    .m-only .hero-m .hero-bg::after {
-        content: ""; position: absolute; left: 0; right: 0; top: var(--m-hero-h); bottom: 0;
-        background: var(--m-eoq) center bottom / 100% auto no-repeat #001f4e;
-        transform: scale(var(--m-eoq-flip), -1);
-    }
-    .m-only .hero-m .hero-sub { font-size: clamp(10px, 2.6vw, 15px); line-height: 1.3; color: #fff; margin: 2.4vw 0 3.4vw; }
-    .m-only .hero-m .btn { padding: 1.4vw 3.2vw; font-size: clamp(9px, 2.2vw, 12px); gap: 1.4vw; }
-    .m-only .hero-m .btn svg { width: 1.25em; height: 1.25em; }
+    /* Keep desktop structure on mobile too: banner = Caring, center box = EOQ */
+    .m-only .hero-d { display: block; }
+    .m-only .eoq-section { display: block; }
+    .m-only .hero-m, .m-only .hospital-section { display: none; }
 
     /* values: four separate tiles */
     .m-only .values { padding: 4.5vw 0 5.4vw; }
@@ -378,27 +356,6 @@ body {
     .m-only .values-card { gap: 1.3vw; background: none; box-shadow: none; border-radius: 0; padding: 0; }
     .m-only .value { background: linear-gradient(180deg, #f3f8fe, #e6f1fd); border-radius: 2.8vw; box-shadow: 0 7px 10px -6px rgba(20, 70, 140, .35); padding: 3vw 0 2.8vw; }
     .m-only .value + .value::before { display: none; }
-
-    /* Jiwar Hospital card (old banner image) */
-    .m-only .hospital-section { display: block; padding: 0 0 2vw; }
-    .m-only .hospital-section .wrap { padding: 0 2.75vw; }
-    .m-only .hospital {
-        position: relative; isolation: isolate;
-        display: grid; grid-template-columns: 55% 1fr; align-items: center;
-        aspect-ratio: 2 / 1;
-        border-radius: 4.5vw; overflow: hidden;
-        background: #001f4e; color: #fff;
-        box-shadow: 0 10px 26px rgba(8, 36, 91, .25);
-    }
-    .m-only .hospital::before {
-        content: ""; position: absolute; inset: 0; z-index: -1;
-        background: var(--m-banner) center / cover no-repeat;
-        transform: scaleX(var(--m-banner-flip));
-    }
-    .m-only .hospital-text { grid-column: 2; min-width: 0; justify-self: start; width: fit-content; max-width: 100%; padding: 0 0 1.5vw; }
-    .m-only .hospital-title { font-size: clamp(11px, 3.5vw, 22px); line-height: 1.22; white-space: nowrap; color: #08245B; text-align: left; }
-    .m-only .hospital-title .ecg { width: 1.8em; margin-left: .3em; }
-    .m-only .hospital-sub { margin-top: 2.2vw; text-align: center; font-size: clamp(8px, 2.2vw, 13px); letter-spacing: .14em; color: #dbe8ff; }
 }
 
 /* ================= JIWAR WALL (desktop only) ================= */
