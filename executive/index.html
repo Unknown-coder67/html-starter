@@ -44,8 +44,8 @@ html {
     min-height: 100%;
     min-height: 100dvh;
     overflow-y: scroll;
-    background: #FFFFFF;
-    background-color: #FFFFFF;
+    background: #F0F4FA;
+    background-color: #F0F4FA;
 }
 
 body {
@@ -78,16 +78,12 @@ body::before {
     height: 100%;
     z-index: -1;
     pointer-events: none;
-    background-color: #e8f4f8;
-    background-image: url("/desktop-background.jpg");
-    background-size: cover;
-    background-position: center top;
-    background-repeat: no-repeat;
+    background: linear-gradient(180deg, #F0F4FA, #eff6fe);
 }
 
 @media (max-width: 700px) {
     body::before {
-        background-image: url("/mobile-background.jpg");
+        background: linear-gradient(180deg, #F0F4FA, #eff6fe);
     }
 }
 
@@ -365,6 +361,15 @@ header {
     color: #00B7E2;
     margin-bottom: 18px;
     line-height: 1.25;
+}
+.page-header-texts .line2::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 4px;
+    background: #00B7E2;
+    border-radius: 2px;
+    margin: 12px auto 0;
 }
 
 .page-header-texts .line3 {
@@ -1426,6 +1431,15 @@ body.exec-bg::before {
     margin-bottom: 16px;
     text-transform: uppercase;
 }
+.exec-access-headline::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 4px;
+    background: #00B7E2;
+    border-radius: 2px;
+    margin: 12px auto 0;
+}
 
 .exec-access-box h2 {
     color: #05255E;
@@ -2383,32 +2397,31 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const departmentCodes = {
-    "RECEPTION4": "Reception",
-   "DUTY4": "Duty Manager",
-   "ENCODER4": "Encoder",
-   /*"QUALITY4": "Quality",*/
-   "DRIVERS4": "Drivers",
-   "RCM4": "Revenue Cycle Management",
-   "RESPIRATORY4": "Respiratory Therapy",
-   "RADIOLOGY4": "Radiology",
-   "LABORATORY4": "Laboratory",
-   "ICU4": "Intensive Care Unit",
-   "CATH4": "Cath Lab",
-   "SECURITY4": "Security",
-   /*"IT4": "Information Technology",
-   "SUPPLY4": "Supply Chain",
-   "HR4": "Human Resources",    */
-   "ER4": "Emergency Department",
-  /* "FINANCE4": "Finance",    */
-   "GPQ4": "General Practice",
-   "PHARMQ4": "Pharmacy",
-   /*"ANESQ4": "Anesthesia",    */
-   "CARDQ4": "Cardiology",
-   "NAS4": "Nascom",
-   /*"NUTRQ4": "Clinical Nutrition",
-   "PTQ4": "Physiotherapy",
-   "NLEQ4": "Nursing Leadership & Education",
-   "SOCIAL4": "Social Services"    */
+    "Reception4": "Reception",
+   "Duty Manager4": "Duty Manager",
+   "Encoder4": "Encoder",
+   /*"Quality4": "Quality",*/
+   "Drivers4": "Drivers",
+   "Revenue Cycle Management4": "Revenue Cycle Management",
+   "Respiratory Therapy4": "Respiratory Therapy",
+   "Radiology4": "Radiology",
+   "Laboratory4": "Laboratory",
+   "Intensive Care Unit4": "Intensive Care Unit",
+   "Cath Lab4": "Cath Lab",
+   "Security4": "Security",
+   /*"Information Technology4": "Information Technology",
+   "Supply Chain4": "Supply Chain",
+   "Human Resources4": "Human Resources",    */
+   "Emergency Department4": "Emergency Department",
+  /* "Finance4": "Finance",    */
+   "General Practice4": "General Practice",
+   "Pharmacy4": "Pharmacy",
+   /*"Anesthesia4": "Anesthesia",    */
+   "Nascom4": "Nascom",
+   /*"Clinical Nutrition4": "Clinical Nutrition",
+   "Physiotherapy4": "Physiotherapy",
+   "Nursing Leadership & Education4": "Nursing Leadership & Education",
+   "Social Services4": "Social Services"    */
 };
 
 const departmentEmployees = {
@@ -2605,13 +2618,7 @@ const departmentEmployees = {
        { name: "Abdelrahman Osman", id: "1" },
        { name: "Samia Azab", id: "1" }
    ],*/
-   "Cardiology": [
-       { name: "Mostafa Haggag", id: "1" },
-       { name: "Abdulkabir Abdishakur", id: "1" },
-       { name: "Mujeeb Tareen", id: "1" },
-       { name: "Ahmed Abdullateef", id: "1" }
-   ],
-   "Nascom": [
+"Nascom": [
        { name: "Mahbul", id: "FK01", group: "Housekeeping Staff" },
        { name: "Niloy", id: "FK02", group: "Housekeeping Staff" },
        { name: "Jueal", id: "FK03", group: "Housekeeping Staff" },
@@ -3309,45 +3316,7 @@ const departmentCriteria = {
       ]
     }
   ],
-  "Cardiology": [
-    {
-      title: "First: Clinical Excellence",
-      items: [
-        "High-quality cardiac care aligned with current guidelines.",
-        "Accurate assessment, monitoring, and documentation.",
-        "Safe performance or support of cardiac procedures.",
-        "Timely recognition and response to cardiac emergencies."
-      ]
-    },
-    {
-      title: "Second: Patient Relations",
-      items: [
-        "Clear explanation of cardiac conditions and care plans.",
-        "Empathy and respect for patients and families.",
-        "Protection of privacy during examinations and counseling.",
-        "Professional handling of concerns and expectations."
-      ]
-    },
-    {
-      title: "Third: Safety & Teamwork",
-      items: [
-        "Compliance with infection control and procedure safety.",
-        "Effective collaboration within the cardiology team.",
-        "Reliable handovers and interdisciplinary communication.",
-        "Proper use and care of cardiology equipment."
-      ]
-    },
-    {
-      title: "Fourth: Responsibility & Growth",
-      items: [
-        "Ownership of assigned patients and clinic duties.",
-        "Ongoing learning in cardiovascular practice.",
-        "Initiative to improve clinic or procedure workflows.",
-        "Honesty, confidentiality, and policy compliance."
-      ]
-    }
-  ],
-  "Nascom": [
+"Nascom": [
     {
       title: "Housekeeping Staff",
       items: [
@@ -3527,7 +3496,6 @@ function renderDepartments(filter = "") {
             card.onclick = () => selectDepartment(dept.code, dept.name);
             const imgSrc = getDeptImage(dept.name);
             card.innerHTML = `
-                <img src="${imgSrc}" alt="${dept.name}" class="dept-img" onerror="this.src='/eoq/dept-default.jpg'; this.onerror=null;">
                 <div class="dept-name">${dept.name}</div>
                 <span class="dept-chevron" aria-hidden="true">&gt;</span>
             `;
