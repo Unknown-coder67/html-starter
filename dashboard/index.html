@@ -38,8 +38,8 @@ html {
     min-height: 100dvh;
     min-height: -webkit-fill-available;
     overflow-y: scroll;
-    background-color: #FFFFFF;
-    background: #FFFFFF;
+    background-color: #F0F4FA;
+    background: #F0F4FA;
 }
 
 body {
@@ -52,12 +52,7 @@ body {
     min-height: 100%;
     min-height: 100dvh;
     min-height: -webkit-fill-available;
-    background-color: #FFFFFF;
-    background-image: url("/desktop-background.jpg");
-    background-size: cover;
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background: linear-gradient(180deg, #F0F4FA, #eff6fe);
     -webkit-font-smoothing: antialiased;
     padding-top: 74px;
     padding-bottom: env(safe-area-inset-bottom, 0);
@@ -73,16 +68,14 @@ body::after {
     right: 0;
     bottom: 0;
     height: env(safe-area-inset-bottom, 0px);
-    background: #FFFFFF;
+    background: #eff6fe;
     z-index: 10000;
     pointer-events: none;
 }
 
 @media (max-width: 700px) {
     body {
-        background-image: url("/mobile-background.jpg");
-        background-attachment: scroll;
-        background-color: #FFFFFF;
+        background: linear-gradient(180deg, #F0F4FA, #eff6fe);
     }
 }
 
