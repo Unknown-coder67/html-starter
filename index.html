@@ -348,13 +348,13 @@ body {
 .m-only .hero-m, .m-only .hospital-section { display: none; }
 @media (max-width: 700px) {
     .m-only {
-        --m-wave-drop: 7vw;        /* >>> LOWER THE WAVE: 0 = old position, bigger = lower (try 3vw to 8vw) <<< */
-        --m-wave-top: calc(-18vw + var(--m-wave-drop));
-        --m-about-lift: calc(2vw + var(--m-wave-drop));   /* gap between the wave and "About" */
-        --m-hero-ext: calc(var(--m-wave-drop) + 1.5vw);   /* extra image drawn under the hero so the lowered wave is not cut flat */
-        --m-banner-flip: 1;        /* -1 = mirror the banner image (mosque on the left), 1 = leave as is */
+        /* Restore original wave position (same as the old working version) */
+        --m-wave-top: -23.5vw;
+        --m-wave-h: 77.5vw;
+        --m-about-lift: -9vw;
+        --m-banner-flip: 1;
     }
-    /* Keep desktop structure on mobile too: banner = Caring, center box = EOQ */
+    /* Banner = Caring, center box = EOQ */
     .m-only .hero-d { display: block; }
     .m-only .eoq-section { display: block; }
     .m-only .hero-m, .m-only .hospital-section { display: none; }
