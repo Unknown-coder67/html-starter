@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>document.documentElement.className += " js";</script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#ffffff" media="(max-width: 700px)">
 <meta name="robots" content="noindex, nofollow">
 <title>Care Medical Jiwar</title>
@@ -90,7 +90,9 @@ body {
     }
     .m-only * { box-sizing: border-box; margin: 0; padding: 0; }
     /* Goldplay SemiBold everywhere */
-    .m-only, .m-only * { font-family: var(--font) !important; font-weight: 600 !important; font-synthesis: none; }
+    .m-only, .m-only * { font-family: var(--font) !important; font-weight: 600; font-synthesis: none; }
+    .m-only .hero h1 { font-weight: 300 !important; }
+    .m-only .hero h1 .accent { font-weight: 600 !important; }
     .m-only a { text-decoration: none; color: inherit; }
 
     /* solid strip at the very bottom edge: Safari tints its bottom toolbar from this */
@@ -157,7 +159,7 @@ body {
         background: var(--m-wave-glow) left var(--m-wave-top) / 100% var(--m-wave-h) no-repeat;
         pointer-events: none;
     }
-    .m-only .hero h1 { font-size: clamp(18px, 5vw, 34px); line-height: 1.17; letter-spacing: -.1px; text-align: left; color: #08245B; font-weight: 200 !important; }
+    .m-only .hero h1 { font-size: clamp(18px, 5vw, 34px); line-height: 1.17; letter-spacing: -.1px; text-align: left; color: #666666; font-weight: 300 !important; }
     .m-only .hero h1 .accent { color: #14c8f0; white-space: nowrap; font-weight: 600 !important; }
     .m-only .ecg { display: inline-block; width: 1.5em; height: .7em; margin-left: .22em; vertical-align: -.05em; overflow: visible; }
     .m-only .hero .bar { width: 10vw; height: max(3px, 1vw); margin: 2.4vw 0 0; }
