@@ -242,8 +242,14 @@ body {
 .js .m-only .tw:not(.tw-ready) { visibility: hidden; }
 .m-only .tw .tw-ch { visibility: hidden; }
 .m-only .tw .tw-ch.on { visibility: visible; }
-.m-only .tw.tw-ready .ecg { opacity: 0; transition: opacity .6s ease; }
-.m-only .tw.tw-ready.tw-done .ecg { opacity: 1; }
+/* pulse line: drawn from left to right after the text is typed */
+.m-only .tw .ecg path { stroke-dasharray: 1 1; stroke-dashoffset: 1; stroke-linecap: butt; }
+.m-only .tw.tw-ready:not(.tw-done) .ecg { visibility: hidden; }
+.m-only .tw.tw-done .ecg path { animation: ecgDraw 1.5s cubic-bezier(.4, .1, .3, 1) both; }
+@keyframes ecgDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+    .m-only .tw.tw-done .ecg path { animation: none; stroke-dashoffset: 0; }
+}
 .tw-caret { display: inline-block; width: 0; height: 1em; position: relative; vertical-align: -.1em; }
 .tw-caret::after { content: ""; position: absolute; left: 1px; top: 0; width: .06em; height: 100%; background: #14c8f0; animation: twBlink 1s steps(1) infinite; }
 @keyframes twBlink { 50% { opacity: 0; } }
@@ -333,7 +339,7 @@ body {
 .m-only .hero-m, .m-only .hospital-section { display: none; }
 @media (max-width: 700px) {
     .m-only {
-        --m-wave-drop: 4vw;        /* >>> LOWER THE WAVE: 0 = old position, bigger = lower (try 3vw to 8vw) <<< */
+        --m-wave-drop: 7vw;        /* >>> LOWER THE WAVE: 0 = old position, bigger = lower (try 3vw to 8vw) <<< */
         --m-wave-top: calc(-18vw + var(--m-wave-drop));
         --m-about-lift: calc(2vw + var(--m-wave-drop));   /* gap between the wave and "About" */
         --m-hero-ext: calc(var(--m-wave-drop) + 1.5vw);   /* extra image drawn under the hero so the lowered wave is not cut flat */
@@ -345,7 +351,7 @@ body {
     /* EOQ hero */
     .m-only .hero-m { display: block; padding: 6.5vw 8vw 0; }
     .m-only .hero-m::before { display: none; }
-    .m-only .hero-m::after { bottom: calc(-1 * var(--m-hero-ext)); }
+    .m-only .hero-m::after { bottom: calc(-1 * var(--m-hero-ext) - 8vw); }   /* glow line + blur must not be clipped at the lowest point of the wave */
     .m-only .hero-m .hero-bg {
         position: absolute; left: 0; right: 0; top: 0; bottom: calc(-1 * var(--m-hero-ext)); z-index: -2; overflow: hidden;
         -webkit-mask: var(--m-wave-mask) left var(--m-wave-top) / 100% var(--m-wave-h) no-repeat;
@@ -378,8 +384,8 @@ body {
     .m-only .hospital-section .wrap { padding: 0 2.75vw; }
     .m-only .hospital {
         position: relative; isolation: isolate;
-        display: grid; grid-template-columns: 65% 1fr; align-items: center;
-        aspect-ratio: 2.66 / 1;
+        display: grid; grid-template-columns: 55% 1fr; align-items: center;
+        aspect-ratio: 2 / 1;
         border-radius: 4.5vw; overflow: hidden;
         background: #001f4e; color: #fff;
         box-shadow: 0 10px 26px rgba(8, 36, 91, .25);
@@ -389,10 +395,10 @@ body {
         background: var(--m-banner) center / cover no-repeat;
         transform: scaleX(var(--m-banner-flip));
     }
-    .m-only .hospital-text { grid-column: 2; min-width: 0; padding: 0 3.5vw 0 0; }
-    .m-only .hospital-text h2 { font-size: clamp(12px, 3.9vw, 24px); line-height: 1.12; }
-    .m-only .hospital-text .bar { width: 5vw; height: max(2px, .7vw); margin: 1.6vw 0 1.4vw; }
-    .m-only .hospital-text p { font-size: clamp(9px, 2.4vw, 14px); line-height: 1.35; color: #e3efff; }
+    .m-only .hospital-text { grid-column: 2; min-width: 0; justify-self: start; width: fit-content; max-width: 100%; padding: 0 0 1.5vw; }
+    .m-only .hospital-title { font-size: clamp(11px, 3.5vw, 22px); line-height: 1.22; white-space: nowrap; color: #fff; text-align: left; }
+    .m-only .hospital-title .ecg { width: 1.8em; margin-left: .3em; }
+    .m-only .hospital-sub { margin-top: 2.2vw; text-align: center; font-size: clamp(8px, 2.2vw, 13px); letter-spacing: .14em; color: #dbe8ff; }
 }
 
 /* ================= JIWAR WALL (desktop only) ================= */
@@ -485,7 +491,7 @@ body {
     <div class="m-top">
     <section class="hero hero-d">
         <div class="wrap">
-            <h1 class="tw" aria-label="Caring with Every Heartbeat">Caring with<br>Every <span class="accent">Heartbeat<svg class="ecg" viewBox="0 0 100 30" fill="none" stroke="#14c8f0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="0,15 30,15 38,6 47,26 57,1 66,28 73,15 100,15"/></svg></span></h1>
+            <h1 class="tw" aria-label="Caring with Every Heartbeat">Caring with<br>Every <span class="accent">Heartbeat<svg class="ecg" viewBox="0 0 100 30" fill="none" stroke="#14c8f0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M0 15H30L38 6L47 26L57 1L66 28L73 15H100"/></svg></span></h1>
             <span class="bar"></span>
         </div>
     </section>
@@ -493,7 +499,7 @@ body {
     <section class="hero hero-m">
         <div class="hero-bg" aria-hidden="true"><i></i></div>
         <div class="wrap">
-            <h1 class="tw" aria-label="Employee of the Quarter">Employee of<br>the <span class="accent">Quarter</span></h1>
+            <h1>Employee of<br>the <span class="accent">Quarter</span></h1>
             <p class="hero-sub">Celebrating Excellence Across<br>Our Teams</p>
             <a href="/eoq/" class="btn btn-cyan">Choose Your Star <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
         </div>
@@ -568,9 +574,8 @@ body {
         <div class="wrap m-dim">
             <div class="hospital">
                 <div class="hospital-text">
-                    <h2>Jiwar Hospital</h2>
-                    <span class="bar"></span>
-                    <p>A place where care, compassion, and the spirit of Makkah come together.</p>
+                    <h2 class="tw hospital-title" aria-label="Caring with Every Heartbeat">Caring with<br>Every Heartbeat<svg class="ecg" viewBox="0 0 100 30" fill="none" stroke="#14c8f0" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M0 15H30L38 6L47 26L57 1L66 28L73 15H100"/></svg></h2>
+                    <p class="hospital-sub">Jiwar Hospital</p>
                 </div>
             </div>
         </div>
@@ -746,6 +751,14 @@ window.addEventListener("pageshow", function (e) {
 <script>
 /* typing effect for "Caring with Every Heartbeat" (desktop + mobile) */
 (function () {
+  /* start typing only when the heading is on screen (the banner card is below the fold on phones) */
+  function whenVisible(el, cb) {
+    if (!("IntersectionObserver" in window)) return cb();
+    var io = new IntersectionObserver(function (entries) {
+      if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); cb(); }
+    }, { threshold: 0.9 });
+    io.observe(el);
+  }
   function typeIt(h1) {
   var chars = [];
   (function wrap(node) {
@@ -789,7 +802,7 @@ window.addEventListener("pageshow", function (e) {
     chars.forEach(function (c) { c.classList.add("on"); });
     finish();
   } else {
-    setTimeout(step, 600);
+    whenVisible(h1, function () { setTimeout(step, 500); });
   }
   }
   Array.prototype.slice.call(document.querySelectorAll(".m-only .tw")).forEach(typeIt);
