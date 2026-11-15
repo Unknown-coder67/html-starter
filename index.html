@@ -1128,14 +1128,14 @@ footer {
     /* ---- About (right under the banner, above the values) ---- */
     .m-only .about { position: relative; z-index: 2; flex: none; margin-top: var(--m-about-lift); padding: 0; }
     .m-only .about .wrap { padding: 0 8vw; }
-    .m-only .about h2 { font-size: clamp(18px, 5.6vw, 34px); line-height: 1.15; color: #08245B; }
+    .m-only .about h2 { font-size: clamp(12.6px, 3.92vw, 23.8px); line-height: 1.15; color: #08245B; }   /* "About" size: min, preferred (vw), max */
     .m-only .about .bar { width: 8.25vw; height: max(3px, .8vw); margin: 2.2vw 0 3vw; }
     .m-only .about p { font-size: clamp(11px, 3vw, 17px); line-height: 1.45; color: #08245B; }
 
     /* ---- values card ---- */
-    .m-only .values { flex: none; display: flex; align-items: center; padding: 3.5vw 0 3.5vw; }   /* gap above "What We Celebrate" and below the card: raise/lower these two numbers */
+    .m-only .values { flex: none; display: flex; align-items: center; padding: 3.85vw 0 4.03vw; }   /* padding: TOP (gap between About text and "What We Celebrate")  0  BOTTOM (gap between the values card and the EOQ box) */
     .m-only .values .wrap { width: 100%; padding: 0 5.5vw; }
-    .m-only .values-title { display: flex; align-items: center; justify-content: center; gap: 3vw; margin-bottom: 3vw; font-size: clamp(16px, 5vw, 30px); line-height: 1.15; color: #08245B; text-align: center; }
+    .m-only .values-title { display: flex; align-items: center; justify-content: center; gap: 3vw; margin-bottom: 3vw; font-size: clamp(8px, 2.5vw, 15px); line-height: 1.15; color: #08245B; text-align: center; }
     .m-only .values-title::before, .m-only .values-title::after { content: ""; flex: none; width: 12vw; height: 1.5px; background: #08245B; }
     .m-only .values-card {
         display: grid; grid-template-columns: repeat(4, 1fr);
@@ -1168,6 +1168,10 @@ footer {
     .m-only .eoq-text .btn { padding: 1.5vw 3.4vw; font-size: clamp(9.5px, 2.55vw, 14px); gap: 1.6vw; }
     .m-only .eoq-text .btn svg { width: 1.25em; height: 1.25em; }
 
+    /* ---- dim a block until it is fully inside the screen (same idea as .focus-item on desktop) ---- */
+    .m-only .m-dim { opacity: .32; transition: opacity .35s ease; }   /* .32 = how dim */
+    .m-only .m-dim.is-full { opacity: 1; }
+
     /* ---- Our People. Our Pride. ---- */
     .m-only .pride { position: relative; padding: 4vw 0 8vw; }
     .m-only .pride .wrap { padding: 0 8vw; }
@@ -1181,10 +1185,19 @@ footer {
     .m-only footer { text-align: center; padding: 18px 20px calc(18px + var(--m-safe-bottom)); color: #557083; font-size: 0.7rem; background: transparent; }
 }
 
+/* coming back to Home: the page fades in and slides up (header stays still) */
+@keyframes mPageIn { from { opacity: 0; transform: translateY(35px); } to { opacity: 1; transform: none; } }
+@media (max-width: 700px) {
+    .m-only main, .m-only footer { animation: mPageIn 1.3s ease; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .m-only main, .m-only footer { animation: none; }
+}
+
 /* short phone screens (e.g. Safari with its toolbars showing): tighten the gaps a little more so the EOQ box still fits on the first screen */
 @media (max-width: 700px) and (max-height: 700px) {
     .m-only .about .bar { margin: 2vw 0 2vw; }
-    .m-only .values { padding: 2vw 0; }
+    .m-only .values { padding: 2.2vw 0 2.3vw; }   /* same two gaps on short screens */
     .m-only .values-title { margin-bottom: 2vw; }
 }
 </style>
@@ -1427,7 +1440,7 @@ Who made things a little better</p>
     </div><!-- /m-top -->
 
     <section class="eoq-section">
-        <div class="wrap">
+        <div class="wrap m-dim">
             <div class="eoq">
                 <div class="eoq-text">
                     <h2>Employee of<br>the Quarter</h2>
@@ -1440,7 +1453,7 @@ Who made things a little better</p>
     </section>
 
     <section class="pride">
-        <div class="wrap">
+        <div class="wrap m-dim">
             <h2>Our People. Our Pride.</h2>
             <span class="bar"></span>
             <p>Our pride begins with the people behind everything we do. Every role has a purpose, every contribution has its place. Together, they are what make us who we are.</p>
@@ -1799,6 +1812,35 @@ celebratingLinks.forEach((link) => {
   });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") setOpen(false); });
 })();
+
+/* mobile: dim the EOQ box and "Our People. Our Pride." until each one is fully inside the screen (below the white header) */
+(function () {
+  var items = document.querySelectorAll(".m-only .m-dim");
+  if (!items.length) return;
+  if (!("IntersectionObserver" in window)) {
+    for (var i = 0; i < items.length; i++) items[i].classList.add("is-full");
+    return;
+  }
+  var header = document.querySelector(".m-header");
+  var topCut = header ? header.offsetHeight : 74;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      en.target.classList.toggle("is-full", en.intersectionRatio >= 0.95);
+    });
+  }, { threshold: [0, 0.5, 0.95, 1], rootMargin: "-" + topCut + "px 0px 0px 0px" });
+  for (var j = 0; j < items.length; j++) io.observe(items[j]);
+})();
+
+/* coming back with the browser Back button: play the fade-in / slide-up again */
+window.addEventListener("pageshow", function (e) {
+  if (!e.persisted) return;
+  var els = document.querySelectorAll(".m-only main, .m-only footer");
+  for (var i = 0; i < els.length; i++) {
+    els[i].style.animation = "none";
+    void els[i].offsetWidth;
+    els[i].style.animation = "";
+  }
+});
 </script>
 </body>
 </html>
