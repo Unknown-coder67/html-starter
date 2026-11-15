@@ -606,6 +606,22 @@ footer {
         white-space: normal;
     }
 }
+
+/* page fade-in + slide-up when arriving from another page (header stays still) */
+@keyframes pageIn {
+    from { opacity: 0; transform: translateY(35px); }
+    to { opacity: 1; transform: none; }
+}
+.intro-section,
+.main-content,
+.story-continues,
+footer { animation: pageIn 1.3s ease; }
+@media (prefers-reduced-motion: reduce) {
+    .intro-section,
+    .main-content,
+    .story-continues,
+    footer { animation: none; }
+}
 </style>
 </head>
 
@@ -849,5 +865,17 @@ requestAnimationFrame(() => {
 });
 </script>
 
+
+<script>
+/* coming back with the browser Back button: play the fade-in / slide-up again */
+window.addEventListener("pageshow", function (e) {
+    if (!e.persisted) return;
+    document.querySelectorAll(".intro-section, .main-content, .story-continues, footer").forEach(function (el) {
+        el.style.animation = "none";
+        void el.offsetWidth;
+        el.style.animation = "";
+    });
+});
+</script>
 </body>
 </html>
