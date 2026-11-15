@@ -9,6 +9,24 @@
 <link rel="icon" type="image/png" href="/favicon.png">
 <title>EOQ | Care Medical Jiwar</title>
 
+<script>
+/* One page file, two URLs:
+     jiwar.care/eoq/        -> department nomination
+     jiwar.care/executive   -> Executive (access code, department head, individual contributor)
+   The URL decides which one opens. eoq/index.html and executive/index.html are identical copies. */
+(function () {
+    var path = location.pathname.toLowerCase().replace(/\/index\.html$/, "").replace(/\/+$/, "");
+    window.IS_EXEC_PAGE = (path === "/executive");
+    if (window.IS_EXEC_PAGE) {
+        document.documentElement.classList.add("is-exec-page");
+        document.title = "Executive | Care Medical Jiwar";
+    } else if (location.hash.toLowerCase() === "#executive") {
+        /* old link (jiwar.care/eoq/#executive) -> the real Executive page */
+        location.replace("/executive");
+    }
+})();
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap" rel="stylesheet">
@@ -486,6 +504,15 @@ header {
 }
 
 .step-panel.active { display: block; }
+
+/* /executive: the department-nomination steps are never used there */
+html.is-exec-page #step1,
+html.is-exec-page #step2,
+html.is-exec-page #step3,
+html.is-exec-page #step4,
+html.is-exec-page #step5 { display: none; }
+html.is-exec-page #pageHeaderTexts,
+html.is-exec-page #progressWrap { display: none; }   /* the Executive code shows/hides these itself with inline styles */
 
 @keyframes pageFade {
     from { opacity: 0; transform: translateY(35px); }
@@ -1927,6 +1954,7 @@ input::placeholder, textarea::placeholder {
 </head>
 
 <body class="has-bg">
+<script>if (window.IS_EXEC_PAGE) { document.body.classList.remove("has-bg"); document.body.classList.add("exec-bg"); }</script>
 
 <header>
     <div class="navbar">
@@ -1936,7 +1964,7 @@ input::placeholder, textarea::placeholder {
         <nav class="header-nav">
             <a href="/" class="nav-btn" id="homeBtn"><span class="nav-label">HOME</span></a>
             <div class="header-nav-pair">
-                <a href="#" class="nav-btn" id="executiveBtn" onclick="startExecutive(event)"><span class="nav-label">EXECUTIVE</span></a>
+                <a href="/executive" class="nav-btn" id="executiveBtn" onclick="onExecutiveBtn(event)"><span class="nav-label">EXECUTIVE</span></a>
                 <a href="/dashboard" class="nav-btn" id="dashboardBtn" style="display:none;"><span class="nav-label">DASHBOARD</span></a>
             </div>
         </nav>
@@ -1947,7 +1975,7 @@ input::placeholder, textarea::placeholder {
 
     <div class="page-header-texts" id="pageHeaderTexts">
         <div class="line1" id="headerLine1">Employee of the Quarter</div>
-        <img src="lock.jpg" alt="Access" class="access-dept-img" id="accessDeptImg" onerror="this.style.display='none'" style="display:none;">
+        <img src="/eoq/lock.jpg" alt="Access" class="access-dept-img" id="accessDeptImg" onerror="this.style.display='none'" style="display:none;">
         <div class="line2" id="headerLine2">Select Your Department</div>
         <div class="line3" id="headerLine3">Select your department to meet your teamy</div>
     </div>
@@ -2027,7 +2055,7 @@ input::placeholder, textarea::placeholder {
                             <div class="no-select-circle">
                                 <div class="no-select-circle-inner"></div>
                             </div>
-                            <img src="no-selection.jpg" alt="" class="no-select-img" onerror="this.style.display='none'">
+                            <img src="/eoq/no-selection.jpg" alt="" class="no-select-img" onerror="this.style.display='none'">
                             <div class="no-select-texts">
                                 <div class="no-select-title">No Selection This Quarter</div>
                                 <div class="no-select-desc">
@@ -2129,7 +2157,7 @@ input::placeholder, textarea::placeholder {
 
     <section class="step-panel" id="execAccess">
         <div class="exec-access-box">
-            <img src="lock.jpg" alt="Executive Access" class="exec-access-icon" onerror="this.src='dept-default.jpg'; this.onerror=null;">
+            <img src="/eoq/lock.jpg" alt="Executive Access" class="exec-access-icon" onerror="this.src='/eoq/dept-default.jpg'; this.onerror=null;">
             <div class="exec-access-headline">EXECUTIVE ACCESS</div>
             <h2>Please enter your code to continue.</h2>
             <div class="code-field">
@@ -2156,7 +2184,7 @@ input::placeholder, textarea::placeholder {
             </div>
             <div class="exec-boxes">
                 <div class="exec-box" onclick="goExecDeptHead()">
-                    <img src="dept-head.jpg" alt="" class="exec-box-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
+                    <img src="/eoq/dept-head.jpg" alt="" class="exec-box-img" onerror="this.src='/eoq/dept-default.jpg'; this.onerror=null;">
                     <div class="exec-box-texts">
                         <h3>Outstanding Department Head</h3>
                         <p>Select an outstanding department head</p>
@@ -2164,7 +2192,7 @@ input::placeholder, textarea::placeholder {
                     <div class="exec-box-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
                 </div>
                 <div class="exec-box" onclick="goExecIndividual()">
-                    <img src="individual-contributor.jpg" alt="" class="exec-box-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
+                    <img src="/eoq/individual-contributor.jpg" alt="" class="exec-box-img" onerror="this.src='/eoq/dept-default.jpg'; this.onerror=null;">
                     <div class="exec-box-texts">
                         <h3>Outstanding Individual Contributor</h3>
                         <p>Select an outstanding employee from your assigned category.</p>
@@ -2188,7 +2216,7 @@ input::placeholder, textarea::placeholder {
             </div>
             <div class="exec-boxes">
                 <div class="exec-box" onclick="goExecStaff('admin')">
-                    <img src="admin-staff.jpg" alt="" class="exec-box-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
+                    <img src="/eoq/admin-staff.jpg" alt="" class="exec-box-img" onerror="this.src='/eoq/dept-default.jpg'; this.onerror=null;">
                     <div class="exec-box-texts">
                         <h3>Administrative Staff</h3>
                         <p>Selected by the Administrative Director</p>
@@ -2196,7 +2224,7 @@ input::placeholder, textarea::placeholder {
                     <div class="exec-box-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
                 </div>
                 <div class="exec-box" onclick="goExecStaff('medical')">
-                    <img src="medical-staff.jpg" alt="" class="exec-box-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
+                    <img src="/eoq/medical-staff.jpg" alt="" class="exec-box-img" onerror="this.src='/eoq/dept-default.jpg'; this.onerror=null;">
                     <div class="exec-box-texts">
                         <h3>Medical Staff</h3>
                         <p>Selected by the Medical Services Director</p>
@@ -2217,7 +2245,7 @@ input::placeholder, textarea::placeholder {
                     <div class="dh-list" id="execDHList"></div>
                     <div class="no-select-card" id="execDHNoSelect" onclick="selectExecDHNo()">
                         <div class="no-select-circle"><div class="no-select-circle-inner"></div></div>
-                        <img src="no-selection.jpg" alt="" class="no-select-img" onerror="this.style.display='none'">
+                        <img src="/eoq/no-selection.jpg" alt="" class="no-select-img" onerror="this.style.display='none'">
                         <div class="no-select-texts">
                             <div class="no-select-title">No Selection This Quarter</div>
                             <div class="no-select-desc">
@@ -2259,7 +2287,7 @@ input::placeholder, textarea::placeholder {
                     <div class="emp-list" id="execStaffList"></div>
                     <div class="no-select-card" id="execStaffNoSelect" onclick="selectExecStaffNo()">
                         <div class="no-select-circle"><div class="no-select-circle-inner"></div></div>
-                        <img src="no-selection.jpg" alt="" class="no-select-img" onerror="this.style.display='none'">
+                        <img src="/eoq/no-selection.jpg" alt="" class="no-select-img" onerror="this.style.display='none'">
                         <div class="no-select-texts">
                             <div class="no-select-title">No Selection This Quarter</div>
                             <div class="no-select-desc">
@@ -3415,7 +3443,7 @@ function getDeptImage(name) {
         .replace(/&/g, "and")
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-|-$/g, "");
-    return `dept-${slug}.jpg`;
+    return `/eoq/dept-${slug}.jpg`;
 }
 
 const headerTexts = {
@@ -3499,7 +3527,7 @@ function renderDepartments(filter = "") {
             card.onclick = () => selectDepartment(dept.code, dept.name);
             const imgSrc = getDeptImage(dept.name);
             card.innerHTML = `
-                <img src="${imgSrc}" alt="${dept.name}" class="dept-img" onerror="this.src='dept-default.jpg'; this.onerror=null;">
+                <img src="${imgSrc}" alt="${dept.name}" class="dept-img" onerror="this.src='/eoq/dept-default.jpg'; this.onerror=null;">
                 <div class="dept-name">${dept.name}</div>
                 <span class="dept-chevron" aria-hidden="true">&gt;</span>
             `;
@@ -3514,7 +3542,7 @@ function selectDepartment(code, name) {
     document.getElementById("codeError").style.display = "none";
 
     const img = document.getElementById("accessDeptImg");
-    img.src = "lock.jpg";
+    img.src = "/eoq/lock.jpg";
     img.alt = "Access";
     img.onerror = function() { this.style.display = "none"; };
 
@@ -4235,6 +4263,11 @@ function setExecProgress(mode, step) {
     }
 }
 
+/* header EXECUTIVE button: on /eoq/ it is a normal link to /executive; on /executive it just resets to the access screen */
+function onExecutiveBtn(e) {
+    if (window.IS_EXEC_PAGE) startExecutive(e);
+}
+
 function startExecutive(e) {
     if (e) e.preventDefault();
     execMode = null;
@@ -4627,7 +4660,7 @@ document.querySelectorAll('header a[href="/"]').forEach(function (a) {
 function restoreExecState() {
     let saved = null;
     try { saved = JSON.parse(sessionStorage.getItem(EXEC_STATE_KEY) || "null"); } catch (e) {}
-    if (!saved || !saved.panel) return;
+    if (!saved || !saved.panel) return false;
 
     let navType = "navigate";
     try {
@@ -4636,12 +4669,12 @@ function restoreExecState() {
     } catch (e) {}
     if (navType !== "reload" && navType !== "back_forward") {
         clearExecState();
-        return;
+        return false;
     }
 
     if (!saved.auth || saved.panel === "execAccess") {
         startExecutive();
-        return;
+        return true;
     }
 
     document.body.classList.add("exec-bg");
@@ -4661,13 +4694,13 @@ function restoreExecState() {
     } else {
         showPanel("execChoice");
     }
+    return true;
 }
-restoreExecState();
 
-/* Opened from the home page menu (jiwar.care/eoq/#executive): go straight to the Executive access screen.
-   If a reload just restored a logged-in Executive screen, leave that alone. */
-if (window.location.hash.toLowerCase() === "#executive" && !execAuthenticated) {
-    startExecutive();
+/* Boot. /executive opens the Executive access screen (a reload keeps you on the screen you were on);
+   /eoq/ is the normal department nomination page. */
+if (window.IS_EXEC_PAGE) {
+    if (!restoreExecState()) startExecutive();
 }
 </script>
 
