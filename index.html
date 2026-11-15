@@ -91,8 +91,15 @@ body {
     .m-only * { box-sizing: border-box; margin: 0; padding: 0; }
     /* Goldplay SemiBold everywhere */
     .m-only, .m-only * { font-family: var(--font) !important; font-weight: 600; font-synthesis: none; }
-    .m-only .hero h1 { font-weight: 300 !important; }
-    .m-only .hero h1 .accent { font-weight: 600 !important; }
+    /* Allow thinner weight only on the banner title */
+    .m-only .hero h1 {
+        font-weight: 200 !important;
+        font-synthesis: weight !important;   /* allow browser to synthesize thin weight */
+    }
+    .m-only .hero h1 .accent {
+        font-weight: 600 !important;
+        font-synthesis: none !important;
+    }
     .m-only a { text-decoration: none; color: inherit; }
 
     /* solid strip at the very bottom edge: Safari tints its bottom toolbar from this */
@@ -159,8 +166,8 @@ body {
         background: var(--m-wave-glow) left var(--m-wave-top) / 100% var(--m-wave-h) no-repeat;
         pointer-events: none;
     }
-    .m-only .hero h1 { font-size: clamp(18px, 5vw, 34px); line-height: 1.17; letter-spacing: -.1px; text-align: left; color: #666666; font-weight: 300 !important; }
-    .m-only .hero h1 .accent { color: #14c8f0; white-space: nowrap; font-weight: 600 !important; }
+    .m-only .hero h1 { font-size: clamp(18px, 5vw, 34px); line-height: 1.17; letter-spacing: -.1px; text-align: left; color: #666666; font-weight: 200 !important; font-synthesis: weight !important; }
+    .m-only .hero h1 .accent { color: #14c8f0; white-space: nowrap; font-weight: 600 !important; font-synthesis: none !important; }
     .m-only .ecg { display: inline-block; width: 1.5em; height: .7em; margin-left: .22em; vertical-align: -.05em; overflow: visible; }
     .m-only .hero .bar { width: 10vw; height: max(3px, 1vw); margin: 2.4vw 0 0; }
 
@@ -410,6 +417,22 @@ body {
 </style>
 </head>
 <body>
+
+<script>
+/* Prevent pinch-zoom and double-tap zoom on iOS Safari */
+(function () {
+  document.addEventListener('gesturestart', function (e) { e.preventDefault(); }, { passive: false });
+  document.addEventListener('gesturechange', function (e) { e.preventDefault(); }, { passive: false });
+  document.addEventListener('gestureend', function (e) { e.preventDefault(); }, { passive: false });
+  var lastTouchEnd = 0;
+  document.addEventListener('touchend', function (e) {
+    var now = Date.now();
+    if (now - lastTouchEnd <= 300) e.preventDefault();
+    lastTouchEnd = now;
+  }, { passive: false });
+})();
+</script>
+
 
 <!-- ================= HOME (desktop + mobile) ================= -->
 <div class="m-only">
