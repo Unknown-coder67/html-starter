@@ -167,7 +167,7 @@ body {
     .m-only .about .wrap { padding: 0 8vw; }
     .m-only .about h2 { font-size: clamp(12.6px, 3.92vw, 23.8px); line-height: 1.15; color: #08245B; }
     .m-only .about .bar { width: 8.25vw; height: max(3px, .8vw); margin: 2.2vw 0 3vw; }
-    .m-only .about p { font-size: clamp(11px, 3vw, 17px); line-height: 1.45; color: #08245B; }
+    .m-only .about p { font-size: clamp(13.2px, 3.6vw, 20.4px); line-height: 1.45; color: #08245B; }
 
     /* ---- values card ---- */
     .m-only .values { flex: none; display: flex; align-items: center; padding: 9.85vw 0 9.03vw; }
@@ -369,7 +369,7 @@ body {
         transform: scale(var(--m-eoq-flip), -1);
     }
     .m-only .hero-m .hero-sub { font-size: clamp(10px, 2.6vw, 15px); line-height: 1.3; color: #fff; margin: 2.4vw 0 3.4vw; }
-    .m-only .hero-m .btn { padding: 1.8vw 4.2vw; font-size: clamp(10px, 2.7vw, 15px); gap: 1.8vw; }
+    .m-only .hero-m .btn { padding: 1.4vw 3.2vw; font-size: clamp(9px, 2.2vw, 12px); gap: 1.4vw; }
     .m-only .hero-m .btn svg { width: 1.25em; height: 1.25em; }
 
     /* values: four separate tiles */
@@ -753,6 +753,16 @@ window.addEventListener("pageshow", function (e) {
 (function () {
   /* start typing only when the heading is on screen (the banner card is below the fold on phones) */
   function whenVisible(el, cb) {
+    /* inside a dimmed box: wait until the box is undimmed (gets .is-full) */
+    var dim = el.closest ? el.closest(".m-dim") : null;
+    if (dim) {
+      if (dim.classList.contains("is-full")) return cb();
+      var mo = new MutationObserver(function () {
+        if (dim.classList.contains("is-full")) { mo.disconnect(); cb(); }
+      });
+      mo.observe(dim, { attributes: true, attributeFilter: ["class"] });
+      return;
+    }
     if (!("IntersectionObserver" in window)) return cb();
     var io = new IntersectionObserver(function (entries) {
       if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); cb(); }
@@ -787,14 +797,15 @@ window.addEventListener("pageshow", function (e) {
   var i = 0;
 
   function finish() {
+    if (caret.parentNode) caret.parentNode.removeChild(caret);
     h1.classList.add("tw-done");
-    setTimeout(function () { if (caret.parentNode) caret.parentNode.removeChild(caret); }, 1200);
   }
   function step() {
     if (i >= chars.length) return finish();
     var c = chars[i++];
     c.classList.add("on");
     c.parentNode.insertBefore(caret, c.nextSibling);
+    if (i >= chars.length) return finish();   /* last letter typed: caret disappears right away */
     setTimeout(step, 55 + Math.random() * 70);
   }
 
