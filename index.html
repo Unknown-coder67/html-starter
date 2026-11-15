@@ -167,7 +167,7 @@ body {
     .m-only .about .wrap { padding: 0 8vw; }
     .m-only .about h2 { font-size: clamp(12.6px, 3.92vw, 23.8px); line-height: 1.15; color: #08245B; }
     .m-only .about .bar { width: 8.25vw; height: max(3px, .8vw); margin: 2.2vw 0 3vw; }
-    .m-only .about p { font-size: clamp(13.2px, 3.6vw, 20.4px); line-height: 1.45; color: #08245B; }
+    .m-only .about p { font-size: clamp(13.2px, 3.6vw, 20.4px); line-height: 1.65; color: #08245B; }
 
     /* ---- values card ---- */
     .m-only .values { flex: none; display: flex; align-items: center; padding: 9.85vw 0 9.03vw; }
@@ -796,10 +796,24 @@ window.addEventListener("pageshow", function (e) {
   caret.setAttribute("aria-hidden", "true");
   var i = 0;
 
-  function finish() {
+ function finish() {
     if (caret.parentNode) caret.parentNode.removeChild(caret);
     h1.classList.add("tw-done");
-  }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    setTimeout(function () {
+        h1.classList.remove("tw-done");
+
+        chars.forEach(function (c) {
+            c.classList.remove("on");
+        });
+
+        i = 0;
+        setTimeout(step, 500);
+    }, 1800);
+}
+     
   function step() {
     if (i >= chars.length) return finish();
     var c = chars[i++];
