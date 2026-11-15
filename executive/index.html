@@ -1,0 +1,4708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="icon" type="image/png" href="/favicon.png">
+<title>EOQ | Care Medical Jiwar</title>
+
+<script>
+/* One page file, two URLs:
+     jiwar.care/eoq/        -> department nomination
+     jiwar.care/executive   -> Executive (access code, department head, individual contributor)
+   The URL decides which one opens. eoq/index.html and executive/index.html are identical copies. */
+(function () {
+    var path = location.pathname.toLowerCase().replace(/\/index\.html$/, "").replace(/\/+$/, "");
+    window.IS_EXEC_PAGE = (path === "/executive");
+    if (window.IS_EXEC_PAGE) {
+        document.documentElement.classList.add("is-exec-page");
+        document.title = "Executive | Care Medical Jiwar";
+    } else if (location.hash.toLowerCase() === "#executive") {
+        /* old link (jiwar.care/eoq/#executive) -> the real Executive page */
+        location.replace("/executive");
+    }
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --header-h: calc(max(8px, env(safe-area-inset-top, 8px)) + 66px);
+}
+
+html {
+    min-height: 100%;
+    min-height: 100dvh;
+    overflow-y: scroll;
+    background: #FFFFFF;
+    background-color: #FFFFFF;
+}
+
+body {
+    font-family: "DM Sans", Arial, Helvetica, sans-serif;
+    font-feature-settings: normal;
+    font-variation-settings: "opsz" 14, "wght" 750;
+    font-optical-sizing: none;
+    font-weight: 500;
+    color: #08245B;
+    line-height: 1.6;
+    min-height: 100%;
+    min-height: 100dvh;
+    background: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding-top: var(--header-h);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    background-color: #e8f4f8;
+    background-image: url("/desktop-background.jpg");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+
+@media (max-width: 700px) {
+    body::before {
+        background-image: url("/mobile-background.jpg");
+    }
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: #FFFFFF;
+    border-bottom: none;
+    padding: 8px 5%;
+}
+
+.navbar {
+    max-width: 1920px;
+    height: 58px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    position: relative;
+}
+
+.logo {
+    width: 200px;
+    height: 50px;
+    object-fit: contain;
+    transform: translate(-8px, 3px);
+}
+
+.header-nav a {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 9px 0;
+    border: none;
+    background: none;
+    color: rgb(23, 23, 29);
+    cursor: pointer;
+    font-family: "DM Sans", Arial, Helvetica, sans-serif;
+    font-size: 14.4px;
+    font-style: normal;
+    font-weight: 750;
+    font-feature-settings: normal;
+    font-variation-settings: "opsz" 14, "wght" 750;
+    font-optical-sizing: none;
+    line-height: 21.6px;
+    letter-spacing: normal;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+}
+
+.nav-swap {
+    display: inline-grid;
+    justify-items: center;
+    align-items: center;
+}
+.nav-swap > a { grid-area: 1 / 1; }
+.nav-swap > a.nav-hidden { visibility: hidden; pointer-events: none; }
+
+.header-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 10px;
+    width: 0;
+    height: 2px;
+    background: #00B7E2;
+    transition: width 200ms ease;
+}
+
+.header-nav a:hover {
+    color: #171717;
+}
+
+.header-nav a:hover::after {
+    width: 100%;
+}
+
+.header-nav a.nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: transparent !important;
+    color: #08245B !important;
+    border: none;
+    border-radius: 999px;
+    padding: 12px 17px;
+    font-family: "DM Sans", Arial, Helvetica, sans-serif;
+    font-size: 15.04px;
+    font-weight: 750;
+    font-feature-settings: normal;
+    font-variation-settings: "opsz" 14, "wght" 750;
+    font-optical-sizing: none;
+    line-height: 22.56px;
+    height: 46.5625px;
+    cursor: pointer;
+    text-decoration: none !important;
+    white-space: nowrap;
+    box-sizing: border-box;
+    transition: color 200ms ease;
+    -webkit-tap-highlight-color: transparent;
+    column-gap: 8px;
+}
+
+.header-nav a.nav-btn::after {
+    content: none !important;
+    display: none !important;
+}
+
+.header-nav a.nav-btn .nav-label {
+    position: relative;
+    display: inline-block;
+}
+
+.header-nav a.nav-btn .nav-label::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 2px;
+    background: #00B7E2;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease;
+}
+
+.header-nav a.nav-btn:hover {
+    background: transparent !important;
+    color: #00B7E2 !important;
+    opacity: 1;
+}
+
+.header-nav a.nav-btn:hover .nav-label::after {
+    transform: scaleX(1);
+}
+
+#homeBtn:hover {
+    transform: translateY(-50%);
+}
+
+.header-nav {
+    display: block;
+    position: static;
+    width: 0;
+    height: 0;
+    overflow: visible;
+    gap: 0;
+}
+
+.header-nav-pair {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    z-index: 2;
+}
+
+.header-nav-pair .nav-btn {
+    width: 110px;
+    min-width: 110px;
+    max-width: 110px;
+    padding-left: 8px;
+    padding-right: 8px;
+    justify-content: center;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+#homeBtn {
+    position: absolute;
+    right: calc(110px + 14px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    min-width: 0;
+    padding-left: 12px;
+    padding-right: 12px;
+    z-index: 2;
+}
+
+#executiveBtn {
+    color: #D6A95B !important;
+}
+
+#executiveBtn:hover {
+    color: #D6A95B !important;
+}
+
+#executiveBtn .nav-label::after {
+    background: #D6A95B !important;
+}
+
+#executiveBtn:hover .nav-label::after {
+    transform: scaleX(1);
+}
+    
+@media (max-width: 700px) {
+    .logo {
+        width: 100px;
+        height: 50px;
+        transform: none;
+    }
+    .header-nav a.nav-btn {
+        font-size: 12.5px;
+        padding: 9px 8px;
+        height: 40px;
+    }
+    .header-nav-pair {
+        gap: 8px;
+    }
+    .header-nav-pair .nav-btn {
+        width: 96px;
+        min-width: 96px;
+        max-width: 96px;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+    #homeBtn {
+        right: calc(96px + 8px);
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-nav a.nav-btn {
+        font-size: 11.5px;
+        padding: 8px 6px;
+        height: 36px;
+    }
+    .header-nav-pair {
+        gap: 6px;
+    }
+    .header-nav-pair .nav-btn {
+        width: 86px;
+        min-width: 86px;
+        max-width: 86px;
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+    #homeBtn {
+        right: calc(86px + 6px);
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+}
+
+.page-header-texts {
+    text-align: center;
+    margin-top: 28px;
+    margin-bottom: 40px;
+    padding: 0 16px;
+}
+
+.page-header-texts .line1 {
+    font-size: 1.05rem;
+    font-weight: 750;
+    color: #557083;
+    margin-bottom: 16px;
+}
+
+.page-header-texts .line2 {
+    font-size: clamp(1.7rem, 3.6vw, 2.15rem);
+    font-weight: 750;
+    color: #00B7E2;
+    margin-bottom: 18px;
+    line-height: 1.25;
+}
+
+.page-header-texts .line3 {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #05255E;
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.progress-wrap {
+    max-width: 897px;
+    margin: 0 auto 44px;
+    padding: 0 16px;
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    gap: 2px;
+}
+
+.progress-steps::before {
+    content: "";
+    position: absolute;
+    top: 16px;
+    left: 10%;
+    right: 10%;
+    height: 3.2px;
+    background: #d0e0e8;
+    z-index: 0;
+    border-radius: 2px;
+}
+
+.progress-bar-fill {
+    position: absolute;
+    top: 16px;
+    left: 10%;
+    height: 3.2px;
+    background: #c4ccd2;
+    z-index: 1;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+    width: 0%;
+    max-width: 80%;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+    flex: 1;
+    min-width: 0;
+    cursor: default;
+}
+
+.step.clickable { cursor: pointer; }
+
+.step-circle {
+    width: 34.5px;
+    height: 34.5px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2.9px solid #d0e0e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14.4px;
+    font-weight: 800;
+    color: #8aa0b0;
+    transition: all 0.3s ease;
+}
+
+.step.active .step-circle {
+    border-color: #00B7E2;
+    background: #00B7E2;
+    color: #fff;
+    box-shadow: 0 0 0 3.5px rgba(0,183,226,0.2);
+}
+
+.step.completed .step-circle {
+    border-color: #c4ccd2;
+    background: #ffffff;
+    color: #000;
+}
+
+.step-circle svg {
+    width: 18.4px;
+    height: 18.4px;
+    display: block;
+}
+
+.step.clickable:hover .step-circle {
+    border-color: #c4ccd2;
+    transform: scale(1.08);
+}
+
+.step-label {
+    margin-top: 7px;
+    font-size: 12px;
+    font-weight: 750;
+    color: #8aa0b0;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.step.active .step-label,
+.step.completed .step-label {
+    color: #08245B;
+}
+
+.progress-wrap.short .progress-steps::before,
+.progress-wrap.short .progress-bar-fill {
+    left: 25%;
+    right: 25%;
+    max-width: 50%;
+}
+
+.main-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px 40px;
+    flex: 1 0 auto;
+}
+
+.step-panel {
+    display: none;
+    animation: pageFade 1.3s ease;
+}
+
+.page-header-texts,
+.progress-wrap {
+    animation: pageFade 1.3s ease;
+}
+
+.step-panel.active { display: block; }
+
+/* /executive: the department-nomination steps are never used there */
+html.is-exec-page #step1,
+html.is-exec-page #step2,
+html.is-exec-page #step3,
+html.is-exec-page #step4,
+html.is-exec-page #step5 { display: none; }
+html.is-exec-page #pageHeaderTexts,
+html.is-exec-page #progressWrap { display: none; }   /* the Executive code shows/hides these itself with inline styles */
+
+@keyframes pageFade {
+    from { opacity: 0; transform: translateY(35px); }
+    to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .step-panel,
+    .page-header-texts,
+    .progress-wrap { animation: none; }
+}
+
+.top-search-wrap {
+    max-width: 820px;
+    margin: 0 auto 28px;
+    padding: 0 8px;
+}
+
+.top-search-wrap .search-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.top-search-wrap svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: #05255E;
+    pointer-events: none;
+}
+
+.top-search-input {
+    width: 100%;
+    height: 46px;
+    padding: 0 16px 0 42px;
+    border: 1px solid #d0e0e8;
+    border-radius: 12px;
+    background: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #17324d;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.top-search-input::placeholder { color: #8aa0b0; }
+.top-search-input:focus {
+    border-color: #087c98;
+    box-shadow: 0 0 0 3px rgba(8,124,152,0.12);
+}
+
+.dept-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    width: 85%;
+    max-width: 720px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.dept-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px 18px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    border: 1px solid rgba(220,235,241,0.7);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    aspect-ratio: auto;
+    min-height: 52px;
+    position: relative;
+}
+
+.dept-card:hover {
+    transform: translateY(-2px);
+    box-shadow: -4px 0 10px -2px rgba(0, 183, 226, 0.22);
+    border-color: #9ddfea;
+}
+
+.dept-img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    border-radius: 10px;
+    margin: 0 14px 0 0;
+    flex-shrink: 0;
+}
+
+.dept-name {
+    font-size: 0.95rem;
+    font-weight: 750;
+    color: #05255E;
+    line-height: 1.3;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    min-width: 0;
+}
+
+.dept-chevron {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #8aa0b0;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+
+.emp-group {
+    margin-top: 20px;
+    margin-bottom: 4px;
+}
+.emp-group:first-child {
+    margin-top: 0;
+}
+.emp-group-title {
+    font-size: 0.88rem;
+    font-weight: 750;
+    color: #00B7E2;
+    letter-spacing: 0.02em;
+    padding: 0 4px 8px;
+    margin-bottom: 8px;
+    border-bottom: 2px solid #e0edf3;
+}
+.nascom-continue-wrap {
+    display: none;
+    justify-content: flex-end;
+    margin-top: 14px;
+    padding-top: 4px;
+}
+.nascom-continue-wrap.visible {
+    display: flex;
+}
+
+.access-box {
+    max-width: 440px;
+    width: 92%;
+    margin: -10px auto 0;
+    border-radius: 20px;
+    clip-path: inset(0 -48px -48px -48px);
+    -webkit-clip-path: inset(0 -48px -48px -48px);
+    text-align: center;
+}
+
+.access-dept-img {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+    border-radius: 14px;
+    margin: 0 auto 22px;
+    display: block;
+}
+
+.code-field {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.code-field input {
+    width: 100%;
+    height: 52px;
+    border: 1px solid #cbdde5;
+    border-radius: 12px;
+    padding: 0 16px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    color: #17324d;
+    text-align: center;
+    text-transform: uppercase;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.code-field input:focus {
+    border-color: #00B7E2;
+    box-shadow: 0 0 0 3px rgba(0,183,226,0.15);
+}
+
+.code-field input::placeholder {
+    color: #a0b4c0;
+    text-transform: none;
+    font-weight: 500;
+}
+
+.continue-btn {
+    width: 100%;
+    height: 52px;
+    background: #08245B;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.continue-btn:hover {
+    background: #0a2f75;
+    box-shadow: 0 6px 20px rgba(8,36,91,0.25);
+}
+.continue-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.code-error {
+    display: none;
+    color: #d94b4b;
+    font-size: 0.9rem;
+    margin-top: 12px;
+}
+
+.criteria-panel {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 12px 40px rgba(23,50,77,0.1);
+    overflow: hidden;
+}
+
+.criteria-body {
+    padding: 22px 28px 28px;
+    color: #17324d;
+    font-size: 0.93rem;
+    line-height: 1.55;
+    max-height: 58vh;
+    overflow-y: auto;
+}
+
+.criteria-body h3 {
+    color: #05255E;
+    font-size: 1.02rem;
+    font-weight: 750;
+    margin: 20px 0 7px;
+}
+.criteria-body h3:first-child { margin-top: 0; }
+
+.criteria-body ol {
+    padding-left: 22px;
+    margin-bottom: 2px;
+}
+
+.criteria-body li {
+    margin-bottom: 3px;
+    color: #3a4f63;
+    font-weight: 500;
+}
+
+.got-it-wrapper {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid #e8f0f4;
+    text-align: center;
+}
+
+.got-it-btn {
+    display: inline-block;
+    background: #D79A1E;
+    color: #17171D;
+    border: none;
+    border-radius: 18px;
+    padding: 13px 34px;
+    font-size: 0.98rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: box-shadow 0.25s;
+}
+.got-it-btn:hover { box-shadow: 0 0 22px rgba(215,154,30,0.5); }
+
+.nominate-outer {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.nominate-split {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.employee-list-pane {
+    flex: 0 0 auto;
+    width: 1100px;
+    min-width: 0;
+}
+
+.employee-list-pane .top-search-wrap {
+    max-width: 1020px;
+    margin: 0 auto 28px;
+    padding: 0;
+}
+
+.reason-pane {
+    flex: 0 0 auto;
+    width: 0;
+    margin-left: 0;
+    padding: 4px 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    transition: width 0.45s cubic-bezier(0.22,1,0.36,1),
+                margin-left 0.45s cubic-bezier(0.22,1,0.36,1),
+                padding 0.45s cubic-bezier(0.22,1,0.36,1),
+                opacity 0.3s ease,
+                visibility 0.45s;
+}
+
+.reason-inner {
+    min-width: 372px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.nominate-split.has-selection .reason-pane {
+    width: 380px;
+    margin-left: 24px;
+    padding: 4px;
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s, 0s, 0s, 0.15s, 0s;
+}
+
+.no-select-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: #FFFFFF;
+    border: 1px dashed #c5d8e2;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 36px;
+    transition: border-color 0.2s, background 0.2s;
+    text-align: left;
+}
+
+.no-select-card:hover {
+    border-color: #9ddfea;
+    background: #FFFFFF;
+}
+
+.no-select-card.selected {
+    border-style: solid;
+    border-color: #D79A1E;
+    background: #FFFFFF;
+}
+
+.no-select-circle {
+    width: 28px;
+    height: 28px;
+    border: 2px solid #cbdde5;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    transition: all 0.2s;
+}
+
+.no-select-card.selected .no-select-circle {
+    background: #D79A1E;
+    border-color: #D79A1E;
+}
+
+.no-select-circle-inner {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    opacity: 0;
+}
+
+.no-select-card.selected .no-select-circle-inner { opacity: 1; }
+
+.no-select-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.no-select-texts { flex: 1; min-width: 0; }
+
+.no-select-title {
+    font-size: 0.92rem;
+    font-weight: 750;
+    color: #05255E;
+    margin-bottom: 3px;
+}
+
+.no-select-desc {
+    font-size: 0.78rem;
+    color: #8aa0b0;
+    line-height: 1.35;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+.no-select-desc .tiny-circle {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #8aa0b0;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+.no-select-continue-wrap {
+    display: none;
+    justify-content: flex-end;
+    margin-top: 14px;
+    padding-top: 4px;
+}
+
+.no-select-continue-wrap.visible {
+    display: flex;
+}
+
+.no-select-continue-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: #08245B;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 11px 24px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.no-select-continue-btn:hover {
+    background: #0a2f75;
+    box-shadow: 0 4px 16px rgba(8,36,91,0.25);
+}
+
+.reason-title {
+    font-size: 1rem;
+    font-weight: 750;
+    color: #D79A1E;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.reason-hint {
+    font-size: 0.82rem;
+    color: #8aa0b0;
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+.reason-textarea {
+    width: 100%;
+    min-height: 130px;
+    border: 1px solid #d0e0e8;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    color: #17324d;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.reason-textarea:focus {
+    border-color: #087c98;
+    box-shadow: 0 0 0 3px rgba(8,124,152,0.12);
+}
+.reason-textarea::placeholder { color: #a0b4c0; }
+
+.char-count {
+    text-align: right;
+    font-size: 0.78rem;
+    color: #8aa0b0;
+    margin-top: 5px;
+    margin-bottom: 12px;
+}
+
+.next-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: #08245B;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 11px 24px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 800;
+    cursor: pointer;
+    align-self: flex-end;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.next-btn:hover {
+    background: #0a2f75;
+    box-shadow: 0 4px 16px rgba(8,36,91,0.25);
+}
+.next-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.review-box {
+    max-width: 560px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 18px;
+    padding: 32px 28px;
+    box-shadow: 0 12px 40px rgba(23,50,77,0.1);
+    text-align: center;
+}
+
+.review-box h2 {
+    color: #05255E;
+    font-size: 1.05rem;
+    font-weight: 750;
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.review-person {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.review-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #f8fbfd;
+    border: 2px solid #d0e0e8;
+    color: #08245B;
+    font-weight: 800;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.review-name {
+    font-size: 1.05rem;
+    font-weight: 750;
+    color: #05255E;
+}
+
+.review-dept {
+    font-size: 0.9rem;
+    color: #05255E;
+    margin-top: 3px;
+}
+
+.story-box {
+    background: #f8fbfd;
+    border: 1px solid #e0edf3;
+    border-radius: 14px;
+    padding: 18px 18px 42px;
+    text-align: left;
+    margin-bottom: 24px;
+    position: relative;
+    min-height: 100px;
+}
+
+.story-box h3 {
+    font-size: 0.9rem;
+    font-weight: 750;
+    color: #8aa0b0;
+    margin-bottom: 10px;
+}
+
+.story-text {
+    font-size: 0.93rem;
+    color: #3a4f63;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.story-text[contenteditable="true"] {
+    outline: none;
+    border: 1px solid #e0edf3;
+    border-radius: 8px;
+    padding: 8px;
+    background: #fff;
+    min-height: 60px;
+    transition: border-color 0.2s;
+}
+.story-text[contenteditable="true"]:focus {
+    border-color: #9ddfea;
+}
+
+.edit-story-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 14px;
+    background: none;
+    border: none;
+    color: #087c98;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: inherit;
+    z-index: 2;
+}
+.edit-story-btn:hover { color: #D79A1E; }
+
+.review-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.btn-back {
+    background: transparent;
+    border: 2px solid #17171D;
+    color: #17171D;
+    border-radius: 12px;
+    padding: 11px 22px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: border-color 0.2s, color 0.2s;
+}
+.btn-back:hover { border-color: #00B7E2; color: #00B7E2; }
+
+.btn-submit {
+    background: #08245B;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 11px 28px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.btn-submit:hover {
+    background: #0a2f75;
+    box-shadow: 0 4px 16px rgba(8,36,91,0.25);
+}
+.btn-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.success-panel {
+    max-width: 460px;
+    margin: 30px auto 0;
+    background: #fff;
+    border-radius: 20px;
+    padding: 42px 32px;
+    box-shadow: 0 12px 40px rgba(23,50,77,0.12);
+    text-align: center;
+}
+
+.success-icon-wrap {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 20px;
+}
+
+.success-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #e8f6f8;
+    color: #00B7E2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.star {
+    position: absolute;
+    color: #D79A1E;
+    font-size: 15px;
+    animation: twinkle 2s ease-in-out infinite;
+}
+.star:nth-child(1) { top: 0; left: 6px; }
+.star:nth-child(2) { top: 8px; right: 0; animation-delay: 0.4s; }
+.star:nth-child(3) { bottom: 4px; left: 0; animation-delay: 0.8s; }
+.star:nth-child(4) { bottom: 0; right: 10px; animation-delay: 1.2s; }
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.4; transform: scale(0.85); }
+    50% { opacity: 1; transform: scale(1.15); }
+}
+
+.success-panel h2 {
+    color: #05255E;
+    font-size: 1.5rem;
+    font-weight: 750;
+    margin-bottom: 10px;
+}
+
+.success-panel p {
+    color: #557083;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+}
+
+.home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    background: #08245B;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 13px 26px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 800;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.home-btn:hover {
+    background: #0a2f75;
+    box-shadow: 0 4px 16px rgba(8,36,91,0.25);
+}
+
+footer {
+    text-align: center;
+    padding: 18px 20px;
+    padding-bottom: max(18px, env(safe-area-inset-bottom, 18px));
+    color: #02102B;
+    font-size: 0.7rem;
+    background: transparent;
+    margin-top: auto;
+}
+
+.page-back-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto 0;
+    padding: 0 16px;
+}
+
+.page-back-btn {
+    background: none;
+    border: none;
+    padding: 6px 10px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #08245B;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.page-back-btn:hover { color: #00B7E2; }
+
+@media (max-width: 1000px) {
+    .nominate-split {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .employee-list-pane {
+        flex: 0 0 auto;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Completely override desktop width/margin animation.
+       Keep the pane in normal flow so we can animate height + opacity + transform. */
+    .reason-pane,
+    .nominate-split.has-selection .reason-pane {
+        flex: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        box-sizing: border-box !important;
+        left: auto !important;
+        right: auto !important;
+        transform-origin: center top;
+    }
+
+    /* Hidden / closed state – same 0.3s delay as open */
+/* Hidden / closed state – same 1.5s + ease-in-out as the page scroll */
+.reason-pane {
+    display: flex !important;
+    flex-direction: column;
+    margin-top: 0;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transform: translateY(120px);
+    transition:
+        max-height 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0s,   /* matches easeInOutCubic */
+        opacity 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0s,
+        margin-top 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0s,
+        transform 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0s,
+        visibility 0s linear 1.5s;
+}
+
+/* Open state – same curve so it accelerates with the scroll */
+.nominate-split.has-selection .reason-pane {
+    max-height: 560px;
+    opacity: 1;
+    margin-top: 18px;
+    visibility: visible;
+    transform: translateY(0);
+    transition:
+        max-height 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0s,
+        opacity 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0s,
+        margin-top 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0s,
+        transform 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0s,
+        visibility 0s linear 0s;
+}
+
+    .reason-inner {
+        min-width: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+@media (max-width: 1560px) {
+    .nominate-split .employee-list-pane { width: 100%; }
+    .nominate-split.has-selection .employee-list-pane { width: auto; flex: 1 1 0; min-width: 0; }
+}
+
+@media (max-width: 800px) {
+    .dept-grid {
+        width: 80%;
+        max-width: 480px;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 560px) {
+    .step-label { font-size: 10.5px; }
+    .page-header-texts .line2 { font-size: 1.45rem; }
+}
+
+
+
+body.exec-bg::before {
+    background-color: #FFFFFF;
+}
+
+.exec-access-box {
+    max-width: 440px;
+    width: 92%;
+    margin: 140px auto 0;
+    border-radius: 20px;
+    clip-path: inset(0 -48px -48px -48px);
+    -webkit-clip-path: inset(0 -48px -48px -48px);
+    text-align: center;
+}
+.exec-access-icon {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+    border-radius: 14px;
+    margin: 0 auto 24px;
+    display: block;
+}
+.exec-access-headline {
+    font-size: 1.45rem;
+    font-weight: 750;
+    color: #D6A95B;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+}
+
+.exec-access-box h2 {
+    color: #05255E;
+    font-size: 1rem;
+    font-weight: 750;
+    margin-bottom: 26px;
+}
+
+.exec-choice-wrap {
+    max-width: 900px;
+    margin: 64px auto 0;
+    padding: 0 16px 24px;
+}
+
+.exec-choice-headline {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.exec-choice-headline h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: 750;
+    color: #00B7E2;
+    letter-spacing: 0.02em;
+}
+
+.exec-choice-sub {
+    text-align: center;
+    color: #05255E;
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 36px;
+}
+
+.exec-boxes {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.exec-box {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #fff;
+    border: 1px solid #e0edf3;
+    border-radius: 16px;
+    padding: 24px;
+    min-height: 112px;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    text-align: left;
+}
+
+.exec-box:hover {
+    border-color: #9ddfea;
+    box-shadow: 0 8px 24px rgba(23,50,77,0.1);
+    transform: translateY(-2px);
+}
+
+.exec-box-img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.exec-box-texts {
+    flex: 1;
+    min-width: 0;
+}
+
+.exec-box-texts h3 {
+    font-size: 1.15rem;
+    font-weight: 750;
+    color: #05255E;
+    line-height: 1.3;
+    margin-bottom: 6px;
+}
+
+.exec-box-texts p {
+    font-size: 0.92rem;
+    color: #557083;
+    font-weight: 500;
+    line-height: 1.45;
+    margin: 0;
+}
+
+.exec-box-arrow {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: transparent;
+    color: #08245B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.dh-list,
+.emp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: calc((66px * 5) + (10px * 4));
+    overflow-y: auto;
+}
+
+.dh-card,
+.emp-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    min-height: 66px;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border: 1px solid #e0edf3;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    text-align: left;
+}
+
+.dh-card:hover,
+.emp-card:hover {
+    border-color: #9ddfea;
+}
+
+.dh-card.selected,
+.emp-card.selected {
+    border-color: #D79A1E;
+    box-shadow: 0 2px 10px rgba(215,154,30,0.15);
+}
+
+.dh-avatar,
+.emp-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #f8fbfd;
+    border: 1.5px solid #d0e0e8;
+    color: #08245B;
+    font-weight: 800;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.dh-info,
+.emp-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.dh-name,
+.emp-name {
+    font-size: 0.95rem;
+    font-weight: 750;
+    color: #05255E;
+    line-height: 1.25;
+}
+
+.dh-dept {
+    font-size: 0.8rem;
+    color: #8aa0b0;
+    margin-top: 2px;
+}
+
+.dh-circle,
+.emp-circle {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #cbdde5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: #fff;
+    margin-left: auto;
+}
+
+.dh-card.selected .dh-circle,
+.emp-card.selected .emp-circle {
+    background: #D79A1E;
+    border-color: #D79A1E;
+}
+
+.dh-circle-inner,
+.emp-circle-inner {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #fff;
+    opacity: 0;
+}
+
+.dh-card.selected .dh-circle-inner,
+.emp-card.selected .emp-circle-inner { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+    .step-panel, .employee-list-pane, .reason-pane {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+*, *::before, *::after,
+input, textarea, button, select,
+input::placeholder, textarea::placeholder {
+    font-family: "DM Sans", Arial, Helvetica, sans-serif !important;
+    font-weight: 750 !important;
+    font-style: normal !important;
+    font-variation-settings: "opsz" 14, "wght" 750 !important;
+    font-optical-sizing: none !important;
+}
+
+
+@media (max-width: 700px) {
+    .page-header-texts { margin-top: 20px; margin-bottom: 28px; }
+    .page-header-texts .line1 { margin-bottom: 12px; }
+    .page-header-texts .line2 { margin-bottom: 12px; }
+    .page-header-texts .line3 {
+    font-size: 0.9rem;
+}
+    .progress-wrap { margin: 0 auto 28px; }
+
+    .dept-grid {
+        grid-template-columns: 1fr;
+        width: 90%;
+        max-width: 420px;
+        gap: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .dept-card {
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
+        aspect-ratio: auto;
+        min-height: 38px;
+        padding: 10px 16px;
+        border-radius: 12px;
+        border: 1px solid rgba(220,235,241,0.7);
+    }
+    .dept-card:hover {
+        transform: translateY(-2px);
+        box-shadow: -4px 0 10px -2px rgba(0, 183, 226, 0.22);
+        border-color: #9ddfea;
+    }
+    .dept-img {
+        width: 40px;
+        height: 40px;
+        margin: 0 14px 0 0;
+        border-radius: 10px;
+        flex-shrink: 0;
+    }
+    .dept-name {
+        font-size: 0.9rem;
+        justify-content: flex-start;
+        text-align: left;
+        flex: 1;
+        min-width: 0;
+    }
+    .dept-chevron {
+        display: block;
+    }
+
+    #step2 { padding-top: 0px; }
+    .access-box { width: 82%; padding: 28px 14px; margin-top: -30px; border-radius: 14px; }
+    .access-dept-img { width: 40px; height: 40px; margin-bottom: 20px; }
+    .code-field { margin-bottom: 10px; }
+    .code-field input { height: 40px; font-size: 15px; }
+    .code-field input::placeholder { font-size: 13px; }
+    .continue-btn { height: 40px; font-size: 0.9rem; }
+    .criteria-body { padding: 12px 14px 14px; max-height: 48vh; font-size: 0.8rem; }
+    .criteria-body h3 { font-size: 0.88rem; margin: 8px 0 3px; }
+    .criteria-body li { margin-bottom: 2px; }
+    .got-it-wrapper { margin-top: 10px; padding-top: 8px; }
+    .got-it-btn { padding: 8px 20px; font-size: 0.82rem; }
+    .emp-card, .dh-card {
+        padding: 6px 8px;
+        gap: 8px;
+        border-radius: 8px;
+        min-height: 40px;
+    }
+    .emp-avatar, .dh-avatar { width: 28px; height: 28px; font-size: 0.72rem; }
+    .emp-name, .dh-name { font-size: 0.8rem; }
+    .dh-dept { font-size: 0.68rem; }
+    .emp-circle, .dh-circle { width: 16px; height: 16px; }
+    .emp-circle-inner, .dh-circle-inner { width: 7px; height: 7px; }
+    .dh-list, .emp-list { gap: 6px; max-height: calc((40px * 5) + (6px * 4)); }
+    .no-select-card { padding: 8px 10px; gap: 8px; margin-top: 12px; }
+    .no-select-circle { width: 18px; height: 18px; }
+    .no-select-circle-inner { width: 8px; height: 8px; }
+    .no-select-img { width: 28px; height: 28px; }
+    .no-select-title { font-size: 0.78rem; }
+    .no-select-desc { font-size: 0.68rem; }
+    .no-select-continue-btn { padding: 8px 14px; font-size: 0.8rem; }
+    .reason-title { font-size: 0.85rem; margin-bottom: 3px; }
+    .reason-hint { font-size: 0.7rem; margin-bottom: 6px; }
+    .reason-textarea { min-height: 70px; padding: 8px 10px; font-size: 0.8rem; }
+    .char-count { margin-bottom: 6px; font-size: 0.7rem; }
+    .next-btn { padding: 8px 14px; font-size: 0.8rem; }
+    .review-box { padding: 16px 14px; border-radius: 12px; }
+    .review-box h2 { font-size: 1.15rem; margin-bottom: 12px; }
+    .review-person { gap: 10px; margin-bottom: 12px; }
+    .review-avatar { width: 44px; height: 44px; font-size: 1rem; }
+    .review-name { font-size: 1rem; }
+    .review-dept { font-size: 0.82rem; }
+    .story-box { padding: 10px 12px 32px; margin-bottom: 12px; min-height: 64px; }
+    .story-box h3 { font-size: 0.8rem; margin-bottom: 6px; }
+    .story-text { font-size: 0.8rem; }
+    .btn-back, .btn-submit { padding: 8px 14px; font-size: 0.8rem; }
+    .success-panel { padding: 22px 18px; margin-top: 12px; }
+    .success-icon-wrap { width: 60px; height: 60px; margin-bottom: 10px; }
+    .success-icon { width: 52px; height: 52px; font-size: 26px; }
+    .success-panel h2 { font-size: 1.2rem; }
+    .success-panel p { font-size: 0.88rem; }
+    .home-btn { padding: 9px 16px; font-size: 0.8rem; margin-top: 12px; }
+    .page-back-wrap { margin: -4px auto 0; }
+    .top-search-input { height: 36px; font-size: 0.82rem; }
+    .exec-access-box { padding: 20px 16px; margin-top: 120px; }
+    .exec-access-icon { width: 40px; height: 40px; margin-bottom: 24px; }
+    .exec-access-headline { font-size: 1rem; margin-bottom: 4px; letter-spacing: 0.22em; }
+    .exec-access-box h2 { font-size: 0.85rem; margin-bottom: 20px; }
+    footer { padding: 10px 14px; font-size: 0.62rem; }
+
+.criteria-modal {
+        max-height: min(78vh, 640px);
+        border-radius: 14px;
+    }
+    .criteria-modal-header { padding: 14px 16px 10px; }
+    .criteria-modal-header h2 { font-size: 1.05rem; }
+    .criteria-modal-body { padding: 12px 16px 6px; font-size: 0.82rem; }
+    .criteria-modal-body h3 { font-size: 0.88rem; margin: 10px 0 4px; }
+    .criteria-modal-actions { padding: 14px 16px 18px; }
+    .criteria-modal-actions .got-it-btn { padding: 10px 24px; font-size: 0.88rem; }
+    .criteria-modal-actions .criteria-back-btn { font-size: 0.88rem; margin-top: 12px; }
+
+.exec-choice-wrap {
+        margin-top: 48px;
+        padding: 0 16px 32px;
+    }
+    .exec-choice-headline {
+        margin-bottom: 10px;
+    }
+    .exec-choice-headline h1 {
+        font-size: clamp(1.4rem, 6vw, 1.85rem);
+        line-height: 1.25;
+    }
+    .exec-choice-sub {
+        margin-bottom: 28px;
+        font-size: 0.95rem;
+    }
+    .exec-boxes {
+        gap: 16px;
+    }
+    .exec-box {
+        padding: 24px 16px;
+        gap: 14px;
+        min-height: 112px;
+        border-radius: 16px;
+    }
+    .exec-box-img {
+        width: 36px;
+        height: 36px;
+    }
+    .exec-box-texts h3 {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+    .exec-box-texts p {
+        font-size: 0.85rem;
+    }
+    .exec-box-arrow {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
+}
+
+
+
+.criteria-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(8, 36, 91, 0.45);
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    padding-top: max(16px, env(safe-area-inset-top, 16px));
+    padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
+    box-sizing: border-box;
+}
+.criteria-modal-overlay.open {
+    display: flex;
+}
+.criteria-modal {
+    background: #fff;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 560px;
+    max-height: min(82vh, 720px);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 16px 48px rgba(8, 36, 91, 0.22);
+    overflow: hidden;
+    animation: criteriaPop 0.28s ease;
+}
+@keyframes criteriaPop {
+    from { opacity: 0; transform: translateY(18px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.criteria-modal-header {
+    padding: 18px 22px 12px;
+    border-bottom: 1px solid #e8f0f4;
+    flex-shrink: 0;
+}
+.criteria-modal-header h2 {
+    font-size: 1.15rem;
+    font-weight: 750;
+    color: #05255E;
+    margin: 0 0 4px;
+}
+.criteria-modal-header p {
+    font-size: 0.85rem;
+    color: #8aa0b0;
+    margin: 0;
+    font-weight: 500;
+}
+.criteria-modal-body {
+    padding: 16px 22px 8px;
+    color: #17324d;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+.criteria-modal-body .criteria-section {
+    margin-bottom: 4px;
+}
+.criteria-modal-body .criteria-section[dir="rtl"] {
+    text-align: right;
+}
+.criteria-modal-body .criteria-section[dir="rtl"] ol {
+    padding-right: 20px;
+    padding-left: 0;
+}
+.criteria-modal-body h3 {
+    color: #05255E;
+    font-size: 0.95rem;
+    font-weight: 750;
+    margin: 14px 0 6px;
+}
+.criteria-modal-body .criteria-section:first-child h3 { margin-top: 0; }
+.criteria-modal-body ol {
+    padding-left: 20px;
+    margin: 0 0 4px;
+}
+.criteria-modal-body li {
+    margin-bottom: 3px;
+    color: #3a4f63;
+    font-weight: 500;
+}
+.criteria-modal-scroll {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    min-height: 0;
+}
+.criteria-modal-actions {
+    padding: 18px 22px 24px;
+    text-align: center;
+    border-top: 1px solid #e8f0f4;
+    margin-top: 8px;
+}
+.criteria-modal-actions .got-it-btn {
+    display: inline-block;
+    background: #D79A1E;
+    color: #17171D;
+    border: none;
+    border-radius: 18px;
+    padding: 13px 34px;
+    font-size: 0.98rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: box-shadow 0.25s;
+}
+.criteria-modal-actions .got-it-btn:hover {
+    box-shadow: 0 0 22px rgba(215,154,30,0.5);
+}
+.criteria-modal-actions .criteria-back-btn {
+    display: block;
+    margin: 14px auto 0;
+    background: none;
+    border: none;
+    padding: 6px 10px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #08245B;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.criteria-modal-actions .criteria-back-btn:hover {
+    color: #00B7E2;
+}
+
+
+
+
+
+</style>
+</head>
+
+<body class="has-bg">
+<script>if (window.IS_EXEC_PAGE) { document.body.classList.remove("has-bg"); document.body.classList.add("exec-bg"); }</script>
+
+<header>
+    <div class="navbar">
+        <a href="/">
+            <img src="/logo.jpg" alt="Company Logo" class="logo">
+        </a>
+        <nav class="header-nav">
+            <a href="/" class="nav-btn" id="homeBtn"><span class="nav-label">HOME</span></a>
+            <div class="header-nav-pair">
+                <a href="/executive" class="nav-btn" id="executiveBtn" onclick="onExecutiveBtn(event)"><span class="nav-label">EXECUTIVE</span></a>
+                <a href="/dashboard" class="nav-btn" id="dashboardBtn" style="display:none;"><span class="nav-label">DASHBOARD</span></a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main class="main-content">
+
+    <div class="page-header-texts" id="pageHeaderTexts">
+        <div class="line1" id="headerLine1">Employee of the Quarter</div>
+        <img src="/eoq/lock.jpg" alt="Access" class="access-dept-img" id="accessDeptImg" onerror="this.style.display='none'" style="display:none;">
+        <div class="line2" id="headerLine2">Select Your Department</div>
+        <div class="line3" id="headerLine3">Select your department to meet your teamy</div>
+    </div>
+
+    <div class="progress-wrap" id="progressWrap">
+        <div class="progress-steps">
+            <div class="progress-bar-fill" id="progressFill"></div>
+            <div class="step active" data-step="1" onclick="onStepClick(1)">
+                <div class="step-circle">1</div>
+                <div class="step-label">Department</div>
+            </div>
+            <div class="step" data-step="2" onclick="onStepClick(2)">
+                <div class="step-circle">2</div>
+                <div class="step-label">Access</div>
+            </div>
+            <div class="step" data-step="3" onclick="onStepClick(3)">
+                <div class="step-circle">3</div>
+                <div class="step-label">Criteria</div>
+            </div>
+            <div class="step" data-step="4" onclick="onStepClick(4)">
+                <div class="step-circle">4</div>
+                <div class="step-label">Selection</div>
+            </div>
+            <div class="step" data-step="5" onclick="onStepClick(5)">
+                <div class="step-circle">5</div>
+                <div class="step-label">Review & Submit</div>
+            </div>
+        </div>
+    </div>
+
+    <section class="step-panel active" id="step1">
+
+        <div class="dept-grid" id="deptGrid"></div>
+    </section>
+
+    <section class="step-panel" id="step2">
+        <div class="access-box">
+
+            <div class="code-field">
+                <input type="text" id="departmentCode" placeholder="Department code..." autocomplete="off" inputmode="text" enterkeyhint="go">
+            </div>
+
+            <button class="continue-btn" id="continueBtn" onclick="verifyCode()">
+                Continue
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+
+            <div class="code-error" id="codeError">Invalid department code. Please try again.</div>
+        </div>
+        <div class="page-back-wrap">
+            <button type="button" class="page-back-btn" onclick="goToStep(1)">Back</button>
+        </div>
+    </section>
+
+    <section class="step-panel" id="step3">
+        <div class="page-back-wrap">
+            <button type="button" class="page-back-btn" onclick="goToStep(2)">Back</button>
+        </div>
+    </section>
+
+<section class="step-panel" id="step4">
+        <div class="nominate-outer">
+                <div class="nominate-split" id="nominateSplit">
+                    <div class="employee-list-pane">
+        <div class="top-search-wrap" id="nominateSearchWrap" style="display: none;">
+            <div class="search-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input type="text" id="searchInput" class="top-search-input" placeholder="Search by name..." autocomplete="off">
+            </div>
+        </div>
+
+                        <div class="emp-list" id="empList"></div>
+
+                        <div class="no-select-card" id="noSelectCard" onclick="selectNoEmployee()">
+                            <div class="no-select-circle">
+                                <div class="no-select-circle-inner"></div>
+                            </div>
+                            <img src="/eoq/no-selection.jpg" alt="" class="no-select-img" onerror="this.style.display='none'">
+                            <div class="no-select-texts">
+                                <div class="no-select-title">No Selection This Quarter</div>
+                                <div class="no-select-desc">
+                                    <span class="">•</span>
+                                    <span>If no one stands out this quarter, you may choose not to select an employee.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="no-select-continue-wrap" id="noSelectContinueWrap">
+                            <button class="no-select-continue-btn" onclick="goToStep(5)">
+                                Continue
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                        <div class="nascom-continue-wrap" id="nascomContinueWrap">
+                            <button class="no-select-continue-btn" onclick="goToStep(5)">
+                                Continue
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="reason-pane" id="reasonPane">
+                      <div class="reason-inner">
+                        <div class="reason-title">What made them stand out</div>
+                        <p class="reason-hint">Share what made this employee special this quarter. A short sentence or a few lines is enough.</p>
+                        <textarea id="reasonText" class="reason-textarea" maxlength="500" placeholder="Their dedication, teamwork, and positive attitude..."></textarea>
+                        <div class="char-count"><span id="charCount">0</span>/500</div>
+                        <button class="next-btn" id="nextToReviewBtn" onclick="goToStep(5)" disabled>
+                            Next
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        <div class="page-back-wrap">
+            <button type="button" class="page-back-btn" onclick="goToStep(3)">Back</button>
+        </div>
+    </section>
+
+    <section class="step-panel" id="step5">
+        <div class="review-box">
+            <h2>Review Your Selection</h2>
+
+            <div class="review-person">
+                <div class="review-avatar" id="reviewAvatar">AB</div>
+                <div>
+                    <div class="review-name" id="reviewName">Employee Name</div>
+                    <div class="review-dept" id="reviewDept">Department</div>
+                </div>
+            </div>
+
+            <div class="story-box" id="storyBox">
+                <h3>Comments</h3>
+                <div class="story-text" id="storyText"></div>
+                <button class="edit-story-btn" id="editStoryBtn" onclick="toggleEditStory()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                    Edit
+                </button>
+            </div>
+
+            <div class="review-actions">
+                <button class="btn-back" onclick="goToStep(4)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back
+                </button>
+                <button class="btn-submit" id="submitBtn" onclick="confirmVote()">Submit</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="step-panel" id="step6">
+        <div class="success-panel">
+            <div class="success-icon-wrap">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <div class="success-icon">✓</div>
+            </div>
+            <h2>Thank You!</h2>
+            <p>The selection has been submitted successfully.</p>
+            <p>Your time and thoughtful choice are truly valued.</p>
+            <a href="/" class="home-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+                Back to Home
+            </a>
+        </div>
+    </section>
+
+
+    <section class="step-panel" id="execAccess">
+        <div class="exec-access-box">
+            <img src="/eoq/lock.jpg" alt="Executive Access" class="exec-access-icon" onerror="this.src='/eoq/dept-default.jpg'; this.onerror=null;">
+            <div class="exec-access-headline">EXECUTIVE ACCESS</div>
+            <h2>Please enter your code to continue.</h2>
+            <div class="code-field">
+                <input type="text" id="execCode" placeholder="Access code..." autocomplete="off" inputmode="text" enterkeyhint="go">
+            </div>
+            <button class="continue-btn" id="execContinueBtn" onclick="verifyExecCode()">
+                Continue
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <div class="code-error" id="execCodeError">Invalid code. Please try again.</div>
+        </div>
+        <div class="page-back-wrap">
+            <button type="button" class="page-back-btn" onclick="exitExecutive()">Back</button>
+        </div>
+    </section>
+
+    <section class="step-panel" id="execChoice">
+        <div class="exec-choice-wrap">
+            <div class="exec-choice-headline">
+                <h1>EXECUTIVE SELECTION</h1>
+            </div>
+            <div class="exec-choice-sub">
+                Celebrating Leadership & Excellence<br>
+            </div>
+            <div class="exec-boxes">
+                <div class="exec-box" onclick="goExecDeptHead()">
+                    <img src="/eoq/dept-head.jpg" alt="" class="exec-box-img" onerror="this.src='/eoq/dept-default.jpg'; this.onerror=null;">
+                    <div class="exec-box-texts">
+                        <h3>Outstanding Department Head</h3>
+                        <p>Select an outstanding department head</p>
+                    </div>
+                    <div class="exec-box-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+                </div>
+                <div class="exec-box" onclick="goExecIndividual()">
+                    <img src="/eoq/individual-contributor.jpg" alt="" class="exec-box-img" onerror="this.src='/eoq/dept-default.jpg'; this.onerror=null;">
+                    <div class="exec-box-texts">
+                        <h3>Outstanding Individual Contributor</h3>
+                        <p>Select an outstanding employee from your assigned category.</p>
+                    </div>
+                    <div class="exec-box-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+                </div>
+            </div>
+        </div>
+        <div class="page-back-wrap">
+            <button type="button" class="page-back-btn" onclick="execBackToAccess()">Back</button>
+        </div>
+    </section>
+
+    <section class="step-panel" id="execCategory">
+        <div class="exec-choice-wrap">
+            <div class="exec-choice-headline">
+                <h1>Outstanding Individual Contributor</h1>
+            </div>
+            <div class="exec-choice-sub">
+                Select the outstanding individual from your assigned category.<br>
+            </div>
+            <div class="exec-boxes">
+                <div class="exec-box" onclick="goExecStaff('admin')">
+                    <img src="/eoq/admin-staff.jpg" alt="" class="exec-box-img" onerror="this.src='/eoq/dept-default.jpg'; this.onerror=null;">
+                    <div class="exec-box-texts">
+                        <h3>Administrative Staff</h3>
+                        <p>Selected by the Administrative Director</p>
+                    </div>
+                    <div class="exec-box-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+                </div>
+                <div class="exec-box" onclick="goExecStaff('medical')">
+                    <img src="/eoq/medical-staff.jpg" alt="" class="exec-box-img" onerror="this.src='/eoq/dept-default.jpg'; this.onerror=null;">
+                    <div class="exec-box-texts">
+                        <h3>Medical Staff</h3>
+                        <p>Selected by the Medical Services Director</p>
+                    </div>
+                    <div class="exec-box-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+                </div>
+            </div>
+        </div>
+        <div class="page-back-wrap">
+            <button type="button" class="page-back-btn" onclick="execBackToChoice()">Back</button>
+        </div>
+    </section>
+
+    <section class="step-panel" id="execDHNominate">
+        <div class="nominate-outer">
+            <div class="nominate-split" id="execDHSplit">
+                <div class="employee-list-pane">
+                    <div class="dh-list" id="execDHList"></div>
+                    <div class="no-select-card" id="execDHNoSelect" onclick="selectExecDHNo()">
+                        <div class="no-select-circle"><div class="no-select-circle-inner"></div></div>
+                        <img src="/eoq/no-selection.jpg" alt="" class="no-select-img" onerror="this.style.display='none'">
+                        <div class="no-select-texts">
+                            <div class="no-select-title">No Selection This Quarter</div>
+                            <div class="no-select-desc">
+                                <span class="">•</span>
+                                <span>If no one stands out this quarter, you may choose not to select a department head.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="no-select-continue-wrap" id="execDHNoContinue">
+                        <button class="no-select-continue-btn" onclick="goExecDHReview()">
+                            Continue
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="reason-pane" id="execDHReasonPane">
+                    <div class="reason-inner">
+                        <div class="reason-title">What made them stand out</div>
+                        <p class="reason-hint">Share what made this department head special this quarter. A short sentence or a few lines is enough.</p>
+                        <textarea id="execDHReason" class="reason-textarea" maxlength="500" placeholder="Their dedication, leadership, and positive impact..."></textarea>
+                        <div class="char-count"><span id="execDHCharCount">0</span>/500</div>
+                        <button class="next-btn" id="execDHNextBtn" onclick="goExecDHReview()" disabled>
+                            Next
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-back-wrap">
+            <button type="button" class="page-back-btn" onclick="execBackToChoice()">Back</button>
+        </div>
+    </section>
+
+    <section class="step-panel" id="execStaffNominate">
+        <div class="nominate-outer">
+            <div class="nominate-split" id="execStaffSplit">
+                <div class="employee-list-pane">
+                    <div class="emp-list" id="execStaffList"></div>
+                    <div class="no-select-card" id="execStaffNoSelect" onclick="selectExecStaffNo()">
+                        <div class="no-select-circle"><div class="no-select-circle-inner"></div></div>
+                        <img src="/eoq/no-selection.jpg" alt="" class="no-select-img" onerror="this.style.display='none'">
+                        <div class="no-select-texts">
+                            <div class="no-select-title">No Selection This Quarter</div>
+                            <div class="no-select-desc">
+                                <span class="•"></span>
+                                <span>If no one stands out this quarter, you may choose not to select an employee.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="no-select-continue-wrap" id="execStaffNoContinue">
+                        <button class="no-select-continue-btn" onclick="goExecStaffReview()">
+                            Continue
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="reason-pane" id="execStaffReasonPane">
+                    <div class="reason-inner">
+                        <div class="reason-title">What made them stand out</div>
+                        <p class="reason-hint">Share what made this employee special this quarter. A short sentence or a few lines is enough.</p>
+                        <textarea id="execStaffReason" class="reason-textarea" maxlength="500" placeholder="Their dedication, teamwork, and positive attitude..."></textarea>
+                        <div class="char-count"><span id="execStaffCharCount">0</span>/500</div>
+                        <button class="next-btn" id="execStaffNextBtn" onclick="goExecStaffReview()" disabled>
+                            Next
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-back-wrap">
+            <button type="button" class="page-back-btn" onclick="execBackToCategory()">Back</button>
+        </div>
+    </section>
+
+    <section class="step-panel" id="execReview">
+        <div class="review-box">
+            <h2>Review Your Selection</h2>
+            <div class="review-person">
+                <div class="review-avatar" id="execReviewAvatar">AB</div>
+                <div>
+                    <div class="review-name" id="execReviewName">Name</div>
+                    <div class="review-dept" id="execReviewDept">Department</div>
+                </div>
+            </div>
+            <div class="story-box" id="execStoryBox">
+                <h3>Comments</h3>
+                <div class="story-text" id="execStoryText"></div>
+                <button class="edit-story-btn" id="execEditStoryBtn" onclick="toggleExecEditStory()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                    Edit
+                </button>
+            </div>
+            <div class="review-actions">
+                <button class="btn-back" id="execReviewBackBtn" onclick="execReviewBack()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back
+                </button>
+                <button class="btn-submit" id="execSubmitBtn" onclick="confirmExecVote()">Submit</button>
+            </div>
+        </div>
+    </section>
+
+
+
+<div class="criteria-modal-overlay" id="criteriaModal" role="dialog" aria-modal="true" aria-labelledby="criteriaModalTitle">
+    <div class="criteria-modal">
+        <div class="criteria-modal-header">
+            <h2 id="criteriaModalTitle">Evaluation Criteria</h2>
+            <p id="criteriaModalSub">Review the standards for this department before nominating.</p>
+        </div>
+        <div class="criteria-modal-scroll" id="criteriaModalScroll">
+            <div class="criteria-modal-body" id="criteriaModalBody"></div>
+            <div class="criteria-modal-actions">
+                <button type="button" class="got-it-btn" onclick="closeCriteriaModal()">LET’S BEGIN</button>
+                <button type="button" class="criteria-back-btn" onclick="criteriaModalBack()">Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</main>
+
+<footer>
+    © 2026 Care Medical Jiwar
+</footer>
+
+<script>
+const SUPABASE_URL = "https://fthkfenbpetpzlcpxvoc.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0aGtmZW5icGV0cHpsY3B4dm9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MjI3MTEsImV4cCI6MjEwNjA5ODcxMX0.-gd99emQuWNRazrc1DenTJpAYxfa_rt2A_BA_Vmqkrk";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const departmentCodes = {
+    "RECEPTION4": "Reception",
+   "DUTY4": "Duty Manager",
+   "ENCODER4": "Encoder",
+   /*"QUALITY4": "Quality",*/
+   "DRIVERS4": "Drivers",
+   "RCM4": "Revenue Cycle Management",
+   "RESPIRATORY4": "Respiratory Therapy",
+   "RADIOLOGY4": "Radiology",
+   "LABORATORY4": "Laboratory",
+   "ICU4": "Intensive Care Unit",
+   "CATH4": "Cath Lab",
+   "SECURITY4": "Security",
+   /*"IT4": "Information Technology",
+   "SUPPLY4": "Supply Chain",
+   "HR4": "Human Resources",    */
+   "ER4": "Emergency Department",
+  /* "FINANCE4": "Finance",    */
+   "GPQ4": "General Practice",
+   "PHARMQ4": "Pharmacy",
+   /*"ANESQ4": "Anesthesia",    */
+   "CARDQ4": "Cardiology",
+   "NAS4": "Nascom",
+   /*"NUTRQ4": "Clinical Nutrition",
+   "PTQ4": "Physiotherapy",
+   "NLEQ4": "Nursing Leadership & Education",
+   "SOCIAL4": "Social Services"    */
+};
+
+const departmentEmployees = {
+  "Reception": [
+       { name: "MOAYAD FELEMBAN", id: "17760" },
+       { name: "ROTANA KOSHAK", id: "17762" },
+       { name: "JOOD ALBESHRY", id: "17764" },
+       { name: "AHMED ALDAJANI", id: "17759" }
+   ],
+   "Duty Manager": [
+       { name: "Ahmad Mufti", id: "17733" },
+       { name: "Hossam Banabilah", id: "17634" },
+       { name: "Sohaib Andargiry", id: "17753" },
+       { name: "Turki Ahmad", id: "17635" },
+       { name: "Abdulaziz Alandijani", id: "17626" }
+   ],
+   "Encoder": [
+       { name: "Tala Shawly", id: "21716" },
+       { name: "Fadhl Almkwas", id: "22731" },
+       { name: "Emma Alghraibi", id: "22730" },
+       { name: "Reem Alqurashi", id: "21428" }
+   ],
+   /*"Quality": [
+       { name: "Mohamed Ibrahim", id: "1" }
+   ],    */
+   "Drivers": [
+       { name: "Meshal Alsharif", id: "1" },
+       { name: "Waseem Alkhuzaee", id: "1" },
+       { name: "Rayan Alhuzali", id: "1" },
+       { name: "Nawaf Albasarai", id: "1" },
+       { name: "Bandar Aldadi", id: "1" },
+       { name: "Yousef Atiah", id: "1" },
+       { name: "Mohd Kayyum", id: "1" },
+       { name: "Afsal Mullappally", id: "1" },
+       { name: "Rayan Alsindi", id: "1" }
+   ],
+   "Revenue Cycle Management": [
+       { name: "Sohaib abdulrheem", id: "19810" },
+       { name: "Nouf Almaqati", id: "21419" },
+       { name: "Razan Alhakami", id: "22402" }
+   ],
+   "Respiratory Therapy": [
+       { name: "Abdulilah alzhrani", id: "1" },
+       { name: "Mohammed Alghamdi", id: "1" },
+       { name: "Asr Mofareh", id: "1" },
+       { name: "Rawan Alkhayri", id: "1" }
+   ],
+   "Radiology": [
+       { name: "Fahad Alnufaiai", id: "1" },
+       { name: "Ahmed Abdelkarim", id: "1" },
+       { name: "Nawaf Alotaibi", id: "1" },
+       { name: "Faisal Alkuhayli", id: "1" },
+       { name: "Nadeera Saga", id: "1" }
+   ],
+   "Laboratory": [
+       { name: "Abdullah Alhazmi", id: "1" },
+       { name: "Hassan Sendi", id: "1" },
+       { name: "Hamed Alsharif", id: "1" },
+       { name: "Dana Alqurashi", id: "1" },
+       { name: "Mohdi Aldajani", id: "1" },
+       { name: "Ahmed Saad", id: "1" }
+   ],
+   "Intensive Care Unit": [
+       { name: "Jaseela Ongaloramma", id: "1" },
+       { name: "Ahmed Mostafa", id: "1" },
+       { name: "Abdelrehem Fahmy", id: "1" },
+       { name: "Abdelrahman Ibrahim", id: "1" },
+       { name: "Shireentaj Kiresur", id: "1" },
+       { name: "Soad Ali", id: "1" },
+       { name: "Hameed Begum", id: "1" },
+       { name: "Bushra Mohamed", id: "1" },
+       { name: "Fatma Ali", id: "1" },
+       { name: "Nafeesa Elhassan", id: "1" },
+       { name: "Afrah Fathima", id: "1" },
+       { name: "Marwa Mahmoud", id: "1" },
+       { name: "Amina Sulaiman", id: "1" },
+       { name: "Sara Hamed", id: "1" },
+       { name: "Memunat Onozer", id: "1" },
+       { name: "Shahid Aafreedi", id: "1" },
+       { name: "Ayman Abdullah", id: "1" },
+       { name: "Mahmoud Mohamed", id: "1" },
+       { name: "Mahmoud Attia", id: "1" },
+       { name: "Ali Ali", id: "1" },
+       { name: "Ahmed Elhamshary", id: "1" },
+       { name: "Ahmed Khairy", id: "1" },
+       { name: "Abdulhameed Abdullah", id: "1" },
+       { name: "Mansour Ali", id: "1" },
+       { name: "Mustafa Hussein", id: "1" },
+       { name: "Omar Hamada", id: "1" },
+       { name: "Mahmoud Mohamed", id: "1" },
+       { name: "Mossad Mofreh", id: "1" },
+       { name: "Abdelsadek Turkey", id: "1" },
+       { name: "Ashwag Mustafa", id: "1" },
+       { name: "Hasna Abid", id: "1" },
+       { name: "Hesham Hamdy", id: "1" },
+       { name: "Yasmeen Aslam", id: "1" },
+       { name: "Shafi Zada", id: "1" },
+       { name: "Islam Hegazy", id: "1" },
+       { name: "Nasser Gamal", id: "1" },
+       { name: "Gehad Hamoud", id: "1" },
+       { name: "Rohina Momtaz", id: "1" },
+       { name: "Abdelghany Mahrous", id: "1" },
+       { name: "Samar Fouad", id: "1" },
+       { name: "Mohamed Ghonim", id: "1" },
+       { name: "Ramy Mohammed", id: "1" },
+       { name: "Mohamed Nada", id: "1" },
+       { name: "Bahaa Ezz", id: "1" },
+       { name: "Mohamed Ali", id: "1" }
+   ],
+   "Cath Lab": [
+       { name: "Mahmood Mansour", id: "1" },
+       { name: "Saman Aslam", id: "1" },
+       { name: "Ali Atifah", id: "1" },
+       { name: "Aly Alahjari", id: "1" },
+       { name: "Mohammed Alosaimi", id: "1" },
+       { name: "Abdulaziz Aldahiri", id: "1" }
+   ],
+   "Security": [
+       { name: "Saud Almuqati", id: "1" },
+       { name: "Abdullah Baoazair", id: "1" },
+       { name: "Meshari Almuwalad", id: "1" },
+       { name: "Gazi Alhabashi", id: "1" }
+   ],
+   /*"Information Technology": [
+       { name: "Hemat Selim", id: "1" }
+   ],
+   "Supply Chain": [
+       { name: "Shrooq Alobaidi", id: "1" }
+   ],
+   "Human Resources": [
+       { name: "Mohammed Alsharif", id: "1" }
+   ],*/
+   "Emergency Department": [
+       { name: "Abdeen Kunna", id: "1" },
+       { name: "Yasein Omer", id: "1" },
+       { name: "Atheer Alsulami", id: "1" },
+       { name: "Negm Eid", id: "1" },
+       { name: "Ahmed Younes", id: "1" },
+       { name: "Eslam Bakr", id: "1" },
+       { name: "Fatima Washa", id: "1" },
+       { name: "Asmaa Mahmoud", id: "1" },
+       { name: "Samar Mohamed", id: "1" },
+       { name: "Neama Asy", id: "1" },
+       { name: "Dina Elzoghby", id: "1" },
+       { name: "Tahmina Nissar", id: "1" },
+       { name: "Lariba Ashraf", id: "1" },
+       { name: "Masbah Aslam", id: "1" },
+       { name: "Maha Snoussi", id: "1" },
+       { name: "Omima Mahmoud", id: "1" },
+       { name: "Abdelrahman Abdelgawwad", id: "1" },
+       { name: "Kawsar Aqil", id: "1" },
+       { name: "Abdulmalik Macaraya", id: "1" },
+       { name: "Mohamed Alhawari", id: "1" },
+       { name: "Mohamed Khattab", id: "1" },
+       { name: "Irshad Bashir", id: "1" },
+       { name: "Waleed Alshafeai", id: "1" },
+       { name: "Mohammad Ihsanullah", id: "1" },
+       { name: "Mohamed Sheta", id: "1" },
+       { name: "Amr Rashed", id: "1" },
+       { name: "Abdelghany Abdelghany", id: "1" },
+       { name: "Omar Abdelhameed", id: "1" },
+       { name: "Ahmed Elsamahy", id: "1" },
+       { name: "Mohamed Essam", id: "1" },
+       { name: "Ahmed Madian", id: "1" },
+       { name: "Kamal Zaib", id: "1" },
+       { name: "Mahmoud Gafar", id: "1" },
+       { name: "Ali Faiek", id: "1" },
+       { name: "Muhammad Meling", id: "1" },
+       { name: "Ahmed Kamal", id: "1" },
+       { name: "Amal Saripada", id: "1" },
+       { name: "Taibah Alhamzah", id: "1" }
+   ],
+   /*"Finance": [
+       { name: "Khalid Rawas", id: "1" },
+       { name: "Mohamed Kalib", id: "1" }
+   ],*/
+   "General Practice": [
+       { name: "Abdullah Babaalghayth", id: "1" },
+       { name: "Kamel Darwish", id: "1" },
+       { name: "Nada Mohamed", id: "1" },
+       { name: "Hana Abdi", id: "1" },
+       { name: "Muna Hajabdullah", id: "1" }
+   ],
+   "Pharmacy": [
+       { name: "Wed Hassan", id: "1" },
+       { name: "Abdullah Abdullah", id: "1" },
+       { name: "Maad Makkawi", id: "1" },
+       { name: "Adi Alqurashi", id: "1" },
+       { name: "Ahmed Almaghrabi", id: "1" },
+       { name: "Abdulrahman Alghamdi", id: "1" },
+       { name: "Abdulrahman Baomar", id: "1" }
+   ],
+   /*"Anesthesia": [
+       { name: "Abdelrahman Osman", id: "1" },
+       { name: "Samia Azab", id: "1" }
+   ],*/
+   "Cardiology": [
+       { name: "Mostafa Haggag", id: "1" },
+       { name: "Abdulkabir Abdishakur", id: "1" },
+       { name: "Mujeeb Tareen", id: "1" },
+       { name: "Ahmed Abdullateef", id: "1" }
+   ],
+   "Nascom": [
+       { name: "Mahbul", id: "FK01", group: "Housekeeping Staff" },
+       { name: "Niloy", id: "FK02", group: "Housekeeping Staff" },
+       { name: "Jueal", id: "FK03", group: "Housekeeping Staff" },
+       { name: "Suweil", id: "FK04", group: "Housekeeping Staff" },
+       { name: "Rasel", id: "FK05", group: "Housekeeping Staff" },
+       { name: "Manik", id: "FK06", group: "Housekeeping Staff" },
+       { name: "Anwar Islam", id: "FK07", group: "Housekeeping Staff" },
+       { name: "Nina", id: "FK08", group: "Housekeeping Staff" },
+       { name: "Maryati", id: "FK09", group: "Housekeeping Staff" },
+       { name: "Rozeena Begum", id: "FK10", group: "Housekeeping Staff" },
+       { name: "Sonia Akhtar", id: "FK11", group: "Housekeeping Staff" },
+       { name: "Shifa", id: "FK12", group: "Housekeeping Staff" },
+       { name: "Mujeeb", id: "FT01", group: "Technician Staff" },
+       { name: "Anas", id: "FT02", group: "Technician Staff" },
+       { name: "M.Taj", id: "FT03", group: "Technician Staff" }
+   ],
+   /*"Clinical Nutrition": [
+       { name: "Safia Bajoudah", id: "1" }
+   ],
+   "Physiotherapy": [
+       { name: "Azzam Alqathama", id: "1" }
+   ],
+   "Nursing Leadership & Education": [
+       { name: "Mustafa Abumusleh", id: "1" },
+       { name: "Rehab Hamed", id: "1" }
+   ],
+   "Social Services": [
+       { name: "Dina Alrashdi", id: "1" }
+   ]*/
+};
+
+
+const defaultCriteria = [
+  {
+    title: "First: Professional and Behavioral Commitment",
+    items: [
+      "Adherence to working hours, attendance, and departure times.",
+      "Compliance with hospital rules and policies.",
+      "Adherence to professional ethics and medical confidentiality.",
+      "Professional appearance and adherence to the official uniform/dress code.",
+      "Respect for supervisors, colleagues, patients, and visitors."
+    ]
+  },
+  {
+    title: "Second: Quality of Job Performance",
+    items: [
+      "Proficiency in performing assigned job duties.",
+      "Accuracy in carrying out tasks and minimizing errors.",
+      "Timely completion of transactions and tasks without compromising quality.",
+      "Ability to work effectively under pressure."
+    ]
+  },
+  {
+    title: "Third: Patient and Visitor Relations",
+    items: [
+      "Courteous reception and positive communication.",
+      "Commitment to patient service and satisfaction.",
+      "Professional and tactful handling of complaints and difficult situations.",
+      "Demonstrating empathy and consideration for patients’ human needs.",
+      "Maintaining patient dignity and privacy."
+    ]
+  },
+  {
+    title: "Fourth: Teamwork and Cooperation",
+    items: [
+      "Cooperation with team members.",
+      "Contributing to a positive work environment.",
+      "Sharing knowledge and experience with colleagues.",
+      "Supporting other departments when needed."
+    ]
+  },
+  {
+    title: "Fifth: Discipline and Safety",
+    items: [
+      "Compliance with occupational health and safety procedures.",
+      "Compliance with infection prevention and control policies (for clinical staff).",
+      "Reporting hazards or professional errors.",
+      "Proper use of equipment and tools.",
+      "Proper care and protection of hospital property."
+    ]
+  },
+  {
+    title: "Sixth: Professional Development and Learning",
+    items: [
+      "Commitment to professional self-development.",
+      "Participation in training courses and workshops.",
+      "Applying acquired knowledge and skills in the workplace.",
+      "Keeping up to date with new instructions, policies, and guidelines.",
+      "Demonstrating a willingness to improve performance."
+    ]
+  },
+  {
+    title: "Seventh: Initiative and Innovation",
+    items: [
+      "Suggesting ideas to improve work processes.",
+      "Effectively identifying and solving problems.",
+      "Taking initiative without waiting for direction.",
+      "Participating in quality improvement projects.",
+      "Demonstrating flexibility and adaptability to change."
+    ]
+  },
+  {
+    title: "Eighth: Responsibility and Reliability",
+    items: [
+      "Taking responsibility for assigned duties.",
+      "Meeting deadlines.",
+      "Demonstrating professional honesty and integrity.",
+      "Maintaining the confidentiality and security of patient and hospital information."
+    ]
+  }
+];
+
+const departmentCriteria = {
+  "Reception": [
+    {
+      title: "First: Attendance, Conduct & Professionalism",
+      items: [
+        "Commitment to attendance, departure, and shift schedules.",
+        "Courtesy, respect, and good communication with patients, visitors, and colleagues.",
+        "Maintaining discipline and professional conduct at all times.",
+        "Commitment to approved hospital instructions and procedures."
+      ]
+    },
+    {
+      title: "Second: Patient Service & Privacy",
+      items: [
+        "Good dealing with patients, visitors, and colleagues.",
+        "Commitment to confidentiality of patient information and maintaining privacy.",
+        "Keenness to improve the quality of service provided to patients.",
+        "Professional handling of patient complaints and inquiries."
+      ]
+    },
+    {
+      title: "Third: Accuracy & Speed of Reception Work",
+      items: [
+        "Taking responsibility and completing tasks accurately.",
+        "Quick response to tasks and requests.",
+        "Accurate registration of patient data and identity verification.",
+        "Speed in completing patient reception procedures without compromising accuracy.",
+        "Ensuring completeness of required documents and forms.",
+        "Speed in completing admission procedures."
+      ]
+    },
+    {
+      title: "Fourth: Guidance, Coordination & Organization",
+      items: [
+        "Good guidance of patients and visitors to the appropriate departments.",
+        "Effective coordination with nursing, physicians, and relevant departments.",
+        "Commitment to approved admission, transfer, and discharge procedures.",
+        "Maintaining organization of the reception area."
+      ]
+    },
+    {
+      title: "Fifth: Teamwork, Initiative & Resilience",
+      items: [
+        "Cooperation with colleagues and other departments and working as a team.",
+        "Initiative in helping colleagues and providing support when needed.",
+        "Ability to work under pressure and handle emergency situations.",
+        "Initiative to solve problems and report observations."
+      ]
+    }
+  ],
+  "Duty Manager": [
+    {
+      title: "أولاً: القيادة وتحمل مسؤولية المناوبة",
+      items: [
+        "تحمل المسؤولية الكاملة عن المناوبة كنقطة السلطة في الموقع.",
+        "اتخاذ قرارات سليمة وفي الوقت المناسب تحت الضغط.",
+        "التنسيق الفعّال مع الأقسام السريرية وغير السريرية.",
+        "تصعيد القضايا الحرجة بشكل مناسب ومتابعتها حتى الحل.",
+        "الحفاظ على حضور هادئ ومهني خلال أوقات الذروة أو الحوادث."
+      ]
+    },
+    {
+      title: "ثانياً: التميز التشغيلي",
+      items: [
+        "ضمان سلاسة تدفق المرضى وإدارة الأسرة خلال المناوبة.",
+        "مراقبة مستويات التوظيف وإعادة توزيع الموارد عند الحاجة.",
+        "الالتزام ببروتوكولات المستشفى للقبول والتحويل والخروج.",
+        "توثيق أحداث المناوبة بدقة وتسليم واضح لمدير المناوبة التالي."
+      ]
+    },
+    {
+      title: "ثالثاً: التواصل مع المرضى والعائلات",
+      items: [
+        "التعامل مع مخاوف المرضى والعائلات بتعاطف ووضوح.",
+        "تهدئة النزاعات مع حماية كرامة المريض.",
+        "تقديم تحديثات شفافة أثناء التأخير أو انقطاع الخدمة.",
+        "دعم موظفي الخط الأمامي في المحادثات الصعبة."
+      ]
+    },
+    {
+      title: "رابعاً: دعم الفريق والسلامة",
+      items: [
+        "دعم أعضاء الفريق عبر الأقسام خلال المناوبة.",
+        "تطبيق إجراءات السلامة ومكافحة العدوى والطوارئ.",
+        "الإبلاغ عن المخاطر والحوادث فورًا.",
+        "تمثيل الاحترام والعدالة والمهنية لجميع الموظفين."
+      ]
+    },
+    {
+      title: "خامساً: الاعتمادية والمبادرة",
+      items: [
+        "الاعتمادية المستمرة في الحضور وتغطية المناوبات.",
+        "استباق المشكلات والتصرف قبل تصاعدها.",
+        "اقتراح تحسينات عملية على إجراءات المناوبة.",
+        "الحفاظ على السرية والالتزام بسياسات المستشفى في جميع الأوقات."
+      ]
+    }
+  ],
+  "Encoder": [
+    {
+      title: "1. Coding Accuracy & Quality – 50%",
+      items: [
+        "Accurate coding in accordance with approved standards – 20%",
+        "Thorough clinical documentation review – 15%",
+        "Error prevention and timely correction – 10%",
+        "Patient information confidentiality – 5%"
+      ]
+    },
+    {
+      title: "2. Teamwork & Collaboration – 10%",
+      items: [
+        "Collaboration with Nursing and RCM teams – 5%",
+        "Knowledge sharing and team support – 3%",
+        "Constructive response to audits and feedback – 2%"
+      ]
+    },
+    {
+      title: "3. Interdepartmental Feedback – 15%",
+      items: [
+        "Professional communication and cooperation – 4%",
+        "Timely response to departmental requests – 4%",
+        "Effective issue resolution – 4%",
+        "Overall department satisfaction – 3%"
+      ]
+    },
+    {
+      title: "4. Attendance & Punctuality – 10%",
+      items: [
+        "Consistent attendance and punctuality – 5%",
+        "Compliance with shift schedules and proper task handover – 5%"
+      ]
+    },
+    {
+      title: "5. Professionalism & Continuous Improvement – 15%",
+      items: [
+        "Keeping up with coding and regulatory updates – 5%",
+        "Initiative in improving work processes – 4%",
+        "Integrity and policy compliance – 3%",
+        "Accountability and responsibility – 3%"
+      ]
+    }
+  ],
+  "Drivers": [
+    {
+      title: "أولاً: البنود المشتركة للسائقين وسائقي الإسعاف",
+      items: [
+        "الالتزام بالحضور والانصراف ومواعيد المناوبات.",
+        "الالتزام بالزي الرسمي والمظهر المهني.",
+        "حسن التعامل مع المرضى والمرافقين والزملاء.",
+        "اللباقة والاحترام في التواصل.",
+        "الالتزام بسرية معلومات المرضى والمحافظة على الخصوصية.",
+        "تحمل المسؤولية وإنجاز المهام بدقة.",
+        "سرعة الاستجابة للمهام والطلبات.",
+        "التعاون مع الزملاء والأقسام الأخرى والعمل بروح الفريق.",
+        "المبادرة في مساعدة الزملاء وتقديم الدعم عند الحاجة.",
+        "القدرة على العمل تحت الضغط والتعامل مع المواقف الطارئة.",
+        "الالتزام بالتعليمات والإجراءات المعتمدة في المستشفى.",
+        "المحافظة على ممتلكات المستشفى ومرافقه.",
+        "المبادرة إلى الإبلاغ عن المشكلات."
+      ]
+    },
+    {
+      title: "ثانياً: البنود الخاصة بالسائقين",
+      items: [
+        "الالتزام بقواعد المرور والقيادة الآمنة في جميع الأوقات.",
+        "المحافظة على سلامة الموظفين أثناء النقل.",
+        "الاستجابة لطلبات النقل في الوقت المناسب.",
+        "فحص المركبة والتأكد من جاهزيتها قبل الاستخدام.",
+        "المحافظة على نظافة المركبة وترتيبها.",
+        "الإبلاغ عن الأعطال أو الحوادث والملاحظات المتعلقة بالسلامة.",
+        "الالتزام بمسارات النقل والتعليمات المحددة.",
+        "المحافظة على المركبة وممتلكات المستشفى."
+      ]
+    },
+    {
+      title: "ثالثاً: البنود الخاصة بسائقي الإسعاف",
+      items: [
+        "سرعة الاستجابة لبلاغات وطلبات النقل الإسعافي.",
+        "الالتزام بالقيادة الآمنة أثناء نقل الحالات الطارئة.",
+        "التأكد من جاهزية سيارة الإسعاف وفق قائمة الفحص المعتمدة.",
+        "التأكد من توفر المستلزمات المطلوبة حسب الإجراءات المعتمدة.",
+        "التنسيق مع الفريق الطبي أثناء نقل الحالات الإسعافية.",
+        "الالتزام بإجراءات نقل المرضى والمحافظة على سلامتهم.",
+        "الإبلاغ الفوري عن أي عطل قد يؤثر على جاهزية سيارة الإسعاف."
+      ]
+    }
+  ],
+  "Revenue Cycle Management": [
+    {
+      title: "1. Approval Staff KPI Scorecard (Total 100%)",
+      items: [
+        "Approval Turnaround Time – Processes requests within the agreed TAT – 20%",
+        "Approval Success & Follow-up – Follows up pending, rejected, and delayed approvals – 15%",
+        "Documentation Accuracy – Ensures medical reports and supporting documents are complete – 15%",
+        "Insurance Policy Compliance – Follows payer rules, CHI requirements, and NPHIES workflows – 15%",
+        "Productivity – Completes assigned requests and tasks efficiently – 10%",
+        "Attitude & Professionalism – Demonstrates respect, cooperation, and a positive attitude – 10%",
+        "Attendance & Punctuality – Complies with working hours, attendance, and break schedules – 10%",
+        "Teamwork & Communication – Communicates effectively with doctors, nurses, and insurance companies – 5%"
+      ]
+    },
+    {
+      title: "2. Monthly Evaluation Rating Scale (1–5)",
+      items: [
+        "5 – Excellent",
+        "4 – Very Good",
+        "3 – Meets Expectations",
+        "2 – Needs Improvement",
+        "1 – Unsatisfactory"
+      ]
+    },
+    {
+      title: "3. Overall Performance Classification",
+      items: [
+        "90–100% – Excellent",
+        "80–89% – Very Good",
+        "70–79% – Satisfactory",
+        "60–69% – Needs Improvement",
+        "Below 60% – Unsatisfactory"
+      ]
+    }
+  ],
+  "Respiratory Therapy": [
+    {
+      title: "First: Clinical Skill",
+      items: [
+        "Competent assessment and delivery of respiratory therapies.",
+        "Safe management of oxygen, ventilators, and related devices.",
+        "Accurate documentation and monitoring of patient response.",
+        "Prompt escalation when respiratory status worsens."
+      ]
+    },
+    {
+      title: "Second: Patient Support",
+      items: [
+        "Clear instruction and reassurance for patients on therapy.",
+        "Respect for comfort, dignity, and cultural needs.",
+        "Education of patients and families on respiratory care.",
+        "Professional communication with the care team."
+      ]
+    },
+    {
+      title: "Third: Safety & Collaboration",
+      items: [
+        "Infection control and equipment hygiene standards.",
+        "Coordination with physicians, nurses, and ICU/ED teams.",
+        "Proper use and maintenance of respiratory equipment.",
+        "Reporting of hazards and equipment faults."
+      ]
+    },
+    {
+      title: "Fourth: Professional Standards",
+      items: [
+        "Reliable coverage of assigned patients and shifts.",
+        "Ongoing development of respiratory therapy knowledge.",
+        "Initiative to improve respiratory care processes.",
+        "Confidentiality and adherence to hospital policies."
+      ]
+    }
+  ],
+  "Radiology": [
+    {
+      title: "معايير تقييم قسم الأشعة",
+      items: [
+        "الالتزام بالمواعيد.",
+        "التعاون مع الزملاء في الأقسام الأخرى.",
+        "التعاون مع الزملاء داخل قسم الأشعة.",
+        "تنفيذ المهام المكلف بها داخل القسم خاصة التحضير للسيباهى.",
+        "التفكير المنطقي والخلاق لإيجاد حلول للمشاكل التي تطرأ داخل القسم."
+      ]
+    }
+  ],
+  "Laboratory": [
+    {
+      title: "First: Analytical Accuracy",
+      items: [
+        "Precise sample handling, processing, and reporting.",
+        "Strict adherence to laboratory SOPs and quality controls.",
+        "Timely turnaround without compromising result integrity.",
+        "Proper identification and rejection of unsuitable samples."
+      ]
+    },
+    {
+      title: "Second: Safety & Compliance",
+      items: [
+        "Full compliance with biosafety and infection-control rules.",
+        "Correct use of PPE, reagents, and equipment.",
+        "Accurate documentation and audit-ready records.",
+        "Prompt reporting of critical values and incidents."
+      ]
+    },
+    {
+      title: "Third: Service & Collaboration",
+      items: [
+        "Responsive support to clinical departments.",
+        "Clear communication on sample requirements and results.",
+        "Professional interaction with patients during collection when applicable.",
+        "Cooperation within the lab team and across shifts."
+      ]
+    },
+    {
+      title: "Fourth: Reliability & Improvement",
+      items: [
+        "Consistent attendance and shift readiness.",
+        "Ongoing learning of new methods and instruments.",
+        "Ideas that improve lab efficiency and quality.",
+        "Integrity and confidentiality in all laboratory work."
+      ]
+    }
+  ],
+  "Intensive Care Unit": [
+    {
+      title: "First: Clinical Excellence & Quality",
+      items: [
+        "Compliance with infection control and prevention protocols.",
+        "Accuracy and speed in electronic medical record documentation without errors.",
+        "Professional handling of critical cases and emergencies in the unit.",
+        "Applying patient safety standards (identity verification, fall prevention)."
+      ]
+    },
+    {
+      title: "Second: Discipline & Commitment",
+      items: [
+        "Full commitment to shift times (attendance, departure, and handover).",
+        "Adherence to the official uniform, ID badge, and professional appearance.",
+        "No unjustified absences or delays during the evaluation period.",
+        "Flexibility and readiness to cover shortages or extra shifts when needed."
+      ]
+    },
+    {
+      title: "Third: Patient Care & Experience",
+      items: [
+        "Humane, compassionate care and commitment to excellence (Ihsan) standards.",
+        "Full protection of patient privacy and confidentiality of information.",
+        "Record free of complaints via the department or official channels.",
+        "Receiving verbal or written appreciation from patients or their families."
+      ]
+    },
+    {
+      title: "Fourth: Teamwork & Behavior",
+      items: [
+        "Effective cooperation and harmony with the medical team and colleagues.",
+        "Helping train or guide new nursing staff and students in the unit.",
+        "Positive initiative and solving internal problems calmly and professionally.",
+        "Accepting guidance from the unit head and implementing it accurately."
+      ]
+    },
+    {
+      title: "Fifth: Development & Innovation",
+      items: [
+        "Validity of all mandatory certificates (e.g. BLS) and attendance at continuous education.",
+        "Submitting ideas or initiatives to improve the work environment or reduce waiting time.",
+        "Active participation in awareness or educational activities in the unit.",
+        "Delivering short lectures or sharing knowledge with colleagues."
+      ]
+    }
+  ],
+  "Cath Lab": [
+    {
+      title: "First: Procedural Excellence",
+      items: [
+        "Skilled support of diagnostic and interventional procedures.",
+        "Strict sterile technique and radiation safety.",
+        "Accurate preparation, monitoring, and documentation.",
+        "Calm, effective response during procedural complications."
+      ]
+    },
+    {
+      title: "Second: Patient Care",
+      items: [
+        "Clear pre- and post-procedure communication with patients.",
+        "Attention to comfort, dignity, and anxiety reduction.",
+        "Safe transfer and monitoring around the procedure table.",
+        "Respect for privacy throughout the cath-lab journey."
+      ]
+    },
+    {
+      title: "Third: Team & Safety",
+      items: [
+        "Seamless teamwork with cardiologists and lab staff.",
+        "Proper care of cath-lab equipment and inventory.",
+        "Prompt reporting of safety or equipment issues.",
+        "Compliance with all lab and hospital protocols."
+      ]
+    },
+    {
+      title: "Fourth: Reliability",
+      items: [
+        "Punctuality and readiness for scheduled lists.",
+        "Continuous improvement of cath-lab skills.",
+        "Integrity and confidentiality in all cases.",
+        "Initiative that strengthens lab quality and efficiency."
+      ]
+    }
+  ],
+  "Security": [
+    {
+      title: "معايير تقييم قسم الأمن",
+      items: [
+        "الالتزام بوقت الحضور والانصراف اليومي.",
+        "التسليم والاستلام اليومي واستكمال النماذج حسب المطلوب.",
+        "تنفيذ المهام الموكلة والإضافية.",
+        "عدم وجود ملاحظات جوهرية.",
+        "الالتزام بتطبيق التعليمات والتوجيهات الصادرة من قبل الإدارة."
+      ]
+    }
+  ],
+  "Information Technology": [
+    {
+      title: "First: System Reliability & Support",
+      items: [
+        "Timely response to IT tickets and user requests.",
+        "Effective troubleshooting of hardware, software, and network issues.",
+        "Maintains uptime and stability of critical hospital systems.",
+        "Clear communication of outages, fixes, and workarounds to users."
+      ]
+    },
+    {
+      title: "Second: Security & Compliance",
+      items: [
+        "Protects systems and data in line with hospital IT security policies.",
+        "Handles access rights and credentials responsibly.",
+        "Reports security risks and incidents promptly.",
+        "Maintains confidentiality of patient and staff information."
+      ]
+    },
+    {
+      title: "Third: Service Quality",
+      items: [
+        "Professional, patient support for clinical and administrative users.",
+        "Documents solutions so issues can be resolved faster next time.",
+        "Prioritizes requests that affect patient care and operations.",
+        "Follows change-management and backup procedures."
+      ]
+    },
+    {
+      title: "Fourth: Teamwork & Improvement",
+      items: [
+        "Collaborates effectively within the IT team and with other departments.",
+        "Shares knowledge and helps colleagues grow technical skills.",
+        "Suggests improvements to systems, processes, or user experience.",
+        "Reliable attendance and ownership of assigned systems and projects."
+      ]
+    }
+  ],
+  "Emergency Department": [
+    {
+      title: "First: Clinical Excellence & Quality",
+      items: [
+        "Compliance with infection control and prevention protocols.",
+        "Accuracy and speed in electronic medical record documentation without errors.",
+        "Professional handling of critical cases and emergencies in the unit.",
+        "Applying patient safety standards (identity verification, fall prevention)."
+      ]
+    },
+    {
+      title: "Second: Discipline & Commitment",
+      items: [
+        "Full commitment to shift times (attendance, departure, and handover).",
+        "Adherence to the official uniform, ID badge, and professional appearance.",
+        "No unjustified absences or delays during the evaluation period.",
+        "Flexibility and readiness to cover shortages or extra shifts when needed."
+      ]
+    },
+    {
+      title: "Third: Patient Care & Experience",
+      items: [
+        "Humane, compassionate care and commitment to excellence (Ihsan) standards.",
+        "Full protection of patient privacy and confidentiality of information.",
+        "Record free of complaints via the department or official channels.",
+        "Receiving verbal or written appreciation from patients or their families."
+      ]
+    },
+    {
+      title: "Fourth: Teamwork & Behavior",
+      items: [
+        "Effective cooperation and harmony with the medical team and colleagues.",
+        "Helping train or guide new nursing staff and students in the unit.",
+        "Positive initiative and solving internal problems calmly and professionally.",
+        "Accepting guidance from the unit head and implementing it accurately."
+      ]
+    },
+    {
+      title: "Fifth: Development & Innovation",
+      items: [
+        "Validity of all mandatory certificates (e.g. BLS) and attendance at continuous education.",
+        "Submitting ideas or initiatives to improve the work environment or reduce waiting time.",
+        "Active participation in awareness or educational activities in the unit.",
+        "Delivering short lectures or sharing knowledge with colleagues."
+      ]
+    }
+  ],
+  "General Practice": [
+    {
+      title: "First: Clinical Care",
+      items: [
+        "Thorough, evidence-based assessment and management.",
+        "Accurate documentation and follow-up planning.",
+        "Appropriate referrals and use of hospital resources.",
+        "Safe prescribing and clear patient education."
+      ]
+    },
+    {
+      title: "Second: Patient Experience",
+      items: [
+        "Respectful, attentive communication in clinic.",
+        "Clear explanations of diagnoses and treatment options.",
+        "Sensitivity to patient concerns and expectations.",
+        "Protection of privacy during consultations."
+      ]
+    },
+    {
+      title: "Third: Teamwork & Efficiency",
+      items: [
+        "Collaboration with nursing and support staff.",
+        "Efficient clinic flow without compromising care quality.",
+        "Reliable attendance and session readiness.",
+        "Support for colleagues during busy clinics."
+      ]
+    },
+    {
+      title: "Fourth: Professionalism",
+      items: [
+        "Continuous learning and guideline awareness.",
+        "Integrity, confidentiality, and policy compliance.",
+        "Constructive ideas to improve primary care services.",
+        "Respectful relationships with all hospital departments."
+      ]
+    }
+  ],
+  "Pharmacy": [
+    {
+      title: "١- التعاون والعمل بروح الفريق",
+      items: [
+        "مساعدة الزملاء ودعمهم أثناء ضغط العمل.",
+        "التعاون الإيجابي مع جميع أفراد الفريق.",
+        "المساهمة في خلق بيئة عمل إيجابية ومحفزة.",
+        "مشاركة المعرفة والخبرات مع الزملاء."
+      ]
+    },
+    {
+      title: "٢- السلوك المهني والاحترام",
+      items: [
+        "احترام الزملاء والتعامل معهم بطريقة إيجابية.",
+        "التواصل الفعّال وحسن التعامل مع الآخرين.",
+        "التحلي بالأخلاق المهنية والروح الإيجابية.",
+        "التعامل مع الخلافات بطريقة مهنية وبنّاءة."
+      ]
+    },
+    {
+      title: "٣- جودة الأداء وسلامة المرضى",
+      items: [
+        "الدقة في تنفيذ المهام والانتباه إلى التفاصيل.",
+        "الالتزام بسياسات وإجراءات الصيدلية.",
+        "الحرص على سلامة المرضى وجودة الخدمات الصيدلانية.",
+        "المحافظة على جودة العمل خلال أوقات ضغط العمل."
+      ]
+    },
+    {
+      title: "٤- المبادرة والتطوير",
+      items: [
+        "تقديم أفكار ومقترحات لتحسين بيئة العمل.",
+        "المبادرة إلى حل المشكلات وتجاوز التحديات.",
+        "المشاركة في مشاريع ومبادرات تطوير القسم.",
+        "المساهمة في تحسين كفاءة سير العمل."
+      ]
+    },
+    {
+      title: "٥- الالتزام وتحمل المسؤولية",
+      items: [
+        "تحمل مسؤولية المهام الموكلة إليه.",
+        "إنجاز المهام في الوقت المحدد.",
+        "الالتزام بمتطلبات العمل وتسليم واستلام المناوبة بشكل صحيح.",
+        "الاعتمادية والحرص على تحقيق أهداف القسم."
+      ]
+    },
+    {
+      title: "٦- الانضباط والحضور",
+      items: [
+        "الالتزام بمواعيد الدوام والمناوبات.",
+        "الانتظام في الحضور وفق الأنظمة المعتمدة.",
+        "الالتزام بإجراءات الحضور والانصراف."
+      ]
+    }
+  ],
+  "Cardiology": [
+    {
+      title: "First: Clinical Excellence",
+      items: [
+        "High-quality cardiac care aligned with current guidelines.",
+        "Accurate assessment, monitoring, and documentation.",
+        "Safe performance or support of cardiac procedures.",
+        "Timely recognition and response to cardiac emergencies."
+      ]
+    },
+    {
+      title: "Second: Patient Relations",
+      items: [
+        "Clear explanation of cardiac conditions and care plans.",
+        "Empathy and respect for patients and families.",
+        "Protection of privacy during examinations and counseling.",
+        "Professional handling of concerns and expectations."
+      ]
+    },
+    {
+      title: "Third: Safety & Teamwork",
+      items: [
+        "Compliance with infection control and procedure safety.",
+        "Effective collaboration within the cardiology team.",
+        "Reliable handovers and interdisciplinary communication.",
+        "Proper use and care of cardiology equipment."
+      ]
+    },
+    {
+      title: "Fourth: Responsibility & Growth",
+      items: [
+        "Ownership of assigned patients and clinic duties.",
+        "Ongoing learning in cardiovascular practice.",
+        "Initiative to improve clinic or procedure workflows.",
+        "Honesty, confidentiality, and policy compliance."
+      ]
+    }
+  ],
+  "Nascom": [
+    {
+      title: "Housekeeping Staff",
+      items: [
+        "Follow the advice.",
+        "Complete tasks fast.",
+        "Everyday hygiene.",
+        "Always keep uniforms and shoes clean and proper.",
+        "Help other staff.",
+        "Speak politely to everyone.",
+        "Do cleaning work well.",
+        "Quick response.",
+        "Work on time.",
+        "Take responsibility related to his work.",
+        "Finish the task before leaving the hospital.",
+        "Create ideas for cleaning.",
+        "Always positive.",
+        "Support the other staff.",
+        "Knowledge for cleaning.",
+        "Clean and neat by self."
+      ]
+    },
+    {
+      title: "Technician Staff",
+      items: [
+        "Follow the advice.",
+        "Quick response.",
+        "Fast work.",
+        "Help with other tasks.",
+        "Hygiene everyday.",
+        "Uniforms and shoes properly.",
+        "Take responsibility.",
+        "Speak politely.",
+        "Create good ideas.",
+        "Complete task on time.",
+        "Follow the hospital policy.",
+        "Helpful.",
+        "Respect to everyone."
+      ]
+    }
+  ]
+};
+
+function getCriteriaForDepartment(deptName) {
+  return departmentCriteria[deptName] || defaultCriteria;
+}
+
+function isArabicText(str) {
+  return /[\u0600-\u06FF]/.test(str || "");
+}
+
+function renderCriteriaHTML(sections) {
+  return sections.map(sec => {
+    const rtl = isArabicText(sec.title) || (sec.items && sec.items.some(isArabicText));
+    const dirAttr = rtl ? ' dir="rtl" style="text-align:right;"' : '';
+    const items = sec.items.map(it => `<li>${it}</li>`).join("");
+    return `<div class="criteria-section"${dirAttr}><h3>${sec.title}</h3><ol>${items}</ol></div>`;
+  }).join("");
+}
+
+function openCriteriaModal() {
+  const overlay = document.getElementById("criteriaModal");
+  const body = document.getElementById("criteriaModalBody");
+  const sub = document.getElementById("criteriaModalSub");
+  const title = document.getElementById("criteriaModalTitle");
+  if (!overlay || !body) return;
+  const sections = getCriteriaForDepartment(currentDeptName);
+  body.innerHTML = renderCriteriaHTML(sections);
+  if (title) title.textContent = currentDeptName ? `${currentDeptName} — Evaluation Criteria` : "Evaluation Criteria";
+  if (sub) sub.textContent = "These standards help ensure fair and meaningful recognition for this department.";
+  overlay.classList.add("open");
+  document.body.style.overflow = "hidden";
+  const scrollEl = document.getElementById("criteriaModalScroll");
+  if (scrollEl) scrollEl.scrollTop = 0;
+}
+
+function criteriaModalBack() {
+  const overlay = document.getElementById("criteriaModal");
+  if (overlay) overlay.classList.remove("open");
+  document.body.style.overflow = "";
+  goToStep(2);
+}
+
+function closeCriteriaModal() {
+  const overlay = document.getElementById("criteriaModal");
+  if (overlay) overlay.classList.remove("open");
+  document.body.style.overflow = "";
+  goToStep(4);
+}
+
+
+function getDeptImage(name) {
+    const slug = name.toLowerCase()
+        .replace(/&/g, "and")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+    return `/eoq/dept-${slug}.jpg`;
+}
+
+const headerTexts = {
+    1: {
+        line1: "",
+        line2: "Employee of the Quarter",
+        line3: "Select your department to meet your team."
+    },
+    2: {
+        line1: "",
+        line2: "Verify Your Department",
+        line3: "Please enter your department code to continue."
+    },
+    3: {
+        line1: "",
+        line2: "Review the Evaluation Criteria",
+        line3: "These standards help ensure fair and meaningful recognition."
+    },
+    4: {
+        line1: "",
+        line2: "Outstanding Employee",
+        line3: "Choose the employee who made a difference this quarter."
+    },
+    5: {
+        line1: "",
+        line2: "Review Your Selection",
+        line3: "Confirm the details before submitting your final choice."
+    },
+    6: {
+        line1: "",
+        line2: "",
+        line3: ""
+    }
+};
+
+let currentStep = 1;
+let currentDepartment = "";
+let currentDeptName = "";
+let selectedCandidate = "";
+let selectedCandidateId = "";
+let selectedEmpRef = null;
+let recognitionStory = "";
+let isNoSelection = false;
+let facSelections = { "Housekeeping Staff": null, "Technician Staff": null };
+let isSubmitting = false;
+let currentEmployees = [];
+let isEditingStory = false;
+let maxReachedStep = 1;
+let placeholderInterval = null;
+
+const reasonPlaceholders = [
+    "Their dedication, teamwork, and positive attitude...",
+    "Always goes the extra mile for patients and colleagues...",
+    "Shows exceptional leadership and reliability under pressure...",
+    "Consistently delivers high-quality work with a smile...",
+    "A true team player who lifts everyone around them..."
+];
+let placeholderIndex = 0;
+
+function getUniqueDepartments() {
+    const seen = new Set();
+    const list = [];
+    for (const [code, name] of Object.entries(departmentCodes)) {
+        if (!seen.has(name)) {
+            seen.add(name);
+            list.push({ code, name });
+        }
+    }
+    return list.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function renderDepartments(filter = "") {
+    const grid = document.getElementById("deptGrid");
+    grid.innerHTML = "";
+    const q = filter.trim().toLowerCase();
+    getUniqueDepartments()
+        .filter(d => !q || d.name.toLowerCase().includes(q))
+        .forEach(dept => {
+            const card = document.createElement("div");
+            card.className = "dept-card";
+            card.onclick = () => selectDepartment(dept.code, dept.name);
+            const imgSrc = getDeptImage(dept.name);
+            card.innerHTML = `
+                <img src="${imgSrc}" alt="${dept.name}" class="dept-img" onerror="this.src='/eoq/dept-default.jpg'; this.onerror=null;">
+                <div class="dept-name">${dept.name}</div>
+                <span class="dept-chevron" aria-hidden="true">&gt;</span>
+            `;
+            grid.appendChild(card);
+        });
+}
+
+function selectDepartment(code, name) {
+    currentDepartment = code;
+    currentDeptName = name;
+    document.getElementById("departmentCode").value = "";
+    document.getElementById("codeError").style.display = "none";
+
+    const img = document.getElementById("accessDeptImg");
+    img.src = "/eoq/lock.jpg";
+    img.alt = "Access";
+    img.onerror = function() { this.style.display = "none"; };
+
+    goToStep(2);
+}
+
+function setHeaderLine(id, text) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = text || "";
+    el.style.display = text ? "" : "none";
+}
+
+function updateHeaderTexts(step) {
+    const t = headerTexts[step] || headerTexts[1];
+    setHeaderLine("headerLine1", t.line1);
+    setHeaderLine("headerLine2", t.line2);
+    setHeaderLine("headerLine3", t.line3);
+    if (step === 2 && currentDeptName) {
+        setHeaderLine("headerLine2", currentDeptName);
+    }
+    const wrap = document.getElementById("pageHeaderTexts");
+    if (wrap) wrap.style.display = step === 6 ? "none" : "block";
+}
+
+function onStepClick(step) {
+    if (step > maxReachedStep) return;
+    if (step === currentStep) return;
+    if (step >= 5 && !selectedCandidate && !isNoSelection) return;
+    if (step >= 5 && isNascomDept() && !isNoSelection && !nascomBothSelected()) return;
+    goToStep(step);
+}
+
+function goToStep(step) {
+    document.querySelectorAll(".step-panel").forEach(p => p.classList.remove("active"));
+    document.getElementById("step" + step).classList.add("active");
+
+    const progressWrap = document.getElementById("progressWrap");
+    const body = document.body;
+
+    if (step === 6) {
+        progressWrap.style.display = "none";
+        body.classList.remove("has-bg");
+        body.classList.add("no-bg");
+    } else {
+        progressWrap.style.display = "block";
+        body.classList.add("has-bg");
+        body.classList.remove("no-bg");
+        updateProgress(step);
+    }
+
+    updateHeaderTexts(step);
+
+    const lockImg = document.getElementById("accessDeptImg");
+    if (lockImg) {
+        lockImg.style.display = (step === 2) ? "block" : "none";
+    }
+    
+    currentStep = step;
+    if (step > maxReachedStep) maxReachedStep = step;
+
+    document.querySelectorAll(".step").forEach(s => {
+        const n = parseInt(s.dataset.step, 10);
+        if (n <= maxReachedStep && n !== step) {
+            s.classList.add("clickable");
+        } else {
+            s.classList.remove("clickable");
+        }
+    });
+
+    if (step === 4) {
+        currentEmployees = departmentEmployees[currentDeptName] || [];
+        if (isNascomDept()) {
+            resetFacSelections();
+            selectedCandidate = "";
+            selectedCandidateId = "";
+            selectedEmpRef = null;
+            isNoSelection = false;
+        }
+        document.getElementById("searchInput").value = "";
+        const searchWrap = document.getElementById("nominateSearchWrap");
+        if (searchWrap) {
+            searchWrap.style.display = (isNascomDept() || currentEmployees.length > 8) ? "block" : "none";
+        }
+        renderEmployees(currentEmployees);
+        updateNominateUI();
+        startPlaceholderRotation();
+    } else {
+        stopPlaceholderRotation();
+    }
+
+    if (step === 5) {
+        prepareReview();
+    }
+
+    if (step === 3) {
+        openCriteriaModal();
+    } else {
+        const overlay = document.getElementById("criteriaModal");
+        if (overlay) overlay.classList.remove("open");
+        document.body.style.overflow = "";
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function updateProgress(step) {
+    const steps = document.querySelectorAll(".step");
+    const fill = document.getElementById("progressFill");
+    const total = 4;
+    const pct = ((step - 1) / total) * 100;
+    fill.style.width = Math.min(pct, 100) + "%";
+
+    steps.forEach(s => {
+        const n = parseInt(s.dataset.step, 10);
+        s.classList.remove("active", "completed");
+        const circle = s.querySelector(".step-circle");
+        if (n < step) {
+            circle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#08245B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+        } else {
+            circle.textContent = n;
+        }
+        if (n < step) s.classList.add("completed");
+        else if (n === step) s.classList.add("active");
+    });
+}
+
+function getInitials(name) {
+    if (!name) return "?";
+    const parts = name.trim().split(/\s+/);
+    if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function isNascomDept() {
+    return currentDeptName === "Nascom";
+}
+
+function resetFacSelections() {
+    facSelections = { "Housekeeping Staff": null, "Technician Staff": null };
+}
+
+function nascomBothSelected() {
+    return !!(facSelections["Housekeeping Staff"] && facSelections["Technician Staff"]);
+}
+
+function syncNascomCandidate() {
+    if (nascomBothSelected()) {
+        const hk = facSelections["Housekeeping Staff"];
+        const tech = facSelections["Technician Staff"];
+        selectedCandidate = "Housekeeping: " + hk.name + " | Technician: " + tech.name;
+        selectedCandidateId = hk.id + "," + tech.id;
+        selectedEmpRef = null;
+    } else {
+        selectedCandidate = "";
+        selectedCandidateId = "";
+        selectedEmpRef = null;
+    }
+}
+
+function createEmpCard(emp) {
+    let isSelected = false;
+    if (isNascomDept() && emp.group) {
+        isSelected = !isNoSelection && facSelections[emp.group] === emp;
+    } else {
+        isSelected = !isNoSelection && emp === selectedEmpRef;
+    }
+    const card = document.createElement("div");
+    card.className = "emp-card" + (isSelected ? " selected" : "");
+    card.dataset.name = emp.name;
+    card._emp = emp;
+    card.onclick = () => selectEmployee(emp);
+    card.innerHTML = `
+        <div class="emp-avatar">${getInitials(emp.name)}</div>
+        <div class="emp-info">
+            <div class="emp-name">${emp.name}</div>
+        </div>
+        <div class="emp-circle">
+            <div class="emp-circle-inner"></div>
+        </div>
+    `;
+    return card;
+}
+
+function renderEmployees(list) {
+    const container = document.getElementById("empList");
+    container.innerHTML = "";
+    const hasGroups = list.some(e => e.group);
+    if (!hasGroups) {
+        list.forEach(emp => container.appendChild(createEmpCard(emp)));
+        return;
+    }
+    const order = [];
+    const byGroup = {};
+    list.forEach(emp => {
+        const g = emp.group || "Other";
+        if (!byGroup[g]) {
+            byGroup[g] = [];
+            order.push(g);
+        }
+        byGroup[g].push(emp);
+    });
+    order.forEach(g => {
+        const wrap = document.createElement("div");
+        wrap.className = "emp-group";
+        const title = document.createElement("div");
+        title.className = "emp-group-title";
+        title.textContent = g;
+        wrap.appendChild(title);
+        byGroup[g].forEach(emp => wrap.appendChild(createEmpCard(emp)));
+        container.appendChild(wrap);
+    });
+}
+
+
+/* ===== Mobile helpers: 1.5s ease scroll + save/restore position ===== */
+let savedScrollYBeforeSelect = null;
+
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+function smoothScrollTo(targetY, duration = 1500) {   // 1.5 seconds
+  const startY = window.scrollY;
+  const distance = targetY - startY;
+  if (Math.abs(distance) < 2) return;
+  const startTime = performance.now();
+
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = easeInOutCubic(progress);
+    window.scrollTo(0, startY + distance * eased);
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function scrollListUnderHeaderAndRevealReason(splitId) {
+  if (!window.matchMedia("(max-width: 1000px)").matches) return;
+
+  // save current position so we can restore on unselect
+  savedScrollYBeforeSelect = window.scrollY;
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const split = document.getElementById(splitId);
+      if (!split) return;
+      const listPane = split.querySelector(".employee-list-pane");
+      if (!listPane) return;
+
+      const header = document.querySelector("header");
+      const headerH = header ? header.offsetHeight : 74;
+      const rect = listPane.getBoundingClientRect();
+      const targetY = window.scrollY + rect.top - headerH - 12;
+      smoothScrollTo(Math.max(0, targetY), 1500);   // 1.5 seconds – matches reason-pane
+    });
+  });
+}
+
+function restoreScrollAfterUnselect() {
+  if (!window.matchMedia("(max-width: 1000px)").matches) return;
+  if (savedScrollYBeforeSelect === null) return;
+  smoothScrollTo(savedScrollYBeforeSelect, 1500);   // 1.5 seconds – matches reason-pane
+  savedScrollYBeforeSelect = null;
+}
+
+function selectEmployee(emp) {
+    if (isNascomDept() && emp.group) {
+        isNoSelection = false;
+        document.getElementById("noSelectCard").classList.remove("selected");
+        document.getElementById("noSelectContinueWrap").classList.remove("visible");
+        if (facSelections[emp.group] === emp) {
+            facSelections[emp.group] = null;
+        } else {
+            facSelections[emp.group] = emp;
+        }
+        syncNascomCandidate();
+        const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
+        const base = currentEmployees || [];
+        const filtered = q
+            ? base.filter(e => e.name.toLowerCase().includes(q))
+            : base;
+        renderEmployees(filtered.length || !q ? filtered : base);
+        updateNominateUI();
+        return;
+    }
+    if (!isNoSelection && selectedEmpRef === emp) {
+        selectedCandidate = "";
+        selectedCandidateId = "";
+        selectedEmpRef = null;
+        document.querySelectorAll(".emp-card").forEach(c => c.classList.remove("selected"));
+        updateNominateUI();
+        restoreScrollAfterUnselect();
+        return;
+    }
+    isNoSelection = false;
+    selectedCandidate = emp.name;
+    selectedCandidateId = emp.id;
+    selectedEmpRef = emp;
+    document.getElementById("noSelectCard").classList.remove("selected");
+    document.getElementById("noSelectContinueWrap").classList.remove("visible");
+    document.querySelectorAll(".emp-card").forEach(c => {
+        c.classList.toggle("selected", c._emp === emp);
+    });
+    updateNominateUI();
+    scrollListUnderHeaderAndRevealReason("nominateSplit");
+}
+
+function selectNoEmployee() {
+    if (isNoSelection) {
+        isNoSelection = false;
+        selectedCandidate = "";
+        selectedCandidateId = "";
+        selectedEmpRef = null;
+        resetFacSelections();
+        document.getElementById("noSelectCard").classList.remove("selected");
+        updateNominateUI();
+        return;
+    }
+    isNoSelection = true;
+    selectedCandidate = "No Employee Selected This Quarter";
+    selectedCandidateId = "";
+    selectedEmpRef = null;
+    resetFacSelections();
+    recognitionStory = "";
+    document.getElementById("reasonText").value = "";
+    updateCharCount();
+    document.querySelectorAll(".emp-card").forEach(c => c.classList.remove("selected"));
+    document.getElementById("noSelectCard").classList.add("selected");
+    document.getElementById("noSelectContinueWrap").classList.add("visible");
+    const facWrap = document.getElementById("nascomContinueWrap");
+    if (facWrap) facWrap.classList.remove("visible");
+    updateNominateUI();
+}
+
+function updateNominateUI() {
+    const split = document.getElementById("nominateSplit");
+    const nextBtn = document.getElementById("nextToReviewBtn");
+    const continueWrap = document.getElementById("noSelectContinueWrap");
+    const facWrap = document.getElementById("nascomContinueWrap");
+    const nascom = isNascomDept();
+
+    if (facWrap) facWrap.classList.remove("visible");
+
+    if (isNoSelection) {
+        split.classList.remove("has-selection");
+        continueWrap.classList.add("visible");
+        nextBtn.disabled = true;
+    } else if (nascom) {
+        split.classList.remove("has-selection");
+        continueWrap.classList.remove("visible");
+        nextBtn.disabled = true;
+        recognitionStory = "";
+        const ta = document.getElementById("reasonText");
+        if (ta) ta.value = "";
+        if (nascomBothSelected() && facWrap) {
+            facWrap.classList.add("visible");
+        }
+    } else if (selectedCandidate) {
+        split.classList.add("has-selection");
+        continueWrap.classList.remove("visible");
+        nextBtn.disabled = !document.getElementById("reasonText").value.trim();
+    } else {
+        split.classList.remove("has-selection");
+        continueWrap.classList.remove("visible");
+        nextBtn.disabled = true;
+    }
+}
+
+function updateCharCount() {
+    const ta = document.getElementById("reasonText");
+    const count = ta.value.length;
+    document.getElementById("charCount").textContent = count;
+    recognitionStory = ta.value;
+    if (!isNoSelection) {
+        document.getElementById("nextToReviewBtn").disabled = !ta.value.trim() || !selectedCandidate;
+    }
+}
+
+document.getElementById("reasonText").addEventListener("input", updateCharCount);
+
+document.getElementById("searchInput").addEventListener("input", function () {
+    const q = this.value.trim().toLowerCase();
+    const filtered = currentEmployees.filter(e =>
+        e.name.toLowerCase().includes(q)
+    );
+    renderEmployees(filtered);
+});
+
+function startPlaceholderRotation() {
+    stopPlaceholderRotation();
+    const ta = document.getElementById("reasonText");
+    placeholderInterval = setInterval(() => {
+        if (document.activeElement === ta || ta.value.trim()) return;
+        placeholderIndex = (placeholderIndex + 1) % reasonPlaceholders.length;
+        ta.placeholder = reasonPlaceholders[placeholderIndex];
+    }, 3500);
+}
+
+function stopPlaceholderRotation() {
+    if (placeholderInterval) {
+        clearInterval(placeholderInterval);
+        placeholderInterval = null;
+    }
+}
+
+function prepareReview() {
+    if (isNoSelection) {
+        document.getElementById("reviewAvatar").textContent = "—";
+        document.getElementById("reviewName").textContent = "No Employee Selected This Quarter";
+        document.getElementById("reviewDept").textContent = currentDeptName + " Department";
+        document.getElementById("storyBox").style.display = "none";
+    } else if (isNascomDept() && nascomBothSelected()) {
+        const hk = facSelections["Housekeeping Staff"];
+        const tech = facSelections["Technician Staff"];
+        document.getElementById("reviewAvatar").textContent = "2";
+        document.getElementById("reviewName").textContent =
+            "Housekeeping: " + hk.name + "\nTechnician: " + tech.name;
+        document.getElementById("reviewName").style.whiteSpace = "pre-line";
+        document.getElementById("reviewDept").textContent = currentDeptName + " Department";
+        document.getElementById("storyBox").style.display = "none";
+        recognitionStory = "";
+    } else {
+        document.getElementById("reviewAvatar").textContent = getInitials(selectedCandidate);
+        document.getElementById("reviewName").textContent = selectedCandidate;
+        document.getElementById("reviewName").style.whiteSpace = "";
+        document.getElementById("reviewDept").textContent = currentDeptName + " Department";
+        document.getElementById("storyBox").style.display = "block";
+        document.getElementById("storyText").textContent = recognitionStory;
+        document.getElementById("storyText").contentEditable = "false";
+        isEditingStory = false;
+        document.getElementById("editStoryBtn").innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg> Edit`;
+    }
+}
+
+function placeCaretAtEnd(el) {
+    el.focus();
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    range.collapse(false);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+}
+
+function toggleEditStory() {
+    const el = document.getElementById("storyText");
+    const btn = document.getElementById("editStoryBtn");
+    if (!isEditingStory) {
+        el.contentEditable = "true";
+        placeCaretAtEnd(el);
+        isEditingStory = true;
+        btn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+            </svg> Save`;
+    } else {
+        el.contentEditable = "false";
+        recognitionStory = el.textContent.trim();
+        isEditingStory = false;
+        btn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg> Edit`;
+    }
+}
+
+async function verifyCode() {
+    const input = document.getElementById("departmentCode");
+    const error = document.getElementById("codeError");
+    const continueBtn = document.getElementById("continueBtn");
+    const code = input.value.trim().toUpperCase();
+
+    if (!code) {
+        error.textContent = "You must enter your department code.";
+        error.style.display = "block";
+        return;
+    }
+
+    if (!departmentCodes[code] || departmentCodes[code] !== currentDeptName) {
+        error.textContent = "Invalid department code for this department. Please try again.";
+        error.style.display = "block";
+        return;
+    }
+
+    continueBtn.disabled = true;
+    continueBtn.innerHTML = "Checking...";
+    error.style.display = "none";
+    input.blur();
+
+    try {
+        const { data, error: dbError } = await supabaseClient
+            .from("department_votes")
+            .select("id")
+            .eq("department_code", code)
+            .maybeSingle();
+
+        if (dbError) {
+            console.error(dbError);
+            error.textContent = "Something went wrong. Please try again.";
+            error.style.display = "block";
+            continueBtn.disabled = false;
+            continueBtn.innerHTML = `Continue <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+            return;
+        }
+
+        if (data) {
+            error.textContent = "This department has already submitted its vote.";
+            error.style.display = "block";
+            continueBtn.disabled = false;
+            continueBtn.innerHTML = `Continue <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+            return;
+        }
+
+        currentDepartment = code;
+        goToStep(3);
+
+    } catch (err) {
+        console.error(err);
+        error.textContent = "Something went wrong. Please try again.";
+        error.style.display = "block";
+    } finally {
+        continueBtn.disabled = false;
+        continueBtn.innerHTML = `Continue <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+    }
+}
+
+async function confirmVote() {
+    if (!selectedCandidate || !currentDepartment || isSubmitting) return;
+
+    if (isEditingStory) {
+        recognitionStory = document.getElementById("storyText").textContent.trim();
+        isEditingStory = false;
+    }
+
+    isSubmitting = true;
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting...";
+
+    const winnerName = isNoSelection ? "No Employee Selected This Quarter" : selectedCandidate;
+    const storyValue = (isNoSelection || isNascomDept()) ? null : recognitionStory;
+
+    try {
+        const { error: insertError } = await supabaseClient
+            .from("department_votes")
+            .insert({
+                department_code: currentDepartment,
+                department_name: currentDeptName,
+                winner_name: winnerName,
+                recognition_story: storyValue,
+                job_title: null
+            });
+
+        if (insertError) {
+            if (insertError.code === "23505") {
+                alert("This department has already submitted its vote.");
+            } else {
+                console.error(insertError);
+                alert("Could not submit the vote. Please try again.");
+            }
+            isSubmitting = false;
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Submit";
+            return;
+        }
+
+        try {
+            await supabaseClient.functions.invoke("send-vote-email", {
+                body: {
+                    department_name: currentDeptName,
+                    winner_name: winnerName,
+                    recognition_story: (isNoSelection || isNascomDept()) ? "" : recognitionStory
+                }
+            });
+        } catch (emailErr) {
+            console.error("Email failed (vote still saved):", emailErr);
+        }
+
+        goToStep(6);
+
+    } catch (err) {
+        console.error(err);
+        alert("Could not submit the vote. Please try again.");
+        isSubmitting = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit";
+    }
+}
+
+document.getElementById("departmentCode").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") verifyCode();
+});
+
+
+let execMode = null;
+let execSelected = null;
+let execSelectedDept = "";
+let execIsNoSelection = false;
+let execStory = "";
+let execIsEditingStory = false;
+let execCurrentList = [];
+let execIsSubmitting = false;
+
+const departmentHeads = [
+    { name: "Mohamed Sheta", dept: "RCM + Encoder Department", id: "DH01" },
+    { name: "Hossam Ali Banabilah", dept: "Reception + Drivers Department", id: "DH02" },
+    { name: "Turki Tursom", dept: "Security Department", id: "DH03" },
+    { name: "Dr. Mahmoud Ellamey", dept: "Emergency Department", id: "DH04" },
+    { name: "Dr. Abdulrahman Faisal Baomar", dept: "Pharmacy Department", id: "DH05" },
+    { name: "Mustafa Faleh", dept: "Nursing Department", id: "DH06" },
+    { name: "Dr. Ahmed Abdelrehim", dept: "Radiology Department", id: "DH07" },
+    { name: "Dr. Ahmed Abdelmoez Saad", dept: "Laboratory Department", id: "DH09" }
+];
+
+const adminStaff = [
+    { name: "Rothana Sami", id: "AS01" },
+    { name: "Khalid Rawas", id: "AS02" },
+    { name: "Taghreed Darraj", id: "AS03" },
+    { name: "Mohammed Alsharif", id: "AS04" },
+    { name: "Shrooq Alobaidi", id: "AS05" },
+    { name: "Rayan Alsindi", id: "AS06" },
+    { name: "Abdulrahman Alhazmi", id: "AS07" }
+];
+
+const medicalStaff = [
+    { name: "Mohammed Rizk", id: "MS01" },
+    { name: "Abdualziz Gedelleila", id: "MS02" },
+    { name: "Dina Alrashdi", id: "MS03" },
+    { name: "Azzam Alqathama", id: "MS04" },
+    { name: "Safia Bajoudah", id: "MS05" }
+];
+
+function hideAllPanels() {
+    document.querySelectorAll(".step-panel").forEach(p => p.classList.remove("active"));
+}
+
+const EXEC_STATE_KEY = "eoqExecState";
+
+function saveExecState(panelId) {
+    try {
+        sessionStorage.setItem(EXEC_STATE_KEY, JSON.stringify({
+            panel: panelId,
+            mode: execMode,
+            auth: execAuthenticated
+        }));
+    } catch (e) {  }
+}
+
+function clearExecState() {
+    try { sessionStorage.removeItem(EXEC_STATE_KEY); } catch (e) {}
+}
+
+function showPanel(id) {
+    hideAllPanels();
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (id.indexOf("exec") === 0) saveExecState(id);
+    else clearExecState();
+}
+
+let execAuthenticated = false;
+
+function setDashboardVisible(visible) {
+    const dashboardBtn = document.getElementById("dashboardBtn");
+    if (dashboardBtn) dashboardBtn.style.display = visible ? "flex" : "none";
+}
+
+function setExecHeaderMode(inExec) {
+    const execBtn = document.getElementById("executiveBtn");
+    if (execBtn) execBtn.style.display = (inExec && execAuthenticated) ? "none" : "";
+    setDashboardVisible(!!(inExec && execAuthenticated));
+}
+
+function setExecProgress(mode, step) {
+    const progressWrap = document.getElementById("progressWrap");
+    const pageHeader = document.getElementById("pageHeaderTexts");
+    if (!progressWrap) return;
+
+    progressWrap.classList.add("short");
+    progressWrap.style.display = "block";
+    progressWrap.innerHTML = `
+        <div class="progress-steps">
+            <div class="progress-bar-fill" id="progressFill" style="width: ${step === 1 ? "0%" : "100%"}; max-width: 50%; left: 25%;"></div>
+            <div class="step ${step === 1 ? "active" : "completed"}" data-step="1">
+                <div class="step-circle">${step > 1 ? '<svg viewBox="0 0 24 24" fill="none" stroke="#08245B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' : "1"}</div>
+                <div class="step-label">Select</div>
+            </div>
+            <div class="step ${step === 2 ? "active" : ""}" data-step="2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Confirm</div>
+            </div>
+        </div>`;
+
+    if (pageHeader) {
+        pageHeader.style.display = "block";
+        if (mode === "dh") {
+            setHeaderLine("headerLine1", "");
+            setHeaderLine("headerLine2", step === 1 ? "Outstanding Department Head" : "Review Your Selection");
+            setHeaderLine("headerLine3", step === 1
+                ? "Choose the Leader Who Made a Difference This Quarter"
+                : "Confirm the details before submitting your final choice.");
+        } else if (mode === "staff") {
+            const cat = execMode === "admin" ? "Administrative Staff" : "Medical Staff";
+            setHeaderLine("headerLine1", "");
+            setHeaderLine("headerLine2", step === 1 ? cat : "Review Your Selection");
+            setHeaderLine("headerLine3", step === 1
+                ? "Choose the employee who made a real difference this quarter"
+                : "Confirm the details before submitting your final choice.");
+        }
+    }
+}
+
+/* header EXECUTIVE button: on /eoq/ it is a normal link to /executive; on /executive it just resets to the access screen */
+function onExecutiveBtn(e) {
+    if (window.IS_EXEC_PAGE) startExecutive(e);
+}
+
+function startExecutive(e) {
+    if (e) e.preventDefault();
+    execMode = null;
+    execAuthenticated = false;
+    document.body.classList.add("exec-bg");
+    document.body.classList.remove("has-bg", "no-bg");
+    document.getElementById("progressWrap").style.display = "none";
+    document.getElementById("pageHeaderTexts").style.display = "none";
+    document.getElementById("execCode").value = "";
+    document.getElementById("execCodeError").style.display = "none";
+    setDashboardVisible(false);
+    setExecHeaderMode(false);
+    showPanel("execAccess");
+}
+
+function verifyExecCode() {
+    const input = document.getElementById("execCode");
+    const error = document.getElementById("execCodeError");
+    const code = (input.value || "").trim();
+    if (!code) {
+        error.textContent = "You must enter your code.";
+        error.style.display = "block";
+        return;
+    }
+    if (code.toUpperCase() !== "EXECUTIVE") {
+        error.textContent = "Invalid code. Please try again.";
+        error.style.display = "block";
+        return;
+    }
+    error.style.display = "none";
+    document.getElementById("pageHeaderTexts").style.display = "none";
+    document.getElementById("progressWrap").style.display = "none";
+    execAuthenticated = true;
+    setExecHeaderMode(true);
+    showPanel("execChoice");
+}
+
+document.getElementById("execCode").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") verifyExecCode();
+});
+
+function goExecDeptHead() {
+    execMode = "dh";
+    execSelected = null;
+    execSelectedDept = "";
+    execIsNoSelection = false;
+    execStory = "";
+    document.getElementById("execDHReason").value = "";
+    document.getElementById("execDHCharCount").textContent = "0";
+    document.getElementById("execDHNoSelect").classList.remove("selected");
+    document.getElementById("execDHNoContinue").classList.remove("visible");
+    document.getElementById("execDHSplit").classList.remove("has-selection");
+    document.getElementById("execDHNextBtn").disabled = true;
+    execCurrentList = departmentHeads.slice();
+    renderExecDH(execCurrentList);
+    setExecProgress("dh", 1);
+    showPanel("execDHNominate");
+}
+
+function goExecIndividual() {
+    document.getElementById("progressWrap").style.display = "none";
+    document.getElementById("pageHeaderTexts").style.display = "none";
+    showPanel("execCategory");
+}
+
+function exitExecutive() {
+    clearExecState();
+    execAuthenticated = false;
+    setDashboardVisible(false);
+    setExecHeaderMode(false);
+    window.location.href = "/eoq/";
+}
+
+function execBackToAccess() {
+    execAuthenticated = false;
+    setDashboardVisible(false);
+    setExecHeaderMode(false);
+    document.getElementById("progressWrap").style.display = "none";
+    document.getElementById("pageHeaderTexts").style.display = "none";
+    document.getElementById("execCode").value = "";
+    document.getElementById("execCodeError").style.display = "none";
+    showPanel("execAccess");
+}
+
+function execBackToChoice() {
+    document.getElementById("progressWrap").style.display = "none";
+    document.getElementById("pageHeaderTexts").style.display = "none";
+    showPanel("execChoice");
+}
+
+function execBackToCategory() {
+    document.getElementById("progressWrap").style.display = "none";
+    document.getElementById("pageHeaderTexts").style.display = "none";
+    showPanel("execCategory");
+}
+
+function goExecStaff(type) {
+    execMode = type;
+    execSelected = null;
+    execSelectedDept = type === "admin" ? "Administrative Staff" : "Medical Staff";
+    execIsNoSelection = false;
+    execStory = "";
+    document.getElementById("execStaffReason").value = "";
+    document.getElementById("execStaffCharCount").textContent = "0";
+    document.getElementById("execStaffNoSelect").classList.remove("selected");
+    document.getElementById("execStaffNoContinue").classList.remove("visible");
+    document.getElementById("execStaffSplit").classList.remove("has-selection");
+    document.getElementById("execStaffNextBtn").disabled = true;
+    execCurrentList = type === "admin" ? adminStaff.slice() : medicalStaff.slice();
+    renderExecStaff(execCurrentList);
+    setExecProgress("staff", 1);
+    showPanel("execStaffNominate");
+}
+
+function renderExecDH(list) {
+    const container = document.getElementById("execDHList");
+    container.innerHTML = "";
+    list.forEach(item => {
+        const isSelected = !execIsNoSelection && execSelected && execSelected.id === item.id;
+        const card = document.createElement("div");
+        card.className = "dh-card" + (isSelected ? " selected" : "");
+        card.onclick = () => selectExecDH(item);
+        card.innerHTML = `
+            <div class="dh-avatar">${getInitials(item.name)}</div>
+            <div class="dh-info">
+                <div class="dh-name">${item.name}</div>
+                <div class="dh-dept">${item.dept}</div>
+            </div>
+            <div class="dh-circle"><div class="dh-circle-inner"></div></div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function selectExecDH(item) {
+    if (!execIsNoSelection && execSelected && execSelected.id === item.id) {
+        execSelected = null;
+        execSelectedDept = "";
+        renderExecDH(departmentHeads);
+        document.getElementById("execDHSplit").classList.remove("has-selection");
+        document.getElementById("execDHNextBtn").disabled = true;
+        restoreScrollAfterUnselect();
+        return;
+    }
+    execIsNoSelection = false;
+    execSelected = item;
+    execSelectedDept = item.dept;
+    document.getElementById("execDHNoSelect").classList.remove("selected");
+    document.getElementById("execDHNoContinue").classList.remove("visible");
+    renderExecDH(departmentHeads);
+    document.getElementById("execDHSplit").classList.add("has-selection");
+    document.getElementById("execDHNextBtn").disabled = !document.getElementById("execDHReason").value.trim();
+    scrollListUnderHeaderAndRevealReason("execDHSplit");
+}
+
+function selectExecDHNo() {
+    if (execIsNoSelection) {
+        execIsNoSelection = false;
+        document.getElementById("execDHNoSelect").classList.remove("selected");
+        document.getElementById("execDHNoContinue").classList.remove("visible");
+        return;
+    }
+    execIsNoSelection = true;
+    execSelected = null;
+    execSelectedDept = "";
+    execStory = "";
+    document.getElementById("execDHReason").value = "";
+    document.getElementById("execDHCharCount").textContent = "0";
+    document.querySelectorAll("#execDHList .dh-card").forEach(c => c.classList.remove("selected"));
+    document.getElementById("execDHNoSelect").classList.add("selected");
+    document.getElementById("execDHNoContinue").classList.add("visible");
+    document.getElementById("execDHSplit").classList.remove("has-selection");
+    document.getElementById("execDHNextBtn").disabled = true;
+}
+
+document.getElementById("execDHReason").addEventListener("input", function () {
+    document.getElementById("execDHCharCount").textContent = this.value.length;
+    execStory = this.value;
+    if (!execIsNoSelection) {
+        document.getElementById("execDHNextBtn").disabled = !this.value.trim() || !execSelected;
+    }
+});
+
+function goExecDHReview() {
+    if (!execIsNoSelection && (!execSelected || !document.getElementById("execDHReason").value.trim())) return;
+    execStory = document.getElementById("execDHReason").value.trim();
+    prepareExecReview();
+    setExecProgress("dh", 2);
+    showPanel("execReview");
+}
+
+function renderExecStaff(list) {
+    const container = document.getElementById("execStaffList");
+    container.innerHTML = "";
+    list.forEach(emp => {
+        const isSelected = !execIsNoSelection && execSelected && execSelected.id === emp.id;
+        const card = document.createElement("div");
+        card.className = "emp-card" + (isSelected ? " selected" : "");
+        card.onclick = () => selectExecStaff(emp);
+        card.innerHTML = `
+            <div class="emp-avatar">${getInitials(emp.name)}</div>
+            <div class="emp-info"><div class="emp-name">${emp.name}</div></div>
+            <div class="emp-circle"><div class="emp-circle-inner"></div></div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function selectExecStaff(emp) {
+    if (!execIsNoSelection && execSelected && execSelected.id === emp.id) {
+        execSelected = null;
+        renderExecStaff(execCurrentList);
+        document.getElementById("execStaffSplit").classList.remove("has-selection");
+        document.getElementById("execStaffNextBtn").disabled = true;
+        restoreScrollAfterUnselect();
+        return;
+    }
+    execIsNoSelection = false;
+    execSelected = emp;
+    document.getElementById("execStaffNoSelect").classList.remove("selected");
+    document.getElementById("execStaffNoContinue").classList.remove("visible");
+    renderExecStaff(execCurrentList);
+    document.getElementById("execStaffSplit").classList.add("has-selection");
+    document.getElementById("execStaffNextBtn").disabled = !document.getElementById("execStaffReason").value.trim();
+    scrollListUnderHeaderAndRevealReason("execStaffSplit");
+}
+
+function selectExecStaffNo() {
+    if (execIsNoSelection) {
+        execIsNoSelection = false;
+        document.getElementById("execStaffNoSelect").classList.remove("selected");
+        document.getElementById("execStaffNoContinue").classList.remove("visible");
+        return;
+    }
+    execIsNoSelection = true;
+    execSelected = null;
+    execStory = "";
+    document.getElementById("execStaffReason").value = "";
+    document.getElementById("execStaffCharCount").textContent = "0";
+    document.querySelectorAll("#execStaffList .emp-card").forEach(c => c.classList.remove("selected"));
+    document.getElementById("execStaffNoSelect").classList.add("selected");
+    document.getElementById("execStaffNoContinue").classList.add("visible");
+    document.getElementById("execStaffSplit").classList.remove("has-selection");
+    document.getElementById("execStaffNextBtn").disabled = true;
+}
+
+document.getElementById("execStaffReason").addEventListener("input", function () {
+    document.getElementById("execStaffCharCount").textContent = this.value.length;
+    execStory = this.value;
+    if (!execIsNoSelection) {
+        document.getElementById("execStaffNextBtn").disabled = !this.value.trim() || !execSelected;
+    }
+});
+
+function goExecStaffReview() {
+    if (!execIsNoSelection && (!execSelected || !document.getElementById("execStaffReason").value.trim())) return;
+    execStory = document.getElementById("execStaffReason").value.trim();
+    prepareExecReview();
+    setExecProgress("staff", 2);
+    showPanel("execReview");
+}
+
+function prepareExecReview() {
+    if (execIsNoSelection) {
+        document.getElementById("execReviewAvatar").textContent = "—";
+        document.getElementById("execReviewName").textContent = "No Selection This Quarter";
+        document.getElementById("execReviewDept").textContent = execMode === "dh"
+            ? "Outstanding Department Head"
+            : (execMode === "admin" ? "Administrative Staff" : "Medical Staff");
+        document.getElementById("execStoryBox").style.display = "none";
+    } else {
+        document.getElementById("execReviewAvatar").textContent = getInitials(execSelected.name);
+        document.getElementById("execReviewName").textContent = execSelected.name;
+        if (execMode === "dh") {
+            document.getElementById("execReviewDept").textContent = execSelected.dept;
+        } else {
+            document.getElementById("execReviewDept").textContent =
+                execMode === "admin" ? "Administrative Staff" : "Medical Staff";
+        }
+        document.getElementById("execStoryBox").style.display = "block";
+        document.getElementById("execStoryText").textContent = execStory;
+        document.getElementById("execStoryText").contentEditable = "false";
+        execIsEditingStory = false;
+        document.getElementById("execEditStoryBtn").innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg> Edit`;
+    }
+}
+
+function toggleExecEditStory() {
+    const el = document.getElementById("execStoryText");
+    const btn = document.getElementById("execEditStoryBtn");
+    if (!execIsEditingStory) {
+        el.contentEditable = "true";
+        placeCaretAtEnd(el);
+        execIsEditingStory = true;
+        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Save`;
+    } else {
+        el.contentEditable = "false";
+        execStory = el.textContent.trim();
+        execIsEditingStory = false;
+        btn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg> Edit`;
+    }
+}
+
+function execReviewBack() {
+    if (execMode === "dh") {
+        setExecProgress("dh", 1);
+        showPanel("execDHNominate");
+    } else {
+        setExecProgress("staff", 1);
+        showPanel("execStaffNominate");
+    }
+}
+
+async function confirmExecVote() {
+    if (execIsSubmitting) return;
+    if (execIsEditingStory) {
+        execStory = document.getElementById("execStoryText").textContent.trim();
+        execIsEditingStory = false;
+    }
+    execIsSubmitting = true;
+    const btn = document.getElementById("execSubmitBtn");
+    btn.disabled = true;
+    btn.textContent = "Submitting...";
+
+    const winnerName = execIsNoSelection ? "No Selection This Quarter" : (execSelected ? execSelected.name : "");
+    let category = "Executive";
+    if (execMode === "dh") category = "Outstanding Department Head";
+    else if (execMode === "admin") category = "Administrative Staff";
+    else if (execMode === "medical") category = "Medical Staff";
+
+    try {
+        const { error: insertError } = await supabaseClient
+            .from("department_votes")
+            .insert({
+                department_code: "EXECUTIVE",
+                department_name: category,
+                winner_name: winnerName,
+                recognition_story: execIsNoSelection ? null : execStory,
+                job_title: null
+            });
+
+        if (insertError) {
+            console.error(insertError);
+        }
+
+        try {
+            await supabaseClient.functions.invoke("send-vote-email", {
+                body: {
+                    department_name: category,
+                    winner_name: winnerName,
+                    recognition_story: execIsNoSelection ? "" : execStory
+                }
+            });
+        } catch (emailErr) {
+            console.error("Email failed (vote still saved):", emailErr);
+        }
+
+        document.getElementById("progressWrap").style.display = "none";
+        document.body.classList.remove("exec-bg", "has-bg");
+        document.body.classList.add("no-bg");
+        document.getElementById("pageHeaderTexts").style.display = "none";
+        showPanel("step6");
+    } catch (err) {
+        console.error(err);
+        alert("Could not submit. Please try again.");
+        btn.disabled = false;
+        btn.textContent = "Submit";
+    } finally {
+        execIsSubmitting = false;
+    }
+}
+
+
+renderDepartments();
+updateProgress(1);
+updateHeaderTexts(1);
+
+document.querySelectorAll('header a[href="/"]').forEach(function (a) {
+    a.addEventListener("click", clearExecState);
+});
+
+function restoreExecState() {
+    let saved = null;
+    try { saved = JSON.parse(sessionStorage.getItem(EXEC_STATE_KEY) || "null"); } catch (e) {}
+    if (!saved || !saved.panel) return false;
+
+    let navType = "navigate";
+    try {
+        const nav = performance.getEntriesByType("navigation")[0];
+        if (nav && nav.type) navType = nav.type;
+    } catch (e) {}
+    if (navType !== "reload" && navType !== "back_forward") {
+        clearExecState();
+        return false;
+    }
+
+    if (!saved.auth || saved.panel === "execAccess") {
+        startExecutive();
+        return true;
+    }
+
+    document.body.classList.add("exec-bg");
+    document.body.classList.remove("has-bg", "no-bg");
+    execAuthenticated = true;
+    setExecHeaderMode(true);
+    document.getElementById("progressWrap").style.display = "none";
+    document.getElementById("pageHeaderTexts").style.display = "none";
+
+    if (saved.panel === "execCategory") {
+        goExecIndividual();
+    } else if (saved.panel === "execDHNominate" || (saved.panel === "execReview" && saved.mode === "dh")) {
+        goExecDeptHead();
+    } else if (saved.panel === "execStaffNominate" || saved.panel === "execReview") {
+        if (saved.mode === "admin" || saved.mode === "medical") goExecStaff(saved.mode);
+        else showPanel("execCategory");
+    } else {
+        showPanel("execChoice");
+    }
+    return true;
+}
+
+/* Boot. /executive opens the Executive access screen (a reload keeps you on the screen you were on);
+   /eoq/ is the normal department nomination page. */
+if (window.IS_EXEC_PAGE) {
+    if (!restoreExecState()) startExecutive();
+}
+</script>
+
+</body>
+</html>
