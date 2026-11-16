@@ -168,7 +168,7 @@ body {
    }
     .m-only .hero::before {
         content: ""; position: absolute; inset: 0; z-index: -2;
-        background: var(--m-banner) center center / 100% auto no-repeat transparent;
+        background: var(--m-banner) center top / 100% auto no-repeat transparent;
         -webkit-mask: var(--m-wave-mask) left var(--m-wave-top) / 100% var(--m-wave-h) no-repeat;
                 mask: var(--m-wave-mask) left var(--m-wave-top) / 100% var(--m-wave-h) no-repeat;
     }
@@ -395,7 +395,7 @@ body {
 @media (max-width: 700px) {
     .m-only {
         /* Restore original wave position (same as the old working version) */
-        --m-wave-top: -23.5vw;
+        --m-wave-top: -26vw;
         --m-wave-h: 77.5vw;
         --m-about-lift: -9vw;
         --m-banner-flip: 1;
