@@ -158,14 +158,14 @@ body {
     .m-only .m-menu-list svg.chev { width: 3vw; height: 3vw; margin-left: auto; stroke: #FFFFFF; stroke-width: 2.4; }
 
     /* ---- hero: banner jpg (bottom aligned), bottom edge cut into a wave in code ---- */
-    .m-only .hero {
-        position: relative; flex: none; isolation: isolate;
-        width: 100%;
-        height: var(--m-hero-h);
-        padding: 9vw 8vw 0;
-        color: #fff;
-        text-align: left;
-    }
+   .m-only .hero {
+       position: relative; flex: none; isolation: isolate;
+       width: 100%;
+       height: var(--m-hero-h);
+       padding: 9vw 8vw 0;
+       color: #fff;
+       text-align: left;
+   }
     .m-only .hero::before {
         content: ""; position: absolute; inset: 0; z-index: -2;
         background: var(--m-banner) center bottom / cover no-repeat #001f4e;
@@ -177,7 +177,7 @@ body {
         background: var(--m-wave-glow) left var(--m-wave-top) / 100% var(--m-wave-h) no-repeat;
         pointer-events: none;
     }
-    .m-only .hero h1 { font-size: clamp(15.3px, 4.25vw, 28.9px); line-height: 1.17; letter-spacing: -.1px; text-align: left; color: #08245B; font-family: "Goldplay Regular", "Goldplay-Regular", sans-serif !important; font-weight: 200 !important; }
+    .m-only .hero h1 { margin-left: 30vw; font-size: clamp(15.3px, 4.25vw, 28.9px); line-height: 1.17; letter-spacing: -.1px; text-align: left; color: #08245B; font-family: "Goldplay Regular", "Goldplay-Regular", sans-serif !important; font-weight: 200 !important; }
     .m-only .hero h1 .accent { color: #08245B; white-space: nowrap; font-family: "Goldplay SemiBold", "Goldplay-SemiBold", sans-serif !important; font-weight: 600 !important; }
     .m-only .ecg { display: inline-block; width: 1.5em; height: .7em; margin-left: .22em; vertical-align: -.05em; overflow: visible; }
     .m-only .hero .bar { width: 10vw; height: max(3px, 1vw); margin: 2.4vw 0 0; }
@@ -302,7 +302,7 @@ body {
     .m-only .m-menu-list svg.chev { width: 12px; height: 12px; }
 
     /* hero */
-    .m-only .hero { padding: calc(var(--m-hero-h) * .14) 0 0 calc(var(--d-gutter) + 67px); }
+    .m-only .hero { padding: calc(var(--m-hero-h) * .14) 0 0 calc(var(--d-gutter) + 67px); text-align: left; } .m-only .hero h1 { margin-left: 0; }
     .m-only .hero h1 { font-size: clamp(24px, 2.6vw, 48px); }
     .m-only .hero .bar { width: 5vw; height: max(4px, .55vw); margin: 1.5vw 0 0; }
 
