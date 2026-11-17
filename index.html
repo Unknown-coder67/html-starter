@@ -913,32 +913,55 @@ window.addEventListener("pageshow", function (e) {
 
       // ===== MOBILE ONLY: run once, then scroll + hide banner =====
       if (isMobile && isMainHero) {
-        // Wait for the ECG pulse animation (1.5s) + tiny buffer
-        setTimeout(function () {
-          const mOnly = document.querySelector(".m-only");
-          const hero = document.querySelector(".hero.hero-d");
-          const about = document.getElementById("m-about");
+// Wait for the ECG pulse animation (1.5s) + tiny buffer
+setTimeout(function () {
+  const mOnly = document.querySelector(".m-only");
+  const hero = document.querySelector(".hero.hero-d");
+  const about = document.getElementById("m-about");
 
-          // 1. Remove the heavy dim
-          mOnly.classList.remove("m-intro-active");
+  // 1. Remove the heavy dim
+  mOnly.classList.remove("m-intro-active");
 
-          // 2. Collapse / hide the banner + text
-          if (hero) {
-            hero.classList.add("hero-hidden");
-            mOnly.classList.add("hero-collapsed");
-          }
+  // 2. Collapse / hide the banner + text
+  if (hero) {
+    hero.classList.add("hero-hidden");
+    mOnly.classList.add("hero-collapsed");
+  }
 
-          // 3. Smooth scroll so About sits under the fixed header
-          if (about) {
-            const headerH = document.querySelector(".m-header")?.offsetHeight || 74;
-            const targetY = about.getBoundingClientRect().top + window.pageYOffset - headerH - 8;
+  // 3. Wait for the banner collapse to almost finish, then scroll slowly to About
+  setTimeout(function () {
+    if (!about) return;
 
-            window.scrollTo({
-              top: Math.max(0, targetY),
-              behavior: "smooth"
-            });
-          }
-        }, prefersReduced ? 100 : 1700); // 1.5s ECG + buffer
+    const headerH = document.querySelector(".m-header")?.offsetHeight || 74;
+    const targetY = about.getBoundingClientRect().top + window.pageYOffset - headerH - 12;
+
+    // Custom slower smooth scroll
+    const startY = window.pageYOffset;
+    const distance = targetY - startY;
+    const duration = 1400; // ← slower (increase this number to make it even slower)
+    let startTime = null;
+
+    function easeInOutCubic(t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function animateScroll(currentTime) {
+      if (!startTime) startTime = currentTime;
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeInOutCubic(progress);
+
+      window.scrollTo(0, startY + distance * eased);
+
+      if (progress < 1) {
+        requestAnimationFrame(animateScroll);
+      }
+    }
+
+    requestAnimationFrame(animateScroll);
+  }, 700); // wait for most of the banner collapse
+
+}, prefersReduced ? 100 : 1700);
 
         return; // ← important: no looping on mobile
       }
