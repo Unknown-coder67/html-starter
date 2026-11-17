@@ -491,6 +491,42 @@ body {
     font-family: "Goldplay SemiBold", "Goldplay-SemiBold", sans-serif !important;
     font-weight: 600 !important;
 }
+
+/* ===== Mobile intro: heavy dim until typing finishes + hide banner ===== */
+@media (max-width: 700px) {
+  .m-only.m-intro-active .about,
+  .m-only.m-intro-active .values,
+  .m-only.m-intro-active .eoq-section,
+  .m-only.m-intro-active .pride,
+  .m-only.m-intro-active footer {
+    opacity: 0.12;
+    pointer-events: none;
+    transition: opacity 0.7s ease;
+  }
+
+  .m-only.m-intro-active .m-header,
+  .m-only.m-intro-active .hero {
+    opacity: 1;
+  }
+
+  .m-only .hero.hero-hidden {
+    height: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: height 0.85s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.6s ease,
+                padding 0.85s ease,
+                margin 0.85s ease;
+  }
+
+  .m-only.hero-collapsed .about {
+    margin-top: 0 !important;
+  }
+}
    
 </style>
 </head>
@@ -816,9 +852,15 @@ window.addEventListener("pageshow", function (e) {
 <script>
 /* typing effect for "Caring with Every Heartbeat" (desktop + mobile) */
 (function () {
-  /* start typing only when the heading is on screen (the banner card is below the fold on phones) */
+  const isMobile = window.matchMedia("(max-width: 700px)").matches;
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // On mobile: start in intro mode (heavy dim)
+  if (isMobile) {
+    document.querySelector(".m-only")?.classList.add("m-intro-active");
+  }
+
   function whenVisible(el, cb) {
-    /* inside a dimmed box: wait until the box is undimmed (gets .is-full) */
     var dim = el.closest ? el.closest(".m-dim") : null;
     if (dim) {
       if (dim.classList.contains("is-full")) return cb();
@@ -834,67 +876,101 @@ window.addEventListener("pageshow", function (e) {
     }, { threshold: 0.9 });
     io.observe(el);
   }
+
   function typeIt(h1) {
-  var chars = [];
-  (function wrap(node) {
-    Array.prototype.slice.call(node.childNodes).forEach(function (n) {
-      if (n.nodeType === 3) {
-        var f = document.createDocumentFragment();
-        n.nodeValue.split("").forEach(function (c) {
-          var s = document.createElement("span");
-          s.className = "tw-ch";
-          s.setAttribute("aria-hidden", "true");
-          s.textContent = c;
-          f.appendChild(s);
-          chars.push(s);
-        });
-        node.replaceChild(f, n);
-      } else if (n.nodeType === 1 && n.tagName.toLowerCase() !== "svg" && n.tagName.toLowerCase() !== "br") {
-        wrap(n);
+    // Only the main hero text on mobile should trigger the special sequence
+    var isMainHero = h1.closest(".hero-d") !== null;
+
+    var chars = [];
+    (function wrap(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          var f = document.createDocumentFragment();
+          n.nodeValue.split("").forEach(function (c) {
+            var s = document.createElement("span");
+            s.className = "tw-ch";
+            s.setAttribute("aria-hidden", "true");
+            s.textContent = c;
+            f.appendChild(s);
+            chars.push(s);
+          });
+          node.replaceChild(f, n);
+        } else if (n.nodeType === 1 && n.tagName.toLowerCase() !== "svg" && n.tagName.toLowerCase() !== "br") {
+          wrap(n);
+        }
+      });
+    })(h1);
+    h1.classList.add("tw-ready");
+
+    var caret = document.createElement("span");
+    caret.className = "tw-caret";
+    caret.setAttribute("aria-hidden", "true");
+    var i = 0;
+
+    function finish() {
+      if (caret.parentNode) caret.parentNode.removeChild(caret);
+      h1.classList.add("tw-done");
+
+      // ===== MOBILE ONLY: run once, then scroll + hide banner =====
+      if (isMobile && isMainHero) {
+        // Wait for the ECG pulse animation (1.5s) + tiny buffer
+        setTimeout(function () {
+          const mOnly = document.querySelector(".m-only");
+          const hero = document.querySelector(".hero.hero-d");
+          const about = document.getElementById("m-about");
+
+          // 1. Remove the heavy dim
+          mOnly.classList.remove("m-intro-active");
+
+          // 2. Collapse / hide the banner + text
+          if (hero) {
+            hero.classList.add("hero-hidden");
+            mOnly.classList.add("hero-collapsed");
+          }
+
+          // 3. Smooth scroll so About sits under the fixed header
+          if (about) {
+            const headerH = document.querySelector(".m-header")?.offsetHeight || 74;
+            const targetY = about.getBoundingClientRect().top + window.pageYOffset - headerH - 8;
+
+            window.scrollTo({
+              top: Math.max(0, targetY),
+              behavior: "smooth"
+            });
+          }
+        }, prefersReduced ? 100 : 1700); // 1.5s ECG + buffer
+
+        return; // ← important: no looping on mobile
       }
-    });
-  })(h1);
-  h1.classList.add("tw-ready");
 
-  var caret = document.createElement("span");
-  caret.className = "tw-caret";
-  caret.setAttribute("aria-hidden", "true");
-  var i = 0;
+      // Desktop (or secondary .tw elements): keep the original looping behaviour
+      if (prefersReduced) return;
 
- function finish() {
-    if (caret.parentNode) caret.parentNode.removeChild(caret);
-    h1.classList.add("tw-done");
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    setTimeout(function () {
+      setTimeout(function () {
         h1.classList.remove("tw-done");
-
-        chars.forEach(function (c) {
-            c.classList.remove("on");
-        });
-
+        chars.forEach(function (c) { c.classList.remove("on"); });
         i = 0;
         setTimeout(step, 500);
-    }, 3000);
-}
-     
-  function step() {
-    if (i >= chars.length) return finish();
-    var c = chars[i++];
-    c.classList.add("on");
-    c.parentNode.insertBefore(caret, c.nextSibling);
-    if (i >= chars.length) return finish();   /* last letter typed: caret disappears right away */
-    setTimeout(step, 55 + Math.random() * 70);
+      }, 3000);
+    }
+
+    function step() {
+      if (i >= chars.length) return finish();
+      var c = chars[i++];
+      c.classList.add("on");
+      c.parentNode.insertBefore(caret, c.nextSibling);
+      if (i >= chars.length) return finish();
+      setTimeout(step, 55 + Math.random() * 70);
+    }
+
+    if (prefersReduced) {
+      chars.forEach(function (c) { c.classList.add("on"); });
+      finish();
+    } else {
+      whenVisible(h1, function () { setTimeout(step, 500); });
+    }
   }
 
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    chars.forEach(function (c) { c.classList.add("on"); });
-    finish();
-  } else {
-    whenVisible(h1, function () { setTimeout(step, 500); });
-  }
-  }
   Array.prototype.slice.call(document.querySelectorAll(".m-only .tw")).forEach(typeIt);
 })();
 </script>
